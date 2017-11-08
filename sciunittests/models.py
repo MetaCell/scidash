@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import HStoreField, ArrayField
 
-import models as sci_models
-
+import sciunitmodels
 # Create your models here.
 
 # Tests related
@@ -33,6 +32,7 @@ class TestClass(models.Model):
 class TestInstance(models.Model):
     test_class = models.ForeignKey(TestClass)
     observation = models.CharField(max_length=50)
+    test_suite = models.ForeignKey(TestSuite)
 
     class Meta:
         verbose_name = 'Test instance'
@@ -43,7 +43,7 @@ class TestInstance(models.Model):
 
 
 class Score(models.Model):
-    model_instance = models.ForeignKey(sci_models.models.ModelInstance)
+    model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField()
     related_data = HStoreField()

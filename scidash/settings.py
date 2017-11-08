@@ -40,15 +40,15 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'pygeppetto_server.apps.PygeppettoServerConfig',
+    'pygeppetto_server',
     'channels',
     'rest_framework',
     'django_extensions',
 ]
 
 SCIDASH_APPS = [
-    'models.apps.ModelsConfig',
-    'tests.apps.TestsConfig',
+    'sciunitmodels.apps.SciunitmodelsConfig',
+    'sciunittests.apps.SciunittestsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
