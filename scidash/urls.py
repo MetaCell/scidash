@@ -16,11 +16,34 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from scidash.api import views
+from sciunitmodels.api import views as models_views
+from sciunittests.api import views as tests_views
+
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+# Models Views
+router.register(r'capabilities', models_views.CapabilityViewSet,
+        base_name='capability')
+router.register(r'model-classes', models_views.ModelClassViewSet,
+        base_name='model-class')
+router.register(r'model-instances', models_views.ModelInstanceViewSet,
+        base_name='model-instance')
+
+# Tests Views
+
+router.register(r'scores', tests_views.ScoreViewSet,
+        base_name='score')
+router.register(r'test-classes', tests_views.TestClassViewSet,
+        base_name='test-class')
+router.register(r'test-instances', tests_views.TestInstanceViewSet,
+        base_name='test-instance')
+router.register(r'test-suites', tests_views.TestSuiteViewSet,
+        base_name='test-suite')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('pygeppetto_server.urls')),
     url(r'^data/', include('general.urls')),
-    url(r'^api/people/', views.people)
+    url(r'^api/', include(router.urls))
 ]
