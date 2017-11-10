@@ -31,8 +31,9 @@ class TestClass(models.Model):
 
 class TestInstance(models.Model):
     test_class = models.ForeignKey(TestClass)
-    observation = models.CharField(max_length=50)
+    observation = HStoreField()
     test_suite = models.ForeignKey(TestSuite)
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Test instance'
@@ -45,9 +46,9 @@ class TestInstance(models.Model):
 class Score(models.Model):
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
-    score = models.FloatField()
+    score = models.FloatField(default=0)
+    prediction = models.FloatField(default=0)
     related_data = HStoreField()
-    unpicklable = ArrayField(models.CharField(max_length=50))
 
     def __str__(self):
         return "Score for {0} in {1} test instance".format(

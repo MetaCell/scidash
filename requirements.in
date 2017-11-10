@@ -1,2 +1,6 @@
 psycopg2
-django-rest-framework
+django
+channels==1.1.8
+asgi-redis==1.4.3
+djangorestframework==3.7.1
+drf-writable-nested

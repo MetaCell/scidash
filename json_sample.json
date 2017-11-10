@@ -1,0 +1,39 @@
+{
+  "model_instance": {
+    "model_class": {
+      "class_name": "ReducedModel",
+      "capabilities": [
+        {
+          "class_name": "CanBeReduced"
+        }
+      ]
+    },
+    "attributes": {},
+    "name": "Izhikevich",
+    "run_params": {},
+    "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
+  },
+  "prediction": 13,
+  "related_data": {
+    "some_related_key": "and_value"
+  },
+  "score": 1.6666666666666667,
+  "test_instance": {
+    "description": "null",
+    "test_suite": {
+      "name": "ReducedSuite"
+    },
+    "test_class": {
+      "class_name": "MyTest"
+    },
+    "observation": {
+      "mean": 8,
+      "std": 3
+    },
+    "unpicklable": [
+      "One",
+      "Two"
+    ],
+    "verbose": 1
+  }
+}
