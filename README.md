@@ -1,6 +1,9 @@
 <p align="center">
   <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
+<p align="center">
+    <img src="https://github.com/tarelli/bucket/blob/master/geppetto%20logo.png?raw=true" alt="Geppetto logo"/>
+</p>
 
 ## SciDash 
 
@@ -35,6 +38,35 @@ cd org.geppetto.frontend/src/main/webapp
 npm install
 npm run build-dev-noTest
 ```
+
+**Install SciDash Geppetto Extension**
+
+Clone the Geppetto SciDash extension into the extensions folder 
+```
+cd org.geppetto.frontend/src/main/webapp/extensions
+git clone https://github.com/MetaCell/geppetto-scidash.git
+```
+
+Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.geppetto.frontend/blob/master/src/main/webapp/GeppettoConfiguration.json) to look like this:
+```
+{
+    "_README" : "http://docs.geppetto.org/en/latest/build.html",
+    "contextPath": "org.geppetto.frontend",
+    "useSsl": false,
+    "embedded": false,
+    "embedderURL": ["/"],
+    "noTest": false,
+    "extensions": {
+        "geppetto-default/ComponentsInitialization": false,
+        "geppetto-scidash/ComponentsInitialization": true
+    },
+    "themes": {
+        "geppetto-default/colors": false,
+        "geppetto-scidash/colors": true,
+    }
+}
+```
+
 
 ## Start the server
 ```
