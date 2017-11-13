@@ -1,11 +1,12 @@
 <p align="center">
-  <img src="https://github.com/tarelli/bucket/blob/master/geppetto%20logo.png?raw=true" alt="Geppetto logo"/>
+  <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
 
-# Geppetto Django Template
-Geppetto Django Template provides a template to develop a Geppetto Instance in Python. This Django application illustrates how to integrate the pygeppetto_server (https://github.com/MetaCell/pygeppetto-django), a module which provides the basic functionality, and establishes the skeleton to customize Geppetto server side.
+## SciDash 
 
-This template provides a very basic python infrastructure to serve the static content. The static content (JS + HTML) can be found at org.geppetto.frontend (https://github.com/openworm/org.geppetto.frontend) and the same module is reused for the Geppetto Java Version. Note, however, that the python server implementation is a work in progress and some features have not been migrated from Java yet.
+SciDash is a project that enables the reproducible execution and visualization of data-driven unit test (SciUnit) for assessing model quality.
+
+SciDash is a geppetto / django-based client-server web application. 
 
 ## Installation
 
@@ -22,11 +23,11 @@ For OS X:
 brew install redis
 ```
 
-**Install Django Template**
+**Install SciDash**
 
 ```
-git clone https://github.com/MetaCell/geppetto-django-template
-cd geppetto-django-template
+git clone https://github.com/MetaCell/scidash
+cd scidash
 mkdir static
 cd static
 git clone https://github.com/openworm/org.geppetto.frontend
@@ -102,11 +103,5 @@ This module implements the basic functionality to start a Python Geppetto Instan
     'rest_framework',
     ]
     ```
-
-**What is missing?**
-
-This skeleton app is not connected to any database but, as it is implemented on top of the Django server, it should be quite simple to integrate any SQL DB. In the settings.py you will find commented out the binding for the sqlite DBS provided by default with Django. These are two links with some useful tips to start with:
-https://docs.djangoproject.com/en/1.11/topics/install/#database-installation
-https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 
