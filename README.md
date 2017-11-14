@@ -26,6 +26,13 @@ For OS X:
 brew install redis
 ```
 
+*Install Database*
+
+1. Install PostgreSQL server: [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu, [application](https://postgresapp.com/) for MacOS
+2. Run `$ su postgres`
+3. Run `$ ./db_create_psql.sh`
+4. Run `$ logout` to return to your shell user
+
 **Install SciDash**
 
 ```
