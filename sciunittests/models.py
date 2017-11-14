@@ -21,9 +21,6 @@ class TestSuite(models.Model):
 
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
-    timestamp = models.DateTimeField(default=datetime.now())
-    hostname = models.CharField(max_length=200, default='')
-    build_info = models.CharField(max_length=200, default='')
 
     class Meta:
         verbose_name = 'Test class'
