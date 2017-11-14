@@ -17,9 +17,9 @@
   "related_data": {
     "some_related_key": "and_value"
   },
-  "score": 1.6666666666666667,
+  "score": 1.66666666666667,
   "test_instance": {
-    "description": "null",
+    "description": null,
     "test_suite": {
       "name": "ReducedSuite"
     },
@@ -27,8 +27,8 @@
       "class_name": "MyTest"
     },
     "observation": {
-      "mean": 8,
-      "std": 3
+      "mean":"8",
+      "std": "3"
     },
     "unpicklable": [
       "One",

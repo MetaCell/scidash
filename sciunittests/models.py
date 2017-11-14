@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.postgres.fields import HStoreField, ArrayField
+from datetime import datetime
 
 import sciunitmodels
-# Create your models here.
-
-# Tests related
 
 
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(default=datetime.now())
+    hostname = models.CharField(max_length=200, default='')
+    build_info = models.CharField(max_length=200, default='')
 
     class Meta:
         verbose_name = 'Test suite'
@@ -20,6 +21,9 @@ class TestSuite(models.Model):
 
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(default=datetime.now())
+    hostname = models.CharField(max_length=200, default='')
+    build_info = models.CharField(max_length=200, default='')
 
     class Meta:
         verbose_name = 'Test class'
@@ -34,6 +38,11 @@ class TestInstance(models.Model):
     observation = HStoreField()
     test_suite = models.ForeignKey(TestSuite)
     description = models.TextField(blank=True, null=True)
+    unpicklable = ArrayField(models.CharField(max_length=100), default=[])
+    verbose = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(default=datetime.now())
+    hostname = models.CharField(max_length=200, default='')
+    build_info = models.CharField(max_length=200, default='')
 
     class Meta:
         verbose_name = 'Test instance'
@@ -49,6 +58,7 @@ class Score(models.Model):
     score = models.FloatField(default=0)
     prediction = models.FloatField(default=0)
     related_data = HStoreField()
+    timestamp = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return "Score for {0} in {1} test instance".format(
