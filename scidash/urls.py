@@ -31,7 +31,6 @@ router.register(r'model-instances', models_views.ModelInstanceViewSet,
         base_name='model-instance')
 
 # Tests Views
-
 router.register(r'scores', tests_views.ScoreViewSet,
         base_name='score')
 router.register(r'test-classes', tests_views.TestClassViewSet,

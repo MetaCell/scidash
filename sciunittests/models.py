@@ -34,6 +34,8 @@ class TestInstance(models.Model):
     observation = HStoreField()
     test_suite = models.ForeignKey(TestSuite)
     description = models.TextField(blank=True, null=True)
+    unpicklable = ArrayField(models.CharField(max_length=100), default=[])
+    verbose = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = 'Test instance'
