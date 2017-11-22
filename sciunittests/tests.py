@@ -1,8 +1,9 @@
 import os
 import json
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
+from general.models import ScidashUser
 
 from sciunittests.serializers import ScoreSerializer
 
@@ -16,11 +17,21 @@ class SciunitTestTestCase(TestCase):
     def setUpClass(cls):
         super(SciunitTestTestCase, cls).setUpClass()
 
+        factory = RequestFactory()
+        request = factory.get('/data/upload/sample_json.json')
+        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
+                'montecarlo')
+
+        request.user = cls.user
+
         with open(SAMPLE_FILE) as f:
-            score_serializer = ScoreSerializer(data=json.loads(f.read()))
+            score_serializer = ScoreSerializer(data=json.loads(f.read()),
+                    context={'request': request})
 
         if score_serializer.is_valid():
             score_serializer.save()
+        else:
+            print(score_serializer.errors)
 
     def scrub(self, obj, bad='_this_is_bad'):
         if isinstance(obj, dict):
@@ -40,6 +51,7 @@ class SciunitTestTestCase(TestCase):
 
     def test_if_scores_endpoint_works_correctly(self):
         client = Client()
+        client.force_login(self.user)
         response = client.get(reverse('score-list'))
 
         self.assertEqual(response.status_code, 200)
@@ -51,6 +63,7 @@ class SciunitTestTestCase(TestCase):
 
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
+        self.scrub(parsed_response, 'timestamp')
         parsed_keys = parsed_response.keys()
 
         for key in data.keys():
@@ -59,6 +72,7 @@ class SciunitTestTestCase(TestCase):
 
     def test_if_test_instance_endpoint_works_correctly(self):
         client = Client()
+        client.force_login(user=self.user)
         response = client.get(reverse('test-instance-list'))
 
         self.assertEqual(response.status_code, 200)
@@ -70,6 +84,7 @@ class SciunitTestTestCase(TestCase):
 
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
+        self.scrub(parsed_response, 'timestamp')
         parsed_keys = parsed_response.keys()
         test_instance_data = data.get('test_instance')
 
@@ -80,6 +95,7 @@ class SciunitTestTestCase(TestCase):
 
     def test_if_test_class_endpoint_works_correctly(self):
         client = Client()
+        client.force_login(user=self.user)
         response = client.get(reverse('test-class-list'))
 
         self.assertEqual(response.status_code, 200)
@@ -91,6 +107,7 @@ class SciunitTestTestCase(TestCase):
 
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
+        self.scrub(parsed_response, 'timestamp')
         parsed_keys = parsed_response.keys()
         test_classes_data = data.get('test_instance').get('test_class')
 
@@ -101,6 +118,7 @@ class SciunitTestTestCase(TestCase):
 
     def test_if_test_suite_endpoint_works_correctly(self):
         client = Client()
+        client.force_login(user=self.user)
         response = client.get(reverse('test-suite-list'))
 
         self.assertEqual(response.status_code, 200)
@@ -112,10 +130,11 @@ class SciunitTestTestCase(TestCase):
 
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
+        self.scrub(parsed_response, 'timestamp')
         parsed_keys = parsed_response.keys()
-        test_classes_data = data.get('test_instance').get('test_suite')
+        test_classes_data = data.get('test_instance').get('test_suites').pop()
 
-        for key in data.get('test_instance').get('test_suite').keys():
+        for key in test_classes_data:
             self.assertTrue(key in parsed_keys)
             self.assertEqual(test_classes_data.get(key),
                     parsed_response.get(key))

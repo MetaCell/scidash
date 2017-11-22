@@ -1,7 +1,7 @@
 import json
 
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
@@ -10,7 +10,7 @@ from sciunittests.serializers import ScoreSerializer
 
 class FileUploadView(APIView):
     parser_classes = (MultiPartParser,)
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     errors = []
 
@@ -18,7 +18,7 @@ class FileUploadView(APIView):
         sciunit_serialized_score_file = request.data['file']
 
         parsed_data = json.loads(sciunit_serialized_score_file.read())
-        instance = self.populate_data(parsed_data)
+        instance = self.populate_data(parsed_data, request)
 
         if instance:
             return Response({'success': True, 'data': instance}, status=201)
@@ -26,8 +26,9 @@ class FileUploadView(APIView):
             return Response({'success': False, 'errors': self.errors},
                             status=400)
 
-    def populate_data(self, data):
-        score_serializer = ScoreSerializer(data=data)
+    def populate_data(self, data, request):
+        score_serializer = ScoreSerializer(data=data,
+                context={'request': request})
 
         if score_serializer.is_valid():
             score_serializer.save()
