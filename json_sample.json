@@ -20,9 +20,11 @@
   "score": 1.66666666666667,
   "test_instance": {
     "description": null,
-    "test_suite": {
+    "build_info": "info",
+    "hostname": "hostname",
+    "test_suites": [{
       "name": "ReducedSuite"
-    },
+    }],
     "test_class": {
       "class_name": "MyTest"
     },
@@ -30,10 +32,6 @@
       "mean":"8",
       "std": "3"
     },
-    "unpicklable": [
-      "One",
-      "Two"
-    ],
     "verbose": 1
   }
 }

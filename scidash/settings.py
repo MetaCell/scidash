@@ -45,11 +45,13 @@ THIRD_PARTY_APPS = [
     'channels',
     'rest_framework',
     'django_extensions',
+    'django_filters'
 ]
 
 SCIDASH_APPS = [
     'sciunitmodels.apps.SciunitmodelsConfig',
     'sciunittests.apps.SciunittestsConfig',
+    'general.apps.GeneralConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
@@ -80,7 +82,13 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+        ]
 }
 
 ROOT_URLCONF = 'scidash.urls'
@@ -149,7 +157,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -160,3 +168,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+AUTH_USER_MODEL = 'general.ScidashUser'

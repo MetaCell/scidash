@@ -20,6 +20,7 @@ from sciunitmodels.api import views as models_views
 from sciunittests.api import views as tests_views
 
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token
 
 router = DefaultRouter()
 # Models Views
@@ -42,6 +43,7 @@ router.register(r'test-suites', tests_views.TestSuiteViewSet,
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/login/', obtain_jwt_token),
     url(r'^', include('pygeppetto_server.urls')),
     url(r'^data/', include('general.urls')),
     url(r'^api/', include(router.urls))
