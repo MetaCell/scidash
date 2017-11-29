@@ -5,11 +5,11 @@
     <img src="https://github.com/tarelli/bucket/blob/master/geppetto%20logo.png?raw=true" alt="Geppetto logo"/>
 </p>
 
-## SciDash 
+## SciDash
 
 SciDash is a project that enables the reproducible execution and visualization of data-driven unit test (SciUnit) for assessing model quality.
 
-SciDash is a geppetto / django-based client-server web application. 
+SciDash is a geppetto / django-based client-server web application.
 
 ## Installation
 
@@ -31,6 +31,7 @@ brew install redis
 ```
 git clone https://github.com/MetaCell/scidash
 cd scidash
+pip install -r requirements.txt
 mkdir static
 cd static
 git clone https://github.com/openworm/org.geppetto.frontend
@@ -41,7 +42,7 @@ npm run build-dev-noTest
 
 **Install SciDash Geppetto Extension**
 
-Clone the Geppetto SciDash extension into the extensions folder 
+Clone the Geppetto SciDash extension into the extensions folder
 ```
 cd org.geppetto.frontend/src/main/webapp/extensions
 git clone https://github.com/MetaCell/geppetto-scidash.git
@@ -70,16 +71,17 @@ Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.
 **Install Database**
 
 1. Install PostgreSQL server: [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu, [application](https://postgresapp.com/) for MacOS
-2. Run: 
+2. Run:
 ```
 # navigate to scidash root folder
-cd scidash  
+cd scidash
 # impersonate postgres user (may not be necessary depending on your access rights)
 su postgres
 # run db creation script located in the scidash folder
 ./db_create_psql.sh
 # to return to your shell user only necessary if you used su
-logout 
+logout
+./manage.py migrate
 ```
 
 ## Start the server
