@@ -1,8 +1,9 @@
 import os
 import json
 
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
+from general.models import ScidashUser
 
 from sciunittests.serializers import ScoreSerializer
 
@@ -16,8 +17,16 @@ class SciunitModelTestCase(TestCase):
     def setUpClass(cls):
         super(SciunitModelTestCase, cls).setUpClass()
 
+        factory = RequestFactory()
+        request = factory.get('/data/upload/sample_json.json')
+        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
+                'montecarlo')
+
+        request.user = cls.user
+
         with open(SAMPLE_FILE) as f:
-            score_serializer = ScoreSerializer(data=json.loads(f.read()))
+            score_serializer = ScoreSerializer(data=json.loads(f.read()),
+                    context={'request': request})
 
         if score_serializer.is_valid():
             score_serializer.save()
