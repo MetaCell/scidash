@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
 
+from general.serializers import ScidashUserSerializer
+
 from sciunittests.models import TestClass, TestSuite, TestInstance, Score
 from sciunitmodels.serializers import ModelInstanceSerializer
 
@@ -34,8 +36,9 @@ class TestInstanceSerializer(WritableNestedModelSerializer):
 class ScoreSerializer(WritableNestedModelSerializer):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
-    owner = serializers.HiddenField(
-            default=serializers.CurrentUserDefault()
+    owner = ScidashUserSerializer(
+            default=serializers.CurrentUserDefault(),
+            read_only=True
             )
 
     class Meta:
