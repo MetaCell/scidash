@@ -8,7 +8,7 @@ from general.models import ScidashUser
 from sciunittests.serializers import ScoreSerializer
 
 SAMPLE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-        'json_sample.json')
+        'test_data/score_object.json')
 
 
 class SciunitModelTestCase(TestCase):

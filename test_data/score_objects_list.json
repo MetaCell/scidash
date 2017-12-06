@@ -1,0 +1,113 @@
+[
+  {
+    "model_instance": {
+      "model_class": {
+        "class_name": "ReducedModel_1",
+        "capabilities": [
+          {
+            "class_name": "CanBeReduced_1"
+          }
+        ]
+      },
+      "attributes": {},
+      "name": "Izhikevich_1",
+      "run_params": {},
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Two.xml"
+    },
+    "prediction": 13,
+    "related_data": {
+      "some_related_key": "and_value"
+    },
+    "score": 1.66666666666721,
+    "test_instance": {
+      "description": null,
+      "build_info": "info",
+      "hostname": "hostname_1",
+      "test_suites": [{
+        "name": "ReducedSuite"
+      }],
+      "test_class": {
+        "class_name": "MyTest"
+      },
+      "observation": {
+        "mean":"8",
+        "std": "3"
+      },
+      "verbose": 1
+    }
+  },
+  {
+    "model_instance": {
+      "model_class": {
+        "class_name": "ReducedModel",
+        "capabilities": [
+          {
+            "class_name": "CanBeReduced"
+          }
+        ]
+      },
+      "attributes": {},
+      "name": "Izhikevich_2",
+      "run_params": {},
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Three.xml"
+    },
+    "prediction": 13,
+    "related_data": {
+      "some_related_key": "and_value"
+    },
+    "score": 1.66666666666759,
+    "test_instance": {
+      "description": null,
+      "build_info": "info",
+      "hostname": "hostname_2",
+      "test_suites": [{
+        "name": "ReducedSuite"
+      }],
+      "test_class": {
+        "class_name": "MyTest"
+      },
+      "observation": {
+        "mean":"8",
+        "std": "3"
+      },
+      "verbose": 1
+    }
+  },
+  {
+    "model_instance": {
+      "model_class": {
+        "class_name": "ReducedModel",
+        "capabilities": [
+          {
+            "class_name": "CanBeReduced"
+          }
+        ]
+      },
+      "attributes": {},
+      "name": "Izhikevich_4",
+      "run_params": {},
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Four.xml"
+    },
+    "prediction": 13,
+    "related_data": {
+      "some_related_key": "and_value"
+    },
+    "score": 1.66666666666584,
+    "test_instance": {
+      "description": null,
+      "build_info": "info",
+      "hostname": "hostname_3",
+      "test_suites": [{
+        "name": "ReducedSuite"
+      }],
+      "test_class": {
+        "class_name": "MyTest"
+      },
+      "observation": {
+        "mean":"8",
+        "std": "3"
+      },
+      "verbose": 1
+    }
+  }
+]
