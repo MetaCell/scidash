@@ -8,8 +8,9 @@ from sciunitmodels.serializers import ModelInstanceSerializer
 
 
 class TestSuiteSerializer(WritableNestedModelSerializer):
-    owner = serializers.HiddenField(
-            default=serializers.CurrentUserDefault()
+    owner = ScidashUserSerializer(
+            default=serializers.CurrentUserDefault(),
+            read_only=True
             )
 
     class Meta:
