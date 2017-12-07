@@ -63,7 +63,7 @@ Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.
     },
     "themes": {
         "geppetto-default/colors": false,
-        "geppetto-scidash/colors": true,
+        "geppetto-scidash/styles/colors": true
     }
 }
 ```
