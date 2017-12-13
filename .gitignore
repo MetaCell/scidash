@@ -108,3 +108,6 @@ venv.bak/
 .mypy_cache/
 
 *.swp
+
+# OSx system files
+.DS_Store
