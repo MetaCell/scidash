@@ -7,3 +7,4 @@ drf-writable-nested
 django-filter
 djangorestframework-jwt
 django-extensions
+django-dotenv

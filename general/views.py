@@ -17,7 +17,8 @@ class FileUploadView(APIView):
     def put(self, request, filename):
         sciunit_serialized_score_file = request.data['file']
 
-        parsed_data = json.loads(sciunit_serialized_score_file.read())
+        parsed_data = \
+        json.loads(sciunit_serialized_score_file.read().decode('utf-8'))
         instance = self.populate_data(parsed_data, request)
 
         if instance:

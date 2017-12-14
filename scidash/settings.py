@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+dotenv.read_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -25,7 +28,9 @@ SECRET_KEY = '4*0@ca#ocm*(1=12m(bfb2p8e$sk-%i4xlj=%$wkj3*&gs!%sr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        "*"
+        ]
 
 
 # Application definition
@@ -118,11 +123,11 @@ WSGI_APPLICATION = 'scidash.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'scidash',
-            'USER': 'scidash_admin',
-            'PASSWORD': 'scidash_local_password',
-            'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-            'PORT': '5432',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT'),
             }
         }
 
