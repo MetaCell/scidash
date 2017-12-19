@@ -46,6 +46,7 @@ RUN git clone $GEPPETTO_REPO
 WORKDIR $EXTENSION_DIR
 RUN git clone $SCIDASH_EXTENSION_REPO
 WORKDIR $GEPPETTO_DIR
+COPY ./deploy/geppetto/GeppettoConfiguration.json $GEPPETTO_DIR/GeppettoConfiguration.json
 RUN npm install
 RUN npm run build-dev-noTest
 
@@ -54,4 +55,4 @@ WORKDIR $APP_DIR
 COPY ./deploy/dotenv/env-docker $APP_DIR/.env
 
 
-CMD python manage.py runserver
+CMD ./deploy/scripts/run.sh
