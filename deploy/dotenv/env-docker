@@ -2,7 +2,7 @@ DEVELOPMENT=1
 STAGING=0
 PRODUCTION=0
 
-DB_HOST='localhost'
+DB_HOST='scidash-postgres'
 DB_PORT=5432
 DB_NAME='scidash'
 DB_USER='scidash_admin'
@@ -10,3 +10,5 @@ DB_PASSWORD='scidash_local_password'
 
 STATIC_URL='/static/'
 STATIC_DIR='static'
+
+REDIS_URL=redis://scidash-redis:6379

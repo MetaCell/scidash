@@ -51,5 +51,7 @@ RUN npm run build-dev-noTest
 
 
 WORKDIR $APP_DIR
+COPY ./deploy/dotenv/env-docker $APP_DIR/.env
+
 
 CMD python manage.py runserver
