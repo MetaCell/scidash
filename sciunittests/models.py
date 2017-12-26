@@ -21,6 +21,7 @@ class TestSuite(models.Model):
 
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
+    url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -49,9 +50,12 @@ class TestInstance(models.Model):
 
 
 class Score(models.Model):
+    _class = models.CharField(max_length=200, default='', null=True,
+            blank=True)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0)
+    score_key = models.FloatField(default=0)
     prediction = models.FloatField(default=0)
     related_data = HStoreField()
     timestamp = models.DateTimeField(default=timezone.now)

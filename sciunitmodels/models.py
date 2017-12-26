@@ -20,6 +20,7 @@ class Capability(models.Model):
 class ModelClass(models.Model):
     class_name = models.CharField(max_length=50)
     capabilities = models.ManyToManyField(Capability)
+    url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Model class'
@@ -34,7 +35,7 @@ class ModelInstance(models.Model):
     attributes = HStoreField()
     name = models.CharField(max_length=50)
     run_params = HStoreField()
-    url = models.URLField()
+    url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Model instance'
