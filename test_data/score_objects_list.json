@@ -24,8 +24,6 @@
     "_class": "ZType_1",
     "test_instance": {
       "description": null,
-      "build_info": "info",
-      "hostname": "hostname",
       "test_suites": [{
         "name": "ReducedSuite_1"
       }],
@@ -66,8 +64,6 @@
     "_class": "ZType",
     "test_instance": {
       "description": null,
-      "build_info": "info",
-      "hostname": "hostname",
       "test_suites": [{
         "name": "ReducedSuite_2"
       }],
@@ -108,8 +104,6 @@
     "_class": "ZType",
     "test_instance": {
       "description": null,
-      "build_info": "info",
-      "hostname": "hostname",
       "test_suites": [{
         "name": "ReducedSuite"
       }],
