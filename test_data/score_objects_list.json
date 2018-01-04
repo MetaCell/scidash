@@ -3,6 +3,7 @@
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel_1",
+        "url": "",
         "capabilities": [
           {
             "class_name": "CanBeReduced_1"
@@ -10,28 +11,70 @@
         ]
       },
       "attributes": {},
-      "name": "Izhikevich_1",
+      "name": "Izhikevich",
       "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Two.xml"
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
     },
     "prediction": 13,
     "related_data": {
       "some_related_key": "and_value"
     },
-    "score": 1.66666666666721,
+    "score": 1.66666666666667,
+    "score_key": 0.738882680363527,
+    "_class": "ZType_1",
     "test_instance": {
       "description": null,
-      "build_info": "info",
-      "hostname": "hostname_1",
       "test_suites": [{
-        "name": "ReducedSuite"
+        "name": "ReducedSuite_1"
       }],
       "test_class": {
-        "class_name": "MyTest"
+        "class_name": "MyTest_1",
+        "url": ""
       },
       "observation": {
         "mean":"8",
-        "std": "3"
+        "std": "3",
+        "url": ""
+      },
+      "verbose": 1
+    }
+  },
+  {
+    "model_instance": {
+      "model_class": {
+        "class_name": "ReducedModel_2",
+        "url": "",
+        "capabilities": [
+          {
+            "class_name": "CanBeReduced_2"
+          }
+        ]
+      },
+      "attributes": {},
+      "name": "Izhikevich",
+      "run_params": {},
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
+    },
+    "prediction": 13,
+    "related_data": {
+      "some_related_key": "and_value"
+    },
+    "score": 1.66666666666667,
+    "score_key": 0.738882680363527,
+    "_class": "ZType",
+    "test_instance": {
+      "description": null,
+      "test_suites": [{
+        "name": "ReducedSuite_2"
+      }],
+      "test_class": {
+        "class_name": "MyTest_2",
+        "url": ""
+      },
+      "observation": {
+        "mean":"8",
+        "std": "3",
+        "url": ""
       },
       "verbose": 1
     }
@@ -40,6 +83,7 @@
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel",
+        "url": "",
         "capabilities": [
           {
             "class_name": "CanBeReduced"
@@ -47,65 +91,30 @@
         ]
       },
       "attributes": {},
-      "name": "Izhikevich_2",
+      "name": "Izhikevich",
       "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Three.xml"
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
     },
     "prediction": 13,
     "related_data": {
       "some_related_key": "and_value"
     },
-    "score": 1.66666666666759,
+    "score": 1.66666666666667,
+    "score_key": 0.738882680363527,
+    "_class": "ZType",
     "test_instance": {
       "description": null,
-      "build_info": "info",
-      "hostname": "hostname_2",
       "test_suites": [{
         "name": "ReducedSuite"
       }],
       "test_class": {
-        "class_name": "MyTest"
+        "class_name": "MyTest",
+        "url": ""
       },
       "observation": {
         "mean":"8",
-        "std": "3"
-      },
-      "verbose": 1
-    }
-  },
-  {
-    "model_instance": {
-      "model_class": {
-        "class_name": "ReducedModel",
-        "capabilities": [
-          {
-            "class_name": "CanBeReduced"
-          }
-        ]
-      },
-      "attributes": {},
-      "name": "Izhikevich_4",
-      "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007Four.xml"
-    },
-    "prediction": 13,
-    "related_data": {
-      "some_related_key": "and_value"
-    },
-    "score": 1.66666666666584,
-    "test_instance": {
-      "description": null,
-      "build_info": "info",
-      "hostname": "hostname_3",
-      "test_suites": [{
-        "name": "ReducedSuite"
-      }],
-      "test_class": {
-        "class_name": "MyTest"
-      },
-      "observation": {
-        "mean":"8",
-        "std": "3"
+        "std": "3",
+        "url": ""
       },
       "verbose": 1
     }

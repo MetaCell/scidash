@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  scidash-redis:
+    image: redis
+  scidash-postgres:
+    image: metacell/scidash-db
+  scidash:
+    image: metacell/scidash
+    ports:
+        - 8000:8000
+
