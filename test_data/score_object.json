@@ -23,8 +23,6 @@
   "_class": "ZType",
   "test_instance": {
     "description": null,
-    "build_info": "info",
-    "hostname": "hostname",
     "test_suites": [{
       "name": "ReducedSuite"
     }],
