@@ -38,8 +38,10 @@ class TestInstance(models.Model):
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default=timezone.now)
-    hostname = models.CharField(max_length=200, default='')
-    build_info = models.CharField(max_length=200, default='')
+    hostname = models.CharField(max_length=200, default='', blank=True,
+            null=True)
+    build_info = models.CharField(max_length=200, default='', blank=True,
+            null=True)
 
     class Meta:
         verbose_name = 'Test instance'

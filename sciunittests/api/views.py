@@ -4,7 +4,8 @@ from sciunittests.serializers import ScoreSerializer, TestInstanceSerializer, \
                                     TestSuiteSerializer, TestClassSerializer
 
 from sciunittests.models import Score, TestInstance, TestSuite, TestClass
-from sciunittests.filters import ScoreFilter, TestSuiteFilter
+from sciunittests.filters import ScoreFilter, TestSuiteFilter, \
+                                TestInstanceFilter
 
 
 class ScoreViewSet(viewsets.ReadOnlyModelViewSet):
@@ -18,6 +19,7 @@ class TestInstanceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TestInstance.objects.all()
     serializer_class = TestInstanceSerializer
     permission_classes = (permissions.AllowAny,)
+    filter_class = TestInstanceFilter
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):

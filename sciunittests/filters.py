@@ -1,5 +1,5 @@
 from django_filters import rest_framework as filters
-from sciunittests.models import Score, TestSuite
+from sciunittests.models import Score, TestSuite, TestInstance
 
 
 class ScoreFilter(filters.FilterSet):
@@ -23,3 +23,10 @@ class TestSuiteFilter(filters.FilterSet):
     class Meta:
         model = TestSuite
         fields = ['owner', 'timestamp_after', 'timestamp_before']
+
+
+class TestInstanceFilter(filters.FilterSet):
+
+    class Meta:
+        model = TestInstance
+        fields = ['hostname']
