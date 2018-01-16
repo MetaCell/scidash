@@ -10,8 +10,14 @@ class ScoreFilter(filters.FilterSet):
 
     class Meta:
         model = Score
-        fields = ['owner', 'model_instance__model_class__class_name',
-                'model_instance', 'timestamp_after', 'timestamp_before']
+        fields = ['owner',
+                'model_instance__model_class__class_name',
+                'test_instance__test_class__class_name',
+                'test_instance__hostname',
+                'test_instance__build_info',
+                '_class',
+                'timestamp_after',
+                'timestamp_before']
 
 
 class TestSuiteFilter(filters.FilterSet):
