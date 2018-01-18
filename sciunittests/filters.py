@@ -16,7 +16,7 @@ class ScoreFilter(filters.FilterSet):
                 'test_instance__test_class__class_name',
                 'test_instance__hostname',
                 'test_instance__build_info',
-                '_class',
+                'score_type',
                 'timestamp_after',
                 'timestamp_before']
 
