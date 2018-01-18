@@ -11,6 +11,7 @@ class ScoreFilter(filters.FilterSet):
     class Meta:
         model = Score
         fields = ['owner',
+                'model_instance',
                 'model_instance__model_class__class_name',
                 'test_instance__test_class__class_name',
                 'test_instance__hostname',
