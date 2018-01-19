@@ -40,6 +40,8 @@ npm install
 npm run build-dev-noTest
 ```
 
+also you should create .env file in the project root, example you can find in folder deploy/dotenv.
+
 **Install SciDash Geppetto Extension**
 
 Clone the Geppetto SciDash extension into the extensions folder

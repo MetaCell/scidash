@@ -69,6 +69,8 @@ class SciunitTestTestCase(TestCase):
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
         self.scrub(parsed_response, 'timestamp')
+        self.scrub(parsed_response, 'build_info')
+        self.scrub(parsed_response, 'hostname')
         self.scrub(parsed_response, 'owner')
         parsed_keys = parsed_response.keys()
 

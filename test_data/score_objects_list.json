@@ -20,8 +20,8 @@
       "some_related_key": "and_value"
     },
     "score": 1.66666666666667,
-    "score_key": 0.738882680363527,
-    "_class": "ZType_1",
+    "sort_key": 0.738882680363527,
+    "score_type": "ZType_1",
     "test_instance": {
       "description": null,
       "test_suites": [{
@@ -60,8 +60,8 @@
       "some_related_key": "and_value"
     },
     "score": 1.66666666666667,
-    "score_key": 0.738882680363527,
-    "_class": "ZType",
+    "sort_key": 0.738882680363527,
+    "score_type": "ZType",
     "test_instance": {
       "description": null,
       "test_suites": [{
@@ -100,8 +100,8 @@
       "some_related_key": "and_value"
     },
     "score": 1.66666666666667,
-    "score_key": 0.738882680363527,
-    "_class": "ZType",
+    "sort_key": 0.738882680363527,
+    "score_type": "ZType",
     "test_instance": {
       "description": null,
       "test_suites": [{

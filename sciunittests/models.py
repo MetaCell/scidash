@@ -52,12 +52,12 @@ class TestInstance(models.Model):
 
 
 class Score(models.Model):
-    _class = models.CharField(max_length=200, default='', null=True,
+    score_type = models.CharField(max_length=200, default='', null=True,
             blank=True)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0)
-    score_key = models.FloatField(default=0)
+    sort_key = models.FloatField(default=0)
     prediction = models.FloatField(default=0)
     related_data = HStoreField()
     timestamp = models.DateTimeField(default=timezone.now)
