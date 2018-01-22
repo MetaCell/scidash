@@ -39,8 +39,12 @@ cd org.geppetto.frontend/src/main/webapp
 npm install
 npm run build-dev-noTest
 ```
+Optional for development to enable dynamic refresh of client code when editing html/js/css:
+```
+npm run build-dev-noTest:watch
+```
 
-also you should create .env file in the project root, example you can find in folder deploy/dotenv.
+Also you should create an .env file in the project root, an example can be found in the folder: deploy/dotenv.
 
 **Install SciDash Geppetto Extension**
 
