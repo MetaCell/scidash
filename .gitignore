@@ -110,3 +110,5 @@ venv.bak/
 
 # OSx system files
 .DS_Store
+
+static/org.geppetto.frontend
