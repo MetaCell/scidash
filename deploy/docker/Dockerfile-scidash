@@ -36,6 +36,12 @@ RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
 RUN apt-get update && apt-get install nodejs
 
+WORKDIR /tmp
+
+RUN git clone https://github.com/MetaCell/pygeppetto-django.git
+WORKDIR pygeppetto-django
+RUN cp ./pygepetto_server $APP_DIR/pygepetto_server
+
 # CLONING FRONTEND
 
 WORKDIR $APP_DIR
