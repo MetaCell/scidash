@@ -59,6 +59,9 @@ class Score(models.Model):
     score = models.FloatField(default=0)
     sort_key = models.FloatField(default=0)
     prediction = models.FloatField(default=0)
+    raw = models.CharField(max_length=200, default=None, blank=True, null=True)
+    summary = models.CharField(max_length=200,
+                               default=None, blank=True, null=True)
     related_data = HStoreField()
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)

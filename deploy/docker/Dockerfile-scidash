@@ -40,7 +40,8 @@ WORKDIR /tmp
 
 RUN git clone https://github.com/MetaCell/pygeppetto-django.git -b development
 WORKDIR pygeppetto-django
-RUN cp ./pygepetto_server $APP_DIR/pygepetto_server
+RUN ls
+RUN cp -r pygeppetto_server $APP_DIR/pygeppetto_server
 
 # CLONING FRONTEND
 
