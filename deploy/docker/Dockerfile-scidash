@@ -4,7 +4,7 @@ FROM python:3
 
 ARG ROOT=/
 ARG APP_DIR=/app
-ARG GEPPETTO_REPO='https://github.com/openworm/org.geppetto.frontend.git -b development-roman'
+ARG GEPPETTO_REPO='https://github.com/openworm/org.geppetto.frontend.git -b development'
 ARG SCIDASH_EXTENSION_REPO='https://github.com/MetaCell/geppetto-scidash.git -b development'
 ARG VENV_PATH=/venv
 ARG DOTENV_FILE=env-docker
