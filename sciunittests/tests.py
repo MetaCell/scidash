@@ -226,7 +226,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         model_class_name = first_element.get('model_instance') \
                                         .get('model_class').get('class_name')
 
-        filtered_url = '{}?model_instance__model_class__class_name={}'.format(
+        filtered_url = '{}?model_class={}'.format(
                 reverse('score-list'),
                 model_class_name
                 )
