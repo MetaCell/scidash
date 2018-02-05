@@ -80,7 +80,7 @@ Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.
 2. Run:
 ```
 # navigate to scidash root folder
-cd scidash
+cd deploy/scripts
 # impersonate postgres user (may not be necessary depending on your access rights)
 su postgres
 # run db creation script located in the scidash folder
