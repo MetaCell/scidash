@@ -3,6 +3,9 @@ from sciunittests.models import Score, TestSuite, TestInstance
 
 
 class ScoreFilter(filters.FilterSet):
+    owner = filters.CharFilter(name='owner__username',
+            lookup_expr='startswith')
+
     timestamp_after = filters.IsoDateTimeFilter(name='timestamp',
             lookup_expr='gte')
 
