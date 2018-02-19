@@ -19,7 +19,7 @@
 		"description": "SciDash is a project that enables the reproducible execution and visualization of data-driven unit test (SciUnit) for assessing model quality.",
 		"type": "website",
 		"url": "http://scidash.github.io/",
-		"icon": "",
-		"image": ""
+		"icon": "http://scidash.github.io/assets/icons/favicon-32x32.png",
+		"image": "http://scidash.github.io/assets/scidash-text.png"
 	}
 }
