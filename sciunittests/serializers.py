@@ -5,9 +5,12 @@ from general.serializers import ScidashUserSerializer
 
 from sciunittests.models import TestClass, TestSuite, TestInstance, Score
 from sciunitmodels.serializers import ModelInstanceSerializer
+from general.mixins import GetByHashOrCreateMixin
 
 
-class TestSuiteSerializer(WritableNestedModelSerializer):
+class TestSuiteSerializer(GetByHashOrCreateMixin,
+        WritableNestedModelSerializer):
+
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
             read_only=True

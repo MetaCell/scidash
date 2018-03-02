@@ -8,6 +8,7 @@ from general import models as general_models
 
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
+    hash = models.CharField(max_length=57, null=True, blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
