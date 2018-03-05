@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.postgres.fields import HStoreField
+from django.contrib.postgres.fields import JSONField, HStoreField
 
 
 # Models Related
@@ -32,9 +32,9 @@ class ModelClass(models.Model):
 
 class ModelInstance(models.Model):
     model_class = models.ForeignKey(ModelClass)
-    attributes = HStoreField()
+    attributes = JSONField()
     name = models.CharField(max_length=50)
-    run_params = HStoreField()
+    run_params = HStoreField(blank=True, null=True)
     url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
