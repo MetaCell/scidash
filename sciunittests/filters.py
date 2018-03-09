@@ -1,3 +1,5 @@
+from django.db.models import Count
+
 from django_filters import rest_framework as filters
 from sciunittests.models import Score, TestSuite, TestInstance
 
@@ -35,6 +37,15 @@ class ScoreFilter(filters.FilterSet):
     build_info = filters.CharFilter(
             name='test_instance__build_info',
             lookup_expr='startswith' )
+
+    with_suites = filters.BooleanFilter(method='with_suites_filter')
+
+    def with_suites_filter(self, queryset, name, value):
+        tests = TestInstance.objects.prefetch_related('test_suites')
+        tests = tests.annotate(Count('test_suites'))
+        tests = tests.filter(test_suites__count__gt=0)
+
+        return queryset.filter(test_instance__in=tests)
 
     class Meta:
         model = Score

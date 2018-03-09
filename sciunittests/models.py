@@ -35,7 +35,7 @@ class TestClass(models.Model):
 class TestInstance(models.Model):
     test_class = models.ForeignKey(TestClass)
     observation = HStoreField()
-    test_suites = models.ManyToManyField(TestSuite)
+    test_suites = models.ManyToManyField(TestSuite, related_name='tests')
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default=timezone.now)
