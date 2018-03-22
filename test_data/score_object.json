@@ -24,6 +24,7 @@
   "test_instance": {
     "description": null,
     "test_suites": [{
+      "hash": "testhash",
       "name": "ReducedSuite"
     }],
     "test_class": {
