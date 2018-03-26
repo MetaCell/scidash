@@ -9,4 +9,7 @@ services:
     image: metacell/scidash
     ports:
         - 8000:8000
+    depends_on:
+        - scidash-redis
+        - scidash-postgres
 
