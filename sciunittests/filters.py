@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Subquery
 
 from django_filters import rest_framework as filters
 from sciunittests.models import Score, TestSuite, TestInstance
@@ -40,12 +40,23 @@ class ScoreFilter(filters.FilterSet):
 
     with_suites = filters.BooleanFilter(method='with_suites_filter')
 
+    by_suite_name = filters.CharFilter(method='by_suite_name_filter')
+
     def with_suites_filter(self, queryset, name, value):
         tests = TestInstance.objects.prefetch_related('test_suites')
         tests = tests.annotate(Count('test_suites'))
         tests = tests.filter(test_suites__count__gt=0)
 
         return queryset.filter(test_instance__in=tests)
+
+    def by_suite_name_filter(self, queryset, name, value):
+        suites = TestSuite.objects.filter(name__startswith=value)
+
+        kwargs = {
+                'test_instance__test_suites__in':Subquery(suites.values('pk'))
+                }
+
+        return queryset.filter(**kwargs)
 
     class Meta:
         model = Score
@@ -56,6 +67,8 @@ class ScoreFilter(filters.FilterSet):
                 'score_name',
                 'hostname',
                 'build_info',
+                'with_suites',
+                'by_suite_name',
                 'score_type',
                 'timestamp_after',
                 'timestamp_before']
