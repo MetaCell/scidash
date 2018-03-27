@@ -67,6 +67,9 @@ class Score(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
+    class Meta:
+        ordering = ['-timestamp']
+
     def __str__(self):
         return "Score for {0} in {1} test instance".format(
             self.model_instance.name,

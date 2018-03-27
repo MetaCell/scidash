@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   scidash-redis:
@@ -8,5 +8,8 @@ services:
   scidash:
     image: metacell/scidash
     ports:
-        - 8000:8000
+        - 80:8000
+    depends_on:
+        - scidash-redis
+        - scidash-postgres
 
