@@ -1,3 +1,5 @@
+import logging
+
 from django.db import models
 from django.contrib.postgres.fields import HStoreField
 from django.utils import timezone
@@ -5,6 +7,7 @@ from django.utils import timezone
 import sciunitmodels
 from general import models as general_models
 
+logger = logging.getLogger(__name__)
 
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
@@ -59,13 +62,26 @@ class Score(models.Model):
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0)
     sort_key = models.FloatField(default=0)
-    prediction = models.FloatField(default=0)
+    prediction_numeric = models.FloatField(default=None, null=True, blank=True)
+    prediction_dict = HStoreField(default=None, null=True, blank=True)
     raw = models.CharField(max_length=200, default=None, blank=True, null=True)
     summary = models.CharField(max_length=200,
                                default=None, blank=True, null=True)
     related_data = HStoreField()
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
+
+    @property
+    def prediction(self):
+        """
+        Alias for prediction, automatically detects type of prediction and
+        returns to corresponding field
+        :returns: dict or float
+        """
+        if self.prediction_numeric is not None:
+            return self.prediction_numeric
+
+        return self.prediction_dict
 
     class Meta:
         ordering = ['-timestamp']
