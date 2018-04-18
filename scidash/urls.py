@@ -40,6 +40,8 @@ router.register(r'test-instances', tests_views.TestInstanceViewSet,
         base_name='test-instance')
 router.register(r'test-suites', tests_views.TestSuiteViewSet,
         base_name='test-suite')
+router.register(r'score-classes', tests_views.ScoreClassViewSet,
+        base_name='score-class')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -3,12 +3,13 @@ from drf_writable_nested import WritableNestedModelSerializer
 
 from general.serializers import ScidashUserSerializer
 
-from sciunittests.models import TestClass, TestSuite, TestInstance, Score
+from sciunittests.models import TestClass, TestSuite, TestInstance, \
+                                ScoreInstance, ScoreClass
 from sciunitmodels.serializers import ModelInstanceSerializer
-from general.mixins import GetByHashOrCreateMixin
+from general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
 
 
-class TestSuiteSerializer(GetByHashOrCreateMixin,
+class TestSuiteSerializer(GetOrCreateMixin,
         WritableNestedModelSerializer):
 
     owner = ScidashUserSerializer(
@@ -21,7 +22,9 @@ class TestSuiteSerializer(GetByHashOrCreateMixin,
         fields = '__all__'
 
 
-class TestClassSerializer(WritableNestedModelSerializer):
+class TestClassSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer):
+    key = 'url'
 
     class Meta:
         model = TestClass
@@ -37,9 +40,20 @@ class TestInstanceSerializer(WritableNestedModelSerializer):
         fields = '__all__'
 
 
-class ScoreSerializer(WritableNestedModelSerializer):
+class ScoreClassSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer):
+
+    key='class_name'
+
+    class Meta:
+        model = ScoreClass
+        fields = '__all__'
+
+
+class ScoreInstanceSerializer(WritableNestedModelSerializer):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
+    score_class = ScoreClassSerializer()
     prediction = serializers.SerializerMethodField()
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
@@ -67,8 +81,8 @@ class ScoreSerializer(WritableNestedModelSerializer):
 
         validated_data.update(data)
 
-        return super(ScoreSerializer, self).create(validated_data)
+        return super(ScoreInstanceSerializer, self).create(validated_data)
 
     class Meta:
-        model = Score
+        model = ScoreInstance
         exclude = ('prediction_dict', 'prediction_numeric', )

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
-from sciunittests.serializers import ScoreSerializer
+from sciunittests.serializers import ScoreInstanceSerializer
 
 
 class FileUploadView(APIView):
@@ -28,7 +28,7 @@ class FileUploadView(APIView):
                             status=400)
 
     def populate_data(self, data, request):
-        score_serializer = ScoreSerializer(data=data,
+        score_serializer = ScoreInstanceSerializer(data=data,
                 context={'request': request})
 
         if score_serializer.is_valid():

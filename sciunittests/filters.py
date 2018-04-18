@@ -1,7 +1,7 @@
 from django.db.models import Count, Subquery
 
 from django_filters import rest_framework as filters
-from sciunittests.models import Score, TestSuite, TestInstance
+from sciunittests.models import ScoreInstance, TestSuite, TestInstance
 
 
 class ScoreFilter(filters.FilterSet):
@@ -59,7 +59,7 @@ class ScoreFilter(filters.FilterSet):
         return queryset.filter(**kwargs)
 
     class Meta:
-        model = Score
+        model = ScoreInstance
         fields = ['owner',
                 'model_instance',
                 'model_class',

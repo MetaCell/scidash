@@ -9,6 +9,7 @@ from general import models as general_models
 
 logger = logging.getLogger(__name__)
 
+
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
     hash = models.CharField(max_length=57, null=True, blank=True)
@@ -55,9 +56,22 @@ class TestInstance(models.Model):
         return "{0} instance".format(self.test_class.class_name)
 
 
-class Score(models.Model):
+class ScoreClass(models.Model):
+    class_name = models.CharField(max_length=200)
+    url = models.URLField()
+
+    class Meta:
+        verbose_name = "Score Class"
+        verbose_name_plural = "Score Classes"
+
+    def __str__(self):
+        return self.class_name
+
+
+class ScoreInstance(models.Model):
     score_type = models.CharField(max_length=200, default='', null=True,
             blank=True)
+    score_class = models.ForeignKey(ScoreClass)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0)

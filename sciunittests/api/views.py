@@ -1,16 +1,20 @@
 from rest_framework import viewsets, permissions
 
-from sciunittests.serializers import ScoreSerializer, TestInstanceSerializer, \
-                                    TestSuiteSerializer, TestClassSerializer
+from sciunittests.serializers import ScoreInstanceSerializer, \
+                                    TestInstanceSerializer, \
+                                    TestSuiteSerializer, TestClassSerializer, \
+                                    ScoreClassSerializer
 
-from sciunittests.models import Score, TestInstance, TestSuite, TestClass
+from sciunittests.models import ScoreInstance, \
+                                    TestInstance, TestSuite, TestClass, \
+                                    ScoreClass
 from sciunittests.filters import ScoreFilter, TestSuiteFilter, \
                                 TestInstanceFilter
 
 
 class ScoreViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Score.objects.all()
-    serializer_class = ScoreSerializer
+    queryset = ScoreInstance.objects.all()
+    serializer_class = ScoreInstanceSerializer
     permission_classes = (permissions.AllowAny,)
     filter_class = ScoreFilter
 
@@ -32,5 +36,11 @@ class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
 class TestClassViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TestClass.objects.all()
     serializer_class = TestClassSerializer
+    permission_classes = (permissions.AllowAny,)
+    filter_fields = ('class_name',)
+
+class ScoreClassViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ScoreClass.objects.all()
+    serializer_class = ScoreClassSerializer
     permission_classes = (permissions.AllowAny,)
     filter_fields = ('class_name',)
