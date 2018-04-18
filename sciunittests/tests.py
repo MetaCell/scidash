@@ -6,8 +6,10 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from general.models import ScidashUser
 
-from sciunittests.serializers import ScoreSerializer
-from sciunittests.models import Score
+from sciunittests.serializers import ScoreInstanceSerializer, \
+                                        TestClassSerializer, \
+                                        ScoreClassSerializer
+from sciunittests.models import ScoreInstance
 
 SAMPLE_OBJECT = os.path.join(os.path.dirname(os.path.dirname(__file__)),
         'test_data/score_object.json')
@@ -30,13 +32,14 @@ class SciunitTestTestCase(TestCase):
         request.user = cls.user
 
         with open(SAMPLE_OBJECT) as f:
-            score_serializer = ScoreSerializer(data=json.loads(f.read()),
+            score_instance_serializer = ScoreInstanceSerializer(
+                    data=json.loads(f.read()),
                     context={'request': request})
 
-        if score_serializer.is_valid():
-            score_serializer.save()
+        if score_instance_serializer.is_valid():
+            score_instance_serializer.save()
         else:
-            print(score_serializer.errors)
+            print(score_instance_serializer.errors)
 
     def scrub(self, obj, bad='_this_is_bad'):
         if isinstance(obj, dict):
@@ -167,13 +170,13 @@ class SciunitTestFiltersScoreTestCase(TestCase):
             objects_list = json.loads(f.read())
 
         for item in objects_list:
-            score_serializer = ScoreSerializer(data=item,
+            score_instance_serializer = ScoreInstanceSerializer(data=item,
                     context={'request': request})
 
-            if score_serializer.is_valid():
-                score_serializer.save()
+            if score_instance_serializer.is_valid():
+                score_instance_serializer.save()
             else:
-                print(score_serializer.errors)
+                print(score_instance_serializer.errors)
 
     def test_scores_endpoint_filters_get_by_id(self):
         client = Client()
@@ -222,7 +225,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         parsed_response = response.json()
-        first_element = parsed_response[0]
+        first_element = parsed_response[2]
         model_class_name = first_element.get('model_instance') \
                                         .get('model_class').get('class_name')
 
@@ -271,7 +274,8 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         parsed_response = response.json()
         first_element = parsed_response[0]
 
-        timestamp = Score.objects.get(pk=first_element.get('id')).timestamp
+        timestamp = ScoreInstance.objects.get(
+                pk=first_element.get('id')).timestamp
 
         filtered_url = '{}?timestamp_before={}'.format(
                 reverse('score-list'),
@@ -320,13 +324,13 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
             objects_list = json.loads(f.read())
 
         for item in objects_list:
-            score_serializer = ScoreSerializer(data=item,
+            score_instance_serializer = ScoreInstanceSerializer(data=item,
                     context={'request': request})
 
-            if score_serializer.is_valid():
-                score_serializer.save()
+            if score_instance_serializer.is_valid():
+                score_instance_serializer.save()
             else:
-                print(score_serializer.errors)
+                print(score_instance_serializer.errors)
 
     def test_test_suite_endpoint_filters_get_by_id(self):
         client = Client()
@@ -358,7 +362,8 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         owner = first_element.get('owner')
         owner_id = owner.get('id')
 
-        filtered_url = '{}?owner={}'.format(reverse('test-suite-list'), owner_id)
+        filtered_url = '{}?owner={}'.format(reverse('test-suite-list'),
+                owner_id)
 
         response = client.get(filtered_url)
 
@@ -377,7 +382,8 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         parsed_response = response.json()
         first_element = parsed_response[0]
 
-        timestamp = Score.objects.get(pk=first_element.get('id')).timestamp
+        timestamp = ScoreInstance.objects.get(
+                pk=first_element.get('id')).timestamp
 
         filtered_url = '{}?timestamp_before={}'.format(
                 reverse('test-suite-list'),
@@ -407,3 +413,67 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         parsed_response = response.json()
 
         self.assertTrue(len(parsed_response) > 1)
+
+
+class SciunitTestMatchingClassObjects(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super(SciunitTestMatchingClassObjects, cls).setUpClass()
+
+        cls.test_class = {
+                "class_name": "TestModelClass",
+                "url": "http://test-class.url"
+                }
+
+        cls.score_class = {
+                "class_name": "TestScoreClass",
+                "url": "http://test-class.url"
+                }
+
+        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
+                'montecarlo')
+
+    def test_is_test_class_match_the_same_object(self):
+        client = Client()
+        client.force_login(self.user)
+
+        test_class_serializer = TestClassSerializer(data=self.test_class)
+
+        if test_class_serializer.is_valid():
+            test_class_serializer.save()
+
+        test_class_serializer = None
+        test_class_serializer = TestClassSerializer(data=self.test_class)
+
+        if test_class_serializer.is_valid():
+            test_class_serializer.save()
+
+        response = client.get(reverse('test-class-list'))
+
+        self.assertEqual(response.status_code, 200)
+        parsed_response = response.json()
+
+        self.assertEqual(len(parsed_response), 1)
+
+    def test_is_score_class_match_the_same_object(self):
+        client = Client()
+        client.force_login(self.user)
+
+        score_class_serializer = ScoreClassSerializer(data=self.score_class)
+
+        if score_class_serializer.is_valid():
+            score_class_serializer.save()
+
+        score_class_serializer = None
+        score_class_serializer = ScoreClassSerializer(data=self.score_class)
+
+        if score_class_serializer.is_valid():
+            score_class_serializer.save()
+
+        response = client.get(reverse('score-class-list'))
+
+        self.assertEqual(response.status_code, 200)
+        parsed_response = response.json()
+
+        self.assertEqual(len(parsed_response), 1)

@@ -5,7 +5,8 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from general.models import ScidashUser
 
-from sciunittests.serializers import ScoreSerializer
+from sciunittests.serializers import ScoreInstanceSerializer
+from sciunitmodels.serializers import ModelClassSerializer
 
 SAMPLE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)),
         'test_data/score_object.json')
@@ -25,7 +26,8 @@ class SciunitModelTestCase(TestCase):
         request.user = cls.user
 
         with open(SAMPLE_FILE) as f:
-            score_serializer = ScoreSerializer(data=json.loads(f.read()),
+            score_serializer = ScoreInstanceSerializer(
+                    data=json.loads(f.read()),
                     context={'request': request})
 
         if score_serializer.is_valid():
@@ -108,3 +110,45 @@ class SciunitModelTestCase(TestCase):
             self.assertTrue(key in parsed_response)
             self.assertEqual(model_instance_data.get(key),
                     parsed_response.get(key))
+
+
+class SciunitModelMatchingClassObjects(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super(SciunitModelMatchingClassObjects, cls).setUpClass()
+
+        cls.model_class = {
+                "class_name": "ScoreModelClass",
+                "capabilities": [
+                    {
+                    "class_name": "TestCapability"
+                        }
+                    ],
+                "url": "http://test-score.url"
+                }
+
+        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
+                'montecarlo')
+
+    def test_is_model_class_match_the_same_object(self):
+        client = Client()
+        client.force_login(self.user)
+
+        model_class_serializer = ModelClassSerializer(data=self.model_class)
+
+        if model_class_serializer.is_valid():
+            model_class_serializer.save()
+
+        model_class_serializer = None
+        model_class_serializer = ModelClassSerializer(data=self.model_class)
+
+        if model_class_serializer.is_valid():
+            model_class_serializer.save()
+
+        response = client.get(reverse('model-class-list'))
+
+        self.assertEqual(response.status_code, 200)
+        parsed_response = response.json()
+
+        self.assertEqual(len(parsed_response), 1)

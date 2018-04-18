@@ -1,5 +1,6 @@
 [
   {
+    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel_1",
@@ -13,7 +14,8 @@
       "attributes": {},
       "name": "Izhikevich",
       "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
+      "backend": "JNeuroML"
     },
     "prediction": 13,
     "related_data": {
@@ -41,6 +43,7 @@
     }
   },
   {
+    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel_2",
@@ -54,7 +57,8 @@
       "attributes": {},
       "name": "Izhikevich",
       "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
+      "backend": "JNeuroML"
     },
     "prediction": 13,
     "related_data": {
@@ -82,6 +86,7 @@
     }
   },
   {
+    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel",
@@ -95,7 +100,8 @@
       "attributes": {},
       "name": "Izhikevich",
       "run_params": {},
-      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml"
+      "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
+      "backend": "JNeuroML"
     },
     "prediction": 13,
     "related_data": {
