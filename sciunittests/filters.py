@@ -6,7 +6,7 @@ from sciunittests.models import ScoreInstance, TestSuite, TestInstance
 
 class ScoreFilter(filters.FilterSet):
     owner = filters.CharFilter(name='owner__username',
-            lookup_expr='startswith')
+            lookup_expr='contains')
 
     timestamp_after = filters.IsoDateTimeFilter(name='timestamp',
             lookup_expr='gte')
@@ -16,27 +16,27 @@ class ScoreFilter(filters.FilterSet):
 
     model_class = filters.CharFilter(
             name='model_instance__model_class__class_name',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     test_class = filters.CharFilter(
             name='test_instance__test_class__class_name',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     hostname = filters.CharFilter(
             name='test_instance__hostname',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     score_name = filters.CharFilter(
             name='test_instance__test_class__class_name',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     score_type = filters.CharFilter(
             name='score_type',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     build_info = filters.CharFilter(
             name='test_instance__build_info',
-            lookup_expr='startswith' )
+            lookup_expr='contains' )
 
     with_suites = filters.BooleanFilter(method='with_suites_filter')
 
@@ -50,7 +50,7 @@ class ScoreFilter(filters.FilterSet):
         return queryset.filter(test_instance__in=tests)
 
     def by_suite_name_filter(self, queryset, name, value):
-        suites = TestSuite.objects.filter(name__startswith=value)
+        suites = TestSuite.objects.filter(name__contains=value)
 
         kwargs = {
                 'test_instance__test_suites__in':Subquery(suites.values('pk'))
