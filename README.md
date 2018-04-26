@@ -157,14 +157,3 @@ This module implements the basic functionality to start a Python Geppetto Instan
     'rest_framework',
     ]
     ```
-
-## Available API filters
-
-1. `/api/<resource>/<id>` - get any entity by id
-2. `/api/scores/?owner=<owner_id>` - get test scores by owner
-3. `/api/scores/?model_instance=<model_instance_id>` - get test scores by model (id)
-4. `/api/scores/?model_instance__model_class__class_name=<class_name>` - get test scores by model (name)
-5. `/api/test-suites/?owner=<owner_id>` - get test suites by owner
-6. `/api/test-suites/?model_instance=<model_instance_id>` - get test test-suites by model (id)
-7. `/api/test_suites/?model_instance__model_class__class_name=<class_name>` - get test test_suites by model (name)
-8. `/api/scores|test-suites/?timestamp_0=<from_date>&timestamp_1=<to_date>` - start/end date range, will be modified with future release of django-filter
