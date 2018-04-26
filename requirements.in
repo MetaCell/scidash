@@ -1,0 +1,10 @@
+psycopg2
+django
+channels==1.1.8
+asgi-redis==1.4.3
+djangorestframework==3.7.1
+drf-writable-nested
+django-filter
+djangorestframework-jwt
+django-extensions
+django-dotenv
