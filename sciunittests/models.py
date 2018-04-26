@@ -58,7 +58,7 @@ class TestInstance(models.Model):
 
 class ScoreClass(models.Model):
     class_name = models.CharField(max_length=200)
-    url = models.URLField()
+    url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
         verbose_name = "Score Class"
