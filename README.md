@@ -57,20 +57,29 @@ git clone https://github.com/MetaCell/geppetto-scidash.git
 Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.geppetto.frontend/blob/master/src/main/webapp/GeppettoConfiguration.json) to look like this:
 ```
 {
-    "_README" : "http://docs.geppetto.org/en/latest/build.html",
-    "contextPath": "org.geppetto.frontend",
-    "useSsl": false,
-    "embedded": false,
-    "embedderURL": ["/"],
-    "noTest": false,
-    "extensions": {
-        "geppetto-default/ComponentsInitialization": false,
-        "geppetto-scidash/ComponentsInitialization": true
-    },
-    "themes": {
-        "geppetto-default/colors": false,
-        "geppetto-scidash/styles/colors": true
-    }
+	"_README": "http://docs.geppetto.org/en/latest/build.html",
+	"contextPath": "org.geppetto.frontend",
+	"useSsl": false,
+	"embedded": false,
+	"embedderURL": ["/"],
+	"rootRedirect": "",
+	"noTest": false,
+	"extensions": {
+		"geppetto-default/ComponentsInitialization": false,
+		"geppetto-scidash/ComponentsInitialization": true
+	},
+	"themes": {
+		"geppetto-default/colors": false,
+		"geppetto-scidash/styles/colors": true
+	},
+	"properties": {
+		"title": "SciDash",
+		"description": "SciDash is a project that enables the reproducible execution and visualization of data-driven unit test for assessing model quality.",
+		"type": "website",
+		"url": "http://scidash.github.io/",
+		"icon": "http://scidash.github.io/assets/icons/favicon-32x32.png",
+		"image": "http://scidash.github.io/assets/scidash-text.png"
+	}
 }
 ```
 
@@ -96,64 +105,3 @@ python manage.py runserver
 ```
 
 Go to http://localhost:8000/ and enjoy!
-
-## How to develop
-
-Any change you make in the python code will be automatically redeployed by the Django server.
-
-JS/HTML code can be found inside `static/org.geppetto.frontend/src/main/webapp/`. The code needs to be rebuilt with webpack everytime there is a change. The recommended way is to run in `/static/org.geppetto.frontend/src/main/webapp/` this command:
-```
-npm run build-dev-noTest:watch
-```
-
-Additionally, if you want to extend the Geppetto core functionality, have a look at https://github.com/MetaCell/pygeppetto-django repo. README describes how to install pygeppetto_server in development mode and modify the code.
-
-## Features
-
-**How to develop a RESTFUL API**
-
-An example of a very simple REST API is provided together with this skeleton. You will find it at the 'api' folder.
-
-The routing happens at urls.py:
-```
-from api import views
-
-urlpatterns = [
-    ...
-    url(r'^api/people/', views.people)
-]
-```
-
-Inside api.views a very simple webservice answering GET and POST request has been implemented.
-
-This REST API, at the moment, is not connected to any database. If you want to have a database have a look at the 'What is missing?' section below and then follow any tutorial regarding the Django Rest Framework(https://realpython.com/blog/python/django-rest-framework-quick-start/ or https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django are very good options).
-
-**How to extend Geppetto Websockets**
-
-**Integration with pygeppetto-django**
-This module implements the basic functionality to start a Python Geppetto Instance. To integrate pygeppetto-django module, the following actions have been performed:
-
-- Add "pygeppetto_server" to your INSTALLED_APPS setting (settings.py) like this::
-    ```
-    INSTALLED_APPS = [
-        ...
-        'pygeppetto_server',
-    ]
-    ```
-
-- Include the pygeppetto_server URLconf in your project urls.py like this::
-    ```
-    url(r'^', include('pygeppetto_server.urls')),
-    ```
-- Add routing for the sockest like this:
-    ```
-    include('pygeppetto_server.routing.server_routing', path=r"^/org.geppetto.frontend/Geppetto"),
-    ```
-- Add channels and rest framework application to your INSTALLED_APPS setting (settings.py) like this::
-    ```
-    INSTALLED_APPS = [
-        ...
-    'channels',
-    'rest_framework',
-    ]
-    ```
