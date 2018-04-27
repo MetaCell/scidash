@@ -54,7 +54,7 @@ cd org.geppetto.frontend/src/main/webapp/extensions
 git clone https://github.com/MetaCell/geppetto-scidash.git
 ```
 
-Then manually edit [GeppettoConfiguration.json](https://github.com/openworm/org.geppetto.frontend/blob/master/src/main/webapp/GeppettoConfiguration.json) to look like this:
+Then edit [GeppettoConfiguration.json](https://github.com/openworm/org.geppetto.frontend/blob/master/src/main/webapp/GeppettoConfiguration.json) to look like this:
 ```
 {
 	"_README": "http://docs.geppetto.org/en/latest/build.html",
