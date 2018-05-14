@@ -26,7 +26,7 @@ class TestSuite(models.Model):
 
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
-    url = models.URLField(default='', null=True, blank=True)
+    url = models.URLField(default='', null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -43,6 +43,7 @@ class TestInstance(models.Model):
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default=timezone.now)
+    hash_id = models.CharField(max_length=100, unique=True)
     hostname = models.CharField(max_length=200, default='', blank=True,
             null=True)
     build_info = models.CharField(max_length=200, default='', blank=True,

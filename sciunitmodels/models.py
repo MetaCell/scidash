@@ -20,7 +20,7 @@ class Capability(models.Model):
 class ModelClass(models.Model):
     class_name = models.CharField(max_length=50)
     capabilities = models.ManyToManyField(Capability)
-    url = models.URLField(default='', null=True, blank=True)
+    url = models.URLField(default='', null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Model class'
@@ -36,6 +36,7 @@ class ModelInstance(models.Model):
     attributes = JSONField()
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
+    hash_id = models.CharField(max_length=100, unique=True)
     url = models.URLField(default='', null=True, blank=True)
 
     class Meta:

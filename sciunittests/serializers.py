@@ -25,15 +25,20 @@ class TestSuiteSerializer(GetOrCreateMixin,
 class TestClassSerializer(GetByKeyOrCreateMixin,
         WritableNestedModelSerializer):
     key = 'url'
+    url = serializers.CharField(validators=[])
 
     class Meta:
         model = TestClass
         fields = '__all__'
 
 
-class TestInstanceSerializer(WritableNestedModelSerializer):
+class TestInstanceSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer):
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
+    hash_id = serializers.CharField(validators=[])
+
+    key = 'hash_id'
 
     class Meta:
         model = TestInstance
@@ -43,7 +48,7 @@ class TestInstanceSerializer(WritableNestedModelSerializer):
 class ScoreClassSerializer(GetByKeyOrCreateMixin,
         WritableNestedModelSerializer):
 
-    key='class_name'
+    key = 'class_name'
 
     class Meta:
         model = ScoreClass
