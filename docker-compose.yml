@@ -6,7 +6,7 @@ services:
   scidash-postgres:
     image: metacell/scidash-db
   scidash:
-    image: metacell/scidash:1.1.0
+    image: metacell/scidash:1.2.0
     ports:
         - 80:8000
     depends_on:
