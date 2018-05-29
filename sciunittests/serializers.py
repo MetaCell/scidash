@@ -55,7 +55,8 @@ class ScoreClassSerializer(GetByKeyOrCreateMixin,
         fields = '__all__'
 
 
-class ScoreInstanceSerializer(WritableNestedModelSerializer):
+class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
     score_class = ScoreClassSerializer()
@@ -64,6 +65,8 @@ class ScoreInstanceSerializer(WritableNestedModelSerializer):
             default=serializers.CurrentUserDefault(),
             read_only=True
             )
+
+    key = 'hash_id'
 
     def get_prediction(self, obj):
         if obj.prediction_numeric is not None:
