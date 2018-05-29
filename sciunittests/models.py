@@ -80,6 +80,7 @@ class ScoreInstance(models.Model):
     prediction_numeric = models.FloatField(default=None, null=True, blank=True)
     prediction_dict = HStoreField(default=None, null=True, blank=True)
     raw = models.CharField(max_length=200, default=None, blank=True, null=True)
+    hash_id = models.CharField(max_length=100, unique=True)
     summary = models.CharField(max_length=200,
                                default=None, blank=True, null=True)
     related_data = HStoreField()
