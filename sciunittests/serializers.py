@@ -61,6 +61,7 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
     model_instance = ModelInstanceSerializer()
     score_class = ScoreClassSerializer()
     prediction = serializers.SerializerMethodField()
+    hash_id = serializers.CharField(validators=[])
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
             read_only=True
