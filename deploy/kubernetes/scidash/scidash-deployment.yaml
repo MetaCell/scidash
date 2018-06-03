@@ -15,25 +15,5 @@ spec:
       - name: scidash
         image: r.cfcr.io/tarelli/metacell/scidash:development
         imagePullPolicy: Always
-        env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: scidash-db
-                  key: username
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: scidash-db
-                  key: password
         ports:
         - containerPort: 8000
-
-        volumeMounts:
-        - name: scidash-db
-          mountPath: /scidash-db
-
-        volumes:
-        - name: scidash-db
-            secret:
-              secretName: scidash-db
