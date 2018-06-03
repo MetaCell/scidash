@@ -1,0 +1,13 @@
+kind: Service
+metadata:
+  name: scidash-db-balancer
+  labels:
+    app: scidash-db-balancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    app: scidash-dev
+# [END service]

@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scidash-dev
+  labels:
+    app: scidash-dev
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: scidash-dev
+    spec:
+      containers:
+      - name: scidash
+        image: r.cfcr.io/tarelli/metacell/scidash:development
+        imagePullPolicy: Always
+        env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: scidash-db
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scidash-db
+                  key: password
+            - name: DB_NAME
+              value: scidash
+            - name: DB_HOST
+              value: localhost
+            - name: DB_PORT
+              value: "5432"
+        ports:
+        - containerPort: 8000
+
+        volumeMounts:
+          - name: scidash-db
+            mountPath: /scidash-db
+
+      volumes:
+        - name: cloudsql
+            secret:
+              secretName: cloudsql

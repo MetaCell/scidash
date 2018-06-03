@@ -1,5 +1,4 @@
 DEVELOPMENT=1
-STAGING=0
 PRODUCTION=0
 
 DB_HOST='scidash-postgres'
