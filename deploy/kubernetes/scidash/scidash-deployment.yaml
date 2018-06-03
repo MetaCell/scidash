@@ -26,12 +26,6 @@ spec:
                 secretKeyRef:
                   name: scidash-db
                   key: password
-            - name: DB_NAME
-              value: scidash
-            - name: DB_HOST
-              value: localhost
-            - name: DB_PORT
-              value: "5432"
         ports:
         - containerPort: 8000
 
