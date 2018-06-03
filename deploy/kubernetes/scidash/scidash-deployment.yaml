@@ -19,16 +19,16 @@ spec:
         - containerPort: 8000
 
         env:
-          name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: scidash-secret
-              key: DB_USER
-          name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: scidash-secret
-              key: DB_PASSWORD
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_PASSWORD
 
       - name: scidash-redis
         image: redis
@@ -36,7 +36,7 @@ spec:
         ports:
         - containerPort: 6379
 
-    volumes:
-      - name: scidash-secret
-        secret:
-          secretName: scidash-secret
+      volumes:
+        - name: scidash-secret
+          secret:
+            secretName: scidash-secret
