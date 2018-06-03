@@ -18,11 +18,6 @@ spec:
         ports:
         - containerPort: 8000
 
-        volumeMounts:
-          name: scidash-secret
-          mountPath: "/scidash-secret"
-          readOnly: true
-
         env:
           name: DB_USER
           valueFrom:
