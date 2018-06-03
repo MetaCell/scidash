@@ -17,3 +17,31 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+
+        volumeMounts:
+          name: scidash-secret
+          mountPath: "/scidash-secret"
+          readOnly: true
+
+        env:
+          name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: scidash-secret
+              key: DB_USER
+          name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: scidash-secret
+              key: DB_PASSWORD
+
+      - name: scidash-redis
+        image: redis
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379
+
+    volumes:
+      - name: scidash-secret
+        secret:
+          secretName: scidash-secret
