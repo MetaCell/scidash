@@ -33,7 +33,7 @@ spec:
         - name: scidash-db
           mountPath: /scidash-db
 
-    volumes:
-    - name: scidash-db
-        secret:
-          secretName: scidash-db
+        volumes:
+        - name: scidash-db
+            secret:
+              secretName: scidash-db
