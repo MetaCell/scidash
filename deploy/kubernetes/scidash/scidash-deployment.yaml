@@ -23,11 +23,27 @@ spec:
       containers:
 
       - image: r.cfcr.io/tarelli/metacell/scidash:deployment
-        imagePullPolicy: Always
+        imagepullpolicy: always
         name: scidash
         ports:
         - containerPort: 8000
           protocol: TCP
+
+        env:
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_PASSWORD
+
+        volumeMounts:
+          name: scidash-secret
+          mountPath: /scidash-secret
 
       - image: redis
         imagePullPolicy: Always
