@@ -1,15 +1,15 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: scidash-dev
+  name: scidash
   labels:
-    app: scidash-dev
+    app: scidash
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: scidash-dev
+        app: scidash
     spec:
       containers:
       - name: scidash
