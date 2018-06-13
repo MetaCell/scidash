@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
+from rest_framework_cache.registry import cache_registry
+from rest_framework_cache.serializers import CachedSerializerMixin
 
 from general.serializers import ScidashUserSerializer
 
@@ -56,7 +58,9 @@ class ScoreClassSerializer(GetByKeyOrCreateMixin,
 
 
 class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
     score_class = ScoreClassSerializer()
@@ -95,3 +99,6 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
     class Meta:
         model = ScoreInstance
         exclude = ('prediction_dict', 'prediction_numeric', )
+
+
+cache_registry.register(ScoreInstanceSerializer)
