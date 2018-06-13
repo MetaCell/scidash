@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: scidash
+  name: scidash
+  namespace: scidash-testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scidash
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: scidash
+    spec:
+      containers:
+
+      - image: r.cfcr.io/tarelli/metacell/scidash:latest
+        imagePullPolicy: Always
+        name: scidash
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+
+        env:
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: scidash-secret
+                key: DB_PASSWORD
+
+        volumeMounts:
+          - name: scidash-secret
+            mountPath: /scidash-secret
+
+      - image: redis
+        imagePullPolicy: Always
+        name: scidash-redis
+        ports:
+        - containerPort: 6379
+
+      volumes:
+        - name: scidash-secret
+          secret:
+            secretName: scidash-secret
+
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
+      restartPolicy: Always
