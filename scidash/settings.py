@@ -50,7 +50,8 @@ THIRD_PARTY_APPS = [
     'channels',
     'rest_framework',
     'django_extensions',
-    'django_filters'
+    'django_filters',
+    'rest_framework_cache',
 ]
 
 SCIDASH_APPS = [
@@ -185,4 +186,8 @@ JWT_AUTH = {
     # this is the maximum time AFTER the token was issued that
     # it can be refreshed.  exprired tokens can't be refreshed.
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+REST_FRAMEWORK_CACHE = {
+    'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
 }
