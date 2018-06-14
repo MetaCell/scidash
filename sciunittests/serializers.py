@@ -12,7 +12,9 @@ from general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
 
 
 class TestSuiteSerializer(GetOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
 
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
@@ -25,7 +27,9 @@ class TestSuiteSerializer(GetOrCreateMixin,
 
 
 class TestClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     key = 'url'
     url = serializers.CharField(validators=[])
 
@@ -35,7 +39,9 @@ class TestClassSerializer(GetByKeyOrCreateMixin,
 
 
 class TestInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
     hash_id = serializers.CharField(validators=[])
@@ -48,7 +54,9 @@ class TestInstanceSerializer(GetByKeyOrCreateMixin,
 
 
 class ScoreClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
 
     key = 'class_name'
 
@@ -102,3 +110,7 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
 
 
 cache_registry.register(ScoreInstanceSerializer)
+cache_registry.register(ScoreClassSerializer)
+cache_registry.register(TestClassSerializer)
+cache_registry.register(TestInstanceSerializer)
+cache_registry.register(TestSuiteSerializer)
