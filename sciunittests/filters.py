@@ -8,13 +8,13 @@ class ScoreFilter(filters.FilterSet):
     owner = filters.CharFilter(name='owner__username',
             lookup_expr='contains')
 
-    timestamp_after = filters.IsoDateTimeFilter(name='timestamp',
+    timestamp_from = filters.IsoDateTimeFilter(name='timestamp',
             lookup_expr='gte')
 
-    timestamp_before = filters.IsoDateTimeFilter(name='timestamp',
+    timestamp_to = filters.IsoDateTimeFilter(name='timestamp',
             lookup_expr='lte')
 
-    model_name = filters.CharFilter(method='model_class_name_filter')
+    model = filters.CharFilter(method='model_class_name_filter')
 
     test_class = filters.CharFilter(
             name='test_instance__test_class__class_name',
@@ -24,7 +24,7 @@ class ScoreFilter(filters.FilterSet):
             name='test_instance__hostname',
             lookup_expr='contains')
 
-    score_name = filters.CharFilter(
+    name = filters.CharFilter(
             name='test_instance__test_class__class_name',
             lookup_expr='contains')
 
@@ -77,17 +77,17 @@ class ScoreFilter(filters.FilterSet):
         model = ScoreInstance
         fields = ['owner',
                 'model_instance',
-                'model_name',
+                'model',
                 'test_class',
-                'score_name',
+                'name',
                 'hostname',
                 'build_info',
                 'with_suites',
                 'suite_name',
                 'suite_hash',
                 'score_type',
-                'timestamp_after',
-                'timestamp_before']
+                'timestamp_from',
+                'timestamp_to']
 
 
 class TestSuiteFilter(filters.FilterSet):

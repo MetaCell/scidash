@@ -1,12 +1,16 @@
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
+from rest_framework_cache.serializers import CachedSerializerMixin
+from rest_framework_cache.registry import cache_registry
 
 from sciunitmodels.models import Capability, ModelClass, ModelInstance
 from general.mixins import GetByKeyOrCreateMixin
 
 
 class CapabilitySerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
 
     key = 'class_name'
 
@@ -16,7 +20,9 @@ class CapabilitySerializer(GetByKeyOrCreateMixin,
 
 
 class ModelClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     key = 'url'
     url = serializers.CharField(validators=[])
 
@@ -28,7 +34,9 @@ class ModelClassSerializer(GetByKeyOrCreateMixin,
 
 
 class ModelInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     model_class = ModelClassSerializer()
     hash_id = serializers.CharField(validators=[])
 
@@ -37,3 +45,7 @@ class ModelInstanceSerializer(GetByKeyOrCreateMixin,
     class Meta:
         model = ModelInstance
         fields = '__all__'
+
+cache_registry.register(CapabilitySerializer)
+cache_registry.register(ModelClassSerializer)
+cache_registry.register(ModelInstanceSerializer)
