@@ -229,7 +229,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         model_class_name = first_element.get('model_instance') \
                                         .get('model_class').get('class_name')
 
-        filtered_url = '{}?model_class={}'.format(
+        filtered_url = '{}?model={}'.format(
                 reverse('score-list'),
                 model_class_name
                 )
@@ -277,7 +277,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         timestamp = ScoreInstance.objects.get(
                 pk=first_element.get('id')).timestamp
 
-        filtered_url = '{}?timestamp_before={}'.format(
+        filtered_url = '{}?timestamp_to={}'.format(
                 reverse('score-list'),
                 (timestamp - timedelta(1)).isoformat()
                 )
@@ -286,7 +286,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
-        filtered_url = '{}?timestamp_after={}'.format(
+        filtered_url = '{}?timestamp_from={}'.format(
                 reverse('score-list'),
                 (timestamp + timedelta(1)).isoformat()
                 )
@@ -295,7 +295,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
-        filtered_url = '{}?timestamp_after={}&timestamp_before={}'.format(
+        filtered_url = '{}?timestamp_from={}&timestamp_to={}'.format(
                 reverse('score-list'),
                 (timestamp - timedelta(0, 3600)).isoformat(),
                 (timestamp + timedelta(0, 3600)).isoformat()

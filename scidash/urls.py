@@ -21,6 +21,9 @@ from sciunittests.api import views as tests_views
 
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_cache.registry import cache_registry
+
+cache_registry.autodiscover()
 
 router = DefaultRouter()
 # Models Views

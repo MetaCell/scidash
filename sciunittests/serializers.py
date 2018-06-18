@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
+from rest_framework_cache.registry import cache_registry
+from rest_framework_cache.serializers import CachedSerializerMixin
 
 from general.serializers import ScidashUserSerializer
 
@@ -10,7 +12,9 @@ from general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
 
 
 class TestSuiteSerializer(GetOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
 
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
@@ -23,17 +27,26 @@ class TestSuiteSerializer(GetOrCreateMixin,
 
 
 class TestClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     key = 'url'
+    url = serializers.CharField(validators=[])
 
     class Meta:
         model = TestClass
         fields = '__all__'
 
 
-class TestInstanceSerializer(WritableNestedModelSerializer):
+class TestInstanceSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
+    hash_id = serializers.CharField(validators=[])
+
+    key = 'hash_id'
 
     class Meta:
         model = TestInstance
@@ -41,24 +54,32 @@ class TestInstanceSerializer(WritableNestedModelSerializer):
 
 
 class ScoreClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer):
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
 
-    key='class_name'
+    key = 'class_name'
 
     class Meta:
         model = ScoreClass
         fields = '__all__'
 
 
-class ScoreInstanceSerializer(WritableNestedModelSerializer):
+class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
+        WritableNestedModelSerializer,
+        CachedSerializerMixin
+        ):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
     score_class = ScoreClassSerializer()
     prediction = serializers.SerializerMethodField()
+    hash_id = serializers.CharField(validators=[])
     owner = ScidashUserSerializer(
             default=serializers.CurrentUserDefault(),
             read_only=True
             )
+
+    key = 'hash_id'
 
     def get_prediction(self, obj):
         if obj.prediction_numeric is not None:
@@ -86,3 +107,10 @@ class ScoreInstanceSerializer(WritableNestedModelSerializer):
     class Meta:
         model = ScoreInstance
         exclude = ('prediction_dict', 'prediction_numeric', )
+
+
+cache_registry.register(ScoreInstanceSerializer)
+cache_registry.register(ScoreClassSerializer)
+cache_registry.register(TestClassSerializer)
+cache_registry.register(TestInstanceSerializer)
+cache_registry.register(TestSuiteSerializer)
