@@ -26,7 +26,7 @@ class TestSuite(models.Model):
 
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
-    url = models.URLField(default='', null=True, blank=True, unique=True)
+    url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -43,7 +43,7 @@ class TestInstance(models.Model):
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
     timestamp = models.DateTimeField(default=timezone.now)
-    hash_id = models.CharField(max_length=100, unique=True)
+    hash_id = models.CharField(max_length=100)
     hostname = models.CharField(max_length=200, default='', blank=True,
             null=True)
     build_info = models.CharField(max_length=200, default='', blank=True,
@@ -80,7 +80,7 @@ class ScoreInstance(models.Model):
     prediction_numeric = models.FloatField(default=None, null=True, blank=True)
     prediction_dict = HStoreField(default=None, null=True, blank=True)
     raw = models.CharField(max_length=200, default=None, blank=True, null=True)
-    hash_id = models.CharField(max_length=100, unique=True)
+    hash_id = models.CharField(max_length=100)
     summary = models.CharField(max_length=200,
                                default=None, blank=True, null=True)
     related_data = HStoreField()
