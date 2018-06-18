@@ -4,7 +4,7 @@ services:
   scidash-redis:
     image: redis
   scidash-postgres:
-    image: metacell/scidash-db:2.0.0
+    image: metacell/scidash-db
   scidash:
     image: metacell/scidash:2.0.0
     ports:
