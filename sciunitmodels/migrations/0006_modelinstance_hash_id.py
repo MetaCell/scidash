@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='modelinstance',
             name='hash_id',
-            field=models.CharField(default=None, max_length=100, unique=True),
+            field=models.CharField(default='legacy_hashid', max_length=100, unique=True),
             preserve_default=False,
         ),
     ]
