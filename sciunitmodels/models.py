@@ -36,7 +36,7 @@ class ModelInstance(models.Model):
     attributes = JSONField()
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
-    hash_id = models.CharField(max_length=100, unique=True)
+    hash_id = models.CharField(max_length=100)
     url = models.URLField(default='', null=True, blank=True)
 
     class Meta:
