@@ -10,4 +10,4 @@ DB_PASSWORD=scidash_local_password
 STATIC_URL=/static/
 STATIC_DIR=static
 
-REDIS_URL=redis://scidash-redis:6379
+REDIS_URL=redis://localhost:6379
