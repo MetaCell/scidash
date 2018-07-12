@@ -4,7 +4,24 @@ from sciunittests.models import ScoreInstance, TestInstance, TestClass, TestSuit
 
 # Register your models here.
 
+class TestInstanceInline(admin.StackedInline):
+    '''
+    Stacked Inline View for TestInstance
+    '''
+    model = TestInstance
+    min_num = 3
+    max_num = 20
+    extra = 1
+
+class TestSuiteAdmin(admin.ModelAdmin):
+    inlines = [
+            TestInstanceInline,
+            ]
+
+
+admin.site.register(TestSuite, TestSuiteAdmin)
+
+
 admin.site.register(ScoreInstance)
 admin.site.register(TestInstance)
 admin.site.register(TestClass)
-admin.site.register(TestSuite)
