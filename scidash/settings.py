@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import dotenv
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,7 +50,8 @@ THIRD_PARTY_APPS = [
     'channels',
     'rest_framework',
     'django_extensions',
-    'django_filters'
+    'django_filters',
+    'rest_framework_cache',
 ]
 
 SCIDASH_APPS = [
@@ -70,16 +72,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
-        },
-        "ROUTING": "scidash.routing.channel_routing",
-    },
-}
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -113,8 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scidash.wsgi.application'
-
+ASGI_APPLICATION = 'scidash.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

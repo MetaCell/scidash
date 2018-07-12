@@ -1,10 +1,10 @@
 psycopg2
-django
-channels==1.1.8
-asgi-redis==1.4.3
+django==1.11.7
+channels==2.1.2
 djangorestframework==3.7.1
 drf-writable-nested
 django-filter
 djangorestframework-jwt
 django-extensions
 django-dotenv
+rest-framework-cache

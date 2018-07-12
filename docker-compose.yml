@@ -5,8 +5,10 @@ services:
     image: redis
   scidash-postgres:
     image: metacell/scidash-db
+    ports:
+        - 5432:5432
   scidash:
-    image: metacell/scidash:0.2.0
+    image: metacell/scidash:2.1.0
     ports:
         - 80:8000
     depends_on:
