@@ -8,10 +8,10 @@ class TestInstanceInline(admin.StackedInline):
     '''
     Stacked Inline View for TestInstance
     '''
-    model = TestInstance
-    min_num = 3
+    model = TestInstance.test_suites.through
+    min_num = 0
     max_num = 20
-    extra = 1
+    extra = 0
 
 class TestSuiteAdmin(admin.ModelAdmin):
     inlines = [
