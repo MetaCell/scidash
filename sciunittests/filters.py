@@ -1,12 +1,12 @@
 from django.db.models import Count, Subquery, Q
-
 from django_filters import rest_framework as filters
+
 from sciunittests.models import ScoreInstance, TestSuite, TestInstance
 
 
 class ScoreFilter(filters.FilterSet):
     owner = filters.CharFilter(name='owner__username',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     timestamp_from = filters.IsoDateTimeFilter(name='timestamp',
             lookup_expr='gte')
@@ -18,23 +18,23 @@ class ScoreFilter(filters.FilterSet):
 
     test_class = filters.CharFilter(
             name='test_instance__test_class__class_name',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     hostname = filters.CharFilter(
             name='test_instance__hostname',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     name = filters.CharFilter(
             name='test_instance__test_class__class_name',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     score_type = filters.CharFilter(
             name='score_type',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     build_info = filters.CharFilter(
             name='test_instance__build_info',
-            lookup_expr='contains')
+            lookup_expr='icontains')
 
     with_suites = filters.BooleanFilter(method='with_suites_filter')
 
@@ -44,8 +44,8 @@ class ScoreFilter(filters.FilterSet):
 
     def model_class_name_filter(self, queryset, name, value):
         return ScoreInstance.objects.filter(
-                Q(model_instance__model_class__class_name__contains=value) |
-                Q(model_instance__name__contains=value)
+                Q(model_instance__model_class__class_name__icontains=value) |
+                Q(model_instance__name__icontains=value)
                 )
 
     def with_suites_filter(self, queryset, name, value):
@@ -56,7 +56,7 @@ class ScoreFilter(filters.FilterSet):
         return queryset.filter(test_instance__in=tests)
 
     def suite_name_filter(self, queryset, name, value):
-        suites = TestSuite.objects.filter(name__contains=value)
+        suites = TestSuite.objects.filter(name__icontains=value)
 
         kwargs = {
                 'test_instance__test_suites__in': Subquery(suites.values('pk'))
@@ -65,6 +65,7 @@ class ScoreFilter(filters.FilterSet):
         return queryset.filter(**kwargs)
 
     def suite_hash_filter(self, queryset, name, value):
+
         suites = TestSuite.objects.filter(hash=value)
 
         kwargs = {
@@ -106,3 +107,5 @@ class TestInstanceFilter(filters.FilterSet):
     class Meta:
         model = TestInstance
         fields = ['hostname']
+
+
