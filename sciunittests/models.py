@@ -1,7 +1,7 @@
 import logging
 
 from django.db import models
-from django.contrib.postgres.fields import HStoreField
+from django.contrib.postgres.fields import JSONField, HStoreField
 from django.utils import timezone
 
 import sciunitmodels
@@ -38,7 +38,7 @@ class TestClass(models.Model):
 
 class TestInstance(models.Model):
     test_class = models.ForeignKey(TestClass)
-    observation = HStoreField()
+    observation = JSONField()
     test_suites = models.ManyToManyField(TestSuite, related_name='tests')
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
@@ -83,7 +83,6 @@ class ScoreInstance(models.Model):
     hash_id = models.CharField(max_length=100)
     summary = models.CharField(max_length=200,
                                default=None, blank=True, null=True)
-    related_data = HStoreField()
     timestamp = models.DateTimeField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 

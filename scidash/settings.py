@@ -73,16 +73,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
-        },
-        "ROUTING": "scidash.routing.channel_routing",
-    },
-}
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -115,8 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scidash.wsgi.application'
-
+ASGI_APPLICATION = 'scidash.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -176,18 +165,10 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'general.ScidashUser'
 
-JWT_AUTH = {
-    # how long the original token is valid for
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
-
-    # allow refreshing of tokens
-    'JWT_ALLOW_REFRESH': True,
-
-    # this is the maximum time AFTER the token was issued that
-    # it can be refreshed.  exprired tokens can't be refreshed.
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-}
-
 REST_FRAMEWORK_CACHE = {
     'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
 }
+
+GEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
+GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
+GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
