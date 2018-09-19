@@ -54,8 +54,8 @@ WORKDIR $EXTENSION_DIR
 RUN git clone $SCIDASH_EXTENSION_REPO
 
 WORKDIR $EXTENSION_DIR/geppetto_scidash
+RUH ls
 RUN git branch
-RUN git log
 
 WORKDIR $GEPPETTO_DIR
 COPY ./deploy/geppetto/GeppettoConfiguration.json $GEPPETTO_DIR/GeppettoConfiguration.json
