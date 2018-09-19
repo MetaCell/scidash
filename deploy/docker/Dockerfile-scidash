@@ -53,7 +53,6 @@ RUN git clone $GEPPETTO_REPO
 WORKDIR $EXTENSION_DIR
 RUN git clone $SCIDASH_EXTENSION_REPO
 
-WORKDIR $EXTENSION_DIR/geppetto_scidash
 RUN ls
 RUN git branch
 
