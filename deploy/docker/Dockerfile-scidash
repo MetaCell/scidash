@@ -52,6 +52,11 @@ WORKDIR $STATIC_DIR
 RUN git clone $GEPPETTO_REPO
 WORKDIR $EXTENSION_DIR
 RUN git clone $SCIDASH_EXTENSION_REPO
+
+WORKDIR $EXTENSION_DIR/geppetto_scidash
+RUN git branch
+RUN git log
+
 WORKDIR $GEPPETTO_DIR
 COPY ./deploy/geppetto/GeppettoConfiguration.json $GEPPETTO_DIR/GeppettoConfiguration.json
 RUN npm install
