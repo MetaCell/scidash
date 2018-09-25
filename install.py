@@ -26,9 +26,6 @@ def main(argv):
 if __name__ == "__main__":
     main(sys.argv[1:])
 
-# set cwd
-os.chdir(os.getcwd()+"/../")
-
 # install requirements
 subprocess.call(['pip', 'install', '-r', 'requirements.txt'], cwd='./')
 
@@ -38,7 +35,7 @@ clone('https://github.com/MetaCell/geppetto-scidash.git','geppetto-scidash','dev
 
 # change extension
 print("Enabling Geppetto SciDash Extension ...")
-geppetto_configuration = os.path.join(os.path.dirname(__file__), './utilities/GeppettoConfiguration.json')
+geppetto_configuration = os.path.join(os.path.dirname(__file__), './deploy/geppetto/GeppettoConfiguration.json')
 copyfile(geppetto_configuration, './static/org.geppetto.frontend/src/main/webapp/GeppettoConfiguration.json')
 
 # Install and building

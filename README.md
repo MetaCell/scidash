@@ -29,13 +29,14 @@ brew install redis
 ```
 
 *Install PostgreSQL server*
-Install PostgreSQL server: [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu, [application](https://postgresapp.com/) for MacOS
+- [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
+- [application](https://postgresapp.com/) for MacOS
 
 **Install SciDash**
 
 ```
 git clone https://github.com/MetaCell/scidash
-cd utilities
+cd scidash
 python install.py
 ```
 Optional for development to enable dynamic refresh of client code when editing html/js/css:
