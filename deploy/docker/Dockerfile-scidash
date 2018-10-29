@@ -5,7 +5,7 @@ FROM python:3.6
 ARG ROOT=/
 ARG APP_DIR=/app
 ARG GEPPETTO_REPO='https://github.com/openworm/org.geppetto.frontend.git -b griddle-update'
-ARG SCIDASH_EXTENSION_REPO='https://github.com/MetaCell/geppetto-scidash.git -b development'
+ARG SCIDASH_EXTENSION_REPO='https://github.com/MetaCell/geppetto-scidash.git -b refactoring'
 ARG VENV_PATH=/venv
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/static
