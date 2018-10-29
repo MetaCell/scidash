@@ -107,5 +107,3 @@ class TestInstanceFilter(filters.FilterSet):
     class Meta:
         model = TestInstance
         fields = ['hostname']
-
-
