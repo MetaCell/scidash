@@ -76,9 +76,6 @@ MIDDLEWARE_CLASSES = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         ],
@@ -169,6 +166,8 @@ REST_FRAMEWORK_CACHE = {
     'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
 }
 
-GEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
+PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
+
+ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 30

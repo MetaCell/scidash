@@ -12,8 +12,7 @@ from general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
 
 
 class TestSuiteSerializer(GetOrCreateMixin,
-        WritableNestedModelSerializer,
-        CachedSerializerMixin
+        WritableNestedModelSerializer
         ):
 
     owner = ScidashUserSerializer(
@@ -27,8 +26,7 @@ class TestSuiteSerializer(GetOrCreateMixin,
 
 
 class TestClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer,
-        CachedSerializerMixin
+        WritableNestedModelSerializer
         ):
     key = 'url'
     url = serializers.CharField(validators=[])
@@ -39,8 +37,7 @@ class TestClassSerializer(GetByKeyOrCreateMixin,
 
 
 class TestInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer,
-        CachedSerializerMixin
+        WritableNestedModelSerializer
         ):
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
@@ -54,8 +51,7 @@ class TestInstanceSerializer(GetByKeyOrCreateMixin,
 
 
 class ScoreClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer,
-        CachedSerializerMixin
+        WritableNestedModelSerializer
         ):
 
     key = 'class_name'
@@ -66,8 +62,7 @@ class ScoreClassSerializer(GetByKeyOrCreateMixin,
 
 
 class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer,
-        CachedSerializerMixin
+        WritableNestedModelSerializer
         ):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
@@ -109,8 +104,8 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
         exclude = ('prediction_dict', 'prediction_numeric', )
 
 
-cache_registry.register(ScoreInstanceSerializer)
-cache_registry.register(ScoreClassSerializer)
-cache_registry.register(TestClassSerializer)
-cache_registry.register(TestInstanceSerializer)
-cache_registry.register(TestSuiteSerializer)
+# cache_registry.register(ScoreInstanceSerializer)
+# cache_registry.register(ScoreClassSerializer)
+# cache_registry.register(TestClassSerializer)
+# cache_registry.register(TestInstanceSerializer)
+# cache_registry.register(TestSuiteSerializer)

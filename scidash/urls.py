@@ -18,6 +18,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from sciunitmodels.api import views as models_views
 from sciunittests.api import views as tests_views
+from sciunittests.views import DateRangeView
 
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
@@ -51,5 +52,6 @@ urlpatterns = [
     url(r'^api/login/', obtain_jwt_token),
     url(r'^', include('pygeppetto_server.urls')),
     url(r'^data/', include('general.urls')),
+    url(r'^api/date-range', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls))
 ]
