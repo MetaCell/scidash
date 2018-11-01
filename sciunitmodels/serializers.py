@@ -46,6 +46,6 @@ class ModelInstanceSerializer(GetByKeyOrCreateMixin,
         model = ModelInstance
         fields = '__all__'
 
-cache_registry.register(CapabilitySerializer)
-cache_registry.register(ModelClassSerializer)
-cache_registry.register(ModelInstanceSerializer)
+# cache_registry.register(CapabilitySerializer)
+# cache_registry.register(ModelClassSerializer)
+# cache_registry.register(ModelInstanceSerializer)

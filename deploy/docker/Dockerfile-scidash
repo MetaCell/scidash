@@ -38,10 +38,9 @@ RUN apt-get update && apt-get install nodejs
 
 WORKDIR /tmp
 
-RUN git clone https://github.com/MetaCell/pygeppetto-django.git -b development
+RUN git clone https://github.com/MetaCell/pygeppetto-django.git -b development-roman
 WORKDIR pygeppetto-django
-RUN ls
-RUN cp -r pygeppetto_server $APP_DIR/pygeppetto_server
+RUN pip install -e .
 
 # CLONING FRONTEND
 
