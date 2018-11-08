@@ -16,8 +16,12 @@ SciDash is a geppetto / django-based client-server web application.
 We recommend you to use a virtual environment for the installation, so you can keep all the dependencies within that environment.
 
 **Dependencies**
+
+*Install pygeppetto-django from sources*
 ```
-pip install pygeppetto-django
+git clone https://github.com/MetaCell/pygeppetto-django.git -b development
+cd pygeppetto-django
+RUN pip install -e .
 ```
 
 *Install Redis server (for the sockets communication)*
