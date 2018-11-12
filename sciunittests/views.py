@@ -12,11 +12,14 @@ class DateRangeView(APIView):
 
     def get(self, request, *args, **kwargs):
         three_month_period = datetime.timedelta(3*365/12)
-        current_date = datetime.date.today()
+        current_date = datetime.datetime.now()
         current_date_iso = datetime.datetime(
             year=current_date.year,
             month=current_date.month,
-            day=current_date.day
+            day=current_date.day,
+            hour=current_date.hour,
+            minute=current_date.minute,
+            second=current_date.second
         )
 
         three_month_ago = current_date_iso - three_month_period
