@@ -1,0 +1,27 @@
+version: '1.0'
+steps:
+  BuildingDockerImage:
+    title: Building Docker Image
+    type: build
+    image_name: metacell/scidash
+    working_directory: ./
+    tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
+    no_cache: true
+    dockerfile: ./deploy/docker/Dockerfile-scidash
+  PushingToDockerRegistry:
+    title: Pushing to Docker Registry
+    type: push
+    candidate: '${{BuildingDockerImage}}'
+    tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
+    registry: cfcr
+  RunningDeployScript:
+    title: Running Deploy Script
+    type: deploy
+    kind: kubernetes
+    cluster: geppetto-cluster@metacellllc
+    namespace: scidash-testing
+    service: scidash
+    candidate:
+      image: ${{BuildingDockerImage}}
+      registry: cfcr
+

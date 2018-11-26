@@ -1,6 +1,10 @@
 #!/bin/bash
 
-if [ -z "$1" ]
+echo "Input db image version ('latest' by default): "
+
+read dbtag
+
+if [ -z "$dbtag" ]
 then
     version="latest"
 else
@@ -9,6 +13,6 @@ fi
 
 tag="metacell/scidash-db:$version"
 directory="."
-dockerfile="./deploy/docker/Dockerfile-postgres"
+dockerfile="./service/docker/Dockerfile-postgres"
 
 docker build -t $tag -f $dockerfile $directory

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
 
-      - image: r.cfcr.io/tarelli/metacell/scidash:development
+      - image: r.cfcr.io/tarelli/metacell/scidash
         imagePullPolicy: Always
         name: scidash
         ports:

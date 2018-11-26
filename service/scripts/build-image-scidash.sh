@@ -1,6 +1,10 @@
 #!/bin/bash
 
-if [ -z "$1" ]
+echo "Input scidash image version ('latest' by default): "
+
+read scidashtag
+
+if [ -z "$scidashtag" ]
 then
     version="latest"
 else
@@ -9,6 +13,6 @@ fi
 
 tag="metacell/scidash:$version"
 directory="."
-dockerfile="./deploy/docker/Dockerfile-scidash"
+dockerfile="./service/docker/Dockerfile-scidash"
 
 docker build --no-cache -t $tag -f $dockerfile $directory

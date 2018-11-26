@@ -1,17 +1,35 @@
-install:
-	echo "Install"
+install: create-db install-frontend install-backend
+	@echo "==========================="
+	@echo "=        Finished         ="
+	@echo "==========================="
 
 install-frontend:
-	./service/scripts/install-frontend.sh
+	@echo "==========================="
+	@echo "=    Install frontend     ="
+	@echo "==========================="
+	@./service/scripts/install-frontend.sh
 
 install-backend:
-	./service/scripts/install-backend.sh
+	@echo "==========================="
+	@echo "=    Install backend      ="
+	@echo "==========================="
+	@./service/scripts/install-backend.sh
+
+install-backend-with-env:
+	@echo "==========================="
+	@echo "=    Install backend      ="
+	@echo "==========================="
+	@./service/scripts/install-backend.sh -v
 
 create-db:
-	./service/scripts/db-create-psql.sh
+	@echo "==========================="
+	@echo "=    Create database      ="
+	@echo "==========================="
+	@./service/scripts/db-create-psql.sh
 
 run-dev: migrate generate-tags
-	make run-django
+	make run-django & \
+	make run-frontend
 
 django-migrate: make-migrations migrate
 
@@ -23,6 +41,9 @@ migrate:
 
 run-django:
 	./manage.py runserver
+
+run-frontend:
+	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
 
 lint: flake8-lint isort-lint yapf-lint
 
@@ -46,3 +67,14 @@ yapf-lint:
 generate-tags:
 	ctags -R --exclude=.git --exclude=node_modules --exclude=dist --exclude=env .
 
+build-scidash:
+	@echo "==========================="
+	@echo "=      Build scidash      ="
+	@echo "==========================="
+	@./service/scripts/build-image-scidash.sh
+
+build-scidash-db:
+	@echo "==========================="
+	@echo "=    Build scidash db     ="
+	@echo "==========================="
+	@./service/scripts/build-image-db.sh
