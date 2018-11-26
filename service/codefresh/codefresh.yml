@@ -28,4 +28,3 @@ steps:
     candidate:
       image: ${{BuildingDockerImage}}
       registry: cfcr
-
