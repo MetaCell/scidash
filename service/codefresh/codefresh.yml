@@ -7,7 +7,7 @@ steps:
     working_directory: ./
     tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
     no_cache: true
-    dockerfile: ./deploy/docker/Dockerfile-scidash
+    dockerfile: ./service/docker/Dockerfile-scidash
   PushingToDockerRegistry:
     title: Pushing to Docker Registry
     type: push
