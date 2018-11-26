@@ -8,6 +8,10 @@ steps:
     tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
     no_cache: true
     dockerfile: ./service/docker/Dockerfile-scidash
+  InstallFrontend:
+    image: '${{BuildingDockerImage}}'
+    commands:
+      - make install-frontend
   PushingToDockerRegistry:
     title: Pushing to Docker Registry
     type: push
