@@ -1,7 +1,7 @@
 version: '1.0'
 steps:
   InstallFrontend:
-    image: eugenmayer/make
+    image: node:8
     working_directory: ${{main_clone}}
     commands:
       - make install-frontend
