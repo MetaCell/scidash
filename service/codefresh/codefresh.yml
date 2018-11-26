@@ -1,6 +1,7 @@
 version: '1.0'
 steps:
   InstallFrontend:
+    image: bash
     working_directory: ${{main_clone}}
     commands:
       - make install-frontend
