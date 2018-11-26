@@ -4,7 +4,7 @@ steps:
     type: git-clone
     title: Cloning Scidash
     repo: MetaCell/scidash.git
-    git: ${{CF-default}}
+    git: CF-default
   InstallFrontend:
     working_directory: ${{CloningRepo}}
     commands:
