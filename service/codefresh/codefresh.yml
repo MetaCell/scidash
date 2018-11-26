@@ -1,5 +1,14 @@
 version: '1.0'
 steps:
+  CloningRepo:
+    type: git-clone
+    title: Cloning Scidash
+    repo: MetaCell/scidash.git
+    git: ${{CF-default}}
+  InstallFrontend:
+    working_directory: ${{CloningRepo}}
+    commands:
+      - make install-frontend
   BuildingDockerImage:
     title: Building Docker Image
     type: build
@@ -8,10 +17,6 @@ steps:
     tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
     no_cache: true
     dockerfile: ./service/docker/Dockerfile-scidash
-  InstallFrontend:
-    image: '${{BuildingDockerImage}}'
-    commands:
-      - make install-frontend
   PushingToDockerRegistry:
     title: Pushing to Docker Registry
     type: push
