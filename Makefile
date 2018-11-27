@@ -78,3 +78,15 @@ build-scidash-db:
 	@echo "=    Build scidash db     ="
 	@echo "==========================="
 	@./service/scripts/build-image-db.sh
+
+push-scidash:
+	@echo "==========================="
+	@echo "=   Push scidash image    ="
+	@echo "==========================="
+	@./service/scripts/push-image-scidash.sh
+
+push-scidash-db:
+	@echo "==========================="
+	@echo "=  Push scidash db image  ="
+	@echo "==========================="
+	@./service/scripts/push-image-scidash-db.sh

@@ -21,7 +21,6 @@ spec:
         app: scidash
     spec:
       containers:
-
       - image: r.cfcr.io/tarelli/metacell/scidash
         imagePullPolicy: Always
         name: scidash

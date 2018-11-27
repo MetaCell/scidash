@@ -19,13 +19,10 @@ steps:
     candidate: '${{BuildingDockerImage}}'
     tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
     registry: cfcr
-  RunningDeployScript:
-    title: Running Deploy Script
-    type: deploy
-    kind: kubernetes
-    cluster: geppetto-cluster@metacellllc
-    namespace: scidash-testing
-    service: scidash
-    candidate:
-      image: ${{BuildingDockerImage}}
-      registry: cfcr
+  Deploy:
+    image: codefresh/kube-helm:master
+    environment:
+      - IMAGE=${{BuildingDockerImage}}
+    commands:
+      - gcloud container clusters get-credentials geppetto-cluster --zone us-central1-a --project metacellllc
+      - kubectl set image deployment/scidash scidash=$IMAGE --namespace=scidash-testing
