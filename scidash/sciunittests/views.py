@@ -35,6 +35,9 @@ class DateRangeView(APIView):
                 acceptable_period = period
                 break
 
+        if acceptable_period is None:
+            acceptable_period = nine_month_ago
+
         return Response({
             "current_date": current_date_iso,
             "acceptable_period": acceptable_period
