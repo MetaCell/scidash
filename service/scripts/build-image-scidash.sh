@@ -8,7 +8,7 @@ if [ -z "$scidashtag" ]
 then
     version="latest"
 else
-    version=$1
+    version=$scidashtag
 fi
 
 tag="metacell/scidash:$version"
