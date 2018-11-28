@@ -24,7 +24,7 @@ steps:
     kind: kubernetes
     cluster: geppetto-cluster
     namespace: scidash-testing
-    file_path: ../kubernetes/scidash/scidash-deployment.yaml
+    file_path: ./service/kubernetes/scidash/scidash-deployment.yaml
     candidate:
       image: ${{BuildingDockerImage}}
       registry: cfcr
