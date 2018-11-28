@@ -24,5 +24,7 @@ steps:
     environment:
       - IMAGE=${{BuildingDockerImage}}
     commands:
-      - gcloud container clusters get-credentials geppetto-cluster --zone us-central1-a --project metacellllc
-      - kubectl set image deployment/scidash scidash=$IMAGE --namespace=scidash-testing
+      - kubectl get deployments
+      - kubectl get clusters
+      - kubectl get pods
+      - kubectl get services
