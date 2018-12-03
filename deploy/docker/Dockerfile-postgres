@@ -1,3 +1,0 @@
-FROM postgres:9.4
-
-ADD ./deploy/scripts/db-create-psql.sh /docker-entrypoint-initdb.d/db-create-psql.sh
