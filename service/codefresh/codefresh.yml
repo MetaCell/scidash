@@ -1,0 +1,30 @@
+version: '1.0'
+steps:
+  InstallFrontend:
+    image: node:8
+    working_directory: ${{main_clone}}
+    commands:
+      - make install-frontend
+  BuildingDockerImage:
+    title: Building Docker Image
+    type: build
+    image_name: metacell/scidash
+    working_directory: ./
+    tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
+    no_cache: true
+    dockerfile: ./service/docker/Dockerfile-scidash
+  PushingToDockerRegistry:
+    title: Pushing to Docker Registry
+    type: push
+    candidate: '${{BuildingDockerImage}}'
+    tag: ${{CF_BRANCH}}-${{CF_BUILD_ID}}
+    registry: cfcr
+  Deploy:
+    type: deploy
+    kind: kubernetes
+    cluster: geppetto-cluster
+    namespace: scidash-testing
+    file_path: ./service/kubernetes/scidash/scidash-deployment.yaml
+    candidate:
+      image: ${{BuildingDockerImage}}
+      registry: cfcr

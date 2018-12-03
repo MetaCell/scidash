@@ -1,0 +1,43 @@
+{
+  "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
+  "hash_id": "111",
+  "model_instance": {
+    "model_class": {
+      "class_name": "ReducedModel",
+      "url": "http://test-url.for/not-spaming-data/in-database",
+      "capabilities": [
+        {
+          "class_name": "CanBeReduced"
+        }
+      ]
+    },
+    "attributes": {},
+    "hash_id": "111",
+    "name": "Izhikevich",
+    "run_params": {},
+    "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
+    "backend": "JNeuroML"
+  },
+  "prediction": 13,
+  "score": 1.66666666666667,
+  "sort_key": 0.738882680363527,
+  "score_type": "ZType",
+  "test_instance": {
+    "description": null,
+    "hash_id": "111",
+    "test_suites": [{
+      "hash": "testhash",
+      "name": "ReducedSuite"
+    }],
+    "test_class": {
+      "class_name": "MyTest",
+      "url": "http://test-url.for/not-spaming-data/in-database"
+    },
+    "observation": {
+      "mean":"8",
+      "std": "3",
+      "url": ""
+    },
+    "verbose": 1
+  }
+}
