@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
     hash = models.CharField(max_length=57, null=True, blank=True)
-    timestamp = models.DateTimeField(default=timezone.now)
+    timestamp = models.DateField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
     class Meta:
@@ -42,7 +42,7 @@ class TestInstance(models.Model):
     test_suites = models.ManyToManyField(TestSuite, related_name='tests')
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
-    timestamp = models.DateTimeField(default=timezone.now)
+    timestamp = models.DateField(default=timezone.now)
     hash_id = models.CharField(max_length=100)
     hostname = models.CharField(max_length=200, default='', blank=True,
             null=True)
@@ -83,7 +83,7 @@ class ScoreInstance(models.Model):
     hash_id = models.CharField(max_length=100)
     summary = models.CharField(max_length=200,
                                default=None, blank=True, null=True)
-    timestamp = models.DateTimeField(default=timezone.now)
+    timestamp = models.DateField(default=timezone.now)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
     @property
