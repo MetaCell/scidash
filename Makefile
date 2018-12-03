@@ -9,6 +9,12 @@ install-frontend:
 	@echo "==========================="
 	@./service/scripts/install-frontend.sh
 
+codefresh-install-frontend:
+	@echo "==========================="
+	@echo "=    Install frontend     ="
+	@echo "==========================="
+	@./service/scripts/codefresh-install-frontend.sh
+
 install-backend:
 	@echo "==========================="
 	@echo "=    Install backend      ="
