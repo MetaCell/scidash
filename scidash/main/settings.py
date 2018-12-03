@@ -171,7 +171,7 @@ REST_FRAMEWORK_CACHE = {
     'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
 }
 
-PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
+GEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 
