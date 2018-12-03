@@ -114,3 +114,4 @@ venv.bak/
 static/org.geppetto.frontend
 pygeppetto_server/
 tags
+pygeppetto-django
