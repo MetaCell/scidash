@@ -57,12 +57,14 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework_cache',
+    'material'
 ]
 
 SCIDASH_APPS = [
     'scidash.sciunitmodels',
     'scidash.sciunittests',
     'scidash.general',
+    'scidash.account'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS

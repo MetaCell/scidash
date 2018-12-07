@@ -1,0 +1,23 @@
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+
+{% load material_form %}
+
+<style>
+.login-container{
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 250px;
+}
+</style>
+
+<div class="login-container">
+  <h5>SCIDASH LOGIN</h5>
+  <form method="POST">
+    {% csrf_token %}
+    {% form form=form %}{% endform %}
+    <button type="submit" name="_submit" class="btn">Submit</button>
+  </form>
+</div>

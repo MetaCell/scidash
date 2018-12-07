@@ -8,3 +8,4 @@ djangorestframework-jwt
 django-extensions
 django-dotenv
 rest-framework-cache
+django-material
