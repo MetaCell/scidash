@@ -20,6 +20,7 @@ from scidash.sciunitmodels.api import views as models_views
 from scidash.sciunittests.api import views as tests_views
 from scidash.sciunittests.views import DateRangeView
 from scidash.account.views import signup
+from scidash.account.api.views import UserViewSet, CheckIsLoggedView
 
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
@@ -56,5 +57,8 @@ urlpatterns = [
     url(r'^api/date-range', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
-    url(r'^auth/sign-up/', signup, name='signup')
+    url(r'^auth/sign-up/', signup, name='signup'),
+    url(r'^api/users/me/$', UserViewSet.as_view({'get': 'retrieve'}),
+        kwargs={'pk': 'me'}, name='user-info'),
+    url(r'^api/users/is-logged', CheckIsLoggedView.as_view(), name='is-logged'),
 ]

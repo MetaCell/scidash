@@ -3,7 +3,7 @@ from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework_cache.registry import cache_registry
 from rest_framework_cache.serializers import CachedSerializerMixin
 
-from scidash.general.serializers import ScidashUserSerializer
+from scidash.account.serializers import ScidashUserSerializer
 
 from scidash.sciunittests.models import TestClass, TestSuite, TestInstance, \
                                 ScoreInstance, ScoreClass
