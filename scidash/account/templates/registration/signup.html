@@ -15,9 +15,11 @@
 
 <div class="registration-container">
   <h5>SCIDASH SIGN UP</h5>
+  <a href="{% url 'login' %}">Already signed up? Then login!</a>
   <form method="post">
     {% csrf_token %}
     {% form form=form %}{% endform %}
     <button type="submit" name="_submit" class="btn">Sign up</button>
   </form>
+  <a href="{% url 'index' %}">Go home</a>
 </div>

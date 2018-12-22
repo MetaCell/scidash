@@ -14,6 +14,8 @@ import os
 import dotenv
 import datetime
 
+from django.urls import reverse
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -178,3 +180,5 @@ GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServle
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
+
+LOGOUT_REDIRECT_URL = '/'

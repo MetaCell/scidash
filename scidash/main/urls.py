@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 from scidash.sciunitmodels.api import views as models_views
 from scidash.sciunittests.api import views as tests_views
 from scidash.sciunittests.views import DateRangeView
@@ -50,14 +52,15 @@ router.register(r'score-classes', tests_views.ScoreClassViewSet,
         base_name='score-class')
 
 urlpatterns = [
+    url(r'^', include('pygeppetto_server.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/login/', obtain_jwt_token),
-    url(r'^', include('pygeppetto_server.urls'), name='home'),
     url(r'^data/', include('scidash.general.urls')),
     url(r'^api/date-range', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
-    url(r'^auth/sign-up/', signup, name='signup'),
+    url(r'^auth/login', auth_views.LoginView.as_view()),
+    url(r'^auth/sign-up/', signup, name='sign-up'),
     url(r'^api/users/me/$', UserViewSet.as_view({'get': 'retrieve'}),
         kwargs={'pk': 'me'}, name='user-info'),
     url(r'^api/users/is-logged', CheckIsLoggedView.as_view(), name='is-logged'),

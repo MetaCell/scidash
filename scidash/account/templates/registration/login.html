@@ -15,9 +15,12 @@
 
 <div class="login-container">
   <h5>SCIDASH LOGIN</h5>
+  <a href="{% url 'sign-up' %}">Have no account? Then sign-up!</a>
   <form method="POST">
     {% csrf_token %}
     {% form form=form %}{% endform %}
+    <input type="hidden" name="next" value="{% url 'index' %}">
     <button type="submit" name="_submit" class="btn">Submit</button>
   </form>
+  <a href="{% url 'index' %}">Go home</a>
 </div>
