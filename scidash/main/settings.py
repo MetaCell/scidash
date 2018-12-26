@@ -182,3 +182,5 @@ GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
 
 LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -6,3 +6,4 @@ class ScidashUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = ScidashUser
+        fields = ('username', 'email',)

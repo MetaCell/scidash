@@ -59,7 +59,13 @@ urlpatterns = [
     url(r'^api/date-range', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
-    url(r'^auth/login', auth_views.LoginView.as_view()),
+    url(r'^auth/password-reset/done/?$', auth_views.PasswordResetDoneView.as_view(
+        template_name='registration/password-reset-done.html'
+    ), name='password-reset-done'),
+    url(r'^auth/password-reset/?$', auth_views.PasswordResetView.as_view(
+        template_name='registration/password-reset.html',
+        success_url='/auth/password-reset/done'
+    ), name='password-reset'),
     url(r'^auth/sign-up/', signup, name='sign-up'),
     url(r'^api/users/me/$', UserViewSet.as_view({'get': 'retrieve'}),
         kwargs={'pk': 'me'}, name='user-info'),
