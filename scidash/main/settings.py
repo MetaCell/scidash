@@ -14,6 +14,8 @@ import os
 import dotenv
 import datetime
 
+from django.urls import reverse
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,12 +59,14 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework_cache',
+    'material'
 ]
 
 SCIDASH_APPS = [
     'scidash.sciunitmodels',
     'scidash.sciunittests',
     'scidash.general',
+    'scidash.account'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
@@ -82,7 +86,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -176,3 +180,7 @@ GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServle
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
+
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -45,6 +45,9 @@ make-migrations:
 migrate:
 	./manage.py migrate
 
+superuser:
+	./manage.py createsuperuser
+
 run-django:
 	./manage.py runserver
 
