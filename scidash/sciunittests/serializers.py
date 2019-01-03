@@ -8,6 +8,7 @@ from scidash.account.serializers import ScidashUserSerializer
 from scidash.sciunittests.models import TestClass, TestSuite, TestInstance, \
                                 ScoreInstance, ScoreClass
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
+from scidash.general.serializers import TagSerializer
 from scidash.general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
 
 
@@ -42,6 +43,7 @@ class TestInstanceSerializer(GetByKeyOrCreateMixin,
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
     hash_id = serializers.CharField(validators=[])
+    tags = TagSerializer(many=True)
 
     key = 'hash_id'
 

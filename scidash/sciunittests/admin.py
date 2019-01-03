@@ -1,8 +1,10 @@
 from django.contrib import admin
-
+from django.contrib.contenttypes.admin import GenericStackedInline
 from scidash.sciunittests.models import ScoreInstance, TestInstance, TestClass, TestSuite
+from scidash.general.models import Tag
 
 # Register your models here.
+
 
 class TestInstanceInline(admin.StackedInline):
     '''
@@ -13,15 +15,24 @@ class TestInstanceInline(admin.StackedInline):
     max_num = 20
     extra = 0
 
+
+class TagInline(GenericStackedInline):
+    model = Tag
+
+
+class TestInstanceModelAdmin(admin.ModelAdmin):
+    inlines = [
+        TagInline,
+    ]
+
+
 class TestSuiteAdmin(admin.ModelAdmin):
     inlines = [
-            TestInstanceInline,
-            ]
+        TestInstanceInline,
+    ]
 
 
 admin.site.register(TestSuite, TestSuiteAdmin)
-
-
 admin.site.register(ScoreInstance)
-admin.site.register(TestInstance)
+admin.site.register(TestInstance, TestInstanceModelAdmin)
 admin.site.register(TestClass)
