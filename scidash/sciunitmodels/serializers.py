@@ -4,6 +4,7 @@ from rest_framework_cache.serializers import CachedSerializerMixin
 from rest_framework_cache.registry import cache_registry
 
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
+from scidash.general.serializers import TagSerializer
 from scidash.general.mixins import GetByKeyOrCreateMixin
 
 
@@ -39,6 +40,7 @@ class ModelInstanceSerializer(GetByKeyOrCreateMixin,
         ):
     model_class = ModelClassSerializer()
     hash_id = serializers.CharField(validators=[])
+    tags = TagSerializer(many=True)
 
     key = 'hash_id'
 
