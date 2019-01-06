@@ -1,6 +1,7 @@
 import logging
 
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import JSONField, HStoreField
 from django.utils import timezone
 
@@ -48,6 +49,7 @@ class TestInstance(models.Model):
             null=True)
     build_info = models.CharField(max_length=200, default='', blank=True,
             null=True)
+    tags = GenericRelation(general_models.Tag)
 
     class Meta:
         verbose_name = 'Test instance'
