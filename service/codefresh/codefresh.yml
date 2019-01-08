@@ -4,7 +4,7 @@ steps:
     image: node:8
     working_directory: ${{main_clone}}
     commands:
-      - make install-frontend
+      - make codefresh-install-frontend
   BuildingDockerImage:
     title: Building Docker Image
     type: build
