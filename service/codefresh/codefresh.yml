@@ -22,7 +22,7 @@ steps:
   Deploy:
     type: deploy
     kind: kubernetes
-    cluster: geppetto-cluster
+    cluster: geppetto-cluster@metacellllc
     namespace: scidash-testing
     file_path: ./service/kubernetes/scidash/scidash-deployment.yaml
     candidate:
