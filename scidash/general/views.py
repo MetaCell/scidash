@@ -5,6 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
+
+from pygeppetto_gateway import GeppettoProjectBuilder, GeppettoServletManager
+from django.views import View
+
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
 
 
@@ -37,3 +41,24 @@ class FileUploadView(APIView):
         else:
             self.errors = score_serializer.errors
             return False
+
+
+class GeppettoHandlerView(View):
+
+    def post(self, request):
+        print(request)
+
+
+class ExperimentView(APIView):
+
+    def post(self, request):
+        data = request.data
+
+        model_url = data.url
+
+        builder = GeppettoProjectBuilder(model_url)
+        project_url = builder.build_project()
+
+        servlet = GeppettoServletManager()
+
+        servlet.handle('load_project_from_url', project_url)
