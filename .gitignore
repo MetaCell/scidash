@@ -115,3 +115,4 @@ static/org.geppetto.frontend
 pygeppetto_server/
 tags
 pygeppetto-django
+static/projects

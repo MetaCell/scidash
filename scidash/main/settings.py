@@ -176,6 +176,10 @@ REST_FRAMEWORK_CACHE = {
 }
 
 PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
+PYGEPPETTO_BUILDER_PROJECT_BASE_URL = os.path.join(os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR')
+), 'projects')
+
 GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 

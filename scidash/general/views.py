@@ -47,18 +47,3 @@ class GeppettoHandlerView(View):
 
     def post(self, request):
         print(request)
-
-
-class ExperimentView(APIView):
-
-    def post(self, request):
-        data = request.data
-
-        model_url = data.url
-
-        builder = GeppettoProjectBuilder(model_url)
-        project_url = builder.build_project()
-
-        servlet = GeppettoServletManager()
-
-        servlet.handle('load_project_from_url', project_url)
