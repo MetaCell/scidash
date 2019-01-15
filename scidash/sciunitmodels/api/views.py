@@ -5,6 +5,7 @@ from scidash.sciunitmodels.serializers import CapabilitySerializer, \
         ModelInstanceSerializer
 
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
+from scidash.sciunitmodels.filters import ModelInstanceFilter
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
@@ -23,3 +24,4 @@ class ModelInstanceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ModelInstance.objects.all()
     serializer_class = ModelInstanceSerializer
     permission_classes = (permissions.AllowAny,)
+    filter_class = ModelInstanceFilter
