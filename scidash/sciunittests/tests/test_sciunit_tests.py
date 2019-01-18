@@ -1,40 +1,43 @@
-import os
 import json
+import os
 from datetime import timedelta
 
-from django.test import TestCase, Client, RequestFactory
+from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
+
 from scidash.general.models import ScidashUser
-
-from scidash.sciunittests.serializers import ScoreInstanceSerializer, \
-                                        TestClassSerializer, \
-                                        ScoreClassSerializer
 from scidash.sciunittests.models import ScoreInstance
+from scidash.sciunittests.serializers import (
+    ScoreClassSerializer, ScoreInstanceSerializer, TestClassSerializer
+)
 
-SAMPLE_OBJECT = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-        'test_data/score_object.json')
+SAMPLE_OBJECT = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), 'test_data/score_object.json'
+)
 
-SAMPLE_OBJECT_LIST = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-        'test_data/score_objects_list.json')
+SAMPLE_OBJECT_LIST = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)),
+    'test_data/score_objects_list.json'
+)
 
 
 class SciunitTestTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitTestTestCase, cls).setUpClass()
 
         factory = RequestFactory()
         request = factory.get('/data/upload/score_object.json')
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
         request.user = cls.user
 
         with open(SAMPLE_OBJECT) as f:
             score_instance_serializer = ScoreInstanceSerializer(
-                    data=json.loads(f.read()),
-                    context={'request': request})
+                data=json.loads(f.read()), context={'request': request}
+            )
 
         if score_instance_serializer.is_valid():
             score_instance_serializer.save()
@@ -102,8 +105,9 @@ class SciunitTestTestCase(TestCase):
 
         for key in data.get('test_instance').keys():
             self.assertTrue(key in parsed_keys)
-            self.assertEqual(test_instance_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                test_instance_data.get(key), parsed_response.get(key)
+            )
 
     def test_if_test_class_endpoint_works_correctly(self):
         client = Client()
@@ -125,8 +129,9 @@ class SciunitTestTestCase(TestCase):
 
         for key in data.get('test_instance').get('test_class').keys():
             self.assertTrue(key in parsed_keys)
-            self.assertEqual(test_classes_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                test_classes_data.get(key), parsed_response.get(key)
+            )
 
     def test_if_test_suite_endpoint_works_correctly(self):
         client = Client()
@@ -149,20 +154,21 @@ class SciunitTestTestCase(TestCase):
 
         for key in test_classes_data:
             self.assertTrue(key in parsed_keys)
-            self.assertEqual(test_classes_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                test_classes_data.get(key), parsed_response.get(key)
+            )
 
 
 class SciunitTestFiltersScoreTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitTestFiltersScoreTestCase, cls).setUpClass()
 
         factory = RequestFactory()
         request = factory.get('/data/upload/score_object_list.json')
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
         request.user = cls.user
 
@@ -170,8 +176,9 @@ class SciunitTestFiltersScoreTestCase(TestCase):
             objects_list = json.loads(f.read())
 
         for item in objects_list:
-            score_instance_serializer = ScoreInstanceSerializer(data=item,
-                    context={'request': request})
+            score_instance_serializer = ScoreInstanceSerializer(
+                data=item, context={'request': request}
+            )
 
             if score_instance_serializer.is_valid():
                 score_instance_serializer.save()
@@ -189,9 +196,9 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         first_element = parsed_response[0]
         first_element_id = first_element.get('id')
 
-        response = client.get(reverse('score-detail', kwargs={
-            'pk': first_element_id
-            }))
+        response = client.get(
+            reverse('score-detail', kwargs={'pk': first_element_id})
+        )
 
         parsed_response = response.json()
         self.assertEqual(first_element, parsed_response)
@@ -230,9 +237,8 @@ class SciunitTestFiltersScoreTestCase(TestCase):
                                         .get('model_class').get('class_name')
 
         filtered_url = '{}?model={}'.format(
-                reverse('score-list'),
-                model_class_name
-                )
+            reverse('score-list'), model_class_name
+        )
 
         response = client.get(filtered_url)
 
@@ -253,9 +259,8 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         model_instance_id = first_element.get('model_instance').get('id')
 
         filtered_url = '{}?model_instance={}'.format(
-                reverse('score-list'),
-                model_instance_id
-                )
+            reverse('score-list'), model_instance_id
+        )
 
         response = client.get(filtered_url)
 
@@ -275,31 +280,30 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         first_element = parsed_response[0]
 
         timestamp = ScoreInstance.objects.get(
-                pk=first_element.get('id')).timestamp
+            pk=first_element.get('id')
+        ).timestamp
 
         filtered_url = '{}?timestamp_to={}'.format(
-                reverse('score-list'),
-                (timestamp - timedelta(1)).isoformat()
-                )
+            reverse('score-list'), (timestamp - timedelta(1)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
         filtered_url = '{}?timestamp_from={}'.format(
-                reverse('score-list'),
-                (timestamp + timedelta(1)).isoformat()
-                )
+            reverse('score-list'), (timestamp + timedelta(1)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
         filtered_url = '{}?timestamp_from={}&timestamp_to={}'.format(
-                reverse('score-list'),
-                (timestamp - timedelta(0, 3600)).isoformat(),
-                (timestamp + timedelta(0, 3600)).isoformat()
-                )
+            reverse('score-list'),
+            (timestamp - timedelta(0, 3600)).isoformat(),
+            (timestamp + timedelta(0, 3600)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
@@ -308,15 +312,15 @@ class SciunitTestFiltersScoreTestCase(TestCase):
 
 
 class SciunitTestFiltersTestSuiteTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitTestFiltersTestSuiteTestCase, cls).setUpClass()
 
         factory = RequestFactory()
         request = factory.get('/data/upload/score_object_list.json')
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
         request.user = cls.user
 
@@ -324,8 +328,9 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
             objects_list = json.loads(f.read())
 
         for item in objects_list:
-            score_instance_serializer = ScoreInstanceSerializer(data=item,
-                    context={'request': request})
+            score_instance_serializer = ScoreInstanceSerializer(
+                data=item, context={'request': request}
+            )
 
             if score_instance_serializer.is_valid():
                 score_instance_serializer.save()
@@ -343,9 +348,9 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         first_element = parsed_response[0]
         first_element_id = first_element.get('id')
 
-        response = client.get(reverse('test-suite-detail', kwargs={
-            'pk': first_element_id
-            }))
+        response = client.get(
+            reverse('test-suite-detail', kwargs={'pk': first_element_id})
+        )
 
         parsed_response = response.json()
         self.assertEqual(first_element, parsed_response)
@@ -362,8 +367,9 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         owner = first_element.get('owner')
         owner_id = owner.get('id')
 
-        filtered_url = '{}?owner={}'.format(reverse('test-suite-list'),
-                owner_id)
+        filtered_url = '{}?owner={}'.format(
+            reverse('test-suite-list'), owner_id
+        )
 
         response = client.get(filtered_url)
 
@@ -383,31 +389,30 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
         first_element = parsed_response[0]
 
         timestamp = ScoreInstance.objects.get(
-                pk=first_element.get('id')).timestamp
+            pk=first_element.get('id')
+        ).timestamp
 
         filtered_url = '{}?timestamp_before={}'.format(
-                reverse('test-suite-list'),
-                (timestamp - timedelta(1)).isoformat()
-                )
+            reverse('test-suite-list'), (timestamp - timedelta(1)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
         filtered_url = '{}?timestamp_after={}'.format(
-                reverse('test-suite-list'),
-                (timestamp + timedelta(1)).isoformat()
-                )
+            reverse('test-suite-list'), (timestamp + timedelta(1)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
         self.assertEqual(len(parsed_response), 0)
 
         filtered_url = '{}?timestamp_after={}&timestamp_before={}'.format(
-                reverse('test-suite-list'),
-                (timestamp - timedelta(0, 3600)).isoformat(),
-                (timestamp + timedelta(0, 3600)).isoformat()
-                )
+            reverse('test-suite-list'),
+            (timestamp - timedelta(0, 3600)).isoformat(),
+            (timestamp + timedelta(0, 3600)).isoformat()
+        )
 
         response = client.get(filtered_url)
         parsed_response = response.json()
@@ -416,23 +421,23 @@ class SciunitTestFiltersTestSuiteTestCase(TestCase):
 
 
 class SciunitTestMatchingClassObjects(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitTestMatchingClassObjects, cls).setUpClass()
 
         cls.test_class = {
-                "class_name": "TestModelClass",
-                "url": "http://test-class.url"
-                }
+            "class_name": "TestModelClass",
+            "url": "http://test-class.url"
+        }
 
         cls.score_class = {
-                "class_name": "TestScoreClass",
-                "url": "http://test-class.url"
-                }
+            "class_name": "TestScoreClass",
+            "url": "http://test-class.url"
+        }
 
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
     def test_is_test_class_match_the_same_object(self):
         client = Client()
@@ -477,4 +482,3 @@ class SciunitTestMatchingClassObjects(TestCase):
         parsed_response = response.json()
 
         self.assertEqual(len(parsed_response), 1)
-

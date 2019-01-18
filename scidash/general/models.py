@@ -1,11 +1,10 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
 class ScidashUser(AbstractUser):
-
     class Meta:
         verbose_name = "Scidash user"
         verbose_name_plural = "Scidash users"

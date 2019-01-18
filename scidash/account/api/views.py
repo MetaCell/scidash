@@ -1,8 +1,8 @@
-from rest_framework import viewsets, views, response
 from django.http import Http404
+from rest_framework import response, views, viewsets
 
-from scidash.general.models import ScidashUser
 from scidash.account.serializers import ScidashUserSerializer
+from scidash.general.models import ScidashUser
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -21,9 +21,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CheckIsLoggedView(views.APIView):
-
     def get(self, request, format=None):
 
-        return response.Response({
-            'is_logged': self.request.user.is_authenticated()
-        })
+        return response.Response(
+            {
+                'is_logged': self.request.user.is_authenticated()
+            }
+        )

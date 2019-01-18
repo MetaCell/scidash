@@ -33,13 +33,19 @@ create-db:
 	@echo "==========================="
 	@./service/scripts/db-create-psql.sh
 
+install-dev:
+	@echo "==========================="
+	@echo "=    Install dev deps     ="
+	@echo "==========================="
+	pip install -r requirements-dev.txt
+
 run-dev: migrate generate-tags
 	make run-django & \
 	make run-frontend
 
-django-migrate: make-migrations migrate
+django-migrate: migrations migrate
 
-make-migrations:
+migrations:
 	./manage.py makemigrations
 
 migrate:
