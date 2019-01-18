@@ -1,17 +1,15 @@
 import datetime
 
-from django.shortcuts import render
 from django.conf import settings as s
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from scidash.sciunittests.models import ScoreInstance
 
 
 class DateRangeView(APIView):
-
     def get(self, request, *args, **kwargs):
-        three_month_period = datetime.timedelta(3*365/12)
+        three_month_period = datetime.timedelta(3 * 365 / 12)
         current_date = datetime.date.today()
         current_date_iso = datetime.datetime(
             year=current_date.year,
@@ -27,8 +25,7 @@ class DateRangeView(APIView):
 
         for period in [three_month_ago, six_month_ago, nine_month_ago]:
             count = ScoreInstance.objects.filter(
-                timestamp__gte=period,
-                timestamp__lt=current_date_iso
+                timestamp__gte=period, timestamp__lt=current_date_iso
             ).count()
 
             if count > s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT:
@@ -38,7 +35,9 @@ class DateRangeView(APIView):
         if acceptable_period is None:
             acceptable_period = nine_month_ago
 
-        return Response({
-            "current_date": current_date_iso,
-            "acceptable_period": acceptable_period
-        })
+        return Response(
+            {
+                "current_date": current_date_iso,
+                "acceptable_period": acceptable_period
+            }
+        )

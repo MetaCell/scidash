@@ -1,13 +1,11 @@
 from __future__ import unicode_literals
 
 from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.postgres.fields import HStoreField, JSONField
+from django.db import models
 from django.utils import timezone
 
-from django.db import models
-from django.contrib.postgres.fields import JSONField, HStoreField
-
 from scidash.general import models as general_models
-
 
 # Models Related
 

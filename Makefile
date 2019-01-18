@@ -33,13 +33,19 @@ create-db:
 	@echo "==========================="
 	@./service/scripts/db-create-psql.sh
 
+install-dev:
+	@echo "==========================="
+	@echo "=    Install dev deps     ="
+	@echo "==========================="
+	pip install -r requirements-dev.txt
+
 run-dev: migrate generate-tags
 	make run-django & \
 	make run-frontend
 
-django-migrate: make-migrations migrate
+django-migrate: migrations migrate
 
-make-migrations:
+migrations:
 	./manage.py makemigrations
 
 migrate:
@@ -99,3 +105,13 @@ push-scidash-db:
 	@echo "=  Push scidash db image  ="
 	@echo "==========================="
 	@./service/scripts/push-image-scidash-db.sh
+
+git-install-hooks:
+	cp service/hooks/* .git/hooks
+
+git-clean-local: git-check-on-dev
+	for b in `git branch --list "feature/*" --merged`; do git branch -d "$$b"; done;
+
+git-check-on-dev:
+	@git status -b -s | grep "## development...origin/development"
+	@echo "On development"

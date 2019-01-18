@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 
 # curl -X POST http://localhost:8000/api/people
@@ -15,17 +15,17 @@ def people(request):
                 "name": "Matteo",
                 "surname": "Cantarelli",
                 "occupation": "Philisopher"
-                },
+            },
             {
                 "name": "Adrian",
                 "surname": "Quintana",
                 "occupation": "Guru"
-                },
+            },
             {
                 "name": "Giovanni",
                 "surname": "Idilli",
                 "occupation": "The Boss"
-                },
+            },
         ]
         return Response(people)
     elif request.method == 'POST':
