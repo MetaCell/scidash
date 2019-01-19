@@ -1,34 +1,33 @@
-from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
+from rest_framework import serializers
 from rest_framework_cache.registry import cache_registry
 from rest_framework_cache.serializers import CachedSerializerMixin
 
 from scidash.account.serializers import ScidashUserSerializer
-
-from scidash.sciunittests.models import TestClass, TestSuite, TestInstance, \
-                                ScoreInstance, ScoreClass
-from scidash.sciunitmodels.serializers import ModelInstanceSerializer
+from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer
-from scidash.general.mixins import GetOrCreateMixin, GetByKeyOrCreateMixin
+from scidash.sciunitmodels.serializers import ModelInstanceSerializer
+from scidash.sciunittests.models import (
+    ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
+)
 
 
-class TestSuiteSerializer(GetOrCreateMixin,
-        WritableNestedModelSerializer, CachedSerializerMixin
-        ):
+class TestSuiteSerializer(
+    GetOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+):
 
     owner = ScidashUserSerializer(
-            default=serializers.CurrentUserDefault(),
-            read_only=True
-            )
+        default=serializers.CurrentUserDefault(), read_only=True
+    )
 
     class Meta:
         model = TestSuite
         fields = '__all__'
 
 
-class TestClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer, CachedSerializerMixin
-        ):
+class TestClassSerializer(
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+):
     key = 'url'
     url = serializers.CharField(validators=[])
 
@@ -37,9 +36,9 @@ class TestClassSerializer(GetByKeyOrCreateMixin,
         fields = '__all__'
 
 
-class TestInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer, CachedSerializerMixin
-        ):
+class TestInstanceSerializer(
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+):
     test_suites = TestSuiteSerializer(many=True)
     test_class = TestClassSerializer()
     hash_id = serializers.CharField(validators=[])
@@ -52,9 +51,9 @@ class TestInstanceSerializer(GetByKeyOrCreateMixin,
         fields = '__all__'
 
 
-class ScoreClassSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer, CachedSerializerMixin
-        ):
+class ScoreClassSerializer(
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+):
 
     key = 'class_name'
 
@@ -63,18 +62,17 @@ class ScoreClassSerializer(GetByKeyOrCreateMixin,
         fields = '__all__'
 
 
-class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
-        WritableNestedModelSerializer, CachedSerializerMixin
-        ):
+class ScoreInstanceSerializer(
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
     score_class = ScoreClassSerializer()
     prediction = serializers.SerializerMethodField()
     hash_id = serializers.CharField(validators=[])
     owner = ScidashUserSerializer(
-            default=serializers.CurrentUserDefault(),
-            read_only=True
-            )
+        default=serializers.CurrentUserDefault(), read_only=True
+    )
 
     key = 'hash_id'
 
@@ -89,13 +87,9 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
         data = {}
 
         if isinstance(prediction, dict):
-            data.update({
-                'prediction_dict': prediction
-                })
+            data.update({'prediction_dict': prediction})
         else:
-            data.update({
-                'prediction_numeric': float(prediction)
-                })
+            data.update({'prediction_numeric': float(prediction)})
 
         validated_data.update(data)
 
@@ -103,7 +97,10 @@ class ScoreInstanceSerializer(GetByKeyOrCreateMixin,
 
     class Meta:
         model = ScoreInstance
-        exclude = ('prediction_dict', 'prediction_numeric', )
+        exclude = (
+            'prediction_dict',
+            'prediction_numeric',
+        )
 
 
 cache_registry.register(ScoreInstanceSerializer)
