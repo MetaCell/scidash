@@ -4,6 +4,37 @@ from django_filters import rest_framework as filters
 from scidash.sciunittests.models import ScoreInstance, TestInstance, TestSuite
 
 
+class TestInstanceFilter(filters.FilterSet):
+    class_name = filters.CharFilter(
+        name='test_class__class_name',
+        lookup_expr='icontains'
+    )
+
+    tags = filters.CharFilter(
+        name='tags__name',
+        lookup_expr='icontains'
+    )
+
+    name = filters.CharFilter(name='test_class__class_name',
+                              lookup_expr='icontains')
+
+    timestamp_from = filters.IsoDateTimeFilter(name='timestamp',
+            lookup_expr='gte')
+
+    timestamp_to = filters.IsoDateTimeFilter(name='timestamp',
+            lookup_expr='lte')
+
+    class Meta:
+        model = TestInstance
+        fields = [
+            'name',
+            'class_name',
+            'tags',
+            'timestamp_from',
+            'timestamp_to'
+        ]
+
+
 class ScoreFilter(filters.FilterSet):
     owner = filters.CharFilter(name='owner__username', lookup_expr='icontains')
 
@@ -93,9 +124,3 @@ class TestSuiteFilter(filters.FilterSet):
     class Meta:
         model = TestSuite
         fields = ['owner', 'timestamp_after', 'timestamp_before']
-
-
-class TestInstanceFilter(filters.FilterSet):
-    class Meta:
-        model = TestInstance
-        fields = ['hostname']
