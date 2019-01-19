@@ -1,6 +1,7 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect, render
+
 from scidash.account.forms import ScidashUserCreationForm
-from django.shortcuts import render, redirect
 
 
 def signup(request):

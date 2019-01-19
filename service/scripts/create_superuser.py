@@ -9,4 +9,6 @@ superuser_password = 'admin_test'
 try:
     User.objects.get(username=superuser_username)
 except User.DoesNotExist:
-    User.objects.create_superuser(superuser_username, superuser_email, superuser_password)
+    User.objects.create_superuser(
+        superuser_username, superuser_email, superuser_password
+    )

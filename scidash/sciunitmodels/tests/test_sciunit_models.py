@@ -1,34 +1,35 @@
-import os
 import json
+import os
 
-from django.test import TestCase, Client, RequestFactory
+from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
+
 from scidash.general.models import ScidashUser
-
-from scidash.sciunittests.serializers import ScoreInstanceSerializer
 from scidash.sciunitmodels.serializers import ModelClassSerializer
+from scidash.sciunittests.serializers import ScoreInstanceSerializer
 
-SAMPLE_FILE = os.path.join(os.path.dirname(__file__),
-        'test_data/score_object.json')
+SAMPLE_FILE = os.path.join(
+    os.path.dirname(__file__), 'test_data/score_object.json'
+)
 
 
 class SciunitModelTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitModelTestCase, cls).setUpClass()
 
         factory = RequestFactory()
         request = factory.get('/data/upload/sample_json.json')
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
         request.user = cls.user
 
         with open(SAMPLE_FILE) as f:
             score_serializer = ScoreInstanceSerializer(
-                    data=json.loads(f.read()),
-                    context={'request': request})
+                data=json.loads(f.read()), context={'request': request}
+            )
 
         if score_serializer.is_valid():
             score_serializer.save()
@@ -67,8 +68,9 @@ class SciunitModelTestCase(TestCase):
 
         for key in capabilities_data.keys():
             self.assertTrue(key in parsed_response)
-            self.assertEqual(capabilities_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                capabilities_data.get(key), parsed_response.get(key)
+            )
 
     def test_if_model_class_endpoint_works_correctly(self):
         client = Client()
@@ -88,8 +90,9 @@ class SciunitModelTestCase(TestCase):
 
         for key in model_class_data.keys():
             self.assertTrue(key in parsed_response)
-            self.assertEqual(model_class_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                model_class_data.get(key), parsed_response.get(key)
+            )
 
     def test_if_model_instance_endpoint_works_correctly(self):
         client = Client()
@@ -108,28 +111,27 @@ class SciunitModelTestCase(TestCase):
 
         for key in model_instance_data.keys():
             self.assertTrue(key in parsed_response)
-            self.assertEqual(model_instance_data.get(key),
-                    parsed_response.get(key))
+            self.assertEqual(
+                model_instance_data.get(key), parsed_response.get(key)
+            )
 
 
 class SciunitModelMatchingClassObjects(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super(SciunitModelMatchingClassObjects, cls).setUpClass()
 
         cls.model_class = {
-                "class_name": "ScoreModelClass",
-                "capabilities": [
-                    {
-                    "class_name": "TestCapability"
-                        }
-                    ],
-                "url": "http://test-score.url"
-                }
+            "class_name": "ScoreModelClass",
+            "capabilities": [{
+                "class_name": "TestCapability"
+            }],
+            "url": "http://test-score.url"
+        }
 
-        cls.user = ScidashUser.objects.create_user('admin', 'a@a.cc',
-                'montecarlo')
+        cls.user = ScidashUser.objects.create_user(
+            'admin', 'a@a.cc', 'montecarlo'
+        )
 
     def test_is_model_class_match_the_same_object(self):
         client = Client()
@@ -152,4 +154,3 @@ class SciunitModelMatchingClassObjects(TestCase):
         parsed_response = response.json()
 
         self.assertEqual(len(parsed_response), 1)
-
