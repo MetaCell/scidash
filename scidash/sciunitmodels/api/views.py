@@ -1,9 +1,13 @@
 from rest_framework import permissions, viewsets
 
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
+
+from scidash.sciunitmodels.filters import ModelInstanceFilter
+
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
+
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
@@ -21,4 +25,5 @@ class ModelClassViewSet(viewsets.ReadOnlyModelViewSet):
 class ModelInstanceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ModelInstance.objects.all()
     serializer_class = ModelInstanceSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
+    filter_class = ModelInstanceFilter
