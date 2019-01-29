@@ -6,32 +6,27 @@ from scidash.sciunittests.models import ScoreInstance, TestInstance, TestSuite
 
 class TestInstanceFilter(filters.FilterSet):
     class_name = filters.CharFilter(
-        name='test_class__class_name',
-        lookup_expr='icontains'
+        name='test_class__class_name', lookup_expr='icontains'
     )
 
-    tags = filters.CharFilter(
-        name='tags__name',
-        lookup_expr='icontains'
+    tags = filters.CharFilter(name='tags__name', lookup_expr='icontains')
+
+    name = filters.CharFilter(
+        name='test_class__class_name', lookup_expr='icontains'
     )
 
-    name = filters.CharFilter(name='test_class__class_name',
-                              lookup_expr='icontains')
+    timestamp_from = filters.IsoDateTimeFilter(
+        name='timestamp', lookup_expr='gte'
+    )
 
-    timestamp_from = filters.IsoDateTimeFilter(name='timestamp',
-            lookup_expr='gte')
-
-    timestamp_to = filters.IsoDateTimeFilter(name='timestamp',
-            lookup_expr='lte')
+    timestamp_to = filters.IsoDateTimeFilter(
+        name='timestamp', lookup_expr='lte'
+    )
 
     class Meta:
         model = TestInstance
         fields = [
-            'name',
-            'class_name',
-            'tags',
-            'timestamp_from',
-            'timestamp_to'
+            'name', 'class_name', 'tags', 'timestamp_from', 'timestamp_to'
         ]
 
 
