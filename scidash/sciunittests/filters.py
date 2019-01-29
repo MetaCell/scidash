@@ -15,6 +15,8 @@ class TestInstanceFilter(filters.FilterSet):
         lookup_expr='icontains'
     )
 
+    owner = filters.CharFilter(name='owner__username', lookup_expr='icontains')
+
     name = filters.CharFilter(name='test_class__class_name',
                               lookup_expr='icontains')
 

@@ -42,6 +42,7 @@ class TestInstance(models.Model):
     observation = JSONField()
     test_suites = models.ManyToManyField(TestSuite, related_name='tests')
     description = models.TextField(blank=True, null=True)
+    owner = models.ForeignKey(general_models.ScidashUser, null=True)
     verbose = models.IntegerField(default=0)
     timestamp = models.DateField(default=date.today)
     hash_id = models.CharField(max_length=100)

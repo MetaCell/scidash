@@ -43,6 +43,10 @@ class TestInstanceSerializer(
     test_class = TestClassSerializer()
     hash_id = serializers.CharField(validators=[])
     tags = TagSerializer(many=True, required=False)
+    owner = ScidashUserSerializer(
+        default=serializers.CurrentUserDefault(), read_only=True
+    )
+    tags = TagSerializer(many=True, required=False)
 
     key = 'hash_id'
 

@@ -39,6 +39,7 @@ class ModelInstance(models.Model):
     attributes = JSONField()
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
+    owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
     timestamp = models.DateField(default=date.today)
     url = models.URLField(default='', null=True, blank=True)
