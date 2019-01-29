@@ -38,7 +38,7 @@ class ModelInstanceSerializer(
 ):
     model_class = ModelClassSerializer()
     hash_id = serializers.CharField(validators=[])
-    tags = TagSerializer(many=True)
+    tags = TagSerializer(many=True, required=False)
     owner = ScidashUserSerializer(
         default=serializers.CurrentUserDefault(), read_only=True
     )
