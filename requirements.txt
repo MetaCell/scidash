@@ -15,6 +15,7 @@ daphne==2.2.0             # via channels
 django-dotenv==1.4.2
 django-extensions==1.9.7
 django-filter==1.1.0
+django-material==1.4.1
 django==1.11.7
 djangorestframework-jwt==1.11.0
 djangorestframework==3.7.1

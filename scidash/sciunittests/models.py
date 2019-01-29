@@ -1,8 +1,9 @@
 import logging
+from datetime import date
 
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.postgres.fields import HStoreField, JSONField
 from django.db import models
-from django.contrib.postgres.fields import JSONField, HStoreField
-from django.utils import timezone
 
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
     hash = models.CharField(max_length=57, null=True, blank=True)
-    timestamp = models.DateField(default=timezone.now)
+    timestamp = models.DateField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
     class Meta:
@@ -42,12 +43,15 @@ class TestInstance(models.Model):
     test_suites = models.ManyToManyField(TestSuite, related_name='tests')
     description = models.TextField(blank=True, null=True)
     verbose = models.IntegerField(default=0)
-    timestamp = models.DateField(default=timezone.now)
+    timestamp = models.DateField(default=date.today)
     hash_id = models.CharField(max_length=100)
-    hostname = models.CharField(max_length=200, default='', blank=True,
-            null=True)
-    build_info = models.CharField(max_length=200, default='', blank=True,
-            null=True)
+    hostname = models.CharField(
+        max_length=200, default='', blank=True, null=True
+    )
+    build_info = models.CharField(
+        max_length=200, default='', blank=True, null=True
+    )
+    tags = GenericRelation(general_models.Tag)
 
     class Meta:
         verbose_name = 'Test instance'
@@ -70,8 +74,9 @@ class ScoreClass(models.Model):
 
 
 class ScoreInstance(models.Model):
-    score_type = models.CharField(max_length=200, default='', null=True,
-            blank=True)
+    score_type = models.CharField(
+        max_length=200, default='', null=True, blank=True
+    )
     score_class = models.ForeignKey(ScoreClass)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
@@ -81,9 +86,10 @@ class ScoreInstance(models.Model):
     prediction_dict = HStoreField(default=None, null=True, blank=True)
     raw = models.CharField(max_length=200, default=None, blank=True, null=True)
     hash_id = models.CharField(max_length=100)
-    summary = models.CharField(max_length=200,
-                               default=None, blank=True, null=True)
-    timestamp = models.DateField(default=timezone.now)
+    summary = models.CharField(
+        max_length=200, default=None, blank=True, null=True
+    )
+    timestamp = models.DateField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
     @property
@@ -103,6 +109,5 @@ class ScoreInstance(models.Model):
 
     def __str__(self):
         return "Score for {0} in {1} test instance".format(
-            self.model_instance.name,
-            self.test_instance.test_class.class_name
+            self.model_instance.name, self.test_instance.test_class.class_name
         )

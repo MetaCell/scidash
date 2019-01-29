@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
-import dotenv
 import datetime
+import os
+
+import dotenv
+from django.urls import reverse
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
@@ -57,12 +59,14 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework_cache',
+    'material'
 ]
 
 SCIDASH_APPS = [
     'scidash.sciunitmodels',
     'scidash.sciunittests',
     'scidash.general',
+    'scidash.account'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
@@ -71,7 +75,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -82,7 +85,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'scidash.account.auth.CsrfExemptSessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
         ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -176,3 +180,7 @@ GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServle
 GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
+
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

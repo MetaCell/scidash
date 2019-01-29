@@ -1,10 +1,9 @@
 from rest_framework import serializers
 
-from scidash.general.models import ScidashUser
+from scidash.general.models import Tag
 
 
-class ScidashUserSerializer(serializers.ModelSerializer):
-
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ScidashUser
-        fields = '__all__'
+        model = Tag
+        fields = ('name', )

@@ -1,8 +1,11 @@
 from __future__ import unicode_literals
+from datetime import date
 
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.postgres.fields import HStoreField, JSONField
 from django.db import models
-from django.contrib.postgres.fields import JSONField, HStoreField
 
+from scidash.general import models as general_models
 
 # Models Related
 
@@ -37,7 +40,9 @@ class ModelInstance(models.Model):
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
     hash_id = models.CharField(max_length=100)
+    timestamp = models.DateField(default=date.today)
     url = models.URLField(default='', null=True, blank=True)
+    tags = GenericRelation(general_models.Tag)
 
     class Meta:
         verbose_name = 'Model instance'
