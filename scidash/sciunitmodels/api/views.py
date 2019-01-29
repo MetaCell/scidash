@@ -19,7 +19,7 @@ class ModelClassViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
 
-class ModelInstanceViewSet(viewsets.ReadOnlyModelViewSet):
+class ModelInstanceViewSet(viewsets.ModelViewSet):
     queryset = ModelInstance.objects.all()
     serializer_class = ModelInstanceSerializer
     permission_classes = (permissions.AllowAny,)
