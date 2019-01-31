@@ -6,6 +6,7 @@ from rest_framework_cache.serializers import CachedSerializerMixin
 from scidash.general.mixins import GetByKeyOrCreateMixin
 from scidash.general.serializers import TagSerializer
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
+from scidash.account.serializers import ScidashUserSerializer
 
 
 class CapabilitySerializer(
@@ -37,7 +38,11 @@ class ModelInstanceSerializer(
 ):
     model_class = ModelClassSerializer()
     hash_id = serializers.CharField(validators=[])
-    tags = TagSerializer(many=True)
+    tags = TagSerializer(many=True, required=False)
+    owner = ScidashUserSerializer(
+        default=serializers.CurrentUserDefault(), read_only=True
+    )
+
 
     key = 'hash_id'
 

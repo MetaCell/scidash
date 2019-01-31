@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
+from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
 from django.db import models
-from django.utils import timezone
 
 from scidash.general import models as general_models
 
@@ -39,8 +39,9 @@ class ModelInstance(models.Model):
     attributes = JSONField()
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
+    owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
-    timestamp = models.DateField(default=timezone.now)
+    timestamp = models.DateField(default=date.today)
     url = models.URLField(default='', null=True, blank=True)
     tags = GenericRelation(general_models.Tag)
 
