@@ -39,7 +39,7 @@ class TestClassSerializer(
 class TestInstanceSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
 ):
-    test_suites = TestSuiteSerializer(many=True)
+    test_suites = TestSuiteSerializer(many=True, required=False)
     test_class = TestClassSerializer()
     hash_id = serializers.CharField(validators=[])
     tags = TagSerializer(many=True, required=False)

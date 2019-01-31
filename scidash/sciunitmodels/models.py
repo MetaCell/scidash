@@ -36,7 +36,7 @@ class ModelClass(models.Model):
 class ModelInstance(models.Model):
     model_class = models.ForeignKey(ModelClass)
     backend = models.CharField(max_length=200, null=True, blank=True)
-    attributes = JSONField()
+    attributes = JSONField(blank=True, null=True)
     name = models.CharField(max_length=50)
     run_params = HStoreField(blank=True, null=True)
     owner = models.ForeignKey(general_models.ScidashUser, null=True)

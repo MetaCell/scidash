@@ -38,9 +38,10 @@ class TestClass(models.Model):
 
 
 class TestInstance(models.Model):
+    name = models.CharField(max_length=200, default='Default Name')
     test_class = models.ForeignKey(TestClass)
     observation = JSONField()
-    test_suites = models.ManyToManyField(TestSuite, related_name='tests')
+    test_suites = models.ManyToManyField(TestSuite, related_name='tests', blank=True)
     description = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     verbose = models.IntegerField(default=0)
