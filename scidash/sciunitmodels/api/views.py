@@ -1,13 +1,10 @@
 from rest_framework import permissions, viewsets
 
-from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
-
 from scidash.sciunitmodels.filters import ModelInstanceFilter
-
+from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
-
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):

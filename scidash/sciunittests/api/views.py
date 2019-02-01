@@ -19,10 +19,10 @@ class ScoreViewSet(viewsets.ReadOnlyModelViewSet):
     filter_class = ScoreFilter
 
 
-class TestInstanceViewSet(viewsets.ReadOnlyModelViewSet):
+class TestInstanceViewSet(viewsets.ModelViewSet):
     queryset = TestInstance.objects.all()
     serializer_class = TestInstanceSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = TestInstanceFilter
 
 
