@@ -115,3 +115,6 @@ static/org.geppetto.frontend
 pygeppetto_server/
 tags
 pygeppetto-django
+static/projects/model.xmi
+static/projects/nml_model.nml
+static/projects/project.json

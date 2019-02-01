@@ -110,7 +110,7 @@ git-install-hooks:
 	cp service/hooks/* .git/hooks
 
 git-clean-local: git-check-on-dev
-	for b in `git branch --list "feature/*" --merged`; do git branch -d "$$b"; done;
+	for b in `git branch --list "feature_*" --merged`; do git branch -d "$$b"; done;
 
 git-check-on-dev:
 	@git status -b -s | grep "## development...origin/development"
