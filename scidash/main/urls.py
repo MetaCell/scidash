@@ -61,11 +61,10 @@ router.register(
 )
 
 urlpatterns = [
-    url(r'^', include('pygeppetto_server.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^api/login/', obtain_jwt_token),
-    url(r'^data/', include('scidash.general.urls')),
-    url(r'^api/date-range', DateRangeView.as_view(), name='date-range-view'),
+    url(r'^api/login/?$', obtain_jwt_token),
+    url(r'^data/?$', include('scidash.general.urls')),
+    url(r'^api/date-range/?$', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
     url(
@@ -83,9 +82,9 @@ urlpatterns = [
         ),
         name='password-reset'
     ),
-    url(r'^auth/sign-up/', signup, name='sign-up'),
+    url(r'^auth/sign-up/?$', signup, name='sign-up'),
     url(
-        r'^api/users/me/$',
+        r'^api/users/me/?$',
         UserViewSet.as_view({
             'get': 'retrieve'
         }),
@@ -93,6 +92,7 @@ urlpatterns = [
         name='user-info'
     ),
     url(
-        r'^api/users/is-logged', CheckIsLoggedView.as_view(), name='is-logged'
+        r'^api/users/is-logged/?$', CheckIsLoggedView.as_view(), name='is-logged'
     ),
+    url(r'^', include('pygeppetto_server.urls')),
 ]
