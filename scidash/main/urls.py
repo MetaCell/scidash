@@ -63,7 +63,7 @@ router.register(
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login/?$', obtain_jwt_token),
-    url(r'^data/?$', include('scidash.general.urls')),
+    url(r'^data/', include('scidash.general.urls')),
     url(r'^api/date-range/?$', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
