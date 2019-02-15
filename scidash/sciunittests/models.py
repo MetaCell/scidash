@@ -74,7 +74,8 @@ class TestClass(models.Model):
 class TestInstance(models.Model):
     name = models.CharField(max_length=200, default='Default Name')
     test_class = models.ForeignKey(TestClass)
-    observation = JSONField()
+    observation = JSONField(null=True, blank=True)
+    params = JSONField(null=True, blank=True)
     test_suites = models.ManyToManyField(
         TestSuite, related_name='tests', blank=True
     )
@@ -96,7 +97,7 @@ class TestInstance(models.Model):
         verbose_name_plural = 'Test instances'
 
     def __str__(self):
-        return "{0} instance".format(self.test_class.class_name)
+        return f"{self.name} - {self.test_class.class_name} instance"
 
 
 class ScoreClass(models.Model):
