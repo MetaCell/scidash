@@ -4,6 +4,7 @@ root_path=$PWD;
 
 sciunit_repo="https://github.com/scidash/sciunit.git -b dash"
 neuronunit_repo="https://github.com/scidash/neuronunit.git -b dash"
+venv="./venv/bin/activate"
 
 sciunit_path="$root_path/sciunit"
 neuronunit_path="$root_path/neuronunit"
@@ -14,6 +15,8 @@ git clone $sciunit_repo $sciunit_path
 git clone $neuronunit_repo $neuronunit_path
 
 cp $proper_requirements_path $sciunit_requirements_path
+
+source $venv
 
 cd $sciunit_path
 
