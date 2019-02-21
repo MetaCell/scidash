@@ -27,6 +27,7 @@ class TestInstanceModelAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
+    list_filter = ["tags__name"]
 
 
 class TestSuiteAdmin(admin.ModelAdmin):
