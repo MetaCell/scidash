@@ -13,9 +13,7 @@ class TestInstanceFilter(filters.FilterSet):
 
     owner = filters.CharFilter(name='owner__username', lookup_expr='icontains')
 
-    name = filters.CharFilter(
-        name='name', lookup_expr='icontains'
-    )
+    name = filters.CharFilter(name='name', lookup_expr='icontains')
 
     timestamp_from = filters.IsoDateTimeFilter(
         name='timestamp', lookup_expr='gte'
