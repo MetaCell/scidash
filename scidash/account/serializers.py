@@ -6,4 +6,4 @@ from scidash.general.models import ScidashUser
 class ScidashUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScidashUser
-        exclude = ('password',)
+        exclude = ('password', )

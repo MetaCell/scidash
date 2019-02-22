@@ -35,12 +35,18 @@ class ModelInstanceFilter(filters.FilterSet):
 
 
 class ModelClassFilter(filters.FilterSet):
-    by_model_url = filters.CharFilter(method='by_model_url')
+    model_url = filters.CharFilter(method='by_model_url')
+
+    class Meta:
+        model = models.ModelClass
+        fields = [
+            'model_url',
+        ]
 
     def by_model_url(self, queryset, name, value):
         model_name = None
-        url = urlparse.urlparse(value)
-        model_name = os.path.basename(url)
+        url = urlparse(value)
+        model_name = os.path.basename(url.path)
         model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
         helpers.download_and_save_model(model_path, value)

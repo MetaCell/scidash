@@ -9,7 +9,9 @@ from django.dispatch import receiver
 
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
-from scidash.sciunittests.helpers import get_observation_schema, get_test_parameters_schema
+from scidash.sciunittests.helpers import (
+    get_observation_schema, get_test_parameters_schema
+)
 
 logger = logging.getLogger(__name__)
 
