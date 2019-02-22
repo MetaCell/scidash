@@ -1,18 +1,10 @@
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
+{% include 'registration/base-template.html' %}
 
 {% load material_form %}
 
-<style>
-.registration-container{
-  position: fixed !important;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
-  width: 250px;
-}
-</style>
-
+{% block content %}
 <div class="registration-container">
   <h5>SCIDASH SIGN UP</h5>
   <a href="{% url 'login' %}">Already signed up? Then login!</a>
@@ -23,3 +15,5 @@
   </form>
   <a href="{% url 'index' %}">Go home</a>
 </div>
+{% endblock %}
+
