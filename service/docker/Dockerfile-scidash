@@ -28,7 +28,7 @@ ADD . $APP_DIR
 # INSTALLING REQUIREMENTS
 
 RUN apt-get install curl
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get install nodejs
 
 RUN make install-backend-with-env
