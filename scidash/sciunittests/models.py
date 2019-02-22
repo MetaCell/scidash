@@ -4,9 +4,14 @@ from datetime import date
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
+from scidash.sciunittests.helpers import (
+    get_observation_schema, get_test_parameters_schema
+)
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +33,10 @@ class TestSuite(models.Model):
 class TestClass(models.Model):
     class_name = models.CharField(max_length=50)
     url = models.URLField(default='', null=True, blank=True)
+    import_path = models.TextField(null=True, blank=True)
+    observation_schema = JSONField(null=True, blank=True)
+    test_parameters_schema = JSONField(null=True, blank=True)
+    memo = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -36,11 +45,39 @@ class TestClass(models.Model):
     def __str__(self):
         return self.class_name
 
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+
+        observation_schema = None
+        params_schema = None
+
+        try:
+            observation_schema = get_observation_schema(self.import_path)
+            params_schema = get_test_parameters_schema(self.import_path)
+        except ImportError:
+            self.memo = f"Can't import {self.import_path}"
+        except AttributeError:
+            self.memo = \
+                f"Wrong class for import {self.import_path}"
+
+        if observation_schema is None:
+            self.memo = \
+                f"Wrong class for import observations {self.import_path}"
+        elif params_schema is None:
+            self.memo = \
+                f"Wrong class for import params {self.import_path}"
+        else:
+            self.memo = ""
+
+        self.observation_schema = observation_schema
+        self.test_parameters_schema = params_schema
+
 
 class TestInstance(models.Model):
     name = models.CharField(max_length=200, default='Default Name')
     test_class = models.ForeignKey(TestClass)
-    observation = JSONField()
+    observation = JSONField(null=True, blank=True)
+    params = JSONField(null=True, blank=True)
     test_suites = models.ManyToManyField(
         TestSuite, related_name='tests', blank=True
     )
@@ -62,7 +99,7 @@ class TestInstance(models.Model):
         verbose_name_plural = 'Test instances'
 
     def __str__(self):
-        return "{0} instance".format(self.test_class.class_name)
+        return f"{self.name} - {self.test_class.class_name} instance"
 
 
 class ScoreClass(models.Model):

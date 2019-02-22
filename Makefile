@@ -1,7 +1,13 @@
-install: create-db install-frontend install-backend
+install: create-db install-sciunit-neuronunit install-frontend install-backend
 	@echo "==========================="
 	@echo "=        Finished         ="
 	@echo "==========================="
+
+install-sciunit-neuronunit:
+	@echo "==========================="
+	@echo "=Install sciunit/neuronunit="
+	@echo "==========================="
+	@./service/scripts/install-sciunit-neuronunit.sh
 
 install-frontend:
 	@echo "==========================="
@@ -74,10 +80,10 @@ isort-format:
 	isort --recursive .
 
 yapf-format:
-	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" .
+	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
 
 yapf-lint:
-	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" .
+	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
 
 generate-tags:
 	ctags -R --exclude=.git --exclude=node_modules --exclude=dist --exclude=env .

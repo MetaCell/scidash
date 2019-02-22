@@ -1,5 +1,10 @@
+import os
+from urllib.parse import urlparse
+
+from django.conf import settings
 from django_filters import rest_framework as filters
 
+import scidash.sciunitmodels.helpers as helpers
 import scidash.sciunitmodels.models as models
 
 
@@ -27,3 +32,32 @@ class ModelInstanceFilter(filters.FilterSet):
         fields = [
             'name', 'class_name', 'tags', 'timestamp_from', 'timestamp_to'
         ]
+
+
+class ModelClassFilter(filters.FilterSet):
+    model_url = filters.CharFilter(method='by_model_url')
+
+    class Meta:
+        model = models.ModelClass
+        fields = [
+            'model_url',
+        ]
+
+    def by_model_url(self, queryset, name, value):
+        model_name = None
+        url = urlparse(value)
+        model_name = os.path.basename(url.path)
+        model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
+
+        helpers.download_and_save_model(model_path, value)
+
+        model_classes = models.ModelClass.objects.filter(
+            import_path__isnull=False
+        )
+
+        matching_classes = [
+            kls.pk for kls in model_classes
+            if helpers.check_capabilities(model_path, kls.import_path)
+        ]
+
+        return queryset.filter(pk__in=matching_classes)
