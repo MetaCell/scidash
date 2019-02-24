@@ -1,5 +1,4 @@
 class GetOrCreateMixin():
-
     def create(self, validated_data):
         model = self.Meta.model
 
@@ -9,7 +8,6 @@ class GetOrCreateMixin():
 
 
 class GetByKeyOrCreateMixin():
-
     def create(self, validated_data):
         model = self.Meta.model
         relations, reverse_relations = self._extract_relations(validated_data)
@@ -25,15 +23,14 @@ class GetByKeyOrCreateMixin():
             try:
                 model_instance = model.objects.get(**{self.key: key})
                 instance = super(GetByKeyOrCreateMixin,
-                        self).update(model_instance, validated_data)
+                                 self).update(model_instance, validated_data)
             except model.DoesNotExist:
                 instance = super(GetByKeyOrCreateMixin,
-                        self).create(validated_data)
+                                 self).create(validated_data)
         else:
             instance = super(GetByKeyOrCreateMixin,
-                        self).create(validated_data)
+                             self).create(validated_data)
 
         self.update_or_create_reverse_relations(instance, reverse_relations)
 
         return instance
-

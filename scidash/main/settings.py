@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
-import dotenv
 import datetime
+import os
 
+import dotenv
 from django.urls import reverse
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -75,7 +75,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -86,7 +85,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'scidash.account.auth.CsrfExemptSessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
         ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -188,3 +188,7 @@ ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+POPULATE_USERS = True
+
+DOWNLOADED_MODEL_DIR = os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'), 'models')
+MODEL_DOLL = os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'), 'model_doll.nml')

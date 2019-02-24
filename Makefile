@@ -1,7 +1,13 @@
-install: create-db install-frontend install-backend
+install: create-db install-sciunit-neuronunit install-frontend install-backend
 	@echo "==========================="
 	@echo "=        Finished         ="
 	@echo "==========================="
+
+install-sciunit-neuronunit:
+	@echo "==========================="
+	@echo "=Install sciunit/neuronunit="
+	@echo "==========================="
+	@./service/scripts/install-sciunit-neuronunit.sh
 
 install-frontend:
 	@echo "==========================="
@@ -33,13 +39,19 @@ create-db:
 	@echo "==========================="
 	@./service/scripts/db-create-psql.sh
 
+install-dev:
+	@echo "==========================="
+	@echo "=    Install dev deps     ="
+	@echo "==========================="
+	pip install -r requirements-dev.txt
+
 run-dev: migrate generate-tags
 	make run-django & \
 	make run-frontend
 
-django-migrate: make-migrations migrate
+django-migrate: migrations migrate
 
-make-migrations:
+migrations:
 	./manage.py makemigrations
 
 migrate:
@@ -68,10 +80,10 @@ isort-format:
 	isort --recursive .
 
 yapf-format:
-	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" .
+	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
 
 yapf-lint:
-	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" .
+	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
 
 generate-tags:
 	ctags -R --exclude=.git --exclude=node_modules --exclude=dist --exclude=env .
@@ -99,3 +111,14 @@ push-scidash-db:
 	@echo "=  Push scidash db image  ="
 	@echo "==========================="
 	@./service/scripts/push-image-scidash-db.sh
+
+git-install-hooks:
+	cp service/hooks/* .git/hooks
+
+git-clean-local: git-check-on-dev
+	for b in `git branch --list "feature_*" --merged`; do git branch -d "$$b"; done;
+	for b in `git branch --list "bug_*" --merged`; do git branch -d "$$b"; done;
+
+git-check-on-dev:
+	@git status -b -s | grep "## development...origin/development"
+	@echo "On development"

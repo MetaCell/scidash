@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
-from scidash.sciunittests.models import ScoreInstance, TestInstance, TestClass, TestSuite
+
 from scidash.general.models import Tag
+from scidash.sciunittests.models import (
+    ScoreInstance, TestClass, TestInstance, TestSuite
+)
 
 # Register your models here.
 
@@ -24,6 +27,7 @@ class TestInstanceModelAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
+    list_filter = ["tags__name"]
 
 
 class TestSuiteAdmin(admin.ModelAdmin):
