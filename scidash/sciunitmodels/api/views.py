@@ -1,4 +1,5 @@
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, views, response
+import scidash.sciunitmodels.helpers as hlp
 
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
@@ -25,3 +26,13 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
     serializer_class = ModelInstanceSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = ModelInstanceFilter
+
+
+class ModelParametersView(views.APIView):
+
+    def get(self, request):
+        url = request.GET.get('url')
+
+        params = hlp.get_model_parameters(url)
+
+        return response.Response(params)

@@ -98,5 +98,6 @@ urlpatterns = [
         CheckIsLoggedView.as_view(),
         name='is-logged'
     ),
+    url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
     url(r'^', include('pygeppetto_server.urls')),
 ]
