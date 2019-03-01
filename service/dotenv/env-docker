@@ -11,3 +11,6 @@ STATIC_URL=/static/
 STATIC_DIR=static
 
 REDIS_URL=redis://scidash-redis:6379
+
+GEPPETTO_SERVLET_URL='ws://live.geppetto.org/org.geppetto.frontend/GeppettoServlet'
+GEPPETTO_BASE_URL='http://live.geppetto.org/org.geppetto.frontend/geppetto'

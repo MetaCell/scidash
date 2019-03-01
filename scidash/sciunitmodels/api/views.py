@@ -31,7 +31,7 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
 class ModelParametersView(views.APIView):
 
     def get(self, request):
-        url = request.GET.get('url')
+        url = request.GET.get('model_url')
 
         params = hlp.get_model_parameters(url)
 

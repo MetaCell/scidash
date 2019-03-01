@@ -50,6 +50,7 @@ class ModelClass(models.Model):
     )
     url = models.URLField(default='', null=True, blank=True, unique=True)
     import_path = models.TextField(null=True, blank=True)
+    memo = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -72,8 +73,6 @@ class ModelClass(models.Model):
         elif extra_capabilities is None:
             self.memo = \
                 f"No extra capabilities check {self.import_path}"
-        else:
-            self.memo = ""
 
         for capability in capabilities:
             capability_model, created = Capability.objects.get_or_create(
@@ -83,9 +82,9 @@ class ModelClass(models.Model):
                 self.capabilities.add(capability_model)
             else:
                 extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(
-                    capability=capability_model,
-                    model_class=self,
-                    extra_check=extra_capabilities[capability]
+                        capability=capability_model,
+                        model_class=self,
+                        extra_check=extra_capabilities[capability]
                 )
                 extra_capability_model.save()
 
