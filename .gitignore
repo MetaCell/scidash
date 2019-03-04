@@ -118,3 +118,6 @@ pygeppetto-django
 static/projects/model.xmi
 static/projects/nml_model.nml
 static/projects/project.json
+static/models/Izh2007One-no-input-1.net.nml
+static/models/Izh2007One.net.nml
+static/models/LEMS_2007One.xml

@@ -45,7 +45,7 @@ install-dev:
 	@echo "==========================="
 	pip install -r requirements-dev.txt
 
-run-dev: migrate generate-tags
+run-dev: migrate
 	make run-django & \
 	make run-frontend
 

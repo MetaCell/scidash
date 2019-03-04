@@ -1,7 +1,10 @@
 import requests
-from django.conf import settings
+import json
+from django.conf import settings as s
 
 from scidash.general.helpers import import_class
+
+import pygeppetto_gateway as pg
 
 
 def download_and_save_model(path, url):
@@ -22,7 +25,7 @@ def check_capabilities(model_file_path, model_class_import_path):
 def get_model_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    doll = settings.MODEL_DOLL
+    doll = s.MODEL_DOLL
 
     return klass(doll).capabilities
 
@@ -30,6 +33,29 @@ def get_model_capabilities(model_class_import_path):
 def get_extra_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    doll = settings.MODEL_DOLL
+    doll = s.MODEL_DOLL
 
     return klass(doll).extra_capability_checks
+
+
+def get_model_parameters(url):
+    servlet_manager = pg.GeppettoServletManager()
+
+    builder = pg.GeppettoProjectBuilder(
+        nml_url=url,
+        project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/p.json",
+        xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/m.xmi",
+        nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/nml_model.nml"
+    )
+    project_url = builder.build_project()
+
+    servlet_manager.handle('load_project_from_url', project_url)
+
+    wrong_message = True
+    result = {}
+
+    while wrong_message:
+        result = json.loads(servlet_manager.read())
+        wrong_message = result.get('type') != 'geppetto_model_loaded'
+
+    return result

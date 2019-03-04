@@ -176,8 +176,22 @@ REST_FRAMEWORK_CACHE = {
 }
 
 PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
-GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
-GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
+PYGEPPETTO_BUILDER_PROJECT_BASE_URL = os.path.join(os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR')
+), 'projects')
+
+GEPPETTO_SERVLET_URL = os.environ.get(
+    'GEPPETTO_SERVLET_URL',
+    'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
+)
+GEPPETTO_BASE_URL = os.environ.get(
+    'GEPPETTO_BASE_URL', 'http://localhost:8080/org.geppetto.frontend/geppetto'
+)
+
+BASE_PROJECT_FILES_HOST = os.environ.get(
+    'BASE_PROJECT_FILES_HOST',
+    'http://localhost:8000/static/projects/'
+)
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
 
@@ -186,5 +200,9 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 POPULATE_USERS = True
 
-DOWNLOADED_MODEL_DIR = os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'), 'models')
-MODEL_DOLL = os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'), 'model_doll.nml')
+DOWNLOADED_MODEL_DIR = os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR'), 'models'
+)
+MODEL_DOLL = os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR'), 'model_doll.nml'
+)
