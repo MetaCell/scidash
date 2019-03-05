@@ -29,9 +29,9 @@ brew install redis
 - [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
 - [application](https://postgresapp.com/) for MacOS
 
-**Install SciDash**
+### **Install SciDash**
 
-***Project root configuration***
+#### ***Project root configuration***
 First of all we need to clone the scidash folder from the remote repo, follow the commands below:
 
 ```
@@ -49,7 +49,7 @@ source .env
 
 Just a reminder before to go forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before to further with the procedure ensure you have Python 3.6 (or bigger) installed.
 
-***Configure Database***
+#### ***Configure Database***
 In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
 
 ```
@@ -63,7 +63,7 @@ sudo su postgres
 logout
 ```
 
-***Backend and Fronend Installation***
+#### ***Backend and Fronend Installation***
 Once done with the database configuration you can proceed with the backend (first) and the frontend (second) installation.
 First we start with the backend installation with the command below:
 ```
@@ -78,9 +78,9 @@ Once the backend installation is done we can move to the fronend installation:
 make install-frontend
 ```
 
-***Run Scidash***
+#### ***Run Scidash***
 
-## Start the server
+##### Start the server
 ```
 make run-dev
 ```
