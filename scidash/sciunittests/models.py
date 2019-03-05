@@ -4,13 +4,11 @@ from datetime import date
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
 from scidash.sciunittests.helpers import (
-    get_observation_schema, get_test_parameters_schema
+    get_observation_schema, get_test_parameters_schema, get_units
 )
 
 logger = logging.getLogger(__name__)
@@ -36,6 +34,7 @@ class TestClass(models.Model):
     import_path = models.TextField(null=True, blank=True)
     observation_schema = JSONField(null=True, blank=True)
     test_parameters_schema = JSONField(null=True, blank=True)
+    units = models.TextField(null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -50,10 +49,12 @@ class TestClass(models.Model):
 
         observation_schema = None
         params_schema = None
+        units = None
 
         try:
             observation_schema = get_observation_schema(self.import_path)
             params_schema = get_test_parameters_schema(self.import_path)
+            units = get_units(self.import_path)
         except ImportError:
             self.memo = f"Can't import {self.import_path}"
         except AttributeError:
@@ -66,11 +67,15 @@ class TestClass(models.Model):
         elif params_schema is None:
             self.memo = \
                 f"Wrong class for import params {self.import_path}"
+        elif units is None:
+            self.memo = \
+                f"Wrong class for import dimensions {self.import_path}"
         else:
             self.memo = ""
 
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema
+        self.units = units
 
 
 class TestInstance(models.Model):

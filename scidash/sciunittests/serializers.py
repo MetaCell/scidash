@@ -7,9 +7,11 @@ from scidash.account.serializers import ScidashUserSerializer
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
+from scidash.general.helpers import import_class
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
+import sciunit
 
 
 class TestSuiteSerializer(
@@ -49,6 +51,38 @@ class TestInstanceSerializer(
     tags = TagSerializer(many=True, required=False)
 
     key = 'hash_id'
+
+    def leave_it_for_later(self, data):
+        sciunit.settings['PREVALIDATE'] = True
+
+        class_data = data.get('test_class')
+        test_class = import_class(class_data.get('import_path'))
+        quantity = import_class(class_data.get('units'))
+        observations = data.get('observation')
+        without_units = []
+
+        def filter_units(schema):
+            result = []
+            for key, rules in schema.items():
+                if rules.get('units', False):
+                    result.append(key)
+
+            return result
+
+        if isinstance(test_class.observations_schema, list):
+            for schema in test_class.observation_schema:
+                without_units += filter_units(schema)
+        else:
+            without_units = filter_units(test_class.observation_schema)
+
+        obs_with_units = {x: int(y)*quantity for x, y in observations.items()}
+
+        try:
+            test_class(obs_with_units)
+        except Exception as e:
+            raise serializers.ValidationError(e)
+
+        return data
 
     class Meta:
         model = TestInstance
