@@ -7,6 +7,7 @@ from django.db import models
 
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
+from scidash.general.helpers import import_class
 from scidash.sciunittests.helpers import (
     get_observation_schema, get_test_parameters_schema, get_units
 )
@@ -40,6 +41,9 @@ class TestClass(models.Model):
     class Meta:
         verbose_name = 'Test class'
         verbose_name_plural = 'Test classes'
+
+    def units_name(self):
+        return import_class(self.units).name
 
     def __str__(self):
         return self.class_name

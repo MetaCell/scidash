@@ -31,6 +31,7 @@ class TestClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
 ):
     key = 'url'
+    units = serializers.CharField(source='units_name', required=False)
     url = serializers.CharField(validators=[])
 
     class Meta:
