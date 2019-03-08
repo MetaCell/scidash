@@ -31,7 +31,7 @@ class TestClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
 ):
     key = 'url'
-    units = serializers.CharField(source='units_name', required=False)
+    units_name = serializers.CharField(required=False)
     url = serializers.CharField(validators=[])
 
     class Meta:
@@ -53,7 +53,7 @@ class TestInstanceSerializer(
 
     key = 'hash_id'
 
-    def leave_it_for_later(self, data):
+    def validate(self, data):
         sciunit.settings['PREVALIDATE'] = True
 
         class_data = data.get('test_class')
@@ -65,23 +65,28 @@ class TestInstanceSerializer(
         def filter_units(schema):
             result = []
             for key, rules in schema.items():
-                if rules.get('units', False):
+                if not rules.get('units', False):
                     result.append(key)
 
             return result
 
-        if isinstance(test_class.observations_schema, list):
+        if isinstance(test_class.observation_schema, list):
             for schema in test_class.observation_schema:
                 without_units += filter_units(schema)
         else:
             without_units = filter_units(test_class.observation_schema)
 
-        obs_with_units = {x: int(y)*quantity for x, y in observations.items()}
+        obs_with_units = {
+            x: (int(y) * quantity if x not in without_units else int(y))
+            for x, y in observations.items()
+        }
 
         try:
             test_class(obs_with_units)
         except Exception as e:
-            raise serializers.ValidationError(e)
+            raise serializers.ValidationError(
+                f"Can't instantiate class, reason candidates: {e}"
+            )
 
         return data
 
