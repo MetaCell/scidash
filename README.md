@@ -13,7 +13,7 @@ SciDash is a geppetto / django-based client-server web application.
 
 ## Installation
 
-We recommend you to use a virtual environment for the installation, so you can keep all the dependencies within that environment.
+We recommend you to use a Python 3 (*3.6 or newer at least*) virtual environment for the installation, so you can keep all the dependencies within that environment.
 
 **Dependencies**
 
@@ -29,31 +29,58 @@ brew install redis
 - [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
 - [application](https://postgresapp.com/) for MacOS
 
-**Install SciDash**
+### **Install SciDash**
+
+#### ***Project root configuration***
+First of all we need to clone the scidash folder from the remote repo, follow the commands below:
 
 ```
 git clone https://github.com/MetaCell/scidash
 cd scidash
-make install
 ```
 
-Also you should create an .env file in the project root, an example can be found in the folder: service/dotenv.
+Once retrieved the data we need to create a .env file in the project root where we are at the moment if you followed the previous commands.
+An example can be found in the folder scidash/dotenv/env-docker but you will need to modify this based on your current configuration (e.g. if you want to configure this in your local machine you will need to change DB_HOST from "scidash-postgres" to "localhost", same principle for the other parameters if you want to use different hosts or ports for your deployment).
 
-**Configure Database**
-Run:
+```
+cp service/dotenv/env-docker .env
+source .env
+```
+
+Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
+
+#### ***Configure Database***
+In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
+
 ```
 # navigate to scidash root folder
 cd service/scripts
 # impersonate postgres user (may not be necessary depending on your access rights)
-su postgres
+sudo su postgres
 # run db creation script located in the scidash folder
 ./db_create_psql.sh
 # to return to your shell user only necessary if you used su
 logout
-make django-migrate
 ```
 
-## Start the server
+#### ***Backend and Fronend Installation***
+Once done with the database configuration you can proceed with the backend (first) and the frontend (second) installation.
+First we start with the backend installation with the command below:
+```
+# navigate to scidash root folder
+make install-backend
+```
+If you'd like to verify that all the packages have been correctly installed you can compare the output of the command "pip list" with the file requirements.txt that contains the list of all the packages required.
+
+Once the backend installation is done we can move to the fronend installation:
+```
+# navigate to scidash root folder
+make install-frontend
+```
+
+#### ***Run Scidash***
+
+##### Start the server
 ```
 make run-dev
 ```
