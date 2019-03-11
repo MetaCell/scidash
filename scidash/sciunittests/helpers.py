@@ -1,33 +1,26 @@
-import importlib
+from scidash.general.helpers import import_class
+import inspect
 
 
 def get_observation_schema(import_path):
-    splitted = import_path.split('.')
-
-    class_name = splitted[-1:][0]
-    module_path = ".".join(splitted[:-1])
-
-    imported_module = importlib.import_module(module_path)
-    klass = getattr(imported_module, class_name)
-
+    klass = import_class(import_path)
     observation_schema = klass.observation_schema
-    result = {}
 
-    for schema in observation_schema:
-        result = {**result, **schema}
-
-    return result
+    return observation_schema
 
 
 def get_test_parameters_schema(import_path):
-    splitted = import_path.split('.')
-
-    class_name = splitted[-1:][0]
-    module_path = ".".join(splitted[:-1])
-
-    imported_module = importlib.import_module(module_path)
-    klass = getattr(imported_module, class_name)
+    klass = import_class(import_path)
 
     params_schema = klass.params_schema
 
     return params_schema
+
+
+def get_units(import_path):
+    klass = import_class(import_path)
+
+    units = \
+        f"{inspect.getmodule(klass.units).__package__}.{klass.units.symbol}"
+
+    return units
