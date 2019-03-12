@@ -59,7 +59,6 @@ def get_model_parameters(url):
 
     while wrong_message:
         result = json.loads(servlet_manager.read())
-        print(result.get('type'))
         wrong_message = result.get(
             'type'
         ) != 'geppetto_model_loaded' and result.get('type') != 'generic_error'
