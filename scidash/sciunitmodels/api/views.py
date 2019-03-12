@@ -32,7 +32,19 @@ class ModelParametersView(views.APIView):
 
     def get(self, request):
         url = request.GET.get('model_url')
+        error = None
 
-        params = hlp.get_model_parameters(url)
+        try:
+            params = hlp.get_model_parameters(url)
+        except Exception as e:
+            error = e
 
-        return response.Response(params)
+        if error is None:
+            return response.Response(params)
+        else:
+            return response.Response(
+                {
+                    'failed': True,
+                    'message': str(error)
+                }, 400
+            )

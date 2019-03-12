@@ -17,7 +17,10 @@ def download_and_save_model(path, url):
 def check_capabilities(model_file_path, model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    failed = klass(model_file_path).failed_extra_capabilities
+    try:
+        failed = klass(model_file_path).failed_extra_capabilities
+    except Exception:
+        return False
 
     return len(failed) == 0
 
@@ -56,6 +59,15 @@ def get_model_parameters(url):
 
     while wrong_message:
         result = json.loads(servlet_manager.read())
-        wrong_message = result.get('type') != 'geppetto_model_loaded'
+        print(result.get('type'))
+        wrong_message = result.get(
+            'type'
+        ) != 'geppetto_model_loaded' and result.get('type') != 'generic_error'
+
+    if result.get('type') == 'generic_error':
+        result = json.loads(result.get('data'))
+        result = json.loads(result.get('message'))
+
+        raise Exception(result)
 
     return result
