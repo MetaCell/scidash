@@ -19,7 +19,7 @@ class GetByKeyOrCreateMixin():
 
         key = validated_data.get(self.key)
 
-        if key is not '':
+        if key != '':
             try:
                 model_instance = model.objects.get(**{self.key: key})
                 instance = super(GetByKeyOrCreateMixin,

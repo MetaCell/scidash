@@ -57,22 +57,29 @@ class ModelClass(models.Model):
 
         capabilities = []
         extra_capabilities = []
+        errors = []
 
         try:
             capabilities = get_model_capabilities(self.import_path)
             extra_capabilities = get_extra_capabilities(self.import_path)
         except ImportError:
-            self.memo = f"Can't import {self.import_path}"
+            errors.append(f"Can't import {self.import_path}")
         except AttributeError:
-            self.memo = \
+            errors.append(
                 f"Wrong class for import {self.import_path}"
+            )
 
         if capabilities is None:
-            self.memo = \
+            errors.append(
                 f"Wrong class for import capabilities {self.import_path}"
+            )
         elif extra_capabilities is None:
-            self.memo = \
+            errors.append(
                 f"No extra capabilities check {self.import_path}"
+            )
+
+        if len(errors) > 0:
+            self.memo = str(errors)
 
         for capability in capabilities:
             capability_model, created = Capability.objects.get_or_create(
@@ -82,9 +89,9 @@ class ModelClass(models.Model):
                 self.capabilities.add(capability_model)
             else:
                 extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(
-                        capability=capability_model,
-                        model_class=self,
-                        extra_check=extra_capabilities[capability]
+                    capability=capability_model,
+                    model_class=self,
+                    extra_check=extra_capabilities[capability]
                 )
                 extra_capability_model.save()
 
