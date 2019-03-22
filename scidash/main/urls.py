@@ -25,6 +25,7 @@ from scidash.account.api.views import CheckIsLoggedView, UserViewSet
 from scidash.account.views import signup
 from scidash.sciunitmodels.api import views as models_views
 from scidash.sciunittests.api import views as tests_views
+from scidash.general.api import views as general_views
 from scidash.sciunittests.views import DateRangeView
 
 cache_registry.autodiscover()
@@ -95,5 +96,6 @@ urlpatterns = [
         name='is-logged'
     ),
     url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
+    url(r'^api/compatibility/$', general_views.CompatibilityMatrixView.as_view()),
     url(r'^', include('pygeppetto_server.urls')),
 ]
