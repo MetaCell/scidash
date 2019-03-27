@@ -1,14 +1,12 @@
 import json
 
+from django.views import View
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 from pygeppetto_gateway import GeppettoProjectBuilder, GeppettoServletManager
-from django.views import View
-
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
 
 
@@ -49,6 +47,5 @@ class FileUploadView(APIView):
 
 
 class GeppettoHandlerView(View):
-
     def post(self, request):
         print(request)

@@ -124,10 +124,19 @@ class ScoreClass(models.Model):
 
 
 class ScoreInstance(models.Model):
+    SCHEDULED = 's'
+    LOCKED = 'l'
+    CALCULATED = 'c'
+
+    STATUS_CHOICES = (
+        (SCHEDULED, 'Scheduled'), (CALCULATED, 'Calculated'),
+        (LOCKED, 'Locked')
+    )
+
     score_type = models.CharField(
         max_length=200, default='', null=True, blank=True
     )
-    score_class = models.ForeignKey(ScoreClass)
+    score_class = models.ForeignKey(ScoreClass, null=True, blank=True)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0)
@@ -136,6 +145,9 @@ class ScoreInstance(models.Model):
     prediction_dict = HStoreField(default=None, null=True, blank=True)
     raw = models.CharField(max_length=200, default=None, blank=True, null=True)
     hash_id = models.CharField(max_length=100)
+    status = models.CharField(
+        max_length=3, choices=STATUS_CHOICES, default='c'
+    )
     summary = models.CharField(
         max_length=200, default=None, blank=True, null=True
     )
@@ -161,3 +173,4 @@ class ScoreInstance(models.Model):
         return "Score for {0} in {1} test instance".format(
             self.model_instance.name, self.test_instance.test_class.class_name
         )
+

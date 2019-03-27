@@ -1,10 +1,10 @@
-import requests
 import json
+
+import requests
 from django.conf import settings as s
 
-from scidash.general.helpers import import_class
-
 import pygeppetto_gateway as pg
+from scidash.general.helpers import import_class
 
 
 def download_and_save_model(path, url):

@@ -65,18 +65,14 @@ class ModelClass(models.Model):
         except ImportError:
             errors.append(f"Can't import {self.import_path}")
         except AttributeError:
-            errors.append(
-                f"Wrong class for import {self.import_path}"
-            )
+            errors.append(f"Wrong class for import {self.import_path}")
 
         if capabilities is None:
             errors.append(
                 f"Wrong class for import capabilities {self.import_path}"
             )
         elif extra_capabilities is None:
-            errors.append(
-                f"No extra capabilities check {self.import_path}"
-            )
+            errors.append(f"No extra capabilities check {self.import_path}")
 
         if len(errors) > 0:
             self.memo = str(errors)
@@ -108,7 +104,7 @@ class ModelInstance(models.Model):
     backend = models.CharField(max_length=200, null=True, blank=True)
     attributes = JSONField(blank=True, null=True)
     name = models.CharField(max_length=50)
-    run_params = HStoreField(blank=True, null=True)
+    run_params = JSONField(blank=True, null=True)
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
     timestamp = models.DateField(default=date.today)
