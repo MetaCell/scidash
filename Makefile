@@ -66,6 +66,12 @@ run-django:
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
 
+run-celery:
+	celery -A scidash.main worker -l info
+
+run-celery-beat:
+	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
 lint: flake8-lint isort-lint yapf-lint
 
 format: yapf-format isort-format
