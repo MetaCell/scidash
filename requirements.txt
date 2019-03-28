@@ -18,7 +18,7 @@ daphne==2.2.5             # via channels
 django-celery-beat==1.4.0
 django-dotenv==1.4.2
 django-extensions==2.1.6
-django-filter==2.1.0
+django-filter==1.1.0
 django-material==1.5.2
 django-timezone-field==3.0  # via django-celery-beat
 django==1.11.7

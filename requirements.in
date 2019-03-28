@@ -3,7 +3,7 @@ django==1.11.7
 channels==2.1.2
 djangorestframework==3.7.1
 drf-writable-nested
-django-filter
+django-filter==1.1.0
 djangorestframework-jwt
 django-extensions
 django-dotenv
