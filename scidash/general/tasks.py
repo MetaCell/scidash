@@ -1,8 +1,11 @@
-from celery import shared_task, utils
 import json
-from scidash.sciunittests.models import ScoreInstance as Score
+
+from celery import shared_task, utils
+
 import pygeppetto_gateway as pg
-from pygeppetto_server.messages import Servlet as S, ServletResponse as SR
+from pygeppetto_server.messages import Servlet as S
+from pygeppetto_server.messages import ServletResponse as SR
+from scidash.sciunittests.models import ScoreInstance as Score
 
 logger = utils.log.get_task_logger(__name__)
 
@@ -65,7 +68,10 @@ def run_experiment():
         score.status = Score.LOCKED
         score.save()
 
-        servlet_manager.handle(S.RUN_EXPERIMENT, json.dumps({
-            'projectId': project_id,
-            'experimentId': 1
-        }))
+        servlet_manager.handle(
+            S.RUN_EXPERIMENT,
+            json.dumps({
+                'projectId': project_id,
+                'experimentId': 1
+            })
+        )

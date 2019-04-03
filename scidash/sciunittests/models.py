@@ -173,4 +173,3 @@ class ScoreInstance(models.Model):
         return "Score for {0} in {1} test instance".format(
             self.model_instance.name, self.test_instance.test_class.class_name
         )
-

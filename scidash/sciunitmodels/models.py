@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.postgres.fields import HStoreField, JSONField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from scidash.general import models as general_models
@@ -81,10 +81,10 @@ class ModelClass(models.Model):
             capability_model, created = Capability.objects.get_or_create(
                 class_name=capability.__name__
             )
-            if capability not in extra_capabilities:
+            if extra_capabilities is None or capability not in extra_capabilities:  # noqa: E501
                 self.capabilities.add(capability_model)
             else:
-                extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(
+                extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(  # noqa: E501
                     capability=capability_model,
                     model_class=self,
                     extra_check=extra_capabilities[capability]

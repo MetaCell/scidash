@@ -86,7 +86,7 @@ isort-format:
 	isort --recursive .
 
 yapf-format:
-	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
+	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "**/neuronunit/**" -e "**/sciunit/**"
 
 yapf-lint:
 	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
