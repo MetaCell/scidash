@@ -66,6 +66,12 @@ run-django:
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
 
+run-celery:
+	celery -A scidash.main worker -l info
+
+run-celery-beat:
+	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
 lint: flake8-lint isort-lint yapf-lint
 
 format: yapf-format isort-format
@@ -80,7 +86,7 @@ isort-format:
 	isort --recursive .
 
 yapf-format:
-	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"
+	yapf -i -r --style .style.yapf -p -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "**/neuronunit/**" -e "**/sciunit/**"
 
 yapf-lint:
 	yapf -d -r --style .style.yapf -e "*/migrations/*.py" -e "env" -e "*/settings.py" . -e "neuronunit/**" -e "sciunit/**"

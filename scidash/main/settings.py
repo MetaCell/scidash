@@ -59,7 +59,8 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework_cache',
-    'material'
+    'material',
+    'django_celery_beat'
 ]
 
 SCIDASH_APPS = [

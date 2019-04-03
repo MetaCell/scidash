@@ -3,15 +3,15 @@ from rest_framework import serializers
 from rest_framework_cache.registry import cache_registry
 from rest_framework_cache.serializers import CachedSerializerMixin
 
+import sciunit
 from scidash.account.serializers import ScidashUserSerializer
+from scidash.general.helpers import import_class
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
-from scidash.general.helpers import import_class
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
-import sciunit
 
 
 class TestSuiteSerializer(

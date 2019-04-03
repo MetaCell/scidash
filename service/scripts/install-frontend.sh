@@ -4,7 +4,7 @@ node -v
 
 root_path=$PWD;
 
-geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git -b griddle-update";
+geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git -b scidash_development";
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git -b development";
 
 geppetto_path="./static/org.geppetto.frontend";
