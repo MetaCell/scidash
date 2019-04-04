@@ -106,5 +106,10 @@ urlpatterns = [
         general_views.CreateScoresFromMatrixView.as_view(),
         name='scheduling-view'
     ),
+    url(
+        r'^api/test-instances/clone/(?P<test_id>[0-9+])/$',
+        tests_views.TestInstanceCloneView.as_view(),
+        name='test-clone-view'
+    ),
     url(r'^', include('pygeppetto_server.urls')),
 ]

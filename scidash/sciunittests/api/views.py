@@ -1,4 +1,8 @@
+import json
+from datetime import date
+
 from rest_framework import permissions, viewsets
+from rest_framework import views, response
 
 from scidash.sciunittests.filters import (
     ScoreFilter, TestInstanceFilter, TestSuiteFilter
@@ -45,3 +49,31 @@ class ScoreClassViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ScoreClassSerializer
     permission_classes = (permissions.AllowAny, )
     filter_fields = ('class_name', )
+
+
+class TestInstanceCloneView(views.APIView):
+
+    def get(self, request, test_id):
+        test_pk = test_id
+
+        try:
+            test_instance = TestInstance.objects.get(pk=test_pk)
+        except TestInstance.DoesNotExists:
+            return response.Response(json.dumps({
+                'success': False,
+                'message': 'Test Instance not found'
+            }), 404)
+
+        new_test_instance = self.clone_test(test_instance)
+
+        serializer = TestInstanceSerializer(new_test_instance)
+
+        return response.Response(serializer.data)
+
+    def clone_test(self, test_instance_model):
+        test_instance_model.timestamp = date.today()
+
+        test_instance_model.pk = None
+        test_instance_model.save()
+
+        return test_instance_model
