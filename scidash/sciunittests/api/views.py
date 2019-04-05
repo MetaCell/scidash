@@ -1,3 +1,4 @@
+from random import getrandbits as grb
 import json
 from datetime import date
 
@@ -74,6 +75,7 @@ class TestInstanceCloneView(views.APIView):
         test_instance_model.timestamp = date.today()
 
         test_instance_model.pk = None
+        test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
         test_instance_model.save()
 
         return test_instance_model
