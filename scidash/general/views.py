@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.views import View
 from rest_framework.parsers import MultiPartParser
@@ -46,7 +47,23 @@ class FileUploadView(APIView):
 
 
 class GeppettoHandlerView(View):
+
+    OUTPUT_MAPPING_FILE = 'outputMapping.dat'
+
     def post(self, request):
         print(request.POST)
+
+        body = json.loads(request.body)
+        results = json.loads(body.get('experiment_results', ''))
+
+        output_mapping = filter(
+            lambda x: os.path.basename(x) == self.OUTPUT_MAPPING_FILE,
+            results
+            )
+
+        output_mapping = output_mapping.pop()
+
+        with open(output_mapping, 'r') as f:
+            
 
         return Response(request.POST)
