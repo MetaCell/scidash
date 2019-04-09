@@ -107,12 +107,12 @@ urlpatterns = [
         name='scheduling-view'
     ),
     url(
-        r'^api/test-instances/clone/(?P<test_id>[0-9+])/$',
+        r'^api/test-instances/clone/(?P<test_id>[0-9]+)/$',
         tests_views.TestInstanceCloneView.as_view(),
         name='test-clone-view'
     ),
     url(
-        r'^api/model-instances/clone/(?P<model_id>[0-9+])/$',
+        r'^api/model-instances/clone/(?P<model_id>[0-9]+)/$',
         models_views.ModelInstanceCloneView.as_view(),
         name='model-clone-view'
     ),
