@@ -24,7 +24,9 @@ class DateRangeView(APIView):
 
         acceptable_period = None
 
-        for period in [three_month_ago, six_month_ago, nine_month_ago, tvelwe_month_ago]:
+        for period in [
+            three_month_ago, six_month_ago, nine_month_ago, tvelwe_month_ago
+        ]:
             count = ScoreInstance.objects.filter(
                 timestamp__gte=period, timestamp__lt=current_date_iso
             ).count()

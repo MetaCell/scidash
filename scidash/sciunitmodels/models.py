@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.postgres.fields import HStoreField, JSONField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from scidash.general import models as general_models
@@ -65,18 +65,14 @@ class ModelClass(models.Model):
         except ImportError:
             errors.append(f"Can't import {self.import_path}")
         except AttributeError:
-            errors.append(
-                f"Wrong class for import {self.import_path}"
-            )
+            errors.append(f"Wrong class for import {self.import_path}")
 
         if capabilities is None:
             errors.append(
                 f"Wrong class for import capabilities {self.import_path}"
             )
         elif extra_capabilities is None:
-            errors.append(
-                f"No extra capabilities check {self.import_path}"
-            )
+            errors.append(f"No extra capabilities check {self.import_path}")
 
         if len(errors) > 0:
             self.memo = str(errors)
@@ -85,10 +81,10 @@ class ModelClass(models.Model):
             capability_model, created = Capability.objects.get_or_create(
                 class_name=capability.__name__
             )
-            if capability not in extra_capabilities:
+            if extra_capabilities is None or capability not in extra_capabilities:  # noqa: E501
                 self.capabilities.add(capability_model)
             else:
-                extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(
+                extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(  # noqa: E501
                     capability=capability_model,
                     model_class=self,
                     extra_check=extra_capabilities[capability]
@@ -108,7 +104,7 @@ class ModelInstance(models.Model):
     backend = models.CharField(max_length=200, null=True, blank=True)
     attributes = JSONField(blank=True, null=True)
     name = models.CharField(max_length=50)
-    run_params = HStoreField(blank=True, null=True)
+    run_params = JSONField(blank=True, null=True)
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
     timestamp = models.DateField(default=date.today)

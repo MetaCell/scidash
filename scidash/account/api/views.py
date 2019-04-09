@@ -24,7 +24,5 @@ class CheckIsLoggedView(views.APIView):
     def get(self, request, format=None):
 
         return response.Response(
-            {
-                'is_logged': self.request.user.is_authenticated()
-            }
+            {'is_logged': self.request.user.is_authenticated()}
         )

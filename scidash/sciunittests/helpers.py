@@ -1,5 +1,6 @@
-from scidash.general.helpers import import_class
 import inspect
+
+from scidash.general.helpers import import_class
 
 
 def get_observation_schema(import_path):
@@ -24,3 +25,5 @@ def get_units(import_path):
         f"{inspect.getmodule(klass.units).__package__}.{klass.units.symbol}"
 
     return units
+
+

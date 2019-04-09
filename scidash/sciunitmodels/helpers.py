@@ -1,14 +1,17 @@
-import requests
 import json
+import os
+
+import requests
 from django.conf import settings as s
 
-from scidash.general.helpers import import_class
-
 import pygeppetto_gateway as pg
+from scidash.general.helpers import import_class
 
 
 def download_and_save_model(path, url):
     model_content = requests.get(url)
+
+    pg.helpers.process_includes(url)
 
     with open(path, 'w') as f:
         f.write(model_content.text)
@@ -18,7 +21,7 @@ def check_capabilities(model_file_path, model_class_import_path):
     klass = import_class(model_class_import_path)
 
     try:
-        failed = klass(model_file_path).failed_extra_capabilities
+        failed = klass(model_file_path).failed_extra_capabilities(klass)
     except Exception:
         return False
 
@@ -28,27 +31,24 @@ def check_capabilities(model_file_path, model_class_import_path):
 def get_model_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    doll = s.MODEL_DOLL
-
-    return klass(doll).capabilities
+    return klass.capabilities()
 
 
 def get_extra_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    doll = s.MODEL_DOLL
-
-    return klass(doll).extra_capability_checks
+    return klass.extra_capability_checks()
 
 
 def get_model_parameters(url):
     servlet_manager = pg.GeppettoServletManager()
+    file_name = os.path.basename(url)
 
     builder = pg.GeppettoProjectBuilder(
-        nml_url=url,
+        model_url=url,
         project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/p.json",
         xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/m.xmi",
-        nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/nml_model.nml"
+        nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{file_name}"
     )
     project_url = builder.build_project()
 

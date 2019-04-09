@@ -23,9 +23,9 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 from scidash.account.api.views import CheckIsLoggedView, UserViewSet
 from scidash.account.views import signup
+from scidash.general.api import views as general_views
 from scidash.sciunitmodels.api import views as models_views
 from scidash.sciunittests.api import views as tests_views
-from scidash.general.api import views as general_views
 from scidash.sciunittests.views import DateRangeView
 
 cache_registry.autodiscover()
@@ -96,6 +96,25 @@ urlpatterns = [
         name='is-logged'
     ),
     url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
-    url(r'^api/compatibility/$', general_views.CompatibilityMatrixView.as_view()),
+    url(
+        r'^api/compatibility/$',
+        general_views.CompatibilityMatrixView.as_view(),
+        name='compatibility-view'
+    ),
+    url(
+        r'^api/schedule/$',
+        general_views.CreateScoresFromMatrixView.as_view(),
+        name='scheduling-view'
+    ),
+    url(
+        r'^api/test-instances/clone/(?P<test_id>[0-9]+)/$',
+        tests_views.TestInstanceCloneView.as_view(),
+        name='test-clone-view'
+    ),
+    url(
+        r'^api/model-instances/clone/(?P<model_id>[0-9]+)/$',
+        models_views.ModelInstanceCloneView.as_view(),
+        name='model-clone-view'
+    ),
     url(r'^', include('pygeppetto_server.urls')),
 ]
