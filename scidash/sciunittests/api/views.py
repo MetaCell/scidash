@@ -3,7 +3,7 @@ import json
 from datetime import date
 
 from rest_framework import permissions, viewsets
-from rest_framework import views, response
+from rest_framework import views, response, mixins
 
 from scidash.sciunittests.filters import (
     ScoreFilter, TestInstanceFilter, TestSuiteFilter
@@ -66,9 +66,13 @@ class TestInstanceCloneView(views.APIView):
             }), 404)
 
         new_test_instance = self.clone_test(test_instance)
+        print("new_test_instance is ")
+        print(new_test_instance)
 
         serializer = TestInstanceSerializer(new_test_instance)
-
+        print("serializer is ")
+        print(serializer)
+        
         return response.Response(serializer.data)
 
     def clone_test(self, test_instance_model):
@@ -79,3 +83,40 @@ class TestInstanceCloneView(views.APIView):
         test_instance_model.save()
 
         return test_instance_model
+
+
+
+class TestInstanceEditView(views.APIView, mixins.UpdateModelMixin):
+
+    def update(self, request, test_id):
+        test_pk = test_id
+        instance = TestInstance.objects.get(pk=test_pk)
+        print("The test instance is ")
+        print(instance)
+        print("request.data.get for name is ")
+        print(request.data.get("name"))
+        instance.name = request.data.get("name")
+        instance.save()
+
+        try:
+            error = None
+            serializer = TestInstanceSerializer(instance, data=request.data, context={'request': request})
+            serializer.is_valid()
+            self.perform_update(serializer)
+        except Exception as e:
+            error = e
+
+        if error is None:
+            return response.Response(serializer.data)
+        else:
+            return response.Response(
+                {
+                    'failed': True,
+                    'message': str(error)
+                }, 400
+            )
+
+
+    def put(self, request, test_id):
+        return self.update(request, test_id)
+
