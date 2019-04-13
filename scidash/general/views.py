@@ -84,8 +84,7 @@ class GeppettoHandlerView(View):
             model_path, name=score_instance.model_instance.name
         )
 
-        model_instance.get_backend().use_memory_cache = True
-        model_instance.get_backend().set_memory_cache(simulation_result)
+        model_instance.set_memory_cache(simulation_result)
 
         test_class = general_hlp.import_class(
             score_instance.test_instance.test_class.import_path
@@ -101,14 +100,14 @@ class GeppettoHandlerView(View):
 
         test_instance = test_class(observation=observation)
 
-        // TODO: uncomment it and remove fake score setting after Rick's response
-        # score = test_instance.judge(model_instance)
+        # TODO: uncomment it and remove fake score setting after Rick's response
+        score = test_instance.judge(model_instance)
 
-        score_instance.score = 0.1
-        score_instance.status = score_instance.CALCULATED
-        score_instance.sort_key = 0.1
+        # score_instance.score = 0.1
+        # score_instance.status = score_instance.CALCULATED
+        # score_instance.sort_key = 0.1
 
-        score_instance.save()
+        # score_instance.save()
 
     def post(self, request):
         body = json.loads(request.body)
