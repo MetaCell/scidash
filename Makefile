@@ -4,9 +4,9 @@ install: create-db install-sciunit-neuronunit install-frontend install-backend
 	@echo "==========================="
 
 install-sciunit-neuronunit:
-	@echo "==========================="
-	@echo "=Install sciunit/neuronunit="
-	@echo "==========================="
+	@echo "============================"
+	@echo "=  Install sci/neuronunit  ="
+	@echo "============================"
 	@./service/scripts/install-sciunit-neuronunit.sh
 
 install-frontend:
