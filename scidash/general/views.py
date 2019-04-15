@@ -11,9 +11,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
-from scidash.sciunittests.models import ScoreInstance
+from scidash.sciunittests.models import ScoreInstance, ScoreClass
 from scidash.general import helpers as general_hlp
 from scidash.sciunitmodels import helpers as model_hlp
+from scidash.general.backends import ScidashCacheBackend
 
 
 class FileUploadView(APIView):
@@ -81,7 +82,8 @@ class GeppettoHandlerView(View):
         model_hlp.download_and_save_model(model_path, model_url)
 
         model_instance = model_class(
-            model_path, name=score_instance.model_instance.name
+            model_path, name=score_instance.model_instance.name,
+            backend=ScidashCacheBackend.name
         )
 
         model_instance.set_memory_cache(simulation_result)
@@ -91,23 +93,72 @@ class GeppettoHandlerView(View):
         )
 
         observation = score_instance.test_instance.observation
+        params = score_instance.test_instance.params
+
         units = general_hlp.import_class(
             score_instance.test_instance.test_class.units
         )
 
         for key in observation:
-            observation[key] = int(observation[key]) * units
+            observation[key] = int(observation[key]
+                                   ) * units if key != 'n' else int(
+                                       observation[key]
+                                   )
 
-        test_instance = test_class(observation=observation)
+        params_units = score_instance.test_instance.test_class.params_units
 
-        # TODO: uncomment it and remove fake score setting after Rick's response
-        score = test_instance.judge(model_instance)
+        for key in params_units:
+            params_units[key] = general_hlp.import_class(
+                params_units[key]
+            )
 
-        # score_instance.score = 0.1
-        # score_instance.status = score_instance.CALCULATED
-        # score_instance.sort_key = 0.1
+        for key in params:
+            params[key] = int(params[key]) * params_units[key]
 
-        # score_instance.save()
+        test_instance = test_class(observation=observation, **params)
+
+        score = test_instance.judge(model_instance).json(
+            add_props=True, string=False
+        )
+
+        self.update_score(score_instance, score)
+
+        return score
+
+    def update_score(self, score_instance, score_data):
+        score_class = None
+
+        score_class, created = ScoreClass.objects.get_or_create(
+            url=score_data.get('_class').get('url'),
+            class_name=score_data.get('_class').get('name')
+            )
+
+        score_instance.score_class = score_class
+        score_instance.score = score_data.get('score')
+
+        sort_key = score_data.get(
+            'norm_score'
+        ) if not score_data.get('sort_key',
+                                False) else score_data.get('sort_key')
+
+        if sort_key is None:
+            score_instance.sort_key = 0
+        else:
+            score_instance.sort_key = sort_key
+
+        prediction = score_data.get('prediction', None)
+
+        if prediction is not None:
+            if isinstance(prediction, dict):
+                score_instance.prediction_dict = prediction
+            else:
+                score_instance.prediction_numeric = prediction
+
+        score_instance.raw = score_data.get('raw', None)
+        score_instance.status = ScoreInstance.CALCULATED
+        score_instance.summary = score_data.get('summary', None)
+
+        score_instance.save()
 
     def post(self, request):
         body = json.loads(request.body)
@@ -154,8 +205,8 @@ class GeppettoHandlerView(View):
                 values[1].append(splat[1])
 
         for i, (key, value) in enumerate(simulation_result.items()):
-            simulation_result[key] = values[i]
+            simulation_result[key] = list(map(lambda x: float(x), values[i]))
 
-        self.calculate_score(simulation_result, score_instance)
+        score = self.calculate_score(simulation_result, score_instance)
 
-        return Response(json.dumps(simulation_result))
+        return Response(data=score)
