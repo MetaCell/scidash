@@ -65,15 +65,13 @@ class CreateScoresFromMatrixView(APIView):
         matrix = request.data
         result = []
 
-        for model in matrix.get('models'):
-            pk = model.get('id')
-
+        for model_pk in matrix.keys():
             try:
-                model_instance = ModelInstance.objects.get(pk=pk)
+                model_instance = ModelInstance.objects.get(pk=model_pk)
             except ModelInstance.DoesNotExist as e:
                 return Response({'success': False, 'message': e})
 
-            test_ids = [test.get('id') for test in matrix.get('tests')]
+            test_ids = [test_pk for test_pk in matrix.get(model_pk)]
 
             test_instances = TestInstance.objects.filter(pk__in=test_ids)
 

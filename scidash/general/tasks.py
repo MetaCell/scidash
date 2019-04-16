@@ -1,6 +1,8 @@
 import json
+import os
 
 from celery import shared_task, utils
+from django.conf import settings as s
 
 import pygeppetto_gateway as pg
 from pygeppetto_server.messages import Servlet as S
@@ -28,9 +30,14 @@ def run_experiment():
 
     for score in scores:
         logger.info(f'Processing score with ID {score.pk}')
+        model_name = os.path.basename(score.model_instance.url)
 
-        model_instance = score.model_instance
-        project_builder = pg.GeppettoProjectBuilder(model_instance.url)
+        project_builder = pg.GeppettoProjectBuilder(
+            score=score,
+            project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/project.json",
+            xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/model.xmi",
+            nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/{model_name}",
+            )
 
         project_url = project_builder.build_project()
 

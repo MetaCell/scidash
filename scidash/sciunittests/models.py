@@ -11,6 +11,7 @@ from scidash.general.helpers import import_class
 from scidash.sciunittests.helpers import (
     get_observation_schema, get_test_parameters_schema, get_units
 )
+from scidash.sciunittests.constants import TEST_PARAMS_UNITS_TYPE
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ class TestClass(models.Model):
     test_parameters_schema = JSONField(null=True, blank=True)
     units = models.TextField(null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
+    params_units = JSONField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -54,6 +56,7 @@ class TestClass(models.Model):
         observation_schema = None
         params_schema = None
         units = None
+        params_units = {}
 
         try:
             observation_schema = get_observation_schema(self.import_path)
@@ -79,7 +82,13 @@ class TestClass(models.Model):
 
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema
+
+        for key in params_schema:
+            params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
+                                                       ['type']]
+
         self.units = units
+        self.params_units = params_units
 
 
 class TestInstance(models.Model):
@@ -139,7 +148,7 @@ class ScoreInstance(models.Model):
     score_class = models.ForeignKey(ScoreClass, null=True, blank=True)
     model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
     test_instance = models.ForeignKey(TestInstance)
-    score = models.FloatField(default=0)
+    score = models.FloatField(default=0, null=True, blank=True)
     sort_key = models.FloatField(default=0)
     prediction_numeric = models.FloatField(default=None, null=True, blank=True)
     prediction_dict = HStoreField(default=None, null=True, blank=True)

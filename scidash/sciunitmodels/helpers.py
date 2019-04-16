@@ -1,4 +1,5 @@
 import json
+import traceback
 import os
 
 import requests
@@ -21,8 +22,10 @@ def check_capabilities(model_file_path, model_class_import_path):
     klass = import_class(model_class_import_path)
 
     try:
-        failed = klass(model_file_path).failed_extra_capabilities(klass)
-    except Exception:
+        failed = klass(model_file_path).failed_extra_capabilities
+    except Exception as e:
+        print(traceback.format_exc())
+        print(e)
         return False
 
     return len(failed) == 0
@@ -37,7 +40,10 @@ def get_model_capabilities(model_class_import_path):
 def get_extra_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    return klass.extra_capability_checks()
+    if klass.extra_capability_checks is not None:
+        return klass.extra_capability_checks
+    else:
+        return {}
 
 
 def get_model_parameters(url):
