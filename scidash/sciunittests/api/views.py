@@ -11,6 +11,9 @@ from scidash.sciunittests.filters import (
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
+from scidash.general.models import (
+    Tag
+)
 from scidash.sciunittests.serializers import (
     ScoreClassSerializer, ScoreInstanceSerializer, TestClassSerializer,
     TestInstanceSerializer, TestSuiteSerializer
@@ -64,23 +67,23 @@ class TestInstanceCloneView(views.APIView):
                 'success': False,
                 'message': 'Test Instance not found'
             }), 404)
-
         new_test_instance = self.clone_test(test_instance)
-        print("new_test_instance is ")
-        print(new_test_instance)
-
         serializer = TestInstanceSerializer(new_test_instance)
-        print("serializer is ")
-        print(serializer)
         
         return response.Response(serializer.data)
 
     def clone_test(self, test_instance_model):
+        test_pk = test_instance_model.pk
         test_instance_model.timestamp = date.today()
-
         test_instance_model.pk = None
         test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
+
         test_instance_model.save()
+
+        # Save required before to add the tags since the generic relation needs
+        # the new key in order to clone the tags as well
+        for tag in Tag.objects.filter(object_id=test_pk, content_type_id="11"):
+            test_instance_model.tags.create(name=tag)
 
         return test_instance_model
 
@@ -91,12 +94,6 @@ class TestInstanceEditView(views.APIView, mixins.UpdateModelMixin):
     def update(self, request, test_id):
         test_pk = test_id
         instance = TestInstance.objects.get(pk=test_pk)
-        print("The test instance is ")
-        print(instance)
-        print("request.data.get for name is ")
-        print(request.data.get("name"))
-        instance.name = request.data.get("name")
-        instance.save()
 
         try:
             error = None

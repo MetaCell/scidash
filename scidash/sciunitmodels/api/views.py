@@ -11,6 +11,9 @@ from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
+from scidash.general.models import (
+    Tag
+)
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
@@ -72,11 +75,17 @@ class ModelInstanceCloneView(views.APIView):
         return response.Response(serializer.data)
 
     def clone_model(self, model_instance_model):
+        model_pk = model_instance_model.pk
         model_instance_model.timestamp = date.today()
 
         model_instance_model.pk = None
         model_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
         model_instance_model.save()
+
+        # Save required before to add the tags since the generic relation needs
+        # the new key in order to clone the tags as well
+        for tag in Tag.objects.filter(object_id=model_pk, content_type_id="8"):
+            model_instance_model.tags.create(name=tag)
 
         return model_instance_model
 

@@ -49,8 +49,6 @@ class TestInstanceSerializer(
     owner = ScidashUserSerializer(
         default=serializers.CurrentUserDefault(), read_only=True
     )
-    tags = TagSerializer(many=True, required=False)
-
     key = 'hash_id'
 
     def validate(self, data):
