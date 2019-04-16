@@ -49,6 +49,12 @@ run-dev: migrate
 	make run-django & \
 	make run-frontend
 
+run-staging: migrate
+	make run-celery & \
+	make run-celery-beat & \
+	make run-django-staging & \
+	make run-frontend
+
 django-migrate: migrations migrate
 
 migrations:
@@ -62,6 +68,9 @@ superuser:
 
 run-django:
 	./manage.py runserver
+
+run-django-staging:
+	./manage.py runserver 0.0.0.0:8000
 
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
