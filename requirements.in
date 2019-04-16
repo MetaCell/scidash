@@ -11,3 +11,4 @@ rest-framework-cache
 django-material
 celery[redis]
 django-celery-beat
+django-celery-results

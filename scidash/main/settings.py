@@ -60,7 +60,8 @@ THIRD_PARTY_APPS = [
     'django_filters',
     'rest_framework_cache',
     'material',
-    'django_celery_beat'
+    'django_celery_beat',
+    'django_celery_results'
 ]
 
 SCIDASH_APPS = [
@@ -204,6 +205,5 @@ POPULATE_USERS = True
 DOWNLOADED_MODEL_DIR = os.path.join(
     BASE_DIR, os.environ.get('STATIC_DIR'), 'models'
 )
-MODEL_DOLL = os.path.join(
-    BASE_DIR, os.environ.get('STATIC_DIR'), 'model_doll.nml'
-)
+
+CELERY_RESULT_BACKEND = 'django-db'
