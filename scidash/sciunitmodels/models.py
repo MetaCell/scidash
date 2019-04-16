@@ -100,11 +100,22 @@ class ModelClass(models.Model):
 
 
 class ModelInstance(models.Model):
+    LOCKED = 'l'
+    AVAILABLE = 'a'
+
+    STATUS_CHOICES = (
+        (LOCKED, 'Locked'),
+        (AVAILABLE, 'Available'),
+    )
+
     model_class = models.ForeignKey(ModelClass)
     backend = models.CharField(max_length=200, null=True, blank=True)
     attributes = JSONField(blank=True, null=True)
     name = models.CharField(max_length=50)
     run_params = JSONField(blank=True, null=True)
+    status = models.CharField(
+        max_length=2, choices=STATUS_CHOICES, default=AVAILABLE
+    )
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
     timestamp = models.DateField(default=date.today)

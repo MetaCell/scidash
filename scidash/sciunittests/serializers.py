@@ -72,7 +72,10 @@ class TestInstanceSerializer(
 
         if isinstance(test_class.observation_schema, list):
             for schema in test_class.observation_schema:
-                without_units += filter_units(schema)
+                if isinstance(schema, tuple):
+                    without_units += filter_units(schema[1])
+                else:
+                    without_units += filter_units(schema)
         else:
             without_units = filter_units(test_class.observation_schema)
 

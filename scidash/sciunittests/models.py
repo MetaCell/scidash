@@ -92,6 +92,14 @@ class TestClass(models.Model):
 
 
 class TestInstance(models.Model):
+    LOCKED = 'l'
+    AVAILABLE = 'a'
+
+    STATUS_CHOICES = (
+        (LOCKED, 'Locked'),
+        (AVAILABLE, 'Available'),
+    )
+
     name = models.CharField(max_length=200, default='Default Name')
     test_class = models.ForeignKey(TestClass)
     observation = JSONField(null=True, blank=True)
@@ -102,6 +110,9 @@ class TestInstance(models.Model):
     description = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     verbose = models.IntegerField(default=0)
+    status = models.CharField(
+        max_length=2, choices=STATUS_CHOICES, default=AVAILABLE
+    )
     timestamp = models.DateField(default=date.today)
     hash_id = models.CharField(max_length=100)
     hostname = models.CharField(
@@ -162,6 +173,16 @@ class ScoreInstance(models.Model):
     )
     timestamp = models.DateField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        self.test_instance.status = TestInstance.LOCKED
+        self.test_instance.save()
+
+        self.model_instance.status = sciunitmodels.models.ModelInstance.LOCKED
+        self.model_instance.save()
+
 
     @property
     def prediction(self):
