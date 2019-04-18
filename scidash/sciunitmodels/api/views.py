@@ -1,7 +1,6 @@
 from random import getrandbits as grb
 from datetime import date
 import json
-import pprint
 
 from rest_framework import permissions, response, views, viewsets, mixins, generics
 

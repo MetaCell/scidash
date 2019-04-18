@@ -29,11 +29,7 @@ def check_capabilities(model_file_path, model_class_import_path):
 
 
 def get_model_capabilities(model_class_import_path):
-    print("model_class_import_path is ")
-    print(model_class_import_path)
     klass = import_class(model_class_import_path)
-    print("klass is ")
-    print(klass)
 
     return klass.capabilities()
 
