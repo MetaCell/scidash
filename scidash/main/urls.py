@@ -116,5 +116,15 @@ urlpatterns = [
         models_views.ModelInstanceCloneView.as_view(),
         name='model-clone-view'
     ),
+    url(
+        r'^api/test-instances/edit/(?P<test_id>[0-9]+)/$',
+        tests_views.TestInstanceEditView.as_view(),
+        name='test-edit-view'
+    ),
+    url(
+        r'^api/model-instances/edit/(?P<model_id>[0-9]+)/$',
+        models_views.ModelInstanceEditView.as_view(),
+        name='model-edit-view'
+    ),
     url(r'^', include('pygeppetto_server.urls')),
 ]
