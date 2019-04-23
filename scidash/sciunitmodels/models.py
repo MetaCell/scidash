@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import logging
 
 from datetime import date
 
@@ -11,7 +12,8 @@ from scidash.sciunitmodels.helpers import (
     get_extra_capabilities, get_model_capabilities
 )
 
-# Models Related
+
+db_logger = logging.getLogger('db')
 
 
 class Capability(models.Model):
@@ -57,25 +59,23 @@ class ModelClass(models.Model):
 
         capabilities = []
         extra_capabilities = []
-        errors = []
 
         try:
             capabilities = get_model_capabilities(self.import_path)
             extra_capabilities = get_extra_capabilities(self.import_path)
         except ImportError:
-            errors.append(f"Can't import {self.import_path}")
+            db_logger.exception(f"Can't import {self.import_path}")
         except AttributeError:
-            errors.append(f"Wrong class for import {self.import_path}")
+            db_logger.exception(f"Wrong class for import {self.import_path}")
 
         if capabilities is None:
-            errors.append(
+            db_logger.exception(
                 f"Wrong class for import capabilities {self.import_path}"
             )
         elif extra_capabilities is None:
-            errors.append(f"No extra capabilities check {self.import_path}")
-
-        if len(errors) > 0:
-            self.memo = str(errors)
+            db_logger.exception(
+                f"No extra capabilities check {self.import_path}"
+            )
 
         for capability in capabilities:
             capability_model, created = Capability.objects.get_or_create(

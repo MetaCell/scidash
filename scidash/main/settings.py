@@ -61,7 +61,8 @@ THIRD_PARTY_APPS = [
     'rest_framework_cache',
     'material',
     'django_celery_beat',
-    'django_celery_results'
+    'django_celery_results',
+    'django_db_logger'
 ]
 
 SCIDASH_APPS = [
@@ -170,6 +171,31 @@ STATIC_URL = os.environ.get('STATIC_URL')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'))
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'handlers': {
+        'db_log': {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
+    },
+    'loggers': {
+        'db': {
+            'handlers': ['db_log'],
+            'level': 'DEBUG'
+        }
+    }
+}
 
 AUTH_USER_MODEL = 'general.ScidashUser'
 

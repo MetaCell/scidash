@@ -17,6 +17,7 @@ constantly==15.1.0        # via twisted
 daphne==2.2.5             # via channels
 django-celery-beat==1.4.0
 django-celery-results==1.0.4
+django-db-logger==0.1.7
 django-dotenv==1.4.2
 django-extensions==2.1.6
 django-filter==1.1.0

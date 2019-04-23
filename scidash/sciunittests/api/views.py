@@ -1,9 +1,8 @@
-from random import getrandbits as grb
 import json
 from datetime import date
+from random import getrandbits as grb
 
-from rest_framework import permissions, viewsets
-from rest_framework import views, response
+from rest_framework import permissions, response, views, viewsets
 
 from scidash.sciunittests.filters import (
     ScoreFilter, TestInstanceFilter, TestSuiteFilter
@@ -53,17 +52,20 @@ class ScoreClassViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class TestInstanceCloneView(views.APIView):
-
     def get(self, request, test_id):
         test_pk = test_id
 
         try:
             test_instance = TestInstance.objects.get(pk=test_pk)
         except TestInstance.DoesNotExists:
-            return response.Response(json.dumps({
-                'success': False,
-                'message': 'Test Instance not found'
-            }), 404)
+            return response.Response(
+                json.dumps(
+                    {
+                        'success': False,
+                        'message': 'Test Instance not found'
+                    }
+                ), 404
+            )
 
         new_test_instance = self.clone_test(test_instance)
 
