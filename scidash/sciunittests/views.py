@@ -10,7 +10,7 @@ from scidash.sciunittests.models import ScoreInstance
 class DateRangeView(APIView):
     def get(self, request, *args, **kwargs):
         three_month_period = datetime.timedelta(3 * 365 / 12)
-        current_date = datetime.date.today()
+        current_date = datetime.date.today() + datetime.timedelta(days=1)
         current_date_iso = datetime.datetime(
             year=current_date.year,
             month=current_date.month,

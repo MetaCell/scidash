@@ -49,8 +49,11 @@ class TestClass(models.Model):
     def units_name(self):
         try:
             destructured = json.loads(self.units)
-        except json.JSONDecodeError:
-            return import_class(self.units).name
+        except (json.JSONDecodeError, TypeError):
+            if self.units is not None:
+                return import_class(self.units).name
+            else:
+                return "N/A"
 
         return build_destructured_unit(destructured).name
 
@@ -72,27 +75,30 @@ class TestClass(models.Model):
         except ImportError:
             db_logger.exception(f"Can't import {self.import_path}")
         except AttributeError:
-            db_logger.exception(f"Wrong class for import {self.import_path}")
+            db_logger.exception(f"Can't import {self.import_path}")
 
         if observation_schema is None:
             db_logger.exception(
-                f"Wrong class for import observations {self.import_path}"
+                f"Observation schema not found {self.import_path}"
             )
-        elif params_schema is None:
+
+        if params_schema is None:
             db_logger.exception(
-                f"Wrong class for import params {self.import_path}"
+                f"Params schema not found {self.import_path}"
             )
-        elif units is None:
+
+        if units is None:
             db_logger.exception(
-                f"Wrong class for import dimensions {self.import_path}"
+                f"Units not found {self.import_path}"
             )
 
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema
 
-        for key in params_schema:
-            params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
-                                                       ['type']]
+        if params_schema is not None:
+            for key in params_schema:
+                params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
+                                                           ['type']]
 
         self.units = units
         self.params_units = params_units
