@@ -1,5 +1,6 @@
 import logging
 from datetime import date
+import json
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
@@ -8,12 +9,13 @@ from django.db import models
 import scidash.sciunitmodels as sciunitmodels
 from scidash.general import models as general_models
 from scidash.general.helpers import import_class
-from scidash.sciunittests.helpers import (
-    get_observation_schema, get_test_parameters_schema, get_units
-)
 from scidash.sciunittests.constants import TEST_PARAMS_UNITS_TYPE
+from scidash.sciunittests.helpers import (
+    get_observation_schema, get_test_parameters_schema, get_units,
+    build_destructured_unit
+)
 
-logger = logging.getLogger(__name__)
+db_logger = logging.getLogger('db')
 
 
 class TestSuite(models.Model):
@@ -45,7 +47,15 @@ class TestClass(models.Model):
         verbose_name_plural = 'Test classes'
 
     def units_name(self):
-        return import_class(self.units).name
+        try:
+            destructured = json.loads(self.units)
+        except (json.JSONDecodeError, TypeError):
+            if self.units is not None:
+                return import_class(self.units).name
+            else:
+                return "N/A"
+
+        return build_destructured_unit(destructured).name
 
     def __str__(self):
         return self.class_name
@@ -63,29 +73,32 @@ class TestClass(models.Model):
             params_schema = get_test_parameters_schema(self.import_path)
             units = get_units(self.import_path)
         except ImportError:
-            self.memo = f"Can't import {self.import_path}"
+            db_logger.exception(f"Can't import {self.import_path}")
         except AttributeError:
-            self.memo = \
-                f"Wrong class for import {self.import_path}"
+            db_logger.exception(f"Can't import {self.import_path}")
 
         if observation_schema is None:
-            self.memo = \
-                f"Wrong class for import observations {self.import_path}"
-        elif params_schema is None:
-            self.memo = \
-                f"Wrong class for import params {self.import_path}"
-        elif units is None:
-            self.memo = \
-                f"Wrong class for import dimensions {self.import_path}"
-        else:
-            self.memo = ""
+            db_logger.exception(
+                f"Observation schema not found {self.import_path}"
+            )
+
+        if params_schema is None:
+            db_logger.exception(
+                f"Params schema not found {self.import_path}"
+            )
+
+        if units is None:
+            db_logger.exception(
+                f"Units not found {self.import_path}"
+            )
 
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema
 
-        for key in params_schema:
-            params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
-                                                       ['type']]
+        if params_schema is not None:
+            for key in params_schema:
+                params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
+                                                           ['type']]
 
         self.units = units
         self.params_units = params_units
@@ -182,7 +195,6 @@ class ScoreInstance(models.Model):
 
         self.model_instance.status = sciunitmodels.models.ModelInstance.LOCKED
         self.model_instance.save()
-
 
     @property
     def prediction(self):

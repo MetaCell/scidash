@@ -1,8 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
-import dotenv
 
+import dotenv
 from celery import Celery
 
 dotenv.read_dotenv(

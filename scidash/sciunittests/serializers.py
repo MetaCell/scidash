@@ -1,3 +1,5 @@
+import json
+
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
 from rest_framework_cache.registry import cache_registry
@@ -12,6 +14,7 @@ from scidash.sciunitmodels.serializers import ModelInstanceSerializer
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
+from scidash.sciunittests.helpers import build_destructured_unit
 
 
 class TestSuiteSerializer(
@@ -56,7 +59,14 @@ class TestInstanceSerializer(
 
         class_data = data.get('test_class')
         test_class = import_class(class_data.get('import_path'))
-        quantity = import_class(class_data.get('units'))
+
+        try:
+            destructured = json.loads(class_data.get('units'))
+        except json.JSONDecodeError:
+            quantity = import_class(class_data.get('units'))
+        else:
+            quantity = build_destructured_unit(destructured)
+
         observations = data.get('observation')
         without_units = []
 

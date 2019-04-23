@@ -1,6 +1,6 @@
 import json
-import traceback
 import os
+import traceback
 
 import requests
 from django.conf import settings as s

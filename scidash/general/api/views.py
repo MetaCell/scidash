@@ -1,5 +1,5 @@
-from random import getrandbits as grb
 import os
+from random import getrandbits as grb
 
 import quantities as pq
 from django.conf import settings as s
@@ -15,7 +15,6 @@ from sciunit import TestSuite
 
 
 class CompatibilityMatrixView(APIView):
-
     def _create_model_instance(self, model_object):
         models_file_path = s.DOWNLOADED_MODEL_DIR
         file_name = os.path.basename(model_object.url)
@@ -48,8 +47,7 @@ class CompatibilityMatrixView(APIView):
         ]
 
         model_instances = [
-            self._create_model_instance(model)
-            for model in model_models
+            self._create_model_instance(model) for model in model_models
         ]
 
         suite = TestSuite(test_instances)

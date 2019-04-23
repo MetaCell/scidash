@@ -1,20 +1,20 @@
+import collections
 import json
 import os
-import collections
 import re
 
-from django.views import View
 from django.conf import settings
+from django.views import View
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from scidash.sciunittests.serializers import ScoreInstanceSerializer
-from scidash.sciunittests.models import ScoreInstance, ScoreClass
 from scidash.general import helpers as general_hlp
-from scidash.sciunitmodels import helpers as model_hlp
 from scidash.general.backends import ScidashCacheBackend
+from scidash.sciunitmodels import helpers as model_hlp
+from scidash.sciunittests.models import ScoreClass, ScoreInstance
+from scidash.sciunittests.serializers import ScoreInstanceSerializer
 
 
 class FileUploadView(APIView):
@@ -58,10 +58,7 @@ class GeppettoHandlerView(View):
     OUTPUT_MAPPING_FILE = 'outputMapping.dat'
     RESULTS_FILE = 'results0.dat'
 
-    RESULTS_MAP = {
-        '^[\w\.\[\]]+\.v$': 'v',
-        '^time\(\w+\)$': 't'
-    }
+    RESULTS_MAP = {'^[\w\.\[\]]+\.v$': 'v', '^time\(\w+\)$': 't'}
 
     def get_variable_from_header(self, header):
         for key, value in self.RESULTS_MAP.items():
@@ -75,14 +72,13 @@ class GeppettoHandlerView(View):
 
         model_url = score_instance.model_instance.url
         model_name = os.path.basename(model_url)
-        model_path = os.path.join(
-            settings.DOWNLOADED_MODEL_DIR, model_name
-        )
+        model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
         model_hlp.download_and_save_model(model_path, model_url)
 
         model_instance = model_class(
-            model_path, name=score_instance.model_instance.name,
+            model_path,
+            name=score_instance.model_instance.name,
             backend=ScidashCacheBackend.name
         )
 
@@ -108,9 +104,7 @@ class GeppettoHandlerView(View):
         params_units = score_instance.test_instance.test_class.params_units
 
         for key in params_units:
-            params_units[key] = general_hlp.import_class(
-                params_units[key]
-            )
+            params_units[key] = general_hlp.import_class(params_units[key])
 
         for key in params:
             params[key] = int(params[key]) * params_units[key]
@@ -131,15 +125,14 @@ class GeppettoHandlerView(View):
         score_class, created = ScoreClass.objects.get_or_create(
             url=score_data.get('_class').get('url'),
             class_name=score_data.get('_class').get('name')
-            )
+        )
 
         score_instance.score_class = score_class
         score_instance.score = score_data.get('score')
 
-        sort_key = score_data.get(
-            'norm_score'
-        ) if not score_data.get('sort_key',
-                                False) else score_data.get('sort_key')
+        sort_key = score_data.get('norm_score') if not score_data.get(
+            'sort_key', False
+        ) else score_data.get('sort_key')
 
         if sort_key is None:
             score_instance.sort_key = 0
@@ -168,20 +161,25 @@ class GeppettoHandlerView(View):
         try:
             score_instance = ScoreInstance.objects.get(pk=score_pk)
         except ScoreInstance.DoesNotExists:
-            return Response({
-                'success': False,
-                'message': 'Score not found'
-            }, 404)
+            return Response(
+                {
+                    'success': False,
+                    'message': 'Score not found'
+                }, 404
+            )
 
-        output_mapping = list(filter(
-            lambda x: os.path.basename(x) == self.OUTPUT_MAPPING_FILE,
-            results
-        )).pop().replace('file:', '')
+        output_mapping = list(
+            filter(
+                lambda x: os.path.basename(x) == self.OUTPUT_MAPPING_FILE,
+                results
+            )
+        ).pop().replace('file:', '')
 
-        results_file = list(filter(
-            lambda x: os.path.basename(x) == self.RESULTS_FILE,
-            results
-        )).pop().replace('file:', '')
+        results_file = list(
+            filter(
+                lambda x: os.path.basename(x) == self.RESULTS_FILE, results
+            )
+        ).pop().replace('file:', '')
 
         simulation_result = None
 

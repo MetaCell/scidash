@@ -34,10 +34,13 @@ def run_experiment():
 
         project_builder = pg.GeppettoProjectBuilder(
             score=score,
-            project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/project.json",
-            xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/model.xmi",
-            nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/{model_name}",
-            )
+            project_location=
+            f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/project.json",
+            xmi_location=
+            f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/model.xmi",
+            nml_location=
+            f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{score.owner}/{score.pk}/{model_name}",
+        )
 
         project_url = project_builder.build_project()
 

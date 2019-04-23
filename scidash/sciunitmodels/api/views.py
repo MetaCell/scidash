@@ -1,6 +1,6 @@
-from random import getrandbits as grb
-from datetime import date
 import json
+from datetime import date
+from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets, mixins, generics
 
@@ -57,17 +57,20 @@ class ModelParametersView(views.APIView):
 
 
 class ModelInstanceCloneView(views.APIView):
-
     def get(self, request, model_id):
         model_pk = model_id
 
         try:
             model_instance = ModelInstance.objects.get(pk=model_pk)
         except ModelInstance.DoesNotExists:
-            return response.Response(json.dumps({
-                'success': False,
-                'message': 'model Instance not found'
-            }), 404)
+            return response.Response(
+                json.dumps(
+                    {
+                        'success': False,
+                        'message': 'model Instance not found'
+                    }
+                ), 404
+            )
 
         new_model_instance = self.clone_model(model_instance)
         serializer = ModelInstanceSerializer(new_model_instance)

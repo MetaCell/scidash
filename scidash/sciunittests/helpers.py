@@ -1,6 +1,19 @@
 import inspect
+import json
+import quantities as pq
 
 from scidash.general.helpers import import_class
+
+
+def build_destructured_unit(unit_dict):
+    unit = pq.UnitQuantity(
+        unit_dict.get('name'),
+        import_class(unit_dict.get('base').get('quantity')) *
+        unit_dict.get('base').get('coefficient'),
+        unit_dict.get('symbol')
+    )
+
+    return unit
 
 
 def get_observation_schema(import_path):
@@ -24,6 +37,38 @@ def get_units(import_path):
     units = \
         f"{inspect.getmodule(klass.units).__package__}.{klass.units.symbol}"
 
+    def importable(unit):
+        import quantities as pq
+        try:
+            import_class(unit)
+        except AttributeError:
+            return False
+
+        return True
+
+    def destructure_custom_unit(unit):
+        base_unit = list(unit.definition.dimensionality).pop()
+
+        base_quantity = \
+            f"{inspect.getmodule(unit).__package__}.{base_unit.symbol}"
+
+        if not importable(base_quantity):
+            base_quantity = "N/A"
+
+        destructured = {
+            'name': unit.name,
+            'base': {
+                'quantity': base_quantity,
+                'coefficient': float(unit.definition.base)
+            },
+            'symbol': unit.symbol
+        }
+
+        return json.dumps(destructured)
+
+    try:
+        import_class(units)
+    except AttributeError:
+        units = destructure_custom_unit(klass.units)
+
     return units
-
-

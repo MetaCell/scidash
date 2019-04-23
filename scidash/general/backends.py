@@ -25,6 +25,4 @@ class ScidashCacheBackend(backends.Backend):
         return {}
 
 
-backends.register_backends({
-    'ScidashCacheBackend': ScidashCacheBackend
-})
+backends.register_backends({'ScidashCacheBackend': ScidashCacheBackend})
