@@ -9,6 +9,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import quantities as pq
 
 from scidash.general import helpers as general_hlp
 from scidash.general.backends import ScidashCacheBackend
@@ -58,7 +59,7 @@ class GeppettoHandlerView(View):
     OUTPUT_MAPPING_FILE = 'outputMapping.dat'
     RESULTS_FILE = 'results0.dat'
 
-    RESULTS_MAP = {'^[\w\.\[\]]+\.v$': 'v', '^time\(\w+\)$': 't'}
+    RESULTS_MAP = {'^[\w\.\[\]]+\.v$': 'v', '^time\(\w+\)$': 't'}  # noqa: W605
 
     def get_variable_from_header(self, header):
         for key, value in self.RESULTS_MAP.items():
@@ -91,9 +92,23 @@ class GeppettoHandlerView(View):
         observation = score_instance.test_instance.observation
         params = score_instance.test_instance.params
 
-        units = general_hlp.import_class(
-            score_instance.test_instance.test_class.units
-        )
+        try:
+            destructured = json.loads(
+                score_instance.test_instance.test_class.units
+            )
+        except json.JSONDecodeError:
+            units = general_hlp.import_class(
+                score_instance.test_instance.test_class.units
+            )
+        else:
+            base_unit = general_hlp.import_class(
+                destructured.get('base').get('quantity')
+            )
+            units = pq.UnitQuantity(
+                destructured.get('name'),
+                base_unit*destructured.get('base').get('coefficient'),
+                destructured.get('symbol')
+            )
 
         for key in observation:
             observation[key] = int(observation[key]
@@ -106,10 +121,13 @@ class GeppettoHandlerView(View):
         for key in params_units:
             params_units[key] = general_hlp.import_class(params_units[key])
 
-        for key in params:
-            params[key] = int(params[key]) * params_units[key]
+        processed_params = {}
 
-        test_instance = test_class(observation=observation, **params)
+        for key in params:
+            if params[key] is not None:
+                processed_params[key] = int(params[key]) * params_units[key]
+
+        test_instance = test_class(observation=observation, **processed_params)
 
         score = test_instance.judge(model_instance).json(
             add_props=True, string=False

@@ -9,6 +9,12 @@ install-sciunit-neuronunit:
 	@echo "============================"
 	@./service/scripts/install-sciunit-neuronunit.sh
 
+update-sciunit-neuronunit:
+	@echo "============================"
+	@echo "=  Update sci/neuronunit   ="
+	@echo "============================"
+	@./service/scripts/update-sciunit-neuronunit.sh
+
 install-frontend:
 	@echo "==========================="
 	@echo "=    Install frontend     ="

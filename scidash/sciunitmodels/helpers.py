@@ -1,12 +1,15 @@
 import json
+import logging
 import os
-import traceback
 
 import requests
 from django.conf import settings as s
 
 import pygeppetto_gateway as pg
 from scidash.general.helpers import import_class
+
+
+db_logger = logging.getLogger('db')
 
 
 def download_and_save_model(path, url):
@@ -24,8 +27,7 @@ def check_capabilities(model_file_path, model_class_import_path):
     try:
         failed = klass(model_file_path).failed_extra_capabilities
     except Exception as e:
-        print(traceback.format_exc())
-        print(e)
+        db_logger.exception(e)
         return False
 
     return len(failed) == 0
@@ -34,7 +36,7 @@ def check_capabilities(model_file_path, model_class_import_path):
 def get_model_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    return klass.capabilities()
+    return klass.get_capabilities()
 
 
 def get_extra_capabilities(model_class_import_path):
