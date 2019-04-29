@@ -3,13 +3,13 @@ import json
 import os
 import re
 
+import quantities as pq
 from django.conf import settings
 from django.views import View
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import quantities as pq
 
 from scidash.general import helpers as general_hlp
 from scidash.general.backends import ScidashCacheBackend
@@ -59,7 +59,11 @@ class GeppettoHandlerView(View):
     OUTPUT_MAPPING_FILE = 'outputMapping.dat'
     RESULTS_FILE = 'results0.dat'
 
-    RESULTS_MAP = {'^[\w\.\[\]]+\.v$': 'v', '^time\(\w+\)$': 't'}  # noqa: W605
+    RESULTS_MAP = {
+        '^[\w\.\[\]]+\.v$': 'RS_pop[0]/v',
+        '^time\(\w+\)$': 't',
+        '^[\w\.\[\]]+\.u$': 'RS_pop[0]/u'
+    }
 
     def get_variable_from_header(self, header):
         for key, value in self.RESULTS_MAP.items():
@@ -106,7 +110,7 @@ class GeppettoHandlerView(View):
             )
             units = pq.UnitQuantity(
                 destructured.get('name'),
-                base_unit*destructured.get('base').get('coefficient'),
+                base_unit * destructured.get('base').get('coefficient'),
                 destructured.get('symbol')
             )
 
@@ -125,7 +129,7 @@ class GeppettoHandlerView(View):
 
         for key in params:
             if params[key] is not None:
-                processed_params[key] = int(params[key]) * params_units[key]
+                processed_params[key] = float(params[key]) * params_units[key]
 
         test_instance = test_class(observation=observation, **processed_params)
 
@@ -212,13 +216,14 @@ class GeppettoHandlerView(View):
             )
 
         with open(results_file, 'r') as f:
-            values = [[], []]
+            values = [[], [], []]
 
             for line in f:
                 splat = line.split('	')
 
                 values[0].append(splat[0])
                 values[1].append(splat[1])
+                values[2].append(splat[2])
 
         for i, (key, value) in enumerate(simulation_result.items()):
             simulation_result[key] = list(map(lambda x: float(x), values[i]))

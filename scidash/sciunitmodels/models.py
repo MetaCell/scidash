@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-import logging
 
+import logging
 from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
@@ -11,7 +11,6 @@ from scidash.general import models as general_models
 from scidash.sciunitmodels.helpers import (
     get_extra_capabilities, get_model_capabilities
 )
-
 
 db_logger = logging.getLogger('db')
 

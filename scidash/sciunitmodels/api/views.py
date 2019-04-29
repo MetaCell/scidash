@@ -2,16 +2,16 @@ import json
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import permissions, response, views, viewsets, mixins, generics
+from rest_framework import (
+    generics, mixins, permissions, response, views, viewsets
+)
 
 import scidash.sciunitmodels.helpers as hlp
+from scidash.general.models import Tag
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
-)
-from scidash.general.models import (
-    Tag
 )
 
 
@@ -92,9 +92,7 @@ class ModelInstanceCloneView(views.APIView):
         return model_instance_model
 
 
-
 class ModelInstanceEditView(views.APIView, mixins.UpdateModelMixin):
-
     def update(self, request, model_id):
         model_pk = model_id
         instance = ModelInstance.objects.get(pk=model_pk)
@@ -103,7 +101,9 @@ class ModelInstanceEditView(views.APIView, mixins.UpdateModelMixin):
 
         try:
             error = None
-            serializer = ModelInstanceSerializer(instance, data=request.data, context={'request': request})
+            serializer = ModelInstanceSerializer(
+                instance, data=request.data, context={'request': request}
+            )
             serializer.is_valid()
             self.perform_update(serializer)
         except Exception as e:
@@ -118,7 +118,6 @@ class ModelInstanceEditView(views.APIView, mixins.UpdateModelMixin):
                     'message': str(error)
                 }, 400
             )
-
 
     def put(self, request, model_id):
         return self.update(request, model_id)

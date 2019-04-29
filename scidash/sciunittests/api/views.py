@@ -2,18 +2,14 @@ import json
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import permissions, viewsets
-from rest_framework import views, response, mixins
+from rest_framework import mixins, permissions, response, views, viewsets
 
-
+from scidash.general.models import Tag
 from scidash.sciunittests.filters import (
     ScoreFilter, TestInstanceFilter, TestSuiteFilter
 )
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
-)
-from scidash.general.models import (
-    Tag
 )
 from scidash.sciunittests.serializers import (
     ScoreClassSerializer, ScoreInstanceSerializer, TestClassSerializer,
@@ -74,7 +70,7 @@ class TestInstanceCloneView(views.APIView):
 
         new_test_instance = self.clone_test(test_instance)
         serializer = TestInstanceSerializer(new_test_instance)
-        
+
         return response.Response(serializer.data)
 
     def clone_test(self, test_instance_model):
@@ -93,16 +89,16 @@ class TestInstanceCloneView(views.APIView):
         return test_instance_model
 
 
-
 class TestInstanceEditView(views.APIView, mixins.UpdateModelMixin):
-
     def update(self, request, test_id):
         test_pk = test_id
         instance = TestInstance.objects.get(pk=test_pk)
 
         try:
             error = None
-            serializer = TestInstanceSerializer(instance, data=request.data, context={'request': request})
+            serializer = TestInstanceSerializer(
+                instance, data=request.data, context={'request': request}
+            )
             serializer.is_valid()
             self.perform_update(serializer)
         except Exception as e:
@@ -118,7 +114,5 @@ class TestInstanceEditView(views.APIView, mixins.UpdateModelMixin):
                 }, 400
             )
 
-
     def put(self, request, test_id):
         return self.update(request, test_id)
-

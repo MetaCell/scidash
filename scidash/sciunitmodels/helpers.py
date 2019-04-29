@@ -8,7 +8,6 @@ from django.conf import settings as s
 import pygeppetto_gateway as pg
 from scidash.general.helpers import import_class
 
-
 db_logger = logging.getLogger('db')
 
 
