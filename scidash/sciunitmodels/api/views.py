@@ -91,34 +91,3 @@ class ModelInstanceCloneView(views.APIView):
 
         return model_instance_model
 
-
-
-class ModelInstanceEditView(views.APIView, mixins.UpdateModelMixin):
-
-    def update(self, request, model_id):
-        model_pk = model_id
-        instance = ModelInstance.objects.get(pk=model_pk)
-        instance.name = request.data.get("name")
-        instance.save()
-
-        try:
-            error = None
-            serializer = ModelInstanceSerializer(instance, data=request.data, context={'request': request})
-            serializer.is_valid()
-            self.perform_update(serializer)
-        except Exception as e:
-            error = e
-
-        if error is None:
-            return response.Response(serializer.data)
-        else:
-            return response.Response(
-                {
-                    'failed': True,
-                    'message': str(error)
-                }, 400
-            )
-
-
-    def put(self, request, model_id):
-        return self.update(request, model_id)
