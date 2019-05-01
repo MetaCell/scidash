@@ -92,33 +92,3 @@ class TestInstanceCloneView(views.APIView):
 
         return test_instance_model
 
-
-
-class TestInstanceEditView(views.APIView, mixins.UpdateModelMixin):
-
-    def update(self, request, test_id):
-        test_pk = test_id
-        instance = TestInstance.objects.get(pk=test_pk)
-
-        try:
-            error = None
-            serializer = TestInstanceSerializer(instance, data=request.data, context={'request': request})
-            serializer.is_valid()
-            self.perform_update(serializer)
-        except Exception as e:
-            error = e
-
-        if error is None:
-            return response.Response(serializer.data)
-        else:
-            return response.Response(
-                {
-                    'failed': True,
-                    'message': str(error)
-                }, 400
-            )
-
-
-    def put(self, request, test_id):
-        return self.update(request, test_id)
-
