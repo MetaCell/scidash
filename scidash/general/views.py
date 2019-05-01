@@ -3,6 +3,7 @@ import json
 import os
 import re
 
+import quantities as pq
 from django.conf import settings
 from django.views import View
 from rest_framework.parsers import MultiPartParser
@@ -58,7 +59,11 @@ class GeppettoHandlerView(View):
     OUTPUT_MAPPING_FILE = 'outputMapping.dat'
     RESULTS_FILE = 'results0.dat'
 
-    RESULTS_MAP = {'^[\w\.\[\]]+\.v$': 'v', '^time\(\w+\)$': 't'}
+    RESULTS_MAP = {
+        '^[\w\.\[\]]+\.v$': 'RS_pop[0]/v',
+        '^time\(\w+\)$': 't',
+        '^[\w\.\[\]]+\.u$': 'RS_pop[0]/u'
+    }
 
     def get_variable_from_header(self, header):
         for key, value in self.RESULTS_MAP.items():
@@ -91,9 +96,23 @@ class GeppettoHandlerView(View):
         observation = score_instance.test_instance.observation
         params = score_instance.test_instance.params
 
-        units = general_hlp.import_class(
-            score_instance.test_instance.test_class.units
-        )
+        try:
+            destructured = json.loads(
+                score_instance.test_instance.test_class.units
+            )
+        except json.JSONDecodeError:
+            units = general_hlp.import_class(
+                score_instance.test_instance.test_class.units
+            )
+        else:
+            base_unit = general_hlp.import_class(
+                destructured.get('base').get('quantity')
+            )
+            units = pq.UnitQuantity(
+                destructured.get('name'),
+                base_unit * destructured.get('base').get('coefficient'),
+                destructured.get('symbol')
+            )
 
         for key in observation:
             observation[key] = int(observation[key]
@@ -106,10 +125,13 @@ class GeppettoHandlerView(View):
         for key in params_units:
             params_units[key] = general_hlp.import_class(params_units[key])
 
-        for key in params:
-            params[key] = int(params[key]) * params_units[key]
+        processed_params = {}
 
-        test_instance = test_class(observation=observation, **params)
+        for key in params:
+            if params[key] is not None:
+                processed_params[key] = float(params[key]) * params_units[key]
+
+        test_instance = test_class(observation=observation, **processed_params)
 
         score = test_instance.judge(model_instance).json(
             add_props=True, string=False
@@ -194,13 +216,14 @@ class GeppettoHandlerView(View):
             )
 
         with open(results_file, 'r') as f:
-            values = [[], []]
+            values = [[], [], []]
 
             for line in f:
                 splat = line.split('	')
 
                 values[0].append(splat[0])
                 values[1].append(splat[1])
+                values[2].append(splat[2])
 
         for i, (key, value) in enumerate(simulation_result.items()):
             simulation_result[key] = list(map(lambda x: float(x), values[i]))

@@ -1,6 +1,6 @@
+import json
 import logging
 from datetime import date
-import json
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
@@ -11,8 +11,8 @@ from scidash.general import models as general_models
 from scidash.general.helpers import import_class
 from scidash.sciunittests.constants import TEST_PARAMS_UNITS_TYPE
 from scidash.sciunittests.helpers import (
-    get_observation_schema, get_test_parameters_schema, get_units,
-    build_destructured_unit
+    build_destructured_unit, get_observation_schema, get_test_parameters_schema,
+    get_units
 )
 
 db_logger = logging.getLogger('db')
@@ -83,14 +83,10 @@ class TestClass(models.Model):
             )
 
         if params_schema is None:
-            db_logger.exception(
-                f"Params schema not found {self.import_path}"
-            )
+            db_logger.exception(f"Params schema not found {self.import_path}")
 
         if units is None:
-            db_logger.exception(
-                f"Units not found {self.import_path}"
-            )
+            db_logger.exception(f"Units not found {self.import_path}")
 
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema

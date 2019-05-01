@@ -1,12 +1,15 @@
 import json
+import logging
 import os
-import traceback
+import time
 
 import requests
 from django.conf import settings as s
 
 import pygeppetto_gateway as pg
 from scidash.general.helpers import import_class
+
+db_logger = logging.getLogger('db')
 
 
 def download_and_save_model(path, url):
@@ -24,8 +27,7 @@ def check_capabilities(model_file_path, model_class_import_path):
     try:
         failed = klass(model_file_path).failed_extra_capabilities
     except Exception as e:
-        print(traceback.format_exc())
-        print(e)
+        db_logger.exception(e)
         return False
 
     return len(failed) == 0
@@ -34,7 +36,7 @@ def check_capabilities(model_file_path, model_class_import_path):
 def get_model_capabilities(model_class_import_path):
     klass = import_class(model_class_import_path)
 
-    return klass.capabilities()
+    return klass.get_capabilities()
 
 
 def get_extra_capabilities(model_class_import_path):
@@ -46,15 +48,20 @@ def get_extra_capabilities(model_class_import_path):
         return {}
 
 
-def get_model_parameters(url):
+def get_model_parameters(url: str) -> dict:
     servlet_manager = pg.GeppettoServletManager()
     file_name = os.path.basename(url)
 
+    interpreter_string = pg.interpreters.helpers.interpreter_detector(url)
+    interpreter_class = import_class(interpreter_string)
+    timestamp = int(time.time())
+
     builder = pg.GeppettoProjectBuilder(
-        model_url=url,
-        project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/p.json",
-        xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/m.xmi",
-        nml_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{file_name}"
+        model_file_url=url,
+        interpreter=interpreter_class,
+        project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/p.json",  # noqa: E501
+        xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/m.xmi",  # noqa: E501
+        model_file_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/{file_name}"  # noqa: E501
     )
     project_url = builder.build_project()
 
@@ -64,15 +71,21 @@ def get_model_parameters(url):
     result = {}
 
     while wrong_message:
-        result = json.loads(servlet_manager.read())
-        wrong_message = result.get(
+        result = servlet_manager.read()
+        db_logger.info(result)
+
+        parsed_result = json.loads(result)
+
+        wrong_message = parsed_result.get(
             'type'
-        ) != 'geppetto_model_loaded' and result.get('type') != 'generic_error'
+        ) != 'geppetto_model_loaded' and parsed_result.get(
+            'type'
+        ) != 'generic_error'
 
-    if result.get('type') == 'generic_error':
-        result = json.loads(result.get('data'))
-        result = json.loads(result.get('message'))
+    if parsed_result.get('type') == 'generic_error':
+        parsed_result = json.loads(parsed_result.get('data'))
+        parsed_result = json.loads(parsed_result.get('message'))
 
-        raise Exception(result)
+        raise Exception(parsed_result)
 
-    return result
+    return parsed_result

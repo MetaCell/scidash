@@ -1,18 +1,21 @@
 import json
+import logging
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import permissions, response, views, viewsets, mixins, generics
+from rest_framework import (
+    mixins, permissions, response, views, viewsets
+)
 
 import scidash.sciunitmodels.helpers as hlp
+from scidash.general.models import Tag
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
-from scidash.general.models import (
-    Tag
-)
+
+logger = logging.getLogger('db')
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
@@ -43,6 +46,7 @@ class ModelParametersView(views.APIView):
         try:
             params = hlp.get_model_parameters(url)
         except Exception as e:
+            logger.exception(e)
             error = e
 
         if error is None:
@@ -90,4 +94,3 @@ class ModelInstanceCloneView(views.APIView):
             model_instance_model.tags.create(name=tag)
 
         return model_instance_model
-

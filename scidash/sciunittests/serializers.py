@@ -11,10 +11,10 @@ from scidash.general.helpers import import_class
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
+from scidash.sciunittests.helpers import build_destructured_unit
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
-from scidash.sciunittests.helpers import build_destructured_unit
 
 
 class TestSuiteSerializer(

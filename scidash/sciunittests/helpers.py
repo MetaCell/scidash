@@ -1,5 +1,6 @@
 import inspect
 import json
+
 import quantities as pq
 
 from scidash.general.helpers import import_class
@@ -9,8 +10,7 @@ def build_destructured_unit(unit_dict):
     unit = pq.UnitQuantity(
         unit_dict.get('name'),
         import_class(unit_dict.get('base').get('quantity')) *
-        unit_dict.get('base').get('coefficient'),
-        unit_dict.get('symbol')
+        unit_dict.get('base').get('coefficient'), unit_dict.get('symbol')
     )
 
     return unit
