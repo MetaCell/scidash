@@ -1,9 +1,10 @@
 import json
+import logging
 from datetime import date
 from random import getrandbits as grb
 
 from rest_framework import (
-    generics, mixins, permissions, response, views, viewsets
+    mixins, permissions, response, views, viewsets
 )
 
 import scidash.sciunitmodels.helpers as hlp
@@ -13,6 +14,8 @@ from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
+
+logger = logging.getLogger('db')
 
 
 class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
@@ -43,6 +46,7 @@ class ModelParametersView(views.APIView):
         try:
             params = hlp.get_model_parameters(url)
         except Exception as e:
+            logger.exception(e)
             error = e
 
         if error is None:
