@@ -59,7 +59,8 @@ run-staging: migrate
 	make run-celery & \
 	make run-celery-beat & \
 	make run-django-staging & \
-	make run-frontend
+	make run-frontend & \
+	make run-virgo-staging
 
 django-migrate: migrations migrate
 
@@ -86,6 +87,9 @@ run-celery:
 
 run-celery-beat:
 	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+run-virgo-staging:
+	./service/scripts/run-virgo-staging.sh
 
 lint: flake8-lint isort-lint yapf-lint
 
