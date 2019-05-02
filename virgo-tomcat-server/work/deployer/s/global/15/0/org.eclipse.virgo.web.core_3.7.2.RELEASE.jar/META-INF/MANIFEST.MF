@@ -1,0 +1,82 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.virgo.web.core
+Export-Package: org.eclipse.virgo.web.core;version="3.7.2.RELEASE"
+Bundle-Version: 3.7.2.RELEASE
+Bundle-Name: Virgo Web Support Core
+Bundle-ManifestVersion: 2
+Import-Package: javax.servlet;version="[2.6.0,4)",org.eclipse.gemini.w
+ eb.core;version="[3.0.3,4)",org.eclipse.gemini.web.core.spi;version="
+ [3.0.3,4)",org.eclipse.osgi.framework.adaptor;version="0",org.eclipse
+ .virgo.kernel.artifact.bundle;version="[3.7.2,4)",org.eclipse.virgo.k
+ ernel.artifact.fs;version="[3.7.2,4)",org.eclipse.virgo.kernel.equino
+ x.extensions.hooks;version="[3.7.2,4)",org.eclipse.virgo.kernel.insta
+ ll.artifact;version="[3.7.2,4)",org.eclipse.virgo.kernel.install.envi
+ ronment;version="[3.7.2,4)",org.eclipse.virgo.kernel.install.pipeline
+ .stage.transform;version="[3.7.2,4)",org.eclipse.virgo.kernel.osgi.fr
+ amework;version="[3.7.2,4)",org.eclipse.virgo.medic.eventlog;version=
+ "[3.7.2,4)",org.eclipse.virgo.nano.deployer.api.core;version="[3.7.2,
+ 4)",org.eclipse.virgo.nano.serviceability;version="[3.7.2,4)",org.ecl
+ ipse.virgo.repository;version="[3.7.2,4)",org.eclipse.virgo.util.comm
+ on;version="[3.7.2,4)",org.eclipse.virgo.util.osgi.manifest;version="
+ [3.7.2,4)",org.osgi.framework;version="0",org.osgi.service.cm;version
+ ="0",org.osgi.service.event;version="0",org.slf4j;version="[1.7.25,2)
+ "
+Tool: Bundlor 1.1.2.RELEASE
+
+Name: org/eclipse/virgo/web/core/WebApplicationRegistry.class
+SHA-256-Digest: cmuyKN0aaX+frh9EtTLjVcWRDu3AoacwHcsOQINFYfU=
+
+Name: org/eclipse/virgo/web/core/internal/WebApplicationEventLogger.cl
+ ass
+SHA-256-Digest: /Mp9OWc+2RgOGlcmShL3fqt1CzhsyrBc0rjyMQC7g7E=
+
+Name: EventLogMessages.properties
+SHA-256-Digest: VZB7MLQuqYuzPlc786JOYkPS87cMiMKEi731IMFuTZc=
+
+Name: org/eclipse/virgo/web/core/internal/StandardWebApplicationRegist
+ ry.class
+SHA-256-Digest: VmBZiLw+GK7Ds32DMQxpNadiqLl40CyVruzUDqJUkpA=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleTransformer$1.class
+SHA-256-Digest: S9SihWG2FxjsDuUyMC9dDBZJU75uvzZeynN6eM+yT00=
+
+Name: org/eclipse/virgo/web/core/internal/WebArtifactIdentityDetermine
+ r.class
+SHA-256-Digest: AfaVm/r0AWQFXXjH+G/6FoXPdD788szJY3a1P6HS6vw=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleLifecycleListener$W
+ ebBundleDeployedEventHandler.class
+SHA-256-Digest: /AjBJcCY7ZvIr/ZFPWLwbkxD1kA7VtT7zxZSJ6O/LAM=
+
+Name: META-INF/spring/web-context.xml
+SHA-256-Digest: ZK3GsS7ZdA3xk70xUl2F9FGpvCYjxQvvVU0rDlRAUaA=
+
+Name: org/eclipse/virgo/web/core/internal/WarDetectingTransformer.clas
+ s
+SHA-256-Digest: 4c5i6bgP8gMvVCXzk3GgP2w31ft4Q1a72YiUae4jCjw=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleTransformer.class
+SHA-256-Digest: TgtlavhqP6T3R2BN4Tv5F7g10AAkx/UgYn8l3gBhlxs=
+
+Name: org/eclipse/virgo/web/core/internal/WebDeploymentEnvironment.cla
+ ss
+SHA-256-Digest: gtRRDZQY4AqGe6M+bTnot/3v52u1SnSptNq42PpG8EA=
+
+Name: org/eclipse/virgo/web/core/internal/WebAppClassLoaderDelegateHoo
+ k.class
+SHA-256-Digest: ZcFMAwp3bhYt0IQbAbblVa3+Wd9I9A3yR+gkwsRhNp0=
+
+Name: org/eclipse/virgo/web/core/internal/WebContainerUtils.class
+SHA-256-Digest: CqfLqlaAHKC2VBcrv9s/WmxGBsz1/h/OzOq3W8aewEk=
+
+Name: org/eclipse/virgo/web/core/internal/WarDetectingTransformer$1.cl
+ ass
+SHA-256-Digest: X6CBE06FA9mk81yGXmscuFzlNtvrR+IgNov1h0WvaLo=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleLifecycleListener.c
+ lass
+SHA-256-Digest: DvGhKGlWB9FuTlCPJ7i1vdx1dI4CTrPYRocU4fTtl6c=
+
+Name: org/eclipse/virgo/web/core/internal/WebLogEvents.class
+SHA-256-Digest: lE3B1o0MvWIkIKLpUFsb2o36AhwiMlWmJJhDUpdhsUM=
+

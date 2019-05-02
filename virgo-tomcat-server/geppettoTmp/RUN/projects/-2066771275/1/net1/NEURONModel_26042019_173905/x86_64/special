@@ -1,0 +1,13 @@
+#!/bin/sh
+if test "x${NRNHOME}" = "x" ; then
+	NRNHOME="/Applications/NEURON-7.6/nrn"
+fi
+if test "x${NRNBIN}" = "x" ; then
+	NRNBIN="/Applications/NEURON-7.6/nrn/x86_64/bin/"
+fi
+if test "" = "yes" ; then
+	NRNIV="${NRNBIN}nrniv.app/Contents/MacOS/nrniv"
+else
+	NRNIV="${NRNBIN}nrniv"
+fi
+"${NRNIV}" -dll "/Users/roman/Projects/metacell/virgo-tomcat-server/geppettoTmp/RUN/projects/-2066771275/1/net1/NEURONModel_26042019_173905/x86_64/.libs/libnrnmech.so" "$@"

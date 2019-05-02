@@ -1,0 +1,13 @@
+[13/Apr/2019:12:55:38 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 500 56 820
+[13/Apr/2019:12:55:50 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 500 4 820
+[13/Apr/2019:12:56:08 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/geppetto 200 15 3889
+[13/Apr/2019:12:56:12 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 4 -
+[13/Apr/2019:12:56:23 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 2 -
+[13/Apr/2019:12:58:29 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 4 -
+[13/Apr/2019:12:58:39 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 4 -
+[13/Apr/2019:13:02:08 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 5 -
+[13/Apr/2019:13:02:22 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 3 -
+[13/Apr/2019:21:42:12 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/geppetto 200 90 3889
+[13/Apr/2019:21:42:13 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 47 -
+[13/Apr/2019:21:43:07 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/geppetto 200 8 3889
+[13/Apr/2019:21:43:08 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 4 -

@@ -1,0 +1,89 @@
+Manifest-Version: 1.0
+Export-Package: org.eclipse.gemini.blueprint.extender;version="2.1.0.J
+ AVA7";uses:="org.eclipse.gemini.blueprint.context,org.eclipse.gemini.
+ blueprint.service.importer,org.osgi.framework,org.springframework.bea
+ ns,org.springframework.beans.factory.config",org.eclipse.gemini.bluep
+ rint.extender.event;version="2.1.0.JAVA7";uses:="org.eclipse.gemini.b
+ lueprint.context.event,org.eclipse.gemini.blueprint.service.importer.
+ event,org.osgi.framework,org.springframework.context",org.eclipse.gem
+ ini.blueprint.extender.support;version="2.1.0.JAVA7";uses:="org.eclip
+ se.gemini.blueprint.context,org.eclipse.gemini.blueprint.extender,org
+ .eclipse.gemini.blueprint.extender.support.scanning,org.osgi.framewor
+ k,org.springframework.beans.factory",org.eclipse.gemini.blueprint.ext
+ ender.support.scanning;version="2.1.0.JAVA7";uses:="org.osgi.framewor
+ k",org.osgi.service.blueprint;version=1;uses:="org.osgi.service.bluep
+ rint.container,org.osgi.service.blueprint.reflect"
+Gemini-Blueprint-Version: 2.1.0.JAVA7
+Private-Package: org.eclipse.gemini.blueprint.extender.internal.activa
+ tor,org.eclipse.gemini.blueprint.extender.internal.activator.listener
+ s,org.eclipse.gemini.blueprint.extender.internal.blueprint.activator,
+ org.eclipse.gemini.blueprint.extender.internal.blueprint.activator.su
+ pport,org.eclipse.gemini.blueprint.extender.internal.blueprint.event,
+ org.eclipse.gemini.blueprint.extender.internal.boot,org.eclipse.gemin
+ i.blueprint.extender.internal.dependencies.shutdown,org.eclipse.gemin
+ i.blueprint.extender.internal.dependencies.startup,org.eclipse.gemini
+ .blueprint.extender.internal.support,org.eclipse.gemini.blueprint.ext
+ ender.internal.util,org.eclipse.gemini.blueprint.extender.internal.ut
+ il.concurrent,org.eclipse.gemini.blueprint.extender.support.internal
+Implementation-Title: Eclipse Gemini Blueprint
+Git-Revision: ${git.commit.id.describe}
+Built-By: genie.gemini
+Tool: Bnd-3.3.0.201609221906
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Implementation-Vendor: Eclipse Foundation
+Implementation-Vendor-Id: org.eclipse.gemini.blueprint
+Bundle-Activator: org.eclipse.gemini.blueprint.extender.internal.boot.
+ ChainActivator
+Bundle-License: http://www.opensource.org/licenses/eclipse-1.0.php, ht
+ tp://www.opensource.org/licenses/apache2.0.php
+Bundle-SymbolicName: org.eclipse.gemini.blueprint.extender
+Spring-Version: 4.3.7.RELEASE_1
+Implementation-Version: 2.1.0.JAVA7
+Bundle-Name: gemini-blueprint-extender
+Created-By: 1.7.0_80 (Oracle Corporation)
+Bundle-Vendor: Eclipse Foundation
+Build-Jdk: 1.7.0_80
+Bundle-Version: 2.1.0.JAVA7
+Bnd-LastModified: 1497522263919
+Bundle-ManifestVersion: 2
+Bundle-Description: Eclipse Gemini Blueprint extender. Listens for and
+  bootstraps OSGi 4.2 Blueprint and Spring-powered OSGi         bundle
+ s.
+Bundle-DocURL: http://www.eclipse.org/gemini/blueprint/
+Import-Package: org.osgi.service.blueprint.container;version="1.0.0";r
+ esolution:=optional,org.osgi.framework;version="1.3",org.osgi.service
+ .event;version="1.1";resolution:=optional,org.osgi.util.tracker;versi
+ on="1.3",org.apache.commons.logging;version="[1.0,2.0)",org.eclipse.g
+ emini.blueprint.blueprint.container;version="[2.1.0.JAVA7,2.1.0.JAVA7
+ ]",org.eclipse.gemini.blueprint.blueprint.container.support;version="
+ [2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint;version="[2.1
+ .0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint.context;version="
+ [2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint.context.event
+ ;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint.con
+ text.support;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.b
+ lueprint.extender;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gem
+ ini.blueprint.extender.event;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.
+ eclipse.gemini.blueprint.io;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.e
+ clipse.gemini.blueprint.service.exporter.support;version="[2.1.0.JAVA
+ 7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint.service.importer;version
+ ="[2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.blueprint.service.imp
+ orter.event;version="[2.1.0.JAVA7,2.1.0.JAVA7]",org.eclipse.gemini.bl
+ ueprint.service.importer.support;version="[2.1.0.JAVA7,2.1.0.JAVA7]",
+ org.eclipse.gemini.blueprint.util;version="[2.1.0.JAVA7,2.1.0.JAVA7]"
+ ,org.springframework.beans;version="[4.3.0,4.4)",org.springframework.
+ beans.factory;version="[4.3.0,4.4)",org.springframework.beans.factory
+ .config;version="[4.3.0,4.4)",org.springframework.beans.factory.parsi
+ ng;version="[4.3.0,4.4)",org.springframework.beans.factory.support;ve
+ rsion="[4.3.0,4.4)",org.springframework.beans.factory.xml;version="[4
+ .3.0,4.4)",org.springframework.context;version="[4.3.0,4.4)",org.spri
+ ngframework.context.event;version="[4.3.0,4.4)",org.springframework.c
+ ore;version="[4.3.0,4.4)",org.springframework.core.convert;version="[
+ 4.3.0,4.4)",org.springframework.core.io;version="[4.3.0,4.4)",org.spr
+ ingframework.core.io.support;version="[4.3.0,4.4)",org.springframewor
+ k.core.task;version="[4.3.0,4.4)",org.springframework.scheduling.conc
+ urrent;version="[4.3.0,4.4)",org.springframework.util;version="[4.3.0
+ ,4.4)",org.xml.sax;resolution:=optional,org.eclipse.gemini.blueprint.
+ extensions.annotation;resolution:=optional;version="[2.1.0.JAVA7,2.1.
+ 0.JAVA7]",org.osgi.service.blueprint.reflect;version="1.0.0";resoluti
+ on:=optional,org.osgi.service.cm;version="1.2";resolution:=optional
+

@@ -1,0 +1,63 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: 9uYfBaG2JzzbuE39S+gEqrJYkfH0T
+ S2KRUHPrKtF8jE=
+SHA-256-Digest-Manifest: RzUeOJDnY2ScSz6Xy02VZCz/0LWCEwxkkaWfFMnReRo=
+Created-By: 1.8.0_131 (Oracle Corporation)
+
+Name: org/eclipse/virgo/web/core/WebApplicationRegistry.class
+SHA-256-Digest: 5hCsBTvy/70PXpkokmmqeRHzsRCU5Riqn4K94F3wN2s=
+
+Name: org/eclipse/virgo/web/core/internal/WebApplicationEventLogger.cl
+ ass
+SHA-256-Digest: og7WBLnSzrO0nSv8/fk19XprldgZFKlXVBn2UJJCxVU=
+
+Name: EventLogMessages.properties
+SHA-256-Digest: Lt/2RSlII7nVuyPXKbGKwmAmexvBBJdDI9cO0CsUhXc=
+
+Name: org/eclipse/virgo/web/core/internal/StandardWebApplicationRegist
+ ry.class
+SHA-256-Digest: q88KRKTsC9D7RlAY1HVT0yJaTxfhBX0/7E8EtJe5o10=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleTransformer$1.class
+SHA-256-Digest: /dGql+CSTeSxC8bGqmVDrcHAcfnl94z7VwJYI4yzsSQ=
+
+Name: org/eclipse/virgo/web/core/internal/WebArtifactIdentityDetermine
+ r.class
+SHA-256-Digest: lRi3/nxYS2KbQS826C/JLGVXf7oCj64cO4ugWi3nVg8=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleLifecycleListener$W
+ ebBundleDeployedEventHandler.class
+SHA-256-Digest: Y9lFAZ7vUEEBKVGwj+eMhO1LujZnysuWJzG4UmSeKgk=
+
+Name: META-INF/spring/web-context.xml
+SHA-256-Digest: WIUUKKYoHl2td4H+Ino/uEgpH8BZc++VILaUzFzihCE=
+
+Name: org/eclipse/virgo/web/core/internal/WarDetectingTransformer.clas
+ s
+SHA-256-Digest: cuCtkHsvzyIgnjzH7GTA9uIVLOfW/9erUGtHQgubZxg=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleTransformer.class
+SHA-256-Digest: n4I1JVpFoj08lV+YS1FpCagxin4XwqESgSQtUW7iXa8=
+
+Name: org/eclipse/virgo/web/core/internal/WebDeploymentEnvironment.cla
+ ss
+SHA-256-Digest: 7bbOVFEnU8VSCfsZMBAHwTeTOLm2p9fbvKxZE8cEYhs=
+
+Name: org/eclipse/virgo/web/core/internal/WebAppClassLoaderDelegateHoo
+ k.class
+SHA-256-Digest: CFTawyOgmTO0RUifU9QTIvm54n6g+49IpOnWAVz3MDc=
+
+Name: org/eclipse/virgo/web/core/internal/WebContainerUtils.class
+SHA-256-Digest: E7GI0T43U+mZ0Ffm/K4ZZZ7s9m+bCz55PcAb8NcpXVE=
+
+Name: org/eclipse/virgo/web/core/internal/WarDetectingTransformer$1.cl
+ ass
+SHA-256-Digest: wab221j/ROhUkeN34bBMhqPKRiLTUd5ukTzQMvFkUdI=
+
+Name: org/eclipse/virgo/web/core/internal/WebBundleLifecycleListener.c
+ lass
+SHA-256-Digest: CNUQF4Xu0JEuQLdRhHdc5uQf0ty0VcGYLH0le6eYvsw=
+
+Name: org/eclipse/virgo/web/core/internal/WebLogEvents.class
+SHA-256-Digest: +gfJahL0CTWTzjp7qnKIebBLodU5AnjNzHk5Yed5qYE=
+

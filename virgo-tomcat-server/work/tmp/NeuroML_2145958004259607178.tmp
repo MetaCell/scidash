@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<neuroml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.neuroml.org/schema/neuroml2" id="NeuroML_2_loaded_via_LEMS_by_Geppetto" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.githubusercontent.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd">
+    <izhikevich2007Cell v0="-60mV" k="0.7 nS_per_mV" vr="-60 mV" vt="-40 mV" vpeak="35 mV" a="0.03 per_ms" b="-2 nS" c="-50 mV" d="100 pA" C="100 pF" id="RS"/>
+    <pulseGenerator delay="0ms" duration="520ms" amplitude="100 pA" id="RS_Iext"/>
+</neuroml>

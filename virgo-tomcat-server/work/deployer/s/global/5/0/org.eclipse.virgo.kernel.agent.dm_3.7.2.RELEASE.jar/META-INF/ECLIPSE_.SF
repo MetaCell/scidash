@@ -1,0 +1,52 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: Tj009oAcnWUrxi/5ozo34z6tEMAI1
+ 3MrFB3TK6QXrlo=
+SHA-256-Digest-Manifest: UVuJgQv6/IYeyUxKNV4pmKmORRRGw9SaJGCqouixbC0=
+Created-By: 1.8.0_131 (Oracle Corporation)
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $1.class
+SHA-256-Digest: /T5C1oFpzUiYlioigg3uGfQmtssNR0MhzEOyhFoPxR8=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/BlueprintEventPosting
+ OsgiBundleApplicationContextListener.class
+SHA-256-Digest: Wtygai7UtVJ5YZ8zFkrxFf3rFLsThNShCkW76IX5Hrk=
+
+Name: EventLogMessages.properties
+SHA-256-Digest: CZXpGg4/2Nzob4LxO3okFbJ9OliT9k6WFrQ2o/P9Pjk=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/DeployerFailureListen
+ er.class
+SHA-256-Digest: gj5Y/nzojg0llJjwfOVRiEQFmhYuLY340+cGWX0elP8=
+
+Name: OSGI-INF/agentdm_start_tracker.xml
+SHA-256-Digest: Golv0ndZ5/qKyee4GZgwomnpC+Sb20koxi4/fNtwpuI=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/AgentActivator.class
+SHA-256-Digest: GxqjSyw/8X76fluM7M2Q0kzsroG7eoq4D3SskRDuU90=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ .class
+SHA-256-Digest: Y+W9oGq3k3a64wxhyaTOwqbleRSC6FDt/b0AWbcuXuQ=
+
+Name: org/eclipse/virgo/kernel/agent/dm/StandardAgentDMStartTracker.cl
+ ass
+SHA-256-Digest: T17LUMdiraPnKU1OhHwGPVAszS6Bw03fbOF+fOZ0FSk=
+
+Name: org/eclipse/virgo/kernel/agent/dm/AgentDMStartTracker.class
+SHA-256-Digest: eJZbqItzFfQXKlU73zg6mkwBPIA8jlRKxENXnVfKBM8=
+
+Name: OSGI-INF/dm_agent.xml
+SHA-256-Digest: v2y+v6SKa2EiNDPpMN5wW1+Cd/AjSS/vmeOD+KQIZ8o=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $NoOpTracingService.class
+SHA-256-Digest: E4+cgAVndjX1jRW7sKdzTeShFCa2T+oSxjqywumlW6o=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $2.class
+SHA-256-Digest: +K6+PGFPNmYmATXPE6ivnqBxlx2OVwawXU0VzYXH6XA=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/AgentLogEvents.class
+SHA-256-Digest: Uzr9cbog/g627b/y5uCUmFDPNnCGGxxFMAZLE5LSy68=
+

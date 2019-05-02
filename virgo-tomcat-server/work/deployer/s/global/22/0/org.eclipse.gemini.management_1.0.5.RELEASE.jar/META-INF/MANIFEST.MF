@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: cgfrost
+Build-Jdk: 1.6.0_37
+Bundle-Version: 1.0.5.RELEASE
+Bundle-Name: Gemini Management
+Bundle-Activator: org.eclipse.gemini.management.Activator
+Bundle-ManifestVersion: 2
+Import-Package: javax.management,javax.management.openmbean,org.osgi.f
+ ramework;version="1.3.0",org.osgi.framework.startlevel;version="1.0.0
+ ",org.osgi.framework.wiring;version="1.0.0",org.osgi.jmx,org.osgi.jmx
+ .framework,org.osgi.jmx.service.cm,org.osgi.jmx.service.permissionadm
+ in,org.osgi.jmx.service.provisioning,org.osgi.jmx.service.useradmin,o
+ rg.osgi.service.cm,org.osgi.service.packageadmin,org.osgi.service.per
+ missionadmin,org.osgi.service.provisioning,org.osgi.service.useradmin
+ ,org.osgi.util.tracker
+Bundle-SymbolicName: org.eclipse.gemini.management
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

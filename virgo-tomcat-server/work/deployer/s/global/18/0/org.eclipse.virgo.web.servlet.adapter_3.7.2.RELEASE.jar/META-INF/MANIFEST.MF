@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.virgo.web.servlet.adapter
+Export-Package: javax.servlet;version="3.0.0",javax.servlet.annotation
+ ;version="3.0.0",javax.servlet.descriptor;version="3.0.0",javax.servl
+ et.http;version="3.0.0",javax.servlet.resources;version="3.0.0"
+Bundle-Version: 3.7.2.RELEASE
+Bundle-Name: Virgo Web Servlet Adapter
+Require-Bundle: javax.servlet
+Bundle-ManifestVersion: 2
+Tool: Bundlor 1.1.2.RELEASE
+
+Name: about.html
+SHA-256-Digest: 1fuYr0bu6NsJZCAmSom5QtnvnV0Cg8DwLn77Dd1Ql24=
+
