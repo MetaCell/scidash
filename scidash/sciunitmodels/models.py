@@ -56,6 +56,9 @@ class ModelClass(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
+        if self.import_path is None:
+            return
+
         capabilities = []
         extra_capabilities = []
 

@@ -63,6 +63,9 @@ class TestClass(models.Model):
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
 
+        if self.import_path is None:
+            return
+
         observation_schema = None
         params_schema = None
         units = None
