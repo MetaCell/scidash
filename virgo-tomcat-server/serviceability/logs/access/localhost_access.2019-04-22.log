@@ -1,2 +1,0 @@
-[22/Apr/2019:18:29:19 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/geppetto 200 109 3889
-[22/Apr/2019:18:29:19 +0300] 0:0:0:0:0:0:0:1 - HTTP/1.1 GET /org.geppetto.frontend/GeppettoServlet 101 55 -
