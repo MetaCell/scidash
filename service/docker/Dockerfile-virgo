@@ -81,7 +81,7 @@ WORKDIR $SOURCES_DIR/org.geppetto.simulator.scidash
 RUN git checkout development
 
 WORKDIR $SOURCES_DIR/org.geppetto
-RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=org.geppetto.frontend -DuseSsl=false -DskipTests install
+RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=/org.geppetto.frontend -DuseSsl=false -DskipTests install
 
 WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN python update_server.py
