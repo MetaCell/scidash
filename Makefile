@@ -125,6 +125,12 @@ build-scidash-db:
 	@echo "==========================="
 	@./service/scripts/build-image-db.sh
 
+build-virgo:
+	@echo "======================="
+	@echo "=     Build virgo     ="
+	@echo "======================="
+	@./service/scripts/build-image-virgo.sh
+
 push-scidash:
 	@echo "==========================="
 	@echo "=   Push scidash image    ="
