@@ -1,4 +1,5 @@
 import os
+import json
 from random import getrandbits as grb
 
 import quantities as pq
@@ -26,11 +27,33 @@ class CompatibilityMatrixView(APIView):
             model_object.model_class.import_path
         )(path, name=f'{model_object.name}#{model_object.pk}')
 
+    # FIXME: replace with helper
+    def from_destructured(self, unit_dict):
+        unit = pq.UnitQuantity(
+            unit_dict.get('name'),
+            import_class(unit_dict.get('base').get('quantity')) *
+            unit_dict.get('base').get('coefficient'), unit_dict.get('symbol')
+        )
+
+        return unit
+
+    def get_observation(self, units, observation) -> dict:
+
+        try:
+            units = json.loads(units)
+            imported_units = self.from_destructured(units)
+        except Exception:
+            imported_units = import_class(units)
+
+        for key in observation.keys():
+            if key != 'n':
+                observation[key] = float(observation[key]) * imported_units
+
+        return observation
+
     def post(self, request):
         tests = request.data.get('tests')
         models = request.data.get('models')
-
-        observation = {'mean': 1 * pq.ms, 'std': 1 * pq.ms}
 
         test_models = [
             test for test in TestInstance.objects.filter(id__in=tests)
@@ -41,9 +64,13 @@ class CompatibilityMatrixView(APIView):
         ]
 
         test_instances = [
-            import_class(test.test_class.import_path
-                         )(observation, name=f'{test.name}#{test.pk}')
-            for test in test_models
+            import_class(test.test_class.import_path)(
+                self.get_observation(
+                    test.test_class.units,
+                    test.observation
+                ),
+                name=f'{test.name}#{test.pk}'
+            ) for test in test_models
         ]
 
         model_instances = [

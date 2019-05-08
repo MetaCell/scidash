@@ -57,7 +57,12 @@ class TestInstanceSerializer(
     def validate(self, data):
         sciunit.settings['PREVALIDATE'] = True
 
+
         class_data = data.get('test_class')
+
+        if not class_data.get('import_path', False):
+            return data
+
         test_class = import_class(class_data.get('import_path'))
 
         try:

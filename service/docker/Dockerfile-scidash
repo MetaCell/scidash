@@ -30,10 +30,7 @@ ADD . $APP_DIR
 RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get install nodejs
-RUN wget https://neuron.yale.edu/ftp/neuron/versions/v7.6/nrn-7.6.x86_64-linux.deb
-RUN dpkg -i nrn-7.6.x86_64-linux.deb
-RUN apt-get -y install default-jdk
-ENV NEURON_HOME /usr/local/nrn
+
 
 RUN make install-backend-with-env
 RUN make install-sciunit-neuronunit
