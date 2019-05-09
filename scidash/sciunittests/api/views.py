@@ -1,6 +1,7 @@
 import json
 from datetime import date
 from random import getrandbits as grb
+import pdb;
 
 from rest_framework import mixins, permissions, response, views, viewsets
 
@@ -68,16 +69,17 @@ class TestInstanceCloneView(views.APIView):
                 ), 404
             )
 
-        new_test_instance = self.clone_test(test_instance)
+        new_test_instance = self.clone_test(test_instance, request)
         serializer = TestInstanceSerializer(new_test_instance)
 
         return response.Response(serializer.data)
 
-    def clone_test(self, test_instance_model):
+    def clone_test(self, test_instance_model, request):
         test_pk = test_instance_model.pk
         test_instance_model.timestamp = date.today()
         test_instance_model.pk = None
         test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
+        test_instance_model.owner = request.user
 
         test_instance_model.save()
 
