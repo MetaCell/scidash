@@ -14,4 +14,4 @@ REDIS_URL=redis://scidash-redis:6379
 
 GEPPETTO_SERVLET_URL='ws://scidash-geppetto:8080/org.geppetto.frontend/GeppettoServlet'
 GEPPETTO_BASE_URL='http://scidash-geppetto:8080/org.geppetto.frontend/geppetto'
-BASE_PROJECT_FILES_HOST='http://35.188.89.44/static/projects/'
+BASE_PROJECT_FILES_HOST='http://scidash/static/projects/'
