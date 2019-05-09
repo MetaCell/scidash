@@ -78,8 +78,8 @@ WORKDIR $SOURCES_DIR/org.geppetto.simulator.external
 RUN git checkout $ALPHA_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.simulator.scidash
-RUN rm ./src/main/java/META-INF/app-config.xml
-ADD ./service/geppetto/app-config.xml ./src/main/java/META-INF/
+RUN rm ./src/main/java/META-INF/spring/app-config.xml
+ADD ./service/geppetto/app-config.xml ./src/main/java/META-INF/spring/
 RUN git checkout development
 
 WORKDIR $SOURCES_DIR/org.geppetto
