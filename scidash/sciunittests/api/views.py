@@ -1,7 +1,6 @@
 import json
 from datetime import date
 from random import getrandbits as grb
-import pdb;
 
 from rest_framework import mixins, permissions, response, views, viewsets
 
