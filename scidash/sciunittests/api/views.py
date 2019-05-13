@@ -2,7 +2,7 @@ import json
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import mixins, permissions, response, views, viewsets
+from rest_framework import permissions, response, views, viewsets
 
 from scidash.general.models import Tag
 from scidash.sciunittests.filters import (

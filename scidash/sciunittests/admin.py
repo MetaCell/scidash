@@ -9,6 +9,13 @@ from scidash.sciunittests.models import (
 # Register your models here.
 
 
+class TestClassModelAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'observation_schema', 'test_parameters_schema', 'params_units',
+        'units', 'memo'
+    ]
+
+
 class TestInstanceInline(admin.StackedInline):
     '''
     Stacked Inline View for TestInstance
@@ -39,4 +46,4 @@ class TestSuiteAdmin(admin.ModelAdmin):
 admin.site.register(TestSuite, TestSuiteAdmin)
 admin.site.register(ScoreInstance)
 admin.site.register(TestInstance, TestInstanceModelAdmin)
-admin.site.register(TestClass)
+admin.site.register(TestClass, TestClassModelAdmin)

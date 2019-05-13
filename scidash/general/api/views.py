@@ -41,13 +41,29 @@ class CompatibilityMatrixView(APIView):
 
         try:
             units = json.loads(units)
-            imported_units = self.from_destructured(units)
+
+            if units.get('name', False):
+                imported_units = self.from_destructured(units)
         except Exception:
             imported_units = import_class(units)
 
-        for key in observation.keys():
-            if key != 'n':
-                observation[key] = float(observation[key]) * imported_units
+        if not isinstance(imported_units, dict):
+            for key in observation.keys():
+                if key != 'n':
+                    observation[key] = float(observation[key]) * imported_units
+                else:
+                    observation[key] = int(observation[key])
+        else:
+            imported_units = {
+                param: import_class(unit)
+                for param, unit in imported_units.items()
+            }
+            for key in observation.keys():
+                if key != 'n':
+                    observation[key] = float(observation[key]
+                                             ) * imported_units[key]
+                else:
+                    observation[key] = int(observation[key])
 
         return observation
 

@@ -55,7 +55,15 @@ class TestClass(models.Model):
             else:
                 return "N/A"
 
-        return build_destructured_unit(destructured).name
+        if destructured.get('name', False):
+            return build_destructured_unit(destructured).name
+        else:
+            return ' | '.join(
+                [
+                    import_class(value).name
+                    for key, value in destructured.items()
+                ]
+            )
 
     def __str__(self):
         return self.class_name

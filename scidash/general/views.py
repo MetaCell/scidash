@@ -1,4 +1,5 @@
 import collections
+import copy
 import json
 import os
 import re
@@ -58,17 +59,13 @@ class GeppettoHandlerView(View):
 
     OUTPUT_MAPPING_FILE = 'outputMapping.dat'
     RESULTS_FILE = 'results0.dat'
-
-    RESULTS_MAP = {
-        '^[\w\.\[\]]+\.v$': 'RS_pop[0]/v',
-        '^time\(\w+\)$': 't',
-        '^[\w\.\[\]]+\.u$': 'RS_pop[0]/u'
-    }
+    TIME_VAR_REGEXP = '^time\(\w+\)$'
 
     def get_variable_from_header(self, header):
-        for key, value in self.RESULTS_MAP.items():
-            if re.match(key, header):
-                return value
+        if re.match(self.TIME_VAR_REGEXP, header):
+            return 't'
+        else:
+            return header
 
     def calculate_score(self, simulation_result, score_instance):
         model_class = general_hlp.import_class(
@@ -93,8 +90,8 @@ class GeppettoHandlerView(View):
             score_instance.test_instance.test_class.import_path
         )
 
-        observation = score_instance.test_instance.observation
-        params = score_instance.test_instance.params
+        observation = copy.deepcopy(score_instance.test_instance.observation)
+        params = copy.deepcopy(score_instance.test_instance.params)
 
         try:
             destructured = json.loads(
@@ -105,20 +102,29 @@ class GeppettoHandlerView(View):
                 score_instance.test_instance.test_class.units
             )
         else:
-            base_unit = general_hlp.import_class(
-                destructured.get('base').get('quantity')
-            )
-            units = pq.UnitQuantity(
-                destructured.get('name'),
-                base_unit * destructured.get('base').get('coefficient'),
-                destructured.get('symbol')
-            )
+            if destructured.get('name', False):
+                base_unit = general_hlp.import_class(
+                    destructured.get('base').get('quantity')
+                )
+                units = pq.UnitQuantity(
+                    destructured.get('name'),
+                    base_unit * destructured.get('base').get('coefficient'),
+                    destructured.get('symbol')
+                )
+            else:
+                units = destructured
 
         for key in observation:
-            observation[key] = int(observation[key]
-                                   ) * units if key != 'n' else int(
-                                       observation[key]
-                                   )
+            if not isinstance(units, dict):
+                observation[key] = int(observation[key]
+                                       ) * units if key != 'n' else int(
+                                           observation[key]
+                                       )
+            else:
+                observation[key] = int(observation[key]
+                                       ) * units[key] if key != 'n' else int(
+                                           observation[key]
+                                       )
 
         params_units = score_instance.test_instance.test_class.params_units
 
@@ -216,14 +222,13 @@ class GeppettoHandlerView(View):
             )
 
         with open(results_file, 'r') as f:
-            values = [[], [], []]
+            values = [[] for i in range(len(simulation_result.keys()))]
 
             for line in f:
-                splat = line.split('	')
+                splat = line.split('\t')
 
-                values[0].append(splat[0])
-                values[1].append(splat[1])
-                values[2].append(splat[2])
+                for i, value in enumerate(values):
+                    values[i].append(splat[i])
 
         for i, (key, value) in enumerate(simulation_result.items()):
             simulation_result[key] = list(map(lambda x: float(x), values[i]))

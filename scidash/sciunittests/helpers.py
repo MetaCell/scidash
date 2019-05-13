@@ -20,6 +20,9 @@ def get_observation_schema(import_path):
     klass = import_class(import_path)
     observation_schema = klass.observation_schema
 
+    if observation_schema is None:
+        observation_schema = {}
+
     return observation_schema
 
 
@@ -28,17 +31,31 @@ def get_test_parameters_schema(import_path):
 
     params_schema = klass.params_schema
 
+    if params_schema is None:
+        params_schema = {}
+
     return params_schema
 
 
 def get_units(import_path):
     klass = import_class(import_path)
 
+    if isinstance(klass.units, dict):
+        str_units = {}
+
+        for param in klass.units.keys():
+            str_units.update(
+                {
+                    param: f"{inspect.getmodule(klass.units[param]).__package__}.{klass.units[param].symbol}"  # noqa: E501
+                }
+            )
+
+        return json.dumps(str_units)
+
     units = \
         f"{inspect.getmodule(klass.units).__package__}.{klass.units.symbol}"
 
     def importable(unit):
-        import quantities as pq
         try:
             import_class(unit)
         except AttributeError:

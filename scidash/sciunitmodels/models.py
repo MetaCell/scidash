@@ -5,6 +5,8 @@ from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import JSONField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.db import models
 
 from scidash.general import models as general_models
@@ -25,7 +27,7 @@ class Capability(models.Model):
         return self.class_name
 
 
-class CapabilityModelThrough(models.Model):
+class ExtraCapabilityModelThrough(models.Model):
     capability = models.ForeignKey(Capability, on_delete=models.CASCADE)
     model_class = models.ForeignKey('ModelClass', on_delete=models.CASCADE)
     extra_check = models.CharField(max_length=300)
@@ -41,12 +43,11 @@ class CapabilityModelThrough(models.Model):
 class ModelClass(models.Model):
     class_name = models.CharField(max_length=50)
     capabilities = models.ManyToManyField(
-        Capability, blank=True, related_name='capabilities'
+        Capability, blank=True, related_name='model_classes'
     )
     extra_capabilities = models.ManyToManyField(
         Capability,
-        through=CapabilityModelThrough,
-        related_name='capabilities_with_check',
+        through=ExtraCapabilityModelThrough,
         blank=True
     )
     url = models.URLField(default='', null=True, blank=True, unique=True)
@@ -83,10 +84,10 @@ class ModelClass(models.Model):
             capability_model, created = Capability.objects.get_or_create(
                 class_name=capability.__name__
             )
-            if extra_capabilities is None or capability not in extra_capabilities:  # noqa: E501
+            if extra_capabilities is None or capability not in extra_capabilities.keys():  # noqa: E501
                 self.capabilities.add(capability_model)
             else:
-                extra_capability_model, created = CapabilityModelThrough.objects.get_or_create(  # noqa: E501
+                extra_capability_model, created = ExtraCapabilityModelThrough.objects.get_or_create(  # noqa: E501
                     capability=capability_model,
                     model_class=self,
                     extra_check=extra_capabilities[capability]
