@@ -59,6 +59,7 @@ run-staging: migrate
 	make run-celery & \
 	make run-celery-beat & \
 	make run-django-staging & \
+	make run-virgo-staging & \
 	make run-frontend
 
 django-migrate: migrations migrate
