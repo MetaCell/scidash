@@ -1,9 +1,14 @@
 import sciunit.models.backends as backends
+import neuronunit.models.backends as nu_backends
 
 
-class ScidashCacheBackend(backends.Backend):
+class ScidashCacheBackend(nu_backends.jNeuroMLBackend):
 
     name = 'ScidashCache'
+
+    def init_backend(self, *args, **kwargs):
+        """Initialize the Geppetto backend."""
+        super().init_backend(*args, **kwargs)
 
     class FakeAttr:
         def __call__(self, *args, **kwargs):

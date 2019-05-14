@@ -3,14 +3,16 @@ from django.contrib.contenttypes.admin import GenericStackedInline
 
 from scidash.general.models import Tag
 from scidash.sciunitmodels.models import (
-    Capability, CapabilityModelThrough, ModelClass, ModelInstance
+    Capability, ExtraCapabilityModelThrough, ModelClass, ModelInstance
 )
-
-# Register your models here.
 
 
 class TagInline(GenericStackedInline):
     model = Tag
+
+
+class ModelClassAdmin(admin.ModelAdmin):
+    readonly_fields = ['capabilities', 'extra_capabilities']
 
 
 class ModelModelAdmin(admin.ModelAdmin):
@@ -19,7 +21,7 @@ class ModelModelAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(ModelClass)
+admin.site.register(ModelClass, ModelClassAdmin)
 admin.site.register(ModelInstance, ModelModelAdmin)
 admin.site.register(Capability)
-admin.site.register(CapabilityModelThrough)
+admin.site.register(ExtraCapabilityModelThrough)

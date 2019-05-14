@@ -45,6 +45,7 @@ RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
 ADD ./service/geppetto/tomcat-server.xml $VIRGO_DIR/configuration/
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
+RUN chmod 777 -R $VIRGO_DIR
 RUN mkdir rm $VIRGO_DIR/repository/usr
 RUN mvn --version
 
@@ -79,9 +80,11 @@ RUN git checkout $ALPHA_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.simulator.scidash
 RUN git checkout development
+RUN rm ./src/main/java/META-INF/spring/app-config.xml
+ADD ./service/geppetto/app-config.xml ./src/main/java/META-INF/spring
 
 WORKDIR $SOURCES_DIR/org.geppetto
-RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=/org.geppetto.frontend -DuseSsl=false -DskipTests install
+RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=org.geppetto.frontend -DuseSsl=false -DskipTests install
 
 WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN python update_server.py
