@@ -45,6 +45,7 @@ RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
 ADD ./service/geppetto/tomcat-server.xml $VIRGO_DIR/configuration/
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
+RUN chmod 777 -R $VIRGO_DIR
 RUN mkdir rm $VIRGO_DIR/repository/usr
 RUN mvn --version
 
