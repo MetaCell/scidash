@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:osgi="http://www.springframework.org/schema/osgi"	
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/osgi
+							http://www.springframework.org/schema/osgi/spring-osgi.xsd
+							http://www.springframework.org/schema/aop 
+       						http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<osgi:service id="ColladaModelExporter" ref="colladaModelInterpreterService"
+		interface="org.geppetto.core.model.IModelInterpreter">
+	</osgi:service>
+	<bean id="colladaModelInterpreterService" scope="prototype" class="org.geppetto.core.model.services.ColladaModelInterpreterService">
+	<aop:scoped-proxy proxy-target-class="false"/>
+	</bean>
+	
+	<osgi:service id="OBJModelExporter" ref="objModelInterpreterService"
+		interface="org.geppetto.core.model.IModelInterpreter">
+	</osgi:service>
+	<bean id="objModelInterpreterService" scope="prototype" class="org.geppetto.core.model.services.ObjModelInterpreterService">
+	<aop:scoped-proxy proxy-target-class="false"/>
+	</bean>
+	
+	<osgi:service id="DataManager" ref="dataManagerService"
+		interface="org.geppetto.core.data.IGeppettoDataManager">
+	</osgi:service>
+	<bean id="dataManagerService" scope="singleton" class="org.geppetto.core.data.DefaultGeppettoDataManager">
+	<aop:scoped-proxy proxy-target-class="false"/>
+	</bean>
+
+	<osgi:service id="DefaultAuthentication" ref="authService"
+		interface="org.geppetto.core.auth.IAuthService">
+	</osgi:service>
+	<bean id="authService" scope="singleton" class="org.geppetto.core.auth.DefaultAuthService">
+	<aop:scoped-proxy proxy-target-class="false"/>
+	</bean>
+	
+	<bean id="eventListenerBean" class="org.geppetto.core.services.registry.ApplicationListenerBean" />
+	
+</beans>

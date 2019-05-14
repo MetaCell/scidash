@@ -1,0 +1,523 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: 8Tavjvz2kTdVUVvOfKvoPs1AJ7M=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: ZOGynF6QyxIEULe/xDK1VitYj6c=
+
+Name: org/osgi/service/event/package.html
+SHA1-Digest: BzaHOvECgJ4pElaT3HtEd7u9kkw=
+
+Name: org/osgi/util/tracker/BundleTracker$Tracked.class
+SHA1-Digest: uaV9eYGfQmVAAC4hY/Tl0uGRohk=
+
+Name: org/osgi/service/remoteserviceadmin/RemoteServiceAdmin.class
+SHA1-Digest: Bx04hIsfAaUsrpm3YJ3QRZ3BA4A=
+
+Name: org/osgi/service/cm/ConfigurationPermission.class
+SHA1-Digest: +42iwElbbn9XUzsPaRN/44Px6YU=
+
+Name: org/osgi/service/useradmin/Role.class
+SHA1-Digest: vt0BsixTG0uaM+141t1PgPeddLc=
+
+Name: org/osgi/jmx/service/cm/package.html
+SHA1-Digest: gqEzPbgsNYUt05fXlYwxir02UIM=
+
+Name: org/osgi/service/blueprint/reflect/MapEntry.class
+SHA1-Digest: NMthb6iWtKRcZ7P4D+KuWfzXyVg=
+
+Name: org/osgi/service/jndi/packageinfo
+SHA1-Digest: fgH/U8141r+j9eHGA9Fd96pcDqU=
+
+Name: xmlns/scr/v1.1.0/scr.xsd
+SHA1-Digest: qUWSymvWGmhVCPlnBFbh71/3lzc=
+
+Name: org/osgi/service/cm/ConfigurationAdmin.class
+SHA1-Digest: ZUAPf4wQIMq3aNucRiOJrIgp30U=
+
+Name: org/osgi/service/blueprint/reflect/ComponentMetadata.class
+SHA1-Digest: WEXRXqF6BQVSs9yityZh3lTj18E=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointDescription$Unmodifi
+ ableDictionary.class
+SHA1-Digest: ONj+Drhqadg0wEtgn0AgwXX617k=
+
+Name: org/osgi/service/metatype/MetaTypeProvider.class
+SHA1-Digest: /Gm9HUGx4D8yDGVJxdeAAJ4W3+U=
+
+Name: org/osgi/service/remoteserviceadmin/ImportReference.class
+SHA1-Digest: JVQmNdZeHMcx1f65SBarGW2WSio=
+
+Name: org/osgi/util/tracker/BundleTracker.class
+SHA1-Digest: nFMfNFrB/SRP2WGaNvFnD1+kgZ4=
+
+Name: org/osgi/service/blueprint/container/ReifiedType.class
+SHA1-Digest: otY7NH/eeYaHNqsM4VWGSEp1Px0=
+
+Name: org/osgi/service/cm/ConfigurationEvent.class
+SHA1-Digest: gkkg7NPzZenB63LwlvQHnw68LLk=
+
+Name: org/osgi/service/jndi/JNDIContextManager.class
+SHA1-Digest: VYjhBMjBLMnFDfG0t7xyaLNW01A=
+
+Name: org/osgi/util/tracker/ServiceTracker$1.class
+SHA1-Digest: sWBnEP4xIXva8VlnEVyni4o8tpY=
+
+Name: org/osgi/service/useradmin/Authorization.class
+SHA1-Digest: NJPK53xcSbRLr3GD0U1Ok3tzGXs=
+
+Name: org/osgi/jmx/service/useradmin/UserAdminMBean.class
+SHA1-Digest: 6/0KCkn6cH0XjbzRwd0v3YEJ9zo=
+
+Name: org/osgi/jmx/framework/BundleStateMBean.class
+SHA1-Digest: Y2YVQJF604EI/k4jJ2GACRXNwWw=
+
+Name: org/osgi/service/jndi/JNDIConstants.class
+SHA1-Digest: uiuGWkIch/0qrW5BMEMsFEu4UPE=
+
+Name: org/osgi/service/http/package.html
+SHA1-Digest: 6rpbSs4PDJ1JtWoHTFGmS3jHYlY=
+
+Name: org/osgi/service/cm/packageinfo
+SHA1-Digest: isb638AAgCqf/m4MFmxiGsd7HIg=
+
+Name: org/osgi/service/blueprint/container/Converter.class
+SHA1-Digest: f33hYckAMo8hFtdjcZPBXnetrlI=
+
+Name: org/osgi/service/provisioning/packageinfo
+SHA1-Digest: EE0SkcfGGKqN8EZouAd1/VmmCd0=
+
+Name: org/osgi/service/remoteserviceadmin/ExportReference.class
+SHA1-Digest: yfnRYRsNH8fZu4JtFZCsEclA1E8=
+
+Name: org/osgi/service/useradmin/UserAdmin.class
+SHA1-Digest: p2798DBiAL2U4HrcBNiCHkfJ2Q4=
+
+Name: org/osgi/util/xml/packageinfo
+SHA1-Digest: UODLb0Cu37JQ6RjUF+NlNq5ipkQ=
+
+Name: xmlns/blueprint/v1.0.0/blueprint.xsd
+SHA1-Digest: c0pj7X+mtnkDIVtuB0Mxq8uhCvU=
+
+Name: org/osgi/jmx/service/useradmin/package.html
+SHA1-Digest: 6XatkdArJcER5MsU0ifSDu4VGAY=
+
+Name: org/osgi/service/cm/ManagedServiceFactory.class
+SHA1-Digest: x9XXwwZdsKQEvMJIfNKT/xflTXc=
+
+Name: org/osgi/jmx/framework/FrameworkMBean.class
+SHA1-Digest: cZG1q+EIfwnKBnStUyrHqFXvROI=
+
+Name: org/osgi/service/blueprint/reflect/NullMetadata$1.class
+SHA1-Digest: GrA550a/Dh6DYxgLgB+EXsqOAgc=
+
+Name: org/osgi/service/jdbc/packageinfo
+SHA1-Digest: jyaNHOwz1rJ16UaWtJgChT6Ris0=
+
+Name: org/osgi/service/jpa/EntityManagerFactoryBuilder.class
+SHA1-Digest: RYiGjLzOd38W9zEQoSeKQfCZ+/g=
+
+Name: org/osgi/util/tracker/package.html
+SHA1-Digest: iXYhf9t5C3MD1xZsqdwrnF0Drws=
+
+Name: org/osgi/util/xml/package.html
+SHA1-Digest: 22ZC0u2OgCMy02IMIAUHIeDQuAs=
+
+Name: org/osgi/jmx/framework/package.html
+SHA1-Digest: Jup32pnrO18j1uf3AWEzsT9ZpPk=
+
+Name: org/osgi/service/blueprint/container/ServiceUnavailableException
+ .class
+SHA1-Digest: CgRGDdXIvCLt9qT+C3lfoB5y1aw=
+
+Name: org/osgi/service/cm/ConfigurationPermissionCollection.class
+SHA1-Digest: vm6XEntzttGdQZUQGK077Kb5a2E=
+
+Name: org/osgi/service/http/HttpContext.class
+SHA1-Digest: aBjZsN36xJQ/6Ys792RJ5vCZYPk=
+
+Name: org/osgi/service/blueprint/reflect/PropsMetadata.class
+SHA1-Digest: CNPoi2Ony6t/M1hvswKwBXCZY/w=
+
+Name: org/osgi/service/http/packageinfo
+SHA1-Digest: oQONHLkNnCgzIYDgEhD/q8FlU2M=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointPermission.class
+SHA1-Digest: 7uhk3+mZMg3ku6nh7KbZwr/HdCE=
+
+Name: org/osgi/service/component/ComponentContext.class
+SHA1-Digest: 4sa2MeFhhNg3Kh5nJTKdcGNJsJI=
+
+Name: org/osgi/service/blueprint/reflect/NonNullMetadata.class
+SHA1-Digest: 8mkCozGLflzVIFtXZTqj8a/4WK4=
+
+Name: org/osgi/service/metatype/MetaTypeService.class
+SHA1-Digest: qP1tmmKT3hTiU4ZDwO7OOFyJKXM=
+
+Name: org/osgi/service/blueprint/reflect/ServiceMetadata.class
+SHA1-Digest: iSjoFmYIktrhCzi7xGbUsSfxWGc=
+
+Name: org/osgi/service/metatype/package.html
+SHA1-Digest: FIJkkBa1oYU1UdQyWUPbklsTyNk=
+
+Name: org/osgi/service/blueprint/reflect/IdRefMetadata.class
+SHA1-Digest: tqpj9BhmsWlFDpbZliN3AF2jfSc=
+
+Name: xmlns/scr/v1.0.0/scr.xsd
+SHA1-Digest: WERpNDCeN5SCXRIzlqdXiWqsITk=
+
+Name: org/osgi/util/tracker/packageinfo
+SHA1-Digest: SXyas162/JKZl+uosaaAUw7YV5U=
+
+Name: org/osgi/service/log/packageinfo
+SHA1-Digest: jXICWyjXCCq72ZS6u+28DfBdV4Y=
+
+Name: org/osgi/service/jdbc/DataSourceFactory.class
+SHA1-Digest: yeI9tdgLI61bxtwwsFGvK6jl124=
+
+Name: about_files/LICENSE
+SHA1-Digest: BPGcVt6OZEy6kl/cMdS74u9zu1E=
+
+Name: org/osgi/service/remoteserviceadmin/RemoteConstants.class
+SHA1-Digest: OXsZMJj64XJlfzYfuiSE9BEzJbU=
+
+Name: org/osgi/jmx/JmxConstants.class
+SHA1-Digest: JjZ4D5IK7SvwhmqDOymM90o+Bbc=
+
+Name: org/osgi/service/jpa/package.html
+SHA1-Digest: iWfAkQFFvVRFSin3JqQaePVo8+w=
+
+Name: org/osgi/service/blueprint/container/EventConstants.class
+SHA1-Digest: ma1nVNzcEdId3UL4zxMff0lpQMo=
+
+Name: org/osgi/service/blueprint/reflect/Target.class
+SHA1-Digest: I/xEhP3P5le2JeAkj3zzOlxEOPQ=
+
+Name: org/osgi/service/component/ComponentFactory.class
+SHA1-Digest: dlsJF4srXRkY/9OX7ywZWJ32hHk=
+
+Name: org/osgi/jmx/service/provisioning/packageinfo
+SHA1-Digest: FgrcshPYa4/rc57lW0NvCqz1cj0=
+
+Name: org/osgi/service/blueprint/reflect/NullMetadata.class
+SHA1-Digest: ndnKqCyPdpquDi9y4Vi5FdICPBU=
+
+Name: org/osgi/service/cm/ConfigurationListener.class
+SHA1-Digest: j/pv/anV7xb0LMtNSgSWfHpvlX4=
+
+Name: org/osgi/service/event/EventHandler.class
+SHA1-Digest: 3y5bAw4YhNwm7ofFO2EaJ98SPU8=
+
+Name: org/osgi/service/jpa/packageinfo
+SHA1-Digest: +VPC0kY9uER9+3TKB7gnJMNpkDg=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointListener.class
+SHA1-Digest: wFh97I4cchZ84gBlJnZV9nEaohY=
+
+Name: org/osgi/util/tracker/AbstractTracked.class
+SHA1-Digest: LCpwdXjlWnKbnk29RHnGdGlDaWY=
+
+Name: about.html
+SHA1-Digest: 5MjyvllCeAYrq8o8h+F7RFOSbn0=
+
+Name: org/osgi/service/event/EventAdmin.class
+SHA1-Digest: BUyofoDagXGUmDsEBxrxF6LqoFw=
+
+Name: org/osgi/service/remoteserviceadmin/RemoteServiceAdminEvent.clas
+ s
+SHA1-Digest: jNfJNgQZfeEUh+Uptu01BxBIS7Q=
+
+Name: org/osgi/service/useradmin/packageinfo
+SHA1-Digest: rDwZ7MRtHDj7ssdYe2ua4dS2CnE=
+
+Name: org/osgi/jmx/framework/PackageStateMBean.class
+SHA1-Digest: AnJyaQPX/VmOHaC6p72Tv8GIhLk=
+
+Name: org/osgi/jmx/service/permissionadmin/packageinfo
+SHA1-Digest: Ix7mu0276W8BhzcJxTKC+pireIY=
+
+Name: org/osgi/service/blueprint/container/package.html
+SHA1-Digest: aJesAk+NEtrnJM1YpO6X5qH0Mww=
+
+Name: org/osgi/jmx/Item.class
+SHA1-Digest: utuent88SfPQGSd87Aicxd5K3C4=
+
+Name: org/osgi/service/useradmin/package.html
+SHA1-Digest: ZforgzniHn1F0Qvja3u0yOm+jdU=
+
+Name: org/osgi/jmx/service/useradmin/packageinfo
+SHA1-Digest: pH0H3/utyjhki1Pb0B3w6gFbQjU=
+
+Name: org/osgi/util/tracker/ServiceTracker$Tracked.class
+SHA1-Digest: U22wW8a21ZiuevzSt0wdrq1kEa0=
+
+Name: org/osgi/jmx/packageinfo
+SHA1-Digest: Hfsrl9Hz+fg50CUIMeASKxgtEPY=
+
+Name: org/osgi/service/component/package.html
+SHA1-Digest: 0i9R0uziup5mDMu1Tb36N31koHM=
+
+Name: org/osgi/service/remoteserviceadmin/ImportRegistration.class
+SHA1-Digest: w2i9KZu5r8Oah5PXwuvztwijZvo=
+
+Name: org/osgi/service/cm/package.html
+SHA1-Digest: WtBj/hzwvdnc7Oz2L/arHo2vl+c=
+
+Name: org/osgi/service/jndi/package.html
+SHA1-Digest: vvpx0EYj+9AMNmcdg60mN22z5jI=
+
+Name: org/osgi/service/useradmin/UserAdminEvent.class
+SHA1-Digest: IxrC4goOW+ywKZ0iyMUimyZbOOQ=
+
+Name: org/osgi/service/blueprint/reflect/ValueMetadata.class
+SHA1-Digest: QEg5k8VU8zkvGYHGGOHlprooowQ=
+
+Name: org/osgi/util/tracker/BundleTrackerCustomizer.class
+SHA1-Digest: K5els855a3YYvd1EwtcQeSa8Gks=
+
+Name: org/osgi/service/component/packageinfo
+SHA1-Digest: htq93OjCuXCchZohHv9ZVoERgHo=
+
+Name: org/osgi/service/blueprint/container/ComponentDefinitionExceptio
+ n.class
+SHA1-Digest: h+u5w9P0Jsg29VATncaF06s9rIU=
+
+Name: xmlns/scact/v1.0.0/scact.xsd
+SHA1-Digest: 9NphtsCJD2mjDRPqNVyfZANUTD4=
+
+Name: xmlns/rsa/v1.0.0/rsa.xsd
+SHA1-Digest: a7OQERwWQgZoV+m/L6Cw8Z0HROE=
+
+Name: org/osgi/service/cm/ConfigurationPermissionCollection$1.class
+SHA1-Digest: +turRJG/6BDgKMEvtiRxPriNgQQ=
+
+Name: org/osgi/jmx/service/provisioning/ProvisioningServiceMBean.class
+SHA1-Digest: pXjAhNJeCqUO8D7Mf8al4b3M6oo=
+
+Name: org/osgi/service/jdbc/package.html
+SHA1-Digest: C6hTbmKHDqn+/LDWx3UiVjZN7cU=
+
+Name: org/osgi/service/cm/ConfigurationException.class
+SHA1-Digest: ly14XAOwMTSQ+3XXaVnlFiH2UX8=
+
+Name: org/osgi/service/blueprint/container/packageinfo
+SHA1-Digest: c9luyQzeuQgPz1naKy+QhltXoaE=
+
+Name: org/osgi/service/cm/Configuration.class
+SHA1-Digest: YXQQHVZqRXKUPYZOlpRRJWs7hGM=
+
+Name: org/osgi/util/tracker/ServiceTracker.class
+SHA1-Digest: I7xPTlKGmLSiuEmNRKMWTUoE9xQ=
+
+Name: org/osgi/service/event/Event$UnmodifiableDictionary.class
+SHA1-Digest: +LiF2Y39mF42TFTeCN7k5VT/vKY=
+
+Name: org/osgi/service/log/package.html
+SHA1-Digest: tSfsOY5Tvwyz4vvko0C8+JWciJw=
+
+Name: org/osgi/service/useradmin/User.class
+SHA1-Digest: KhHTI04yDs++CoSZ39hQVk1ic0Y=
+
+Name: org/osgi/service/useradmin/UserAdminPermission.class
+SHA1-Digest: iVmu5MQgWazMk8JPU+12QzLNTF0=
+
+Name: org/osgi/service/blueprint/reflect/ReferenceListMetadata.class
+SHA1-Digest: KNdhhNXR/GlaZNI1LhngR95AYPU=
+
+Name: org/osgi/service/metatype/ObjectClassDefinition.class
+SHA1-Digest: Md+WQCUJq4+iV+Vy+CYgGDDTKAI=
+
+Name: org/osgi/service/log/LogListener.class
+SHA1-Digest: 6EOW9FZRlI20fOPXAKHAhMsiri4=
+
+Name: org/osgi/service/blueprint/reflect/ReferenceListener.class
+SHA1-Digest: av+tk0m9I7L5cvksSY0Qt7o+oQ4=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: SAqY+5ITAL0mkdYeijlSRhyIaZk=
+
+Name: org/osgi/service/component/ComponentException.class
+SHA1-Digest: /8BAaYbK6WqfZj1IAbq8HxyssCI=
+
+Name: org/osgi/service/component/ComponentConstants.class
+SHA1-Digest: QUyXcOxAhiUEIrGy6Thy8a8O6D0=
+
+Name: org/osgi/service/blueprint/reflect/RefMetadata.class
+SHA1-Digest: 8EjQeucGyEV3SYhNL8AUcCLhS7Y=
+
+Name: org/osgi/service/useradmin/Group.class
+SHA1-Digest: gLqPZUBlJfIio7+K9qfNiiree3k=
+
+Name: org/osgi/service/event/packageinfo
+SHA1-Digest: f+BTUj2CCg0xTXv39eFdQxxtEiw=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointDescription$1.class
+SHA1-Digest: ef7QXwISDNBnqV2AuqiZyIZKIIw=
+
+Name: org/osgi/service/provisioning/ProvisioningService.class
+SHA1-Digest: zmNGRns9NYhzOU9ryyncepIh/e8=
+
+Name: org/osgi/service/remoteserviceadmin/package.html
+SHA1-Digest: EYifpvlfPpgDh999cp6LkxcKfHg=
+
+Name: org/osgi/service/http/NamespaceException.class
+SHA1-Digest: x/o8bEskdHOPwNlTmbtSHbPc0Wk=
+
+Name: org/osgi/util/tracker/ServiceTracker$AllTracked.class
+SHA1-Digest: 4Xyk9GW4Sn09ft5BuVMtfU1VJr4=
+
+Name: org/osgi/service/blueprint/container/BlueprintListener.class
+SHA1-Digest: HoiT1lKq4UGE0HVqRYjGOqM/TWA=
+
+Name: org/osgi/service/blueprint/reflect/MapMetadata.class
+SHA1-Digest: IdKHgLxorbsHXynw8Ti1gjTkDc4=
+
+Name: org/osgi/service/component/ComponentInstance.class
+SHA1-Digest: t3x+sW66MoECXF9TKHHmychvJjQ=
+
+Name: org/osgi/jmx/service/permissionadmin/package.html
+SHA1-Digest: GEX3oUtf9lyU4+S7RiXgnEug970=
+
+Name: org/osgi/service/blueprint/reflect/ServiceReferenceMetadata.clas
+ s
+SHA1-Digest: VVUG2R7jSbv8HE3mFpHjcImyTt4=
+
+Name: org/osgi/service/event/Event.class
+SHA1-Digest: 4IgK/fDggx1npWexwvvSCfa0ypA=
+
+Name: org/osgi/service/event/TopicPermissionCollection.class
+SHA1-Digest: en4HQYDwygPmTI54iRhGSiBZXpI=
+
+Name: org/osgi/service/blueprint/reflect/package.html
+SHA1-Digest: TQ8o5qrE73NDx31QNP+1lKP3/Oc=
+
+Name: org/osgi/service/event/TopicPermission.class
+SHA1-Digest: jbKpe/gY2bfO/QXwxHiUX+RL4CM=
+
+Name: org/osgi/service/log/LogEntry.class
+SHA1-Digest: 44NxLsUbUIdCOz7w/t+RCVHTp9w=
+
+Name: org/osgi/service/log/LogReaderService.class
+SHA1-Digest: UgNxBKEcIIV5QNRGOCasSCk6nys=
+
+Name: org/osgi/service/blueprint/reflect/CollectionMetadata.class
+SHA1-Digest: wCYOg6wbsEhtp8WSkqeCq49Bp2k=
+
+Name: org/osgi/service/remoteserviceadmin/packageinfo
+SHA1-Digest: OTWU8lLQm9mlPdAGz6h/u9TKkf4=
+
+Name: org/osgi/service/metatype/AttributeDefinition.class
+SHA1-Digest: lsoL8djmUqUfM8dUEG8zcptR5ks=
+
+Name: org/osgi/util/tracker/ServiceTrackerCustomizer.class
+SHA1-Digest: JX6hoLLF8MXY0AaYK6PvAKIPT+Y=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointPermissionCollection
+ .class
+SHA1-Digest: 8kRq/Aw96ugcmVK4Qieo7R7en38=
+
+Name: org/osgi/service/http/HttpService.class
+SHA1-Digest: oJsK5u27QmsTU7CPentpizNTzYY=
+
+Name: org/osgi/jmx/package.html
+SHA1-Digest: UBAfCbVhVXBFtHDrXd+VgOX48J0=
+
+Name: xmlns/metatype/v1.1.0/metatype.xsd
+SHA1-Digest: /8BXO4U037YAIsd0BzUD9gXlOWg=
+
+Name: org/osgi/service/blueprint/reflect/packageinfo
+SHA1-Digest: sHg7bkps9lpAdg7zfWzYRve1EhA=
+
+Name: org/osgi/service/remoteserviceadmin/ExportRegistration.class
+SHA1-Digest: zqpLK+5TCzUntciwcAIG8J6T30Y=
+
+Name: plugin.properties
+SHA1-Digest: N8AEIDXx6jDowlkqo9GmMijthso=
+
+Name: org/osgi/service/blueprint/reflect/BeanMetadata.class
+SHA1-Digest: yo9LHv0MfU02tkHRlNnyOGC8Vqk=
+
+Name: org/osgi/service/blueprint/container/BlueprintEvent.class
+SHA1-Digest: ELz81xu/fIS7LVn49nJ7B8kj+nc=
+
+Name: org/osgi/service/remoteserviceadmin/RemoteServiceAdminListener.c
+ lass
+SHA1-Digest: yNkL3JRYal2K6gF2Y3e4eYRymck=
+
+Name: org/osgi/service/useradmin/UserAdminPermissionCollection.class
+SHA1-Digest: vbttuQiE+JXv+UxOFfnUHQbjOKg=
+
+Name: org/osgi/service/remoteserviceadmin/EndpointDescription.class
+SHA1-Digest: PZI3dEJ/zvY5DACkaIlyjaSeKNI=
+
+Name: org/osgi/jmx/service/cm/ConfigurationAdminMBean.class
+SHA1-Digest: setYsDX5qTdcnUXivLCZxQFco8w=
+
+Name: org/osgi/service/blueprint/reflect/RegistrationListener.class
+SHA1-Digest: /ZFtfro0cu/VnSdJYMKPIGSnrx0=
+
+Name: org/osgi/service/blueprint/reflect/BeanArgument.class
+SHA1-Digest: ozXkiXqwT7YVE1jIm/vqiwKqhd4=
+
+Name: org/osgi/service/provisioning/package.html
+SHA1-Digest: 8RMaSbntrUR90i69g1Ts9wLqVgM=
+
+Name: org/osgi/service/blueprint/reflect/ReferenceMetadata.class
+SHA1-Digest: L6SNW+o5sAjC1Mm8U23LfdNKqxg=
+
+Name: org/osgi/jmx/service/cm/packageinfo
+SHA1-Digest: vu3S4Kkx+9EuNgRpiIApj8fI6DE=
+
+Name: org/osgi/jmx/framework/ServiceStateMBean.class
+SHA1-Digest: Iptd2+NzlVCuRwoToameYsakveQ=
+
+Name: org/osgi/jmx/service/provisioning/package.html
+SHA1-Digest: x3Tk+qlJFxuseMLyrXcSlkwWXeY=
+
+Name: org/osgi/service/cm/ConfigurationPlugin.class
+SHA1-Digest: /5D/ivsWyZn8vRpLDybkeaALeKo=
+
+Name: org/osgi/service/blueprint/container/NoSuchComponentException.cl
+ ass
+SHA1-Digest: mdLXls6QlYFH2vupfnEqHoQArMY=
+
+Name: org/osgi/jmx/service/permissionadmin/PermissionAdminMBean.class
+SHA1-Digest: Q5IwR1FfTglkKLNyEdpt7AfWiCw=
+
+Name: org/osgi/jmx/framework/packageinfo
+SHA1-Digest: SMmqnPgm6W0Z65GLyOZ483By2dU=
+
+Name: org/osgi/service/event/EventConstants.class
+SHA1-Digest: TTKla2oCc1efoUzBRsXSpnH9oYM=
+
+Name: org/osgi/service/cm/ManagedService.class
+SHA1-Digest: U1URsLgeghEL37QNJcAxDYv/QfI=
+
+Name: xmlns/metatype/v1.0.0/metatype.xsd
+SHA1-Digest: CBJ8MOseRTx2cjo0UPiyKsFoLmo=
+
+Name: org/osgi/util/xml/XMLParserActivator.class
+SHA1-Digest: ijVgnJW1N6dzwPtrgusi6F+UWNg=
+
+Name: org/osgi/service/jndi/JNDIProviderAdmin.class
+SHA1-Digest: fSxgcPKuS9w9j+E14phi1eXkNus=
+
+Name: org/osgi/service/blueprint/reflect/BeanProperty.class
+SHA1-Digest: Ezh6BPsfnGisng+Z/CBFYEH2GTc=
+
+Name: org/osgi/service/blueprint/container/BlueprintContainer.class
+SHA1-Digest: zWheJv4dsAHZDwObjohyE4v4dR8=
+
+Name: org/osgi/service/metatype/packageinfo
+SHA1-Digest: 12rYAKCuhPOR8UoeqXmJLChRNho=
+
+Name: org/osgi/service/log/LogService.class
+SHA1-Digest: gVsGzgIEw88WDW1qkts0KQ3rCCI=
+
+Name: org/osgi/service/blueprint/reflect/Metadata.class
+SHA1-Digest: +IV90nFrfR+trvFPF+EmhK5fwt8=
+
+Name: org/osgi/service/metatype/MetaTypeInformation.class
+SHA1-Digest: 9z87JPb8jTjnN3LcExGQsi3ZjRU=
+
+Name: org/osgi/service/useradmin/UserAdminListener.class
+SHA1-Digest: YhKhHuOsN+OocU1vXr0CCdgK2nY=
+

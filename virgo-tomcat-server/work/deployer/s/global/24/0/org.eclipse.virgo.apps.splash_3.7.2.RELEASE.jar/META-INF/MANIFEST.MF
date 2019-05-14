@@ -1,0 +1,70 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.virgo.apps.splash
+Bundle-Name: Splash Screen
+Bundle-Version: 3.7.2.RELEASE
+Bundle-ClassPath: WEB-INF/classes
+Bundle-ManifestVersion: 2
+Web-ContextPath: /
+Import-Package: javax.servlet;version="[2.5.0,4)",javax.servlet.http;v
+ ersion="[2.5.0,4)",org.slf4j;version="[1.7.25,2)"
+Tool: Bundlor 1.1.2.RELEASE
+
+Name: WEB-INF/splash.html
+SHA-256-Digest: ROOdP9sqKB2cdnckLG93oPaYJscyFLYOjIN0+WECB9U=
+
+Name: images/menu-curve-right.png
+SHA-256-Digest: ObpVFiyNLZ8PKMk0HgCY9CqcgLl0e4SBPrISOjb6bQA=
+
+Name: images/favicon.ico
+SHA-256-Digest: u+u6v0Y9zLZkyHdsdWuw2m/CNZ6CqibxMrz6AF9zhU8=
+
+Name: images/footer-right.png
+SHA-256-Digest: tnnQUvTmyZcjRR6XtVv5WZLvi/VPt2yj9Nm4LK3PlsU=
+
+Name: images/footer-left.png
+SHA-256-Digest: TJE63vOD3hfumifpOjyk/dPn8VHhK1gRUuw/CyjBTVU=
+
+Name: images/menu-stretch.png
+SHA-256-Digest: LsUyQeVtm9vMYpdEFibuM8C+ZP2VNmAu28GChqg664k=
+
+Name: WEB-INF/web.xml
+SHA-256-Digest: W+sY8mTOWTuCi7L67IN9D/0JM1qPwBKttS6/gUkJuFg=
+
+Name: images/server-splash.png
+SHA-256-Digest: EOqs7u7oRBIlE1WdPCz+lBQjX5a5djavqAk/6F39LWE=
+
+Name: images/header-left.png
+SHA-256-Digest: USW/P9S0Su1/RsdgB9lMF4rzsiG7/8Ws/lx5zsL5Wwc=
+
+Name: WEB-INF/classes/org/eclipse/virgo/apps/splash/GZIPResponseStream
+ .class
+SHA-256-Digest: BPtD5DCfyOXHog1orsG/TvhDEp0fjJ4iQn2M4Wc6PAQ=
+
+Name: images/footer-stretch.png
+SHA-256-Digest: IXP+od7bFsIyGqlCNZJadjbtDPjK1NCavTcftyl+cvI=
+
+Name: index.html
+SHA-256-Digest: sBTWwyFZFf+ZshWqYoMkZfjPO4+q4Z5MEmGv3hkSRHg=
+
+Name: images/mini-header-right.png
+SHA-256-Digest: h9h1sdZHFaRpTVUA7viu6ZZ1FnLcDeyN8rO3i5hvdd8=
+
+Name: styles/print.css
+SHA-256-Digest: HfCrW1jhMAXIxIwSLBZDweA0yMkeNt4MTVThNUnvpss=
+
+Name: images/header-right.png
+SHA-256-Digest: /+AwFGsWKtveAF55lCHZ5/0VqaDBwlh8yloN0bk9crk=
+
+Name: images/menu-curve-left.png
+SHA-256-Digest: Pqk62H2Rg5NB1WHKkWMp2SbLYpbTLpN91UCWn2+ttL8=
+
+Name: images/mini-header-left.png
+SHA-256-Digest: gh+GTzu4RQYCs1dgFNJrO6mkP6kN47UiVwvYjcmzvUE=
+
+Name: styles/main.css
+SHA-256-Digest: nDjgrD4Rk+XC8GRNFhMhCHEs8CFzEa/Jb+ewQfBWI2U=
+
+Name: WEB-INF/classes/org/eclipse/virgo/apps/splash/ContentServlet.cla
+ ss
+SHA-256-Digest: qT87zxNx2UttrD9pik1Ub/tjYzmGC6dMA0NayghSAjQ=
+

@@ -1,7 +1,6 @@
 FROM python:3.6
 
 # BUILD VARIABLES
-
 ARG ROOT=/
 ARG APP_DIR=/app
 ARG DOTENV_FILE=env-docker
@@ -17,16 +16,26 @@ RUN pip install virtualenv
 ENV PYTHONUNBUFFERED 1
 
 # CREATING PROJECT FOLDERS
-
 RUN mkdir $APP_DIR
 
 #COPYING PROJECT
-
 WORKDIR $APP_DIR
 ADD . $APP_DIR
 
-# INSTALLING REQUIREMENTS
+RUN apt-get -y install software-properties-common
 
+# INSTALL JAVA
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer --allow-unauthenticated && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+
+# INSTALLING REQUIREMENTS
 RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get install nodejs
@@ -41,9 +50,7 @@ RUN make install-sciunit-neuronunit
 WORKDIR $GEPPETTO_DIR
 RUN npm run build-dev-noTest
 
-
 WORKDIR $APP_DIR
 COPY ./service/dotenv/env-docker $APP_DIR/.env
-
 
 CMD ./service/scripts/run.sh

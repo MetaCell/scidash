@@ -1,0 +1,70 @@
+Manifest-Version: 1.0
+Export-Package: org.eclipse.virgo.kernel.agent.dm;version="3.7.2.RELEA
+ SE";uses:="org.eclipse.virgo.nano.shim.serviceability,org.osgi.framew
+ ork,org.springframework.beans.factory,org.springframework.core.task"
+Bundle-SymbolicName: org.eclipse.virgo.kernel.agent.dm
+Bundle-Name: Virgo Kernel Agent Spring DM integration
+Bundle-Version: 3.7.2.RELEASE
+Bundle-ManifestVersion: 2
+Import-Package: org.eclipse.equinox.region;version="[1.1.0,1.2)",org.e
+ clipse.gemini.blueprint.context.event;version="[2.1.0,3)",org.eclipse
+ .gemini.blueprint.extender.event;version="[2.1.0,3)",org.eclipse.gemi
+ ni.blueprint.service.importer;version="[2.1.0,3)",org.eclipse.gemini.
+ blueprint.service.importer.event;version="[2.1.0,3)",org.eclipse.virg
+ o.medic.eventlog;version="[3.7.2,3.8)",org.eclipse.virgo.nano.service
+ ability;version="[3.7.2,3.8)",org.eclipse.virgo.nano.shim.serviceabil
+ ity;version="[3.7.2,3.8)",org.eclipse.virgo.util.osgi;version="[3.7.2
+ ,3.8)",org.osgi.framework;version="0",org.osgi.service.component;vers
+ ion="0",org.osgi.service.event;version="0",org.slf4j;version="[1.7.25
+ ,2)",org.springframework.beans.factory;version="[2.5.6,5)",org.spring
+ framework.core.task;version="[2.5.6,5)"
+Service-Component: OSGI-INF/dm_agent.xml, OSGI-INF/agentdm_start_track
+ er.xml
+Tool: Bundlor 1.1.2.RELEASE
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $1.class
+SHA-256-Digest: SxYkuWonkZuU3U26QrDFtryXlgXevaNL3bsxXyhcXeI=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/BlueprintEventPosting
+ OsgiBundleApplicationContextListener.class
+SHA-256-Digest: nFjg03U1ywEb9wCsmro/y29VeHQKJ1kK5MGi7yP8ZwI=
+
+Name: EventLogMessages.properties
+SHA-256-Digest: B9zVCg+HpOhrqYCBSaJnNM1yiwGgQuEJ64lBeyPjveI=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/DeployerFailureListen
+ er.class
+SHA-256-Digest: EDFU7Jy8TLBeH13Lv12w9mfKwRiu78JSlYSllUCCnGI=
+
+Name: OSGI-INF/agentdm_start_tracker.xml
+SHA-256-Digest: cENkjfau1Ak8Axz13+DyzoGAb+wK4ehaulOgtTqGuxo=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/AgentActivator.class
+SHA-256-Digest: C8glsJszB5EdxSygRPa4F/Nw8ptCIDNpVPEd5+apfDg=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ .class
+SHA-256-Digest: 6Ai+VtO8cXowFVeZRo+LSib0mG5b7iVKEOdTSUX9e94=
+
+Name: org/eclipse/virgo/kernel/agent/dm/StandardAgentDMStartTracker.cl
+ ass
+SHA-256-Digest: yBHnllUMGObMtB+MzLQ1QkIbAhkeesJQNJGjBWzc13s=
+
+Name: org/eclipse/virgo/kernel/agent/dm/AgentDMStartTracker.class
+SHA-256-Digest: WBz6V9f/LKT+ZvCAITmlFDDHnWrcKZbT522mj1HE4xE=
+
+Name: OSGI-INF/dm_agent.xml
+SHA-256-Digest: LOW0sjhYf/D9QJaZ56qWwJD9XybFgVFr0ypxYcixTag=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $NoOpTracingService.class
+SHA-256-Digest: 6YCHNWakuqHHAulc+Qb4EuoaED9ygfcgQIjeigoda2g=
+
+Name: org/eclipse/virgo/kernel/agent/dm/ContextPropagatingTaskExecutor
+ $2.class
+SHA-256-Digest: NwR0je24bWZSeFMfxF6HKBt2qOq9g0SCHpSfcJWNOzg=
+
+Name: org/eclipse/virgo/kernel/agent/dm/internal/AgentLogEvents.class
+SHA-256-Digest: o3OPbgRkhQejoXUNrK3Bi9K9OO0IudRu+cr/NSnNiHU=
+

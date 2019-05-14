@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<neuroml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.neuroml.org/schema/neuroml2" id="NeuroML_2_loaded_via_LEMS_by_Geppetto" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.githubusercontent.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd">
+    <ionChannel type="ionChannelPassive" conductance="10pS" id="passive">
+        <notes>Leak conductance</notes>
+    </ionChannel>
+    <ionChannel species="na" type="ionChannelHH" conductance="10pS" id="na">
+        <notes>Na channel</notes>
+        <gateHHrates instances="3" id="m">
+            <forwardRate type="HHExpLinearRate" rate="1per_ms" midpoint="-40mV" scale="10mV"/>
+            <reverseRate type="HHExpRate" rate="4per_ms" midpoint="-65mV" scale="-18mV"/>
+        </gateHHrates>
+        <gateHHrates instances="1" id="h">
+            <forwardRate type="HHExpRate" rate="0.07per_ms" midpoint="-65mV" scale="-20mV"/>
+            <reverseRate type="HHSigmoidRate" rate="1per_ms" midpoint="-35mV" scale="10mV"/>
+        </gateHHrates>
+    </ionChannel>
+    <ionChannel species="k" type="ionChannelHH" conductance="10pS" id="k">
+        <gateHHrates instances="4" id="n">
+            <forwardRate type="HHExpLinearRate" rate="0.1per_ms" midpoint="-55mV" scale="10mV"/>
+            <reverseRate type="HHExpRate" rate="0.125per_ms" midpoint="-65mV" scale="-80mV"/>
+        </gateHHrates>
+    </ionChannel>
+    <pulseGenerator delay="0ms" duration="100000000s" amplitude="0.08nA" id="pulseGen1"/>
+</neuroml>

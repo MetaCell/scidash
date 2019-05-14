@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: multi-artifact.plan-1-synthetic.context
+Bundle-Version: 1.0.0
+Module-Scope: multi-artifact.plan-1
+Bundle-ManifestVersion: 2
+Import-Bundle: multi-artifact.plan-1-org.geppetto.core,multi-artifact.
+ plan-1-org.geppetto.simulation,multi-artifact.plan-1-org.geppetto.fro
+ ntend,multi-artifact.plan-1-org.geppetto.simulator.external,multi-art
+ ifact.plan-1-org.geppetto.simulator.scidash,multi-artifact.plan-1-org
+ .geppetto.model,multi-artifact.plan-1-org.geppetto.model.neuroml
+

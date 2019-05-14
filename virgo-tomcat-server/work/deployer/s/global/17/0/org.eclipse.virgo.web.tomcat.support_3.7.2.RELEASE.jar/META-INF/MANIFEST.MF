@@ -1,0 +1,68 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.eclipse.virgo.web.tomcat.support
+Bundle-Version: 3.7.2.RELEASE
+Bundle-Name: Virgo Web Support Tomcat Support
+Bundle-ManifestVersion: 2
+Import-Package: javax.servlet;version="[2.6.0,4)",javax.websocket;vers
+ ion="[1.1.0,1.2)";resolution:="optional",org.apache.catalina;version=
+ "[8.5.16,8.6)",org.apache.catalina.connector;version="[8.5.16,8.6)",o
+ rg.apache.catalina.ha;version="[8.5.16,8.6)",org.apache.catalina.ha.d
+ eploy;version="[8.5.16,8.6)";resolution:="optional",org.apache.catali
+ na.ha.session;version="[8.5.16,8.6)";resolution:="optional",org.apach
+ e.catalina.ha.tcp;version="[8.5.16,8.6)";resolution:="optional",org.a
+ pache.catalina.tribes;version="[8.5.16,8.6)",org.apache.catalina.trib
+ es.group;version="[8.5.16,8.6)";resolution:="optional",org.apache.cat
+ alina.tribes.group.interceptors;version="[8.5.16,8.6)";resolution:="o
+ ptional",org.apache.catalina.tribes.io;version="[8.5.16,8.6)";resolut
+ ion:="optional",org.apache.catalina.tribes.membership;version="[8.5.1
+ 6,8.6)";resolution:="optional",org.apache.catalina.tribes.transport;v
+ ersion="[8.5.16,8.6)";resolution:="optional",org.apache.catalina.trib
+ es.transport.nio;version="[8.5.16,8.6)";resolution:="optional",org.ap
+ ache.catalina.valves;version="[8.5.16,8.6)",org.eclipse.gemini.web.to
+ mcat.spi;version="[3.0.3,4)",org.eclipse.virgo.kernel.osgi.framework;
+ version="[3.7.2,4)",org.eclipse.virgo.medic.eventlog;version="[3.7.2,
+ 4)",org.eclipse.virgo.nano.serviceability;version="[3.7.2,4)",org.ecl
+ ipse.virgo.nano.shim.serviceability;version="[3.7.2,4)",org.eclipse.v
+ irgo.util.io;version="[3.7.2,4)",org.eclipse.virgo.util.math;version=
+ "[3.7.2,4)",org.eclipse.virgo.web.core;version="[3.7.2,3.8)",org.osgi
+ .framework;version="0"
+Fragment-Host: org.eclipse.gemini.web.tomcat
+Tool: Bundlor 1.1.2.RELEASE
+
+Name: org/eclipse/virgo/web/tomcat/support/ApplicationNameTrackingValv
+ e.class
+SHA-256-Digest: RAcIoX6Pz8x+N5Q/6omyWi7yx/23kCsQ9wFQSHJx5gw=
+
+Name: org/eclipse/virgo/web/tomcat/support/ServerLifecycleLoggingListe
+ ner.class
+SHA-256-Digest: E1fkaVu3I0U13ryiD3vfNfpoYxewQjm63UdqbdAqPmk=
+
+Name: org/eclipse/virgo/web/tomcat/support/FindResourceDelegatingClass
+ Loader.class
+SHA-256-Digest: Ib7myI66uxvFKJD8QYtegNPV1SUTNYdt83hUNHtH5a8=
+
+Name: org/eclipse/virgo/web/tomcat/support/ApplicationNameTrackingDele
+ gate.class
+SHA-256-Digest: 69twEDzh3jUfaQODUGnnkdw8M9XTdWIx8lQoWvOzJaw=
+
+Name: org/eclipse/virgo/web/tomcat/support/ApplicationNameTrackingList
+ ener.class
+SHA-256-Digest: HzNLswPLV+CX3b2S5aXejy6IZpmxsbOaLjOJX9o5ga4=
+
+Name: EventLogMessages.properties
+SHA-256-Digest: ErY5ZrzWY5w28S3B3W9kceK60TXN/pwPL5ngiSc7bbo=
+
+Name: META-INF/spring/osgi-context.xml
+SHA-256-Digest: Yg37kIBGa2lcWRDlklgfBrf7tulQN/HAfoxYm4Akd6s=
+
+Name: org/eclipse/virgo/web/tomcat/support/ServerClassLoaderCustomizer
+ .class
+SHA-256-Digest: 7KrCNwR1JULXO2YAL1B8mQfDgZDRem2ZJNApTMDvFVE=
+
+Name: org/eclipse/virgo/web/tomcat/support/ServerClassLoaderCustomizer
+ $1.class
+SHA-256-Digest: vlkY99QILZm9Ci0MpSMZALKg0+UI4gYxI+M59A8EV70=
+
+Name: org/eclipse/virgo/web/tomcat/support/TomcatLogEvents.class
+SHA-256-Digest: fmjJxwE5XH+0jqrVloIB4DPVrPQzj8f5y2JlRsFZ10c=
+
