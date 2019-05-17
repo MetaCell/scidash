@@ -15,4 +15,4 @@ tag="metacell/scidash:$version"
 directory="."
 dockerfile="./service/docker/Dockerfile-scidash"
 
-docker build --no-cache -t $tag -f $dockerfile $directory
+docker build -t $tag -f $dockerfile $directory

@@ -1,22 +1,32 @@
-FROM ubuntu:16.04
+FROM python:3.6
 
-RUN add-apt-repository ppa:jonathonf/python-3.6
-RUN apt-get update && apt-get install python3.6
+# FIXME: I KNOW, THIS BUILD IS NOT PERFECT, BUT IT WORKS, AND AT THIS POINT I'M TOO AFRAID OF TOUCH SOMETHING, WILL REFACTOR THIS LATER
+
+RUN useradd -ms /bin/bash developer
+
+# INSTALL JAVA
+RUN apt-get update
+RUN apt-get install -y default-jdk vim python-dev
+
+RUN java -version
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN echo $JAVA_HOME
+
+# update pip
+RUN python3.6 -m pip install pip --upgrade
+RUN python3.6 -m pip install wheel virtualenv
 
 # BUILD VARIABLES
 ARG ROOT=/
 ARG APP_DIR=/app
+ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
-ARG VENV_PATH=./venv/
 ARG STATIC_DIR=$APP_DIR/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
 
-WORKDIR $ROOT
+ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
-# PYTHON INSTALL
-RUN pip install virtualenv
-#ENV PATH $VENV_PATH/bin:$PATH
-ENV PYTHONUNBUFFERED 1
+WORKDIR $ROOT
 
 # CREATING PROJECT FOLDERS
 RUN mkdir $APP_DIR
@@ -24,25 +34,33 @@ RUN mkdir $APP_DIR
 #COPYING PROJECT
 WORKDIR $APP_DIR
 ADD . $APP_DIR
-
-RUN apt-get update && apt-get -y install software-properties-common
-
-# INSTALL JAVA
-RUN \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -y oracle-java8-installer --allow-unauthenticated && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk8-installer
-
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+RUN rm -rf $APP_DIR/virgo-tomcat-server/work
 
 # INSTALLING REQUIREMENTS
-RUN apt-get install curl
+RUN apt-get install -y curl wget
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
-RUN apt-get update && apt-get install nodejs
+RUN apt-get update && apt-get -y install nodejs
 
+# INSTALL NEURON
+RUN mkdir /nrn
+WORKDIR /nrn
+RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
+RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.6/nrn-7.6.tar.gz
+RUN tar xzvf nrn-7.6.tar.gz
+WORKDIR nrn-7.6
+RUN ./configure --prefix `pwd` --without-iv --with-nrnpython
+RUN make && make install
+WORKDIR src/nrnpython
+ENV NEURON_HOME /nrn/nrn-7.6/x86_64/bin
+RUN python setup.py install
+
+RUN mkdir /Applications
+RUN mkdir /Applications/NEURON-7.6/
+WORKDIR /Applications/NEURON-7.6/
+RUN ln -s /nrn/nrn-7.6 nrn
+
+WORKDIR $APP_DIR
+RUN virtualenv venv-py2 -p python2.7
 
 RUN make install-backend-with-env
 RUN make install-sciunit-neuronunit
@@ -50,7 +68,12 @@ RUN make install-sciunit-neuronunit
 WORKDIR $GEPPETTO_DIR
 RUN npm run build-dev-noTest
 
+WORKDIR /nrn
+RUN chown -R developer ./
 WORKDIR $APP_DIR
+RUN chown -R developer ./
 COPY ./service/dotenv/env-docker $APP_DIR/.env
+
+USER developer
 
 CMD ./service/scripts/run.sh

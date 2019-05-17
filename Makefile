@@ -56,16 +56,15 @@ run-dev: migrate
 	make run-frontend
 
 run-staging: migrate
+	make run-django-staging & \
 	make run-celery & \
 	make run-celery-beat & \
-	make run-django-staging & \
-	make run-virgo-staging & \
-	make run-frontend
+	make run-virgo-staging
 
 django-migrate: migrations migrate
 
 migrations:
-	./manage.py makemigrations
+	./manage.py makemigration
 
 migrate:
 	./manage.py migrate
@@ -77,7 +76,7 @@ run-django:
 	./manage.py runserver
 
 run-django-staging:
-	./manage.py runserver 0.0.0.0:8000
+	python3.6 manage.py runserver 0.0.0.0:8000
 
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
@@ -142,14 +141,3 @@ push-scidash-db:
 	@echo "=  Push scidash db image  ="
 	@echo "==========================="
 	@./service/scripts/push-image-scidash-db.sh
-
-git-install-hooks:
-	cp service/hooks/* .git/hooks
-
-git-clean-local: git-check-on-dev
-	for b in `git branch --list "feature_*" --merged`; do git branch -d "$$b"; done;
-	for b in `git branch --list "bug_*" --merged`; do git branch -d "$$b"; done;
-
-git-check-on-dev:
-	@git status -b -s | grep "## development...origin/development"
-	@echo "On development"
