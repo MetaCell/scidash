@@ -3,6 +3,7 @@ import copy
 import json
 import os
 import re
+import logging
 
 import quantities as pq
 from django.conf import settings
@@ -17,6 +18,8 @@ from scidash.general.backends import ScidashCacheBackend
 from scidash.sciunitmodels import helpers as model_hlp
 from scidash.sciunittests.models import ScoreClass, ScoreInstance
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
+
+db_logger = logging.getLogger('db')
 
 
 class FileUploadView(APIView):
@@ -196,18 +199,39 @@ class GeppettoHandlerView(View):
                 }, 404
             )
 
-        output_mapping = list(
-            filter(
-                lambda x: os.path.basename(x) == self.OUTPUT_MAPPING_FILE,
-                results
+        try:
+            output_mapping = list(
+                filter(
+                    lambda x: os.path.basename(x) == self.OUTPUT_MAPPING_FILE,
+                    results
+                )
+            ).pop().replace('file:', '')
+        except IndexError:
+            db_logger.error(
+                f'Error processing results for SCORE {score_instance} '
+                f'with ID {score_instance.pk}, output_mapping not found'
             )
-        ).pop().replace('file:', '')
+            score_instance.error = 'output_mapping not found'
+            score_instance.status = score_instance.FAILED
+            score_instance.save()
 
-        results_file = list(
-            filter(
-                lambda x: os.path.basename(x) == self.RESULTS_FILE, results
+            raise Exception('output_mapping not found')
+
+        try:
+            results_file = list(
+                filter(
+                    lambda x: os.path.basename(x) == self.RESULTS_FILE, results
+                )
+            ).pop().replace('file:', '')
+        except IndexError:
+            db_logger.error(
+                f'Error processing results for SCORE {score_instance} '
+                f'with ID {score_instance.pk}, results not found'
             )
-        ).pop().replace('file:', '')
+            score_instance.error = 'results not found'
+            score_instance.status = score_instance.FAILED
+            score_instance.save()
+            raise Exception('results not found')
 
         simulation_result = None
 
@@ -235,4 +259,4 @@ class GeppettoHandlerView(View):
 
         score = self.calculate_score(simulation_result, score_instance)
 
-        return Response(data=score)
+        return Response(score, status=201)

@@ -117,3 +117,6 @@ pygeppetto_server/
 pygeppetto-django
 static/projects/*
 static/models/*
+virgo-tomcat-server/*
+virgo-tomcat-server/work/*
+celerybeat.pid

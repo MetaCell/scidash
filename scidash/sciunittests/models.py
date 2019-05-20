@@ -167,10 +167,11 @@ class ScoreInstance(models.Model):
     SCHEDULED = 's'
     LOCKED = 'l'
     CALCULATED = 'c'
+    FAILED = 'f'
 
     STATUS_CHOICES = (
         (SCHEDULED, 'Scheduled'), (CALCULATED, 'Calculated'),
-        (LOCKED, 'Locked')
+        (LOCKED, 'Locked'), (FAILED, 'Failed')
     )
 
     score_type = models.CharField(
@@ -193,6 +194,7 @@ class ScoreInstance(models.Model):
     )
     timestamp = models.DateField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
+    error = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

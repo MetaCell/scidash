@@ -64,7 +64,7 @@ run-staging: migrate
 django-migrate: migrations migrate
 
 migrations:
-	./manage.py makemigration
+	./manage.py makemigrations
 
 migrate:
 	./manage.py migrate

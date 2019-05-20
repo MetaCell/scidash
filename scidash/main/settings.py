@@ -69,7 +69,8 @@ SCIDASH_APPS = [
     'scidash.sciunitmodels',
     'scidash.sciunittests',
     'scidash.general',
-    'scidash.account'
+    'scidash.account',
+    'scidash.logviewer'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
