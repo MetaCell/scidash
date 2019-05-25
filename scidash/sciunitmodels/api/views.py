@@ -76,16 +76,17 @@ class ModelInstanceCloneView(views.APIView):
                 ), 404
             )
 
-        new_model_instance = self.clone_model(model_instance)
+        new_model_instance = self.clone_model(model_instance, request)
         serializer = ModelInstanceSerializer(new_model_instance)
         return response.Response(serializer.data)
 
-    def clone_model(self, model_instance_model):
+    def clone_model(self, model_instance_model, request):
         model_pk = model_instance_model.pk
         model_instance_model.timestamp = date.today()
 
         model_instance_model.pk = None
         model_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
+        model_instance_model.owner = request.user
         model_instance_model.save()
 
         # Save required before to add the tags since the generic relation needs
