@@ -67,7 +67,6 @@ class TestInstanceCloneView(views.APIView):
                     }
                 ), 404
             )
-
         new_test_instance = self.clone_test(test_instance, request)
         serializer = TestInstanceSerializer(new_test_instance)
 
@@ -79,6 +78,7 @@ class TestInstanceCloneView(views.APIView):
         test_instance_model.pk = None
         test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
         test_instance_model.owner = request.user
+        test_instance_model.status = 1
 
         test_instance_model.save()
 
