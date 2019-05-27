@@ -34,6 +34,7 @@ RUN mkdir $APP_DIR
 #COPYING PROJECT
 WORKDIR $APP_DIR
 ADD . $APP_DIR
+COPY ./service/settings/settings.py ./scidash/main/settings.py
 RUN rm -rf $APP_DIR/virgo-tomcat-server/work
 
 # INSTALLING REQUIREMENTS

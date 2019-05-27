@@ -74,7 +74,7 @@ class TestInstanceCloneView(views.APIView):
         return response.Response(serializer.data)
 
     def clone_test(self, test_instance_model, request):
-        test_pk = test_instance_model.pk
+        tags = [tag for tag in test_instance_model.tags.all()]
         test_instance_model.timestamp = date.today()
         test_instance_model.pk = None
         test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
@@ -84,7 +84,7 @@ class TestInstanceCloneView(views.APIView):
 
         # Save required before to add the tags since the generic relation needs
         # the new key in order to clone the tags as well
-        for tag in Tag.objects.filter(object_id=test_pk, content_type_id="11"):
+        for tag in tags:
             test_instance_model.tags.create(name=tag)
 
         return test_instance_model
