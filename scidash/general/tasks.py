@@ -6,6 +6,7 @@ from celery import shared_task
 from django.conf import settings as s
 
 import pygeppetto_gateway as pg
+from websocket import WebSocketTimeoutException
 from pygeppetto_server.messages import Servlet as S
 from pygeppetto_server.messages import ServletResponse as SR
 from scidash.sciunittests.models import ScoreInstance as Score
@@ -60,8 +61,11 @@ def send_score_to_geppetto(score):
 
         db_logger.info(response_type)
 
-        if response_type == 'generic_error':
-            return get_error(response.get('data'))
+        if response_type == SR.GENERIC_ERROR or response_type == SR.ERROR_LOADING_PROJECT:  # noqa: E501
+            error = get_error(response.get('data'))
+            db_logger.error(error)
+
+            return error
 
         project_loaded = response_type == SR.PROJECT_LOADED
         model_loaded = response_type == SR.GEPPETTO_MODEL_LOADED
@@ -83,6 +87,39 @@ def send_score_to_geppetto(score):
             'experimentId': 1
         })
     )
+
+    finished = False
+    experiment_loaded = False
+
+    while not finished:
+        try:
+            response = json.loads(servlet_manager.read())
+        except WebSocketTimeoutException:
+            db_logger.info('Successfully started experiment')
+            return True
+        except Exception as e:
+            db_logger.error(e)
+            score.error = e
+            score.status = score.FAILED
+            score.save()
+
+        response_type = response.get('type')
+
+        db_logger.info(response_type)
+
+        if response_type == SR.ERROR_RUNNING_EXPERIMENT:
+            error = get_error(response.get('data'))
+            db_logger.error(error)
+            score.error = error
+            score.status = score.FAILED
+            score.save()
+
+            return error
+
+        experiment_loaded = response_type == SR.EXPERIMENT_LOADED
+
+        if experiment_loaded:
+            db_logger.info(f'Score with ID {score.pk} successfully sent')
 
 
 @shared_task
