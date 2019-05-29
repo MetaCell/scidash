@@ -41,7 +41,7 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
 class ModelParametersView(views.APIView):
     def get(self, request):
         url = request.GET.get('model_url')
-        if "githubusercontent" not in url:
+        if "githubusercontent" not in url and "github" in url:
             string1 = url[0 : url.index("/blob/")]
             string2 = url[(url.index("/blob/") + 5) : len(url)]
             github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
@@ -86,7 +86,7 @@ class ModelInstanceCloneView(views.APIView):
         serializer = ModelInstanceSerializer(new_model_instance)
         return response.Response(serializer.data)
 
-    def clone_model(self, model_instance_model):
+    def clone_model(self, model_instance_model, request):
         tags = [tag for tag in model_instance_model.tags.all()]
         model_instance_model.timestamp = date.today()
 
