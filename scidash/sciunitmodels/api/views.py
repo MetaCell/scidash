@@ -86,8 +86,8 @@ class ModelInstanceCloneView(views.APIView):
         serializer = ModelInstanceSerializer(new_model_instance)
         return response.Response(serializer.data)
 
-    def clone_model(self, model_instance_model, request):
-        model_pk = model_instance_model.pk
+    def clone_model(self, model_instance_model):
+        tags = [tag for tag in model_instance_model.tags.all()]
         model_instance_model.timestamp = date.today()
 
         model_instance_model.pk = None
@@ -97,7 +97,7 @@ class ModelInstanceCloneView(views.APIView):
 
         # Save required before to add the tags since the generic relation needs
         # the new key in order to clone the tags as well
-        for tag in Tag.objects.filter(object_id=model_pk, content_type_id="8"):
+        for tag in tags:
             model_instance_model.tags.create(name=tag)
 
         return model_instance_model
