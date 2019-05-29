@@ -41,6 +41,12 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
 class ModelParametersView(views.APIView):
     def get(self, request):
         url = request.GET.get('model_url')
+        if "githubusercontent" not in url:
+            string1 = url[0 : url.index("/blob/")]
+            string2 = url[(url.index("/blob/") + 5) : len(url)]
+            github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
+            repository = string1[(string1.rfind("/") + 1) : len(string1)]
+            url = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
         error = None
 
         try:
