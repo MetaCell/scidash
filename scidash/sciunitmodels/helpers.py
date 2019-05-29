@@ -88,4 +88,6 @@ def get_model_parameters(url: str) -> dict:
 
         raise Exception(parsed_result)
 
+    servlet_manager.close()
+
     return parsed_result

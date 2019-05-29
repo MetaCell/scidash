@@ -2,8 +2,6 @@ import json
 
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
-from rest_framework_cache.registry import cache_registry
-from rest_framework_cache.serializers import CachedSerializerMixin
 
 import sciunit
 from scidash.account.serializers import ScidashUserSerializer
@@ -18,7 +16,7 @@ from scidash.sciunittests.models import (
 
 
 class TestSuiteSerializer(
-    GetOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+    GetOrCreateMixin, WritableNestedModelSerializer
 ):
 
     owner = ScidashUserSerializer(
@@ -31,7 +29,7 @@ class TestSuiteSerializer(
 
 
 class TestClassSerializer(
-    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
     key = 'url'
     units_name = serializers.CharField(required=False)
@@ -43,7 +41,7 @@ class TestClassSerializer(
 
 
 class TestInstanceSerializer(
-    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
     test_suites = TestSuiteSerializer(many=True, required=False)
     test_class = TestClassSerializer()
@@ -56,7 +54,6 @@ class TestInstanceSerializer(
 
     def validate(self, data):
         sciunit.settings['PREVALIDATE'] = True
-
 
         class_data = data.get('test_class')
 
@@ -112,7 +109,7 @@ class TestInstanceSerializer(
 
 
 class ScoreClassSerializer(
-    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
 
     key = 'class_name'
@@ -123,7 +120,7 @@ class ScoreClassSerializer(
 
 
 class ScoreInstanceSerializer(
-    GetByKeyOrCreateMixin, WritableNestedModelSerializer, CachedSerializerMixin
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
     test_instance = TestInstanceSerializer()
     model_instance = ModelInstanceSerializer()
@@ -161,10 +158,3 @@ class ScoreInstanceSerializer(
             'prediction_dict',
             'prediction_numeric',
         )
-
-
-cache_registry.register(ScoreInstanceSerializer)
-cache_registry.register(ScoreClassSerializer)
-cache_registry.register(TestClassSerializer)
-cache_registry.register(TestInstanceSerializer)
-cache_registry.register(TestSuiteSerializer)

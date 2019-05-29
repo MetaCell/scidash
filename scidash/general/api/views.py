@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from scidash.general.helpers import import_class
 from scidash.sciunitmodels.helpers import download_and_save_model
 from scidash.sciunitmodels.models import ModelInstance
-from scidash.sciunittests.models import ScoreInstance, TestInstance
+from scidash.sciunittests.models import ScoreInstance, TestInstance, TestSuite as TestSuiteModel
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
 from sciunit import TestSuite
 
@@ -103,8 +103,17 @@ class CompatibilityMatrixView(APIView):
 
 class CreateScoresFromMatrixView(APIView):
     def post(self, request):
-        matrix = request.data
+        matrix = request.data.get('matrix')
+        suite_name = request.data.get('suiteName')
+        save_suite = suite_name != ''
         result = []
+
+        if save_suite:
+            test_suite = TestSuiteModel.objects.create(
+                owner=request.user,
+                name=suite_name,
+                hash=f"{grb(128)}"
+            )
 
         for model_pk in matrix.keys():
             try:
@@ -119,6 +128,9 @@ class CreateScoresFromMatrixView(APIView):
             scores = []
 
             for test in test_instances:
+                if save_suite:
+                    test.test_suites.add(test_suite)
+
                 scores.append(
                     ScoreInstance(
                         model_instance=model_instance,

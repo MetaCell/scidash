@@ -5,6 +5,9 @@ from scidash.logviewer.models import LogFile
 
 
 class LogFileAdmin(admin.ModelAdmin):
+
+    add_form_template = 'admin/change_form.html'
+
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
 
