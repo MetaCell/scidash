@@ -45,7 +45,14 @@ class ModelClassFilter(filters.FilterSet):
 
     def by_model_url(self, queryset, name, value):
         model_name = None
+        if "githubusercontent" not in value:
+            string1 = value[0 : value.index("/blob/")]
+            string2 = value[(value.index("/blob/") + 5) : len(value)]
+            github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
+            repository = string1[(string1.rfind("/") + 1) : len(string1)]
+            value = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
         url = urlparse(value)
+        
         model_name = os.path.basename(url.path)
         model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
