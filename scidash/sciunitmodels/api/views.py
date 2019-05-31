@@ -86,11 +86,7 @@ class ModelInstanceCloneView(views.APIView):
         serializer = ModelInstanceSerializer(new_model_instance)
         return response.Response(serializer.data)
 
-<<<<<<< HEAD
     def clone_model(self, model_instance_model, request):
-=======
-    def clone_model(self, model_instance_model):
->>>>>>> 4b05ab6990edb7a552bcf6e913f534758869c072
         tags = [tag for tag in model_instance_model.tags.all()]
         model_instance_model.timestamp = date.today()
 
