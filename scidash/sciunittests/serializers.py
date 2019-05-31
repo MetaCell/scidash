@@ -2,6 +2,7 @@ import json
 
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
+import numpy as np
 
 import sciunit
 from scidash.account.serializers import ScidashUserSerializer
@@ -67,7 +68,10 @@ class TestInstanceSerializer(
         except json.JSONDecodeError:
             quantity = import_class(class_data.get('units'))
         else:
-            quantity = build_destructured_unit(destructured)
+            if destructured.get('name', False):
+                quantity = build_destructured_unit(destructured)
+            else:
+                quantity = destructured
 
         observations = data.get('observation')
         without_units = []
@@ -89,10 +93,30 @@ class TestInstanceSerializer(
         else:
             without_units = filter_units(test_class.observation_schema)
 
-        obs_with_units = {
-            x: (int(y) * quantity if x not in without_units else int(y))
-            for x, y in observations.items()
-        }
+        def process_obs(obs):
+            try:
+                obs = int(obs)
+            except ValueError:
+                obs = np.array(json.loads(obs))
+
+            return obs
+
+        if not isinstance(quantity, dict):
+            obs_with_units = {
+                x: (
+                    process_obs(y) * quantity
+                    if x not in without_units else process_obs(y)
+                )
+                for x, y in observations.items()
+            }
+        else:
+            obs_with_units = {
+                x: (
+                    process_obs(y) * import_class(quantity[x])
+                    if x not in without_units else process_obs(y)
+                )
+                for x, y in observations.items()
+            }
 
         try:
             test_class(obs_with_units)
