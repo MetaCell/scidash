@@ -46,7 +46,7 @@ RUN apt-get update && apt-get -y install nodejs
 RUN mkdir /nrn
 WORKDIR /nrn
 RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
-RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.6/nrn-7.6.tar.gz
+RUN wget -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
 RUN tar xzvf nrn-7.6.tar.gz
 WORKDIR nrn-7.6
 RUN ./configure --prefix `pwd` --without-iv --with-nrnpython
