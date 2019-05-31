@@ -6,6 +6,7 @@ import quantities as pq
 from django.conf import settings as s
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import numpy as np
 
 from scidash.general.helpers import import_class
 from scidash.sciunitmodels.helpers import download_and_save_model
@@ -40,12 +41,12 @@ class CompatibilityMatrixView(APIView):
     def get_observation(self, units, observation) -> dict:
 
         try:
-            units = json.loads(units)
+            imported_units = json.loads(units)
 
-            if units.get('name', False):
-                imported_units = self.from_destructured(units)
+            if imported_units.get('name', False):
+                imported_units = self.from_destructured(imported_units)
         except Exception:
-            imported_units = import_class(units)
+            imported_units = import_class(imported_units)
 
         if not isinstance(imported_units, dict):
             for key in observation.keys():
@@ -60,10 +61,18 @@ class CompatibilityMatrixView(APIView):
             }
             for key in observation.keys():
                 if key != 'n':
-                    observation[key] = float(observation[key]
-                                             ) * imported_units[key]
+                    observation[key] = self.process_obs(observation[key]
+                                                        ) * imported_units[key]
                 else:
                     observation[key] = int(observation[key])
+
+        return observation
+
+    def process_obs(self, obs):
+        try:
+            observation = float(obs)
+        except ValueError:
+            observation = np.array(json.loads(obs))
 
         return observation
 
