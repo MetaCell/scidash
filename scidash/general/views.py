@@ -161,6 +161,12 @@ class GeppettoHandlerView(View):
         score_instance.score_class = score_class
         score_instance.score = score_data.get('score')
 
+        score_instance.test_instance.build_info = 'Scidash Builder'
+        score_instance.test_instance.hostname = 'Scidash Host'
+        score_instance.test_instance.save()
+        score_instance.model_instance.backend = 'Geppetto'
+        score_instance.model_instance.save()
+
         sort_key = score_data.get('norm_score') if not score_data.get(
             'sort_key', False
         ) else score_data.get('sort_key')

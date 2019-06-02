@@ -67,6 +67,8 @@ class ScoreFilter(filters.FilterSet):
 
     suite_hash = filters.CharFilter(method='suite_hash_filter')
 
+    status = filters.CharFilter(name='status', lookup_expr='iexact')
+
     def model_class_name_filter(self, queryset, name, value):
         return ScoreInstance.objects.filter(
             Q(model_instance__model_class__class_name__icontains=value)

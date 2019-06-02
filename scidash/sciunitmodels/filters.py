@@ -52,7 +52,6 @@ class ModelClassFilter(filters.FilterSet):
             repository = string1[(string1.rfind("/") + 1) : len(string1)]
             value = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
         url = urlparse(value)
-        
         model_name = os.path.basename(url.path)
         model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
