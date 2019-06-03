@@ -87,6 +87,100 @@ make run-dev
 
 Go to http://localhost:8000/ and enjoy!
 
+## Requirements to neuronunit test and model classes to work with scidash
+
+> Note: to save compatibility with uploaded results you'll be able to save classes which are not meet requirements, but there is no guarantee that they will work with application
+
+#### ***Model classes requirements***
+
+Capabilities of the model should be accessible by class method `get_capabilities`
+
+```python
+model.get_capabilities()
+```
+
+Extra capabilities check should be accessible by class property `extra_capability_checks`
+
+```python
+model.extra_capability_checks
+```
+
+#### ***Test classes requirements***
+
+*Observations*
+
+Should be accessible by class property `observation_schema`
+
+```python
+test.observation_schema
+```
+
+Supported schema
+
+```python
+[(
+    "<schema_name>",
+    {
+        '<observation_field_name>': {<cerberus_validation_schema>},
+        ...<other_fields>
+    }
+), ...<other_schemas>]
+```
+
+In case there are more than one schema. And if there is only one
+
+```python
+(
+    "<schema_name>",
+    {
+        '<observation_field_name>': {<cerberus_validation_schema>},
+        ...<other_fields>
+    }
+)
+```
+
+Iterable observations should have `iterable: True` in validation schema.
+
+*Parameters*
+
+Should be accessible by class property `params_schema`
+
+```python
+test.params_schema
+```
+
+Supported format
+
+```python
+{
+    '<param_name>': {<cerberus_validation_schema>},
+    ...<other_params>
+}
+```
+
+Should have `type` property in validation schema
+
+*Units*
+
+Should be accessible with class property `units`
+
+```python
+test.units
+```
+
+Supported formats
+
+```python
+pq.Unit # importable string
+```
+
+```python
+pq.UnitQuantity('megaohm', pq.ohm*1e6, symbol='Mohm') # custom unit
+```
+
+```python
+{'v': pq.V, 'i': pq.pA} # mapping
+```
 
 ## Deployment
 
