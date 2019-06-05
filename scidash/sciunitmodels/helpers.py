@@ -2,14 +2,20 @@ import json
 import logging
 import os
 import time
+import re
+import typing as t
 
 import requests
 from django.conf import settings as s
+import enforce
 
 import pygeppetto_gateway as pg
 from scidash.general.helpers import import_class
 
 db_logger = logging.getLogger('db')
+enforce.config({
+    'mode': 'covariant'
+})
 
 
 def download_and_save_model(path, url):
@@ -91,3 +97,66 @@ def get_model_parameters(url: str) -> dict:
     servlet_manager.close()
 
     return parsed_result
+
+
+class URLProcessorException(Exception):
+    pass
+
+
+@enforce.runtime_validation
+class URLProcessor():
+
+    GITHUB_BLOB = 'github'
+    GITHUB_RAW = 'githubusercontent'
+    NEUROML_DB = 'neuroml-db'
+
+    def __init__(self, url: str) -> None:
+        self.url = url
+
+        self.type = self.detect_type()
+
+        db_logger.info(f'URL Processor got {self.type} url')
+
+    def detect_type(self) -> str:
+        if self.GITHUB_RAW not in self.url and self.GITHUB_BLOB in self.url:
+            return self.GITHUB_BLOB
+
+        if self.NEUROML_DB in self.url:
+            return self.NEUROML_DB
+
+        return self.GITHUB_RAW
+
+    def get_file_url(self) -> t.Union[str, dict]:
+        if self.type == self.GITHUB_RAW:
+            return self.url
+
+        if self.type == self.GITHUB_BLOB:
+            return self.convert_github()
+
+        if self.type == self.NEUROML_DB:
+            return self.convert_neuromldb()
+
+    def convert_github(self) -> str:
+        result = self.url
+
+        result = result.replace("blob/", "")
+        result = result.replace("github.com", "raw.githubusercontent.com")
+
+        return result
+
+    def convert_neuromldb(self) -> dict:
+        regexp = 'model_info?model_id=([\w])$'
+
+        result = re.search(regexp, self.url)
+
+        if result is not None:
+            model_id = result.group(1)
+        else:
+            raise URLProcessorException(
+                f'Can\'t found model id for url {self.url}'
+            )
+
+        return {
+            'api': f'https://neuroml-db.org/api/model?id={model_id}',
+            'zip': f'https://neuroml-db.org/GetModelZip?modelID={model_id}&version=NeuroML'
+        }

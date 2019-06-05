@@ -43,19 +43,14 @@ class ModelClassFilter(filters.FilterSet):
             'model_url',
         ]
 
-    def by_model_url(self, queryset, name, value):
-        model_name = None
-        if "githubusercontent" not in value and "github" in value:
-            string1 = value[0 : value.index("/blob/")]
-            string2 = value[(value.index("/blob/") + 5) : len(value)]
-            github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
-            repository = string1[(string1.rfind("/") + 1) : len(string1)]
-            value = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
-        url = urlparse(value)
+    def filter_from_github(self, url: str, queryset):
+        url = urlparse(url)
         model_name = os.path.basename(url.path)
-        model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
+        model_path = os.path.join(
+            settings.DOWNLOADED_MODEL_DIR, model_name
+        )
 
-        helpers.download_and_save_model(model_path, value)
+        helpers.download_and_save_model(model_path, url)
 
         model_classes = models.ModelClass.objects.filter(
             import_path__isnull=False
@@ -67,3 +62,11 @@ class ModelClassFilter(filters.FilterSet):
         ]
 
         return queryset.filter(pk__in=matching_classes)
+
+    def by_model_url(self, queryset, name, value):
+        url = helpers.URLProcessor(value).get_file_url()
+
+        if not isinstance(url, dict):
+            return self.filter_from_github(url, queryset)
+        else:
+            return self.filter_from_nml(url, queryset)
