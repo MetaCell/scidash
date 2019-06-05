@@ -1,11 +1,17 @@
 import os
 from urllib.parse import urlparse
+import json
 
 from django.conf import settings
 from django_filters import rest_framework as filters
+import requests
+import logging
 
 import scidash.sciunitmodels.helpers as helpers
 import scidash.sciunitmodels.models as models
+
+
+db_logger = logging.getLogger('db')
 
 
 class ModelInstanceFilter(filters.FilterSet):
@@ -63,10 +69,25 @@ class ModelClassFilter(filters.FilterSet):
 
         return queryset.filter(pk__in=matching_classes)
 
+    def filter_from_neuromldb(self, info, queryset):
+        model_info = requests.get(info.get('api'))
+
+        if model_info.status_code != 200:
+            db_logger.error(f'Can\'t get model_info for url {info.get("api")}')
+            return queryset.filter(pk__in=[])
+        else:
+            model_info = json.loads(model_info)
+
+        root_file = model_info.get('model', {}).get('File_Name', None)
+
+        if root_file is None:
+            db_logger.error(f'Can\'t get model_info for url {info.get("api")}')
+            return queryset.filter(pk__in=[])
+
     def by_model_url(self, queryset, name, value):
         url = helpers.URLProcessor(value).get_file_url()
 
         if not isinstance(url, dict):
             return self.filter_from_github(url, queryset)
         else:
-            return self.filter_from_nml(url, queryset)
+            return self.filter_from_neuromldb(url, queryset)
