@@ -8,6 +8,7 @@ import typing as t
 import requests
 from django.conf import settings as s
 import enforce
+import zipfile
 
 import pygeppetto_gateway as pg
 from scidash.general.helpers import import_class
@@ -114,6 +115,7 @@ class URLProcessor():
         self.url = url
 
         self.type = self.detect_type()
+        self.model_id = None
 
         db_logger.info(f'URL Processor got {self.type} url')
 
@@ -145,18 +147,77 @@ class URLProcessor():
         return result
 
     def convert_neuromldb(self) -> dict:
-        regexp = 'model_info?model_id=([\w])$'
+        regexp = 'model_id=(\w*)$'
 
         result = re.search(regexp, self.url)
 
         if result is not None:
-            model_id = result.group(1)
+            self.model_id = result.group(1)
         else:
             raise URLProcessorException(
                 f'Can\'t found model id for url {self.url}'
             )
 
         return {
-            'api': f'https://neuroml-db.org/api/model?id={model_id}',
-            'zip': f'https://neuroml-db.org/GetModelZip?modelID={model_id}&version=NeuroML'
+            'api': f'https://neuroml-db.org/api/model?id={self.model_id}',
+            'zip': f'https://neuroml-db.org/GetModelZip?modelID={self.model_id}&version=NeuroML'
         }
+
+
+@enforce.runtime_validation
+class NeuroMLDbExtractor():
+
+    def __init__(self, info: t.Dict[str, str], model_id: str) -> None:
+        self.info = info
+        self.model_id = model_id
+
+        self.download()
+        self.extract()
+
+    def build_url():
+        pass
+
+    def download(self):
+        model_info = requests.get(self.info.get('api'))
+
+        if model_info.status_code != 200:
+            db_logger.error(
+                f'Can\'t get model_info for url {self.info.get("api")}'
+            )
+        else:
+            model_info = json.loads(model_info.text)
+
+        root_file = model_info.get('model', {}).get('File_Name', None)
+
+        if root_file is None:
+            db_logger.error(
+                f'Can\'t get model_info for url {self.info.get("api")}'
+            )
+
+        zip_url = self.info.get('zip')
+
+        self.model_zip_path = os.path.join(
+            s.DOWNLOADED_MODEL_DIR, f'{self.model_id}.zip'
+        )
+
+        response = requests.get(zip_url, allow_redirects=True)
+
+        if response.status_code == 404:
+            db_logger.info(f'Model zip not found with id {self.model_id}')
+
+        with open(self.model_zip_path, 'wb') as f:
+            f.write(response.content)
+
+        self.model_path = os.path.join(
+            s.DOWNLOADED_MODEL_DIR, f'{self.model_id}'
+        )
+
+    def extract(self):
+        zip_ref = zipfile.ZipFile(self.model_zip_path, 'r')
+        zip_ref.extractall(self.model_path)
+        zip_ref.close()
+
+        self.model_path = os.path.join(self.model_path, self.root_file)
+
+    def get_model_url(self):
+        pass
