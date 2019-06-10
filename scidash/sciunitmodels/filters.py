@@ -1,16 +1,15 @@
+import logging
 import os
-import zipfile
 from urllib.parse import urlparse
-import json
 
 from django.conf import settings
 from django_filters import rest_framework as filters
-import requests
-import logging
 
 import scidash.sciunitmodels.helpers as helpers
 import scidash.sciunitmodels.models as models
-
+from pygeppetto_gateway.interpreters.helpers import (
+    NeuroMLDbExtractor, URLProcessor
+)
 
 db_logger = logging.getLogger('db')
 
@@ -53,9 +52,7 @@ class ModelClassFilter(filters.FilterSet):
     def filter_from_github(self, url: str, queryset):
         url = urlparse(url)
         model_name = os.path.basename(url.path)
-        model_path = os.path.join(
-            settings.DOWNLOADED_MODEL_DIR, model_name
-        )
+        model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
         helpers.download_and_save_model(model_path, url)
 
@@ -71,52 +68,18 @@ class ModelClassFilter(filters.FilterSet):
         return queryset.filter(pk__in=matching_classes)
 
     def filter_from_neuromldb(self, info, queryset, model_id):
-        model_info = requests.get(info.get('api'))
 
-        if model_info.status_code != 200:
-            db_logger.error(f'Can\'t get model_info for url {info.get("api")}')
-            return queryset.filter(pk__in=[])
-        else:
-            model_info = json.loads(model_info.text)
-
-        root_file = model_info.get('model', {}).get('File_Name', None)
-
-        if root_file is None:
-            db_logger.error(f'Can\'t get model_info for url {info.get("api")}')
-            return queryset.filter(pk__in=[])
-
-        zip_url = info.get('zip')
-
-        model_zip_path = os.path.join(
-            settings.DOWNLOADED_MODEL_DIR, f'{model_id}.zip'
+        extractor = helpers.NeuroMLDbExtractor(
+            info, model_id, settings.DOWNLOADED_MODEL_DIR
         )
-
-        response = requests.get(zip_url, allow_redirects=True)
-
-        if response.status_code == 404:
-            db_logger.info(f'Model zip not found with id {model_id}')
-            return queryset.filter(pk__in=[])
-
-        with open(model_zip_path, 'wb') as f:
-            f.write(response.content)
-
-        model_path = os.path.join(
-            settings.DOWNLOADED_MODEL_DIR, f'{model_id}'
-        )
-
-        zip_ref = zipfile.ZipFile(model_zip_path, 'r')
-        zip_ref.extractall(model_path)
-        zip_ref.close()
-
-        model_path = os.path.join(model_path, root_file)
 
         model_classes = models.ModelClass.objects.filter(
             import_path__isnull=False
         )
 
         matching_classes = [
-            kls.pk for kls in model_classes
-            if helpers.check_capabilities(model_path, kls.import_path)
+            kls.pk for kls in model_classes if
+            helpers.check_capabilities(extractor.model_path, kls.import_path)
         ]
 
         return queryset.filter(pk__in=matching_classes)

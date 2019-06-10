@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from scidash.logviewer.models import LogFile
 
 # Register your models here.
@@ -19,12 +20,12 @@ class LogFileAdmin(admin.ModelAdmin):
             content = f.readlines()[-last_lines:]
             content.reverse()
 
-        extra_context.update({
-            'lines': content[-last_lines:]
-            })
+        extra_context.update({'lines': content[-last_lines:]})
 
         return super().change_view(
-            request, object_id, extra_context=extra_context,
+            request,
+            object_id,
+            extra_context=extra_context,
         )
 
 

@@ -3,9 +3,7 @@ import logging
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import (
-    mixins, permissions, response, views, viewsets
-)
+from rest_framework import mixins, permissions, response, views, viewsets
 
 import scidash.sciunitmodels.helpers as hlp
 from scidash.general.models import Tag
@@ -42,10 +40,12 @@ class ModelParametersView(views.APIView):
     def get(self, request):
         url = request.GET.get('model_url')
         if "githubusercontent" not in url and "github" in url:
-            string1 = url[0 : url.index("/blob/")]
-            string2 = url[(url.index("/blob/") + 5) : len(url)]
-            github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
-            repository = string1[(string1.rfind("/") + 1) : len(string1)]
+            string1 = url[0:url.index("/blob/")]
+            string2 = url[(url.index("/blob/") + 5):len(url)]
+            github_user = string1[(
+                string1[0:string1.rfind("/")].rfind("/") + 1
+            ):string1.rfind("/")]
+            repository = string1[(string1.rfind("/") + 1):len(string1)]
             url = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
         error = None
 
