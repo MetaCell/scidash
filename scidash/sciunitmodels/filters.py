@@ -128,4 +128,6 @@ class ModelClassFilter(filters.FilterSet):
         if not isinstance(url, dict):
             return self.filter_from_github(url, queryset)
         else:
-            return self.filter_from_neuromldb(url, queryset, processor.model_id)
+            return self.filter_from_neuromldb(
+                url, queryset, processor.model_id
+            )

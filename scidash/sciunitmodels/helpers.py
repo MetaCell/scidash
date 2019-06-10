@@ -164,24 +164,28 @@ class URLProcessor():
         }
 
 
+class NeuroMLDbExtractorException(Exception):
+    pass
+
+
 @enforce.runtime_validation
 class NeuroMLDbExtractor():
 
     def __init__(self, info: t.Dict[str, str], model_id: str) -> None:
         self.info = info
         self.model_id = model_id
+        self.model_path = None
+        self.model_zip_path = None
+        self.url = None
 
         self.download()
         self.extract()
-
-    def build_url():
-        pass
 
     def download(self):
         model_info = requests.get(self.info.get('api'))
 
         if model_info.status_code != 200:
-            db_logger.error(
+            raise NeuroMLDbExtractorException(
                 f'Can\'t get model_info for url {self.info.get("api")}'
             )
         else:
@@ -190,7 +194,7 @@ class NeuroMLDbExtractor():
         root_file = model_info.get('model', {}).get('File_Name', None)
 
         if root_file is None:
-            db_logger.error(
+            raise NeuroMLDbExtractorException(
                 f'Can\'t get model_info for url {self.info.get("api")}'
             )
 
@@ -203,7 +207,9 @@ class NeuroMLDbExtractor():
         response = requests.get(zip_url, allow_redirects=True)
 
         if response.status_code == 404:
-            db_logger.info(f'Model zip not found with id {self.model_id}')
+            raise NeuroMLDbExtractorException(
+                f'Model zip not found with id {self.model_id}'
+            )
 
         with open(self.model_zip_path, 'wb') as f:
             f.write(response.content)
@@ -218,6 +224,3 @@ class NeuroMLDbExtractor():
         zip_ref.close()
 
         self.model_path = os.path.join(self.model_path, self.root_file)
-
-    def get_model_url(self):
-        pass
