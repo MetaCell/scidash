@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import time
+import typing as t
 
 import enforce
 import requests
@@ -50,23 +51,33 @@ def get_extra_capabilities(model_class_import_path):
         return {}
 
 
-def get_model_parameters(url: str) -> dict:
+def get_model_parameters(url: t.Union[str, dict], model_id: str) -> dict:
     servlet_manager = pg.GeppettoServletManager()
-    file_name = os.path.basename(url)
 
-    interpreter_string = pg.interpreters.helpers.interpreter_detector(url)
+    if isinstance(url, dict):
+        extractor = pg.interpreters.helpers.NeuroMLDbExtractor(
+            url, model_id, '/tmp/'
+        )
+        file_name = extractor.root_file
+    else:
+        file_name = os.path.basename(url)
+
+    if isinstance(url, dict):
+        interpreter_string = pg.interpreters.helpers.interpreter_detector(
+            file_name
+        )
+    else:
+        interpreter_string = pg.interpreters.helpers.interpreter_detector(url)
+
     interpreter_class = import_class(interpreter_string)
     timestamp = int(time.time())
 
     builder = pg.GeppettoProjectBuilder(
         model_file_url=url,
         interpreter=interpreter_class,
-        project_location=
-        f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/p.json",  # noqa: E501
-        xmi_location=
-        f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/m.xmi",  # noqa: E501
-        model_file_location=
-        f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/{file_name}"  # noqa: E501
+        project_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/p.json",  # noqa: E501
+        xmi_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/m.xmi",  # noqa: E501
+        model_file_location=f"{s.PYGEPPETTO_BUILDER_PROJECT_BASE_URL}/{timestamp}/{file_name}"  # noqa: E501
     )
     project_url = builder.build_project()
 

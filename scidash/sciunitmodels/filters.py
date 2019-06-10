@@ -69,7 +69,7 @@ class ModelClassFilter(filters.FilterSet):
 
     def filter_from_neuromldb(self, info, queryset, model_id):
 
-        extractor = helpers.NeuroMLDbExtractor(
+        extractor = NeuroMLDbExtractor(
             info, model_id, settings.DOWNLOADED_MODEL_DIR
         )
 
@@ -85,7 +85,7 @@ class ModelClassFilter(filters.FilterSet):
         return queryset.filter(pk__in=matching_classes)
 
     def by_model_url(self, queryset, name, value):
-        processor = helpers.URLProcessor(value)
+        processor = URLProcessor(value)
         url = processor.get_file_url()
 
         if not isinstance(url, dict):
