@@ -1,17 +1,17 @@
 import json
-import os
 import logging
+import os
 
 from celery import shared_task
 from django.conf import settings as s
+from websocket import WebSocketTimeoutException
 
 import pygeppetto_gateway as pg
-from websocket import WebSocketTimeoutException
+from pygeppetto_gateway.interpreters.helpers import interpreter_detector
 from pygeppetto_server.messages import Servlet as S
 from pygeppetto_server.messages import ServletResponse as SR
-from scidash.sciunittests.models import ScoreInstance as Score
 from scidash.general.helpers import import_class
-from pygeppetto_gateway.interpreters.helpers import interpreter_detector
+from scidash.sciunittests.models import ScoreInstance as Score
 
 db_logger = logging.getLogger('db')
 

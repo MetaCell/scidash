@@ -1,5 +1,5 @@
-from django.db import models
 from django.conf import settings as s
+from django.db import models
 
 # Create your models here.
 

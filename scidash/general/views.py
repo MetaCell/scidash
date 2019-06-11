@@ -1,9 +1,9 @@
 import collections
 import copy
 import json
+import logging
 import os
 import re
-import logging
 
 import quantities as pq
 from django.conf import settings

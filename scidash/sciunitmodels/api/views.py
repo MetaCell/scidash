@@ -3,14 +3,12 @@ import logging
 from datetime import date
 from random import getrandbits as grb
 
-from rest_framework import (
-    mixins, permissions, response, views, viewsets
-)
+from rest_framework import permissions, response, views, viewsets
 
 import scidash.sciunitmodels.helpers as hlp
-from scidash.general.models import Tag
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
+from pygeppetto_gateway.interpreters.helpers import URLProcessor
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
@@ -40,17 +38,13 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
 
 class ModelParametersView(views.APIView):
     def get(self, request):
-        url = request.GET.get('model_url')
-        if "githubusercontent" not in url and "github" in url:
-            string1 = url[0 : url.index("/blob/")]
-            string2 = url[(url.index("/blob/") + 5) : len(url)]
-            github_user = string1[(string1[0 : string1.rfind("/")].rfind("/") + 1) : string1.rfind("/")]
-            repository = string1[(string1.rfind("/") + 1) : len(string1)]
-            url = "https://raw.githubusercontent.com/" + github_user + "/" + repository + string2
+        processor = URLProcessor(request.GET.get('model_url'))
+        url = processor.get_file_url()
+
         error = None
 
         try:
-            params = hlp.get_model_parameters(url)
+            params = hlp.get_model_parameters(url, processor.model_id)
         except Exception as e:
             logger.exception(e)
             error = e

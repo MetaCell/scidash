@@ -1,17 +1,18 @@
-import os
 import json
+import os
 from random import getrandbits as grb
 
+import numpy as np
 import quantities as pq
 from django.conf import settings as s
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import numpy as np
 
 from scidash.general.helpers import import_class
 from scidash.sciunitmodels.helpers import download_and_save_model
 from scidash.sciunitmodels.models import ModelInstance
-from scidash.sciunittests.models import ScoreInstance, TestInstance, TestSuite as TestSuiteModel
+from scidash.sciunittests.models import ScoreInstance, TestInstance
+from scidash.sciunittests.models import TestSuite as TestSuiteModel
 from scidash.sciunittests.serializers import ScoreInstanceSerializer
 from sciunit import TestSuite
 
@@ -90,10 +91,7 @@ class CompatibilityMatrixView(APIView):
 
         test_instances = [
             import_class(test.test_class.import_path)(
-                self.get_observation(
-                    test.test_class.units,
-                    test.observation
-                ),
+                self.get_observation(test.test_class.units, test.observation),
                 name=f'{test.name}#{test.pk}'
             ) for test in test_models
         ]
@@ -119,9 +117,7 @@ class CreateScoresFromMatrixView(APIView):
 
         if save_suite:
             test_suite = TestSuiteModel.objects.create(
-                owner=request.user,
-                name=suite_name,
-                hash=f"{grb(128)}"
+                owner=request.user, name=suite_name, hash=f"{grb(128)}"
             )
 
         for model_pk in matrix.keys():

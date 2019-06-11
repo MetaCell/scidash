@@ -1,8 +1,8 @@
 import json
 
+import numpy as np
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
-import numpy as np
 
 import sciunit
 from scidash.account.serializers import ScidashUserSerializer
@@ -16,9 +16,7 @@ from scidash.sciunittests.models import (
 )
 
 
-class TestSuiteSerializer(
-    GetOrCreateMixin, WritableNestedModelSerializer
-):
+class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
 
     owner = ScidashUserSerializer(
         default=serializers.CurrentUserDefault(), read_only=True

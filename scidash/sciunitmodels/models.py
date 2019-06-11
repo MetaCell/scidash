@@ -5,9 +5,9 @@ from datetime import date
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import JSONField
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.db import models
 
 from scidash.general import models as general_models
 from scidash.sciunitmodels.helpers import (
@@ -46,9 +46,7 @@ class ModelClass(models.Model):
         Capability, blank=True, related_name='model_classes'
     )
     extra_capabilities = models.ManyToManyField(
-        Capability,
-        through=ExtraCapabilityModelThrough,
-        blank=True
+        Capability, through=ExtraCapabilityModelThrough, blank=True
     )
     url = models.URLField(default='', null=True, blank=True, unique=True)
     import_path = models.TextField(null=True, blank=True)
@@ -84,7 +82,8 @@ class ModelClass(models.Model):
             capability_model, created = Capability.objects.get_or_create(
                 class_name=capability.__name__
             )
-            if extra_capabilities is None or capability not in extra_capabilities.keys():  # noqa: E501
+            if extra_capabilities is None or capability not in extra_capabilities.keys(
+            ):  # noqa: E501
                 self.capabilities.add(capability_model)
             else:
                 extra_capability_model, created = ExtraCapabilityModelThrough.objects.get_or_create(  # noqa: E501

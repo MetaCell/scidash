@@ -1,6 +1,6 @@
-from django.contrib.contenttypes.models import ContentType
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.contenttypes.models import ContentType
 
 from scidash.general.models import ScidashUser
 

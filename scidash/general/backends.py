@@ -1,5 +1,5 @@
-import sciunit.models.backends as backends
 import neuronunit.models.backends as nu_backends
+import sciunit.models.backends as backends
 
 
 class ScidashCacheBackend(nu_backends.jNeuroMLBackend):
