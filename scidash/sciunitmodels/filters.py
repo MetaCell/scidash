@@ -50,8 +50,8 @@ class ModelClassFilter(filters.FilterSet):
         ]
 
     def filter_from_github(self, url: str, queryset):
-        url = urlparse(url)
-        model_name = os.path.basename(url.path)
+        parsed_url = urlparse(url)
+        model_name = os.path.basename(parsed_url.path)
         model_path = os.path.join(settings.DOWNLOADED_MODEL_DIR, model_name)
 
         helpers.download_and_save_model(model_path, url)
