@@ -78,8 +78,7 @@ class TestInstanceCloneView(views.APIView):
         test_instance_model.pk = None
         test_instance_model.hash_id = f"{grb(128)}_{grb(22)}"
         test_instance_model.owner = request.user
-        test_instance_model.status = 1
-
+        test_instance_model.status = test_instance_model.AVAILABLE
         test_instance_model.save()
 
         # Save required before to add the tags since the generic relation needs

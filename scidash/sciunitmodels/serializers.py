@@ -22,8 +22,6 @@ class ModelClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
     key = 'url'
-    url = serializers.CharField(validators=[])
-
     capabilities = CapabilitySerializer(many=True)
 
     class Meta:

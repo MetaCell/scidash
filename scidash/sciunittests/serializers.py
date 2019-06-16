@@ -30,9 +30,7 @@ class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
 class TestClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-    key = 'url'
     units_name = serializers.CharField(required=False)
-    url = serializers.CharField(validators=[])
 
     class Meta:
         model = TestClass
