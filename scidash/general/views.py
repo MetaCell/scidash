@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import platform
 
 import quantities as pq
 from django.conf import settings
@@ -161,7 +162,7 @@ class GeppettoHandlerView(View):
         score_instance.score_class = score_class
         score_instance.score = score_data.get('score')
 
-        score_instance.test_instance.build_info = 'Scidash Builder'
+        score_instance.test_instance.build_info = f' {platform.system()}-{platform.release()}/{platform.system()}' # noqa: E501
         score_instance.test_instance.hostname = 'Scidash Host'
         score_instance.test_instance.save()
         score_instance.model_instance.backend = 'Geppetto'
@@ -218,6 +219,8 @@ class GeppettoHandlerView(View):
                 f'with ID {score_instance.pk}, output_mapping not found'
             )
             score_instance.error = 'output_mapping not found'
+            score_instance.test_instance.build_info = f' {platform.system()}-{platform.release()}/{platform.system()}' # noqa: E501
+            score_instance.test_instance.hostname = 'Scidash Host'
             score_instance.status = score_instance.FAILED
             score_instance.save()
 
@@ -236,6 +239,8 @@ class GeppettoHandlerView(View):
             )
             score_instance.error = 'results not found'
             score_instance.status = score_instance.FAILED
+            score_instance.test_instance.build_info = f' {platform.system()}-{platform.release()}/{platform.system()}' # noqa: E501
+            score_instance.test_instance.hostname = 'Scidash Host'
             score_instance.save()
             raise Exception('results not found')
 

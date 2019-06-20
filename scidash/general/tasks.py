@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import platform
 
 from celery import shared_task
 from django.conf import settings as s
@@ -112,6 +113,8 @@ def send_score_to_geppetto(score):
             db_logger.error(error)
             score.error = error
             score.status = score.FAILED
+            score.test_instance.build_info = f' {platform.system()}-{platform.release()}/{platform.system()}' # noqa: E501
+            score.test_instance.hostname = 'Scidash Host'
             score.save()
 
             return error
