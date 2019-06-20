@@ -44,7 +44,7 @@ def send_score_to_geppetto(score):
 
     project_url = project_builder.build_project()
 
-    servlet_manager = pg.GeppettoServletManager()
+    servlet_manager = pg.GeppettoServletManager.get_instance()
     servlet_manager.handle(S.LOAD_PROJECT_FROM_URL, project_url)
 
     project_loaded = False
