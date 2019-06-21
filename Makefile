@@ -88,7 +88,7 @@ run-celery-beat:
 	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 
 run-virgo-staging:
-	./service/scripts/run-virgo-staging.sh
+	/bin/bash /opt/virgo/bin/startup.sh
 
 lint: flake8-lint isort-lint yapf-lint
 
