@@ -5,8 +5,9 @@ ARG SOURCES_DIR=$APP_DIR/sources
 ARG VIRGO_DIR=/opt/virgo
 ARG SCIDASH_REPO_FOLDER=/git
 ARG GEPPETTO_REPO=http://github.com/openworm/org.geppetto
-ARG SCIDASH_TAG=scidash_2.0.0
 ARG ALPHA_TAG=v0.4.2-alpha
+ARG SIMFLAG_TAG=v0.4.2-simflag
+
 
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
@@ -36,7 +37,7 @@ RUN export JAVA_HOME
 
 # Get the scidash repo
 
-RUN git clone -b development https://github.com/MetaCell/scidash
+RUN git clone -b deployment https://github.com/MetaCell/scidash
 
 WORKDIR /tmp
 
@@ -84,27 +85,31 @@ RUN cp /git/scidash/service/geppetto/geppetto.plan $SOURCES_DIR/org.geppetto/
 RUN python2 setup.py
 
 WORKDIR $SOURCES_DIR/org.geppetto.core
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $SIMFLAG_TAG
+RUN rm ./src/main/java/META-INF/spring/app-config.xml
+RUN cp /git/scidash/service/geppetto/core/app-config.xml ./src/main/java/META-INF/spring
 
 WORKDIR $SOURCES_DIR/org.geppetto.frontend
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $SIMFLAG_TAG
+RUN rm ./src/main/webapp/WEB-INF/spring/app-config.xml
+RUN cp /git/scidash/service/geppetto/frontend/app-config.xml ./src/main/webapp/WEB-INF/spring/
 
 WORKDIR $SOURCES_DIR/org.geppetto.model
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $ALPHA_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.model.neuroml
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $ALPHA_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.simulation
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $SIMFLAG_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.simulator.external
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $ALPHA_TAG
 
 WORKDIR $SOURCES_DIR/org.geppetto.simulator.scidash
-RUN git checkout $SCIDASH_TAG
+RUN git checkout $SIMFLAG_TAG
 # RUN rm ./src/main/java/META-INF/spring/app-config.xml
-# ADD ./service/geppetto/app-config.xml ./src/main/java/META-INF/spring
+# RUN cp /git/scidash/service/geppetto/simulator.scidash/app-config.xml ./src/main/java/META-INF/spring
 
 WORKDIR $SOURCES_DIR/org.geppetto
 RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=org.geppetto.frontend -DuseSsl=false -DskipTests install
