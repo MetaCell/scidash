@@ -204,8 +204,282 @@ def populate_classes(apps, schema_editor):
             'class_name': 'MorphologyTest',
             'import_path': 'neuronunit.tests.morphology.MorphologyTest'
         },
+        {
+            'class_name': 'SomeSurfaceAreaTest',
+            'import_path': 'neuronunit.tests.morphology.SomeSurfaceAreaTest'
+        },
+        {
+            'class_name': 'NumberofStemsTest',
+            'import_path': 'neuronunit.tests.morphology.NumberofStemsTest'
+        },
+        {
+            'class_name': 'NumberofBifurcationsTest',
+            'import_path': 'neuronunit.tests.morphology.NumberofBifurcationsTest'
+        },
+        {
+            'class_name': 'BasalDendriteNumberofBifurcationsTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteNumberofBifurcationsTest'
+        },
+        {
+            'class_name': 'ApicalDendriteNumberofBifurcationsTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteNumberofBifurcationsTest'
+        },
+        {
+            'class_name': 'NumberofBranchesTest',
+            'import_path': 'neuronunit.tests.morphology.NumberofBranchesTest'
+        },
+        {
+            'class_name': 'BasalDendriteNumberofBranchesTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteNumberofBranchesTest'
+        },
+        {
+            'class_name': 'ApicalDendriteNumberofBranchesTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteNumberofBranchesTest'
+        },
+        {
+            'class_name': 'OverallWidthTest',
+            'import_path': 'neuronunit.tests.morphology.OverallWidthTest'
+        },
+        {
+            'class_name': 'BasalDendriteOverallWidthTest',
+            'import_path': 'neuronunit.tests.morphology.OverallWidthTest'
+        },
+        {
+            'class_name': 'ApicalDendriteOverallWidthTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteOverallWidthTest'
+        },
+        {
+            'class_name': 'OverallHeightTest',
+            'import_path': 'neuronunit.tests.morphology.OverallHeightTest'
+        },
+        {
+            'class_name': 'BasalDendriteOverallHeightTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteOverallHeightTest'
+        },
+        {
+            'class_name': 'ApicalDendriteOverallHeightTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteOverallHeightTest'
+        },
+        {
+            'class_name': 'OverallDepthTest',
+            'import_path': 'neuronunit.tests.morphology.OverallDepthTest'
+        },
+        {
+            'class_name': 'BasalDendriteOverallDepthTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteOverallDepthTest'
+        },
+        {
+            'class_name': 'AverageDiameterTest',
+            'import_path': 'neuronunit.tests.morphology.AverageDiameterTest'
+        },
+        {
+            'class_name': 'BasalDendriteAverageDiameterTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteAverageDiameterTest'
+        },
+        {
+            'class_name': 'ApicalDendriteAverageDiameterTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteAverageDiameterTest'
+        },
+        {
+            'class_name': 'TotalLengthTest',
+            'import_path': 'neuronunit.tests.morphology.TotalLengthTest'
+        },
+        {
+            'class_name': 'BasalDendriteTotalLengthTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteTotalLengthTest'
+        },
+        {
+            'class_name': 'BasalDendriteTotalLengthTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteTotalLengthTest'
+        },
+        {
+            'class_name': 'ApicalDendriteTotalLengthTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteTotalLengthTest'
+        },
+        {
+            'class_name': 'TotalSurfaceTest',
+            'import_path': 'neuronunit.tests.morphology.TotalSurfaceTest'
+        },
+        {
+            'class_name': 'BasalDendriteTotalSurfaceTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteTotalSurfaceTest'
+        },
+        {
+            'class_name': 'ApicalDendriteTotalSurfaceTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteTotalSurfaceTest'
+        },
+        {
+            'class_name': 'TotalVolumeTest',
+            'import_path': 'neuronunit.tests.morphology.TotalVolumeTest'
+        },
+        {
+            'class_name': 'BasalDendriteTotalVolumeTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteTotalVolumeTest'
+        },
+        {
+            'class_name': 'ApicalDendriteTotalVolumeTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteTotalVolumeTest'
+        },
+        {
+            'class_name': 'MaxEuclideanDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.MaxEuclideanDistanceTest'
+        },
+        {
+            'class_name': 'BaseDendriteMaxEuclideanDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.BaseDendriteMaxEuclideanDistanceTest'
+        },
+        {
+            'class_name': 'ApicalDendriteMaxEuclideanDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteMaxEuclideanDistanceTest'
+        },
+        {
+            'class_name': 'MaxPathDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.MaxPathDistanceTest'
+        },
+        {
+            'class_name': 'BasalDendriteMaxPathDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteMaxPathDistanceTest'
+        },
+        {
+            'class_name': 'ApicalDendriteMaxPathDistanceTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteMaxPathDistanceTest'
+        },
+        {
+            'class_name': 'MaxBranchOrderTest',
+            'import_path': 'neuronunit.tests.morphology.MaxBranchOrderTest'
+        },
+        {
+            'class_name': 'BasalDendriteMaxBranchOrderTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteMaxBranchOrderTest'
+        },
+        {
+            'class_name': 'ApicalDendriteMaxBranchOrderTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteMaxBranchOrderTest'
+        },
+        {
+            'class_name': 'AverageContractionTest',
+            'import_path': 'neuronunit.tests.morphology.AverageContractionTest'
+        },
+        {
+            'class_name': 'BasalDendriteAverageContractionTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteAverageContractionTest'
+        },
+        {
+            'class_name': 'ApicalDendriteAverageContractionTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteAverageContractionTest'
+        },
+        {
+            'class_name': 'PartitionAsymmetryTest',
+            'import_path': 'neuronunit.tests.morphology.PartitionAsymmetryTest'
+        },
+        {
+            'class_name': 'BasalDendritePartitionAsymmetryTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendritePartitionAsymmetryTest'
+        },
+        {
+            'class_name': 'ApicalDendritePartitionAsymmetryTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendritePartitionAsymmetryTest'
+        },
+        {
+            'class_name': 'AverageRallsRatioTest',
+            'import_path': 'neuronunit.tests.morphology.AverageRallsRatioTest'
+        },
+        {
+            'class_name': 'BasalDendriteAverageRallsRatioTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteAverageRallsRatioTest'
+        },
+        {
+            'class_name': 'ApicalDendriteAverageRallsRatioTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteAverageRallsRatioTest'
+        },
+        {
+            'class_name': 'AverageBifurcationAngleLocalTest',
+            'import_path': 'neuronunit.tests.morphology.AverageBifurcationAngleLocalTest'
+        },
+        {
+            'class_name': 'BasalDendriteAverageBifurcationAngleLocalTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteAverageBifurcationAngleLocalTest'
+        },
+        {
+            'class_name': 'ApicalDendriteAverageBifurcationAngleLocalTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteAverageBifurcationAngleLocalTest'
+        },
+        {
+            'class_name': 'AverageBifurcationAngleRemoteTest',
+            'import_path': 'neuronunit.tests.morphology.AverageBifurcationAngleRemoteTest'
+        },
+        {
+            'class_name': 'BasalDendriteAverageBifurcationAngleRemoteTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteAverageBifurcationAngleRemoteTest'
+        },
+        {
+            'class_name': 'ApicalDendriteAverageBifurcationAngleRemoteTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteAverageBifurcationAngleRemoteTest'
+        },
+        {
+            'class_name': 'FractalDimensionTest',
+            'import_path': 'neuronunit.tests.morphology.FractalDimensionTest'
+        },
+        {
+            'class_name': 'BasalDendriteFractalDimensionTest',
+            'import_path': 'neuronunit.tests.morphology.BasalDendriteFractalDimensionTest'
+        },
+        {
+            'class_name': 'ApicalDendriteFractalDimensionTest',
+            'import_path': 'neuronunit.tests.morphology.ApicalDendriteFractalDimensionTest'
+        },
+        {
+            'class_name': 'TestPulseTest',
+            'import_path': 'neuronunit.tests.passive.TestPulseTest'
+        },
+        {
+            'class_name': 'TimeConstantTest',
+            'import_path': 'neuronunit.tests.passive.TimeConstantTest'
+        },
+        {
+            'class_name': 'CapacitanceTest',
+            'import_path': 'neuronunit.tests.passive.CapacitanceTest'
+        },
+        {
+            'class_name': 'RestingPotentialTest',
+            'import_path': 'neuronunit.tests.passive.RestingPotentialTest'
+        },
+        {
+            'class_name': 'InjectedCurrent',
+            'import_path': 'neuronunit.tests.waveform.InjectedCurrent'
+        },
+        {
+            'class_name': 'APWidthTest',
+            'import_path': 'neuronunit.tests.waveform.APWidthTest'
+        },
+        {
+            'class_name': 'InjectedCurrentAPWidthTest',
+            'import_path': 'neuronunit.tests.waveform.InjectedCurrentAPWidthTest'
+        },
+        {
+            'class_name': 'APAmplitudeTest',
+            'import_path': 'neuronunit.tests.waveform.APAmplitudeTest'
+        },
+        {
+            'class_name': 'InjectedCurrentAPAmplitudeTest',
+            'import_path': 'neuronunit.tests.waveform.InjectedCurrentAPAmplitudeTest'
+        },
+        {
+            'class_name': 'APThresholdTest',
+            'import_path': 'neuronunit.tests.waveform.APThresholdTest'
+        },
+        {
+            'class_name': 'InjectedCurrentAPThresholdTest',
+            'import_path': 'neuronunit.tests.waveform.InjectedCurrentAPThresholdTest'
+        },
     ]
 
+    for model in data:
+        obj, created = TestClass.objects.get_or_create(
+            **model
+        )
+        obj.clean_fields()
+        obj.save()
 
 class Migration(migrations.Migration):
 
@@ -214,4 +488,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(populate_classes)
     ]
