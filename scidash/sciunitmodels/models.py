@@ -52,9 +52,7 @@ class ModelClass(models.Model):
     import_path = models.TextField(null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
+    def populate_capabilities(self):
         if self.import_path is None:
             return
 
@@ -92,6 +90,11 @@ class ModelClass(models.Model):
                     extra_check=extra_capabilities[capability]
                 )
                 extra_capability_model.save()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        self.populate_capabilities()
 
     class Meta:
         verbose_name = 'Model class'
