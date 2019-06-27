@@ -52,7 +52,9 @@ def get_extra_capabilities(model_class_import_path):
 
 
 def get_model_parameters(url: t.Union[str, dict], model_id: str) -> dict:
-    servlet_manager = pg.GeppettoServletManager.get_instance()
+    servlet_manager = pg.GeppettoServletManager.get_instance(
+        'model_parameters'
+    )
 
     if isinstance(url, dict):
         extractor = pg.interpreters.helpers.NeuroMLDbExtractor(
