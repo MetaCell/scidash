@@ -88,12 +88,13 @@ def send_score_to_geppetto(score):
     finished = False
     experiment_loaded = False
 
+
     while not finished:
         try:
             response = json.loads(servlet_manager.read())
         except WebSocketTimeoutException:
             db_logger.info('Successfully started experiment')
-            return True
+            finished = True
         except Exception as e:
             db_logger.error(e)
             score.error = e
@@ -112,16 +113,12 @@ def send_score_to_geppetto(score):
             score.test_instance.build_info = f' {platform.system()}-{platform.release()}/{platform.system()}' # noqa: E501
             score.test_instance.hostname = 'Scidash Host'
             score.save()
-
-            return error
+            finished = True
 
         experiment_loaded = response_type == SR.EXPERIMENT_LOADED
 
         if experiment_loaded:
             db_logger.info(f'Score with ID {score.pk} successfully sent')
-            return
-
-        return
 
 
 @shared_task
