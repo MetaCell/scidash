@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 from django_filters import rest_framework as filters
+from django.db.models import Q
 
 import scidash.sciunitmodels.helpers as helpers
 import scidash.sciunitmodels.models as models
@@ -57,7 +58,7 @@ class ModelClassFilter(filters.FilterSet):
         helpers.download_and_save_model(model_path, url)
 
         model_classes = models.ModelClass.objects.filter(
-            import_path__isnull=False
+            ~Q(import_path='')
         )
 
         matching_classes = [
