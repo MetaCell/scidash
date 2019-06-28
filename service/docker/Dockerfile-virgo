@@ -59,7 +59,7 @@ RUN ./configure \
     --without-x \
     --with-nrnpython=python3 \
     --without-paranrn \
-    --prefix='/opt/conda/neuron' \
+    --prefix=`pwd` \
     --without-iv \
     --without-nrnoc-x11 \
     --silent &&\
@@ -76,6 +76,7 @@ RUN ln -s /nrn/nrn-7.6 nrn
 WORKDIR /usr/local
 RUN ln -s /nrn/nrn-7.6 nrn
 RUN chown developer nrn
+RUN ls -l /usr/local/nrn/
 
 # -== INSTALL VIRGO ==-
 RUN mkdir $VIRGO_DIR
