@@ -79,7 +79,7 @@ urlpatterns = [
         r'^auth/password-reset/$',
         auth_views.PasswordResetView.as_view(
             template_name='registration/password-reset.html',
-            success_url='/auth/password-reset/done'
+            success_url='/auth/password-reset/done/'
         ),
         name='password-reset'
     ),
