@@ -53,7 +53,7 @@ class ModelClass(models.Model):
     memo = models.TextField(null=True, blank=True)
 
     def populate_capabilities(self):
-        if self.import_path is None:
+        if self.import_path == '':
             return
 
         capabilities = []

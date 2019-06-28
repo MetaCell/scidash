@@ -3,6 +3,7 @@ from datetime import date
 from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
+from django.db.models import Q
 
 from scidash.general.models import Tag
 from scidash.sciunittests.filters import (
@@ -39,7 +40,7 @@ class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class TestClassViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TestClass.objects.all()
+    queryset = TestClass.objects.filter(~Q(import_path=''))
     serializer_class = TestClassSerializer
     permission_classes = (permissions.AllowAny, )
     filter_fields = ('class_name', )
