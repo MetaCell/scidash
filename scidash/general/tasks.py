@@ -28,7 +28,6 @@ def get_project_id(raw_data):
 def get_error(raw_data):
     return raw_data
 
-
 def send_score_to_geppetto(score):
     db_logger.info(f'Processing score with ID {score.pk}')
     model_name = os.path.basename(score.model_instance.url)
@@ -44,7 +43,7 @@ def send_score_to_geppetto(score):
 
     project_url = project_builder.build_project()
 
-    servlet_manager = pg.GeppettoServletManager.get_instance()
+    servlet_manager = pg.GeppettoServletManager.get_instance('scheduler')
     servlet_manager.handle(S.LOAD_PROJECT_FROM_URL, project_url)
 
     project_loaded = False
@@ -77,9 +76,6 @@ def send_score_to_geppetto(score):
 
     if project_id is None:
         return "Project not found"
-
-    score.status = Score.LOCKED
-    score.save()
 
     servlet_manager.handle(
         S.RUN_EXPERIMENT,
@@ -123,11 +119,16 @@ def send_score_to_geppetto(score):
 
         if experiment_loaded:
             db_logger.info(f'Score with ID {score.pk} successfully sent')
+            return
+
+        return
 
 
 @shared_task
 def run_experiment():
-    scores = Score.objects.filter(status=Score.SCHEDULED)
+    scores = list(Score.objects.filter(status=Score.SCHEDULED))
+
+    Score.objects.filter(status=Score.SCHEDULED).update(status=Score.LOCKED)
 
     for score in scores:
         send_score_to_geppetto(score)

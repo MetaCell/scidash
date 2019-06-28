@@ -71,7 +71,7 @@ class TestClass(models.Model):
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
 
-        if self.import_path is None:
+        if self.import_path == '':
             return
 
         observation_schema = None

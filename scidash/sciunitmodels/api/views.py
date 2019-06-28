@@ -4,6 +4,7 @@ from datetime import date
 from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
+from django.db.models import Q
 
 import scidash.sciunitmodels.helpers as hlp
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
@@ -23,7 +24,7 @@ class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ModelClassViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ModelClass.objects.all()
+    queryset = ModelClass.objects.filter(~Q(import_path=''))
     serializer_class = ModelClassSerializer
     permission_classes = (permissions.AllowAny, )
     filter_class = ModelClassFilter
