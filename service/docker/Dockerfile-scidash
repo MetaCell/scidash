@@ -9,37 +9,19 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-
+ARG SCIDASH_BRANCH=development
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
 WORKDIR $ROOT
 
 #COPYING PROJECT
 WORKDIR $APP_DIR
-RUN git clone -b deployment https://github.com/MetaCell/scidash
+RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
 
 # INSTALLING REQUIREMENTS
-RUN apt-get install -y curl wget
+RUN apt-get install -y curl wget lsof
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get -y install nodejs
-
-# INSTALL NEURON
-RUN mkdir /nrn
-WORKDIR /nrn
-RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
-RUN wget -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
-RUN tar xzvf nrn-7.6.tar.gz
-WORKDIR nrn-7.6
-RUN ./configure --prefix `pwd` --without-iv --with-nrnpython
-RUN make && make install
-WORKDIR src/nrnpython
-ENV NEURON_HOME /nrn/nrn-7.6/x86_64/bin
-RUN python setup.py install
-
-RUN mkdir /Applications
-RUN mkdir /Applications/NEURON-7.6/
-WORKDIR /Applications/NEURON-7.6/
-RUN ln -s /nrn/nrn-7.6 nrn
 
 WORKDIR $APP_DIR/scidash
 RUN pip install virtualenv 

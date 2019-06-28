@@ -7,43 +7,40 @@ ARG SCIDASH_REPO_FOLDER=/git
 ARG GEPPETTO_REPO=http://github.com/openworm/org.geppetto
 ARG ALPHA_TAG=v0.4.2-alpha
 ARG SIMFLAG_TAG=v0.4.2-simflag
+ARG SCIDASH_BRANCH=development
 
 
+# -== Install OpenJDK and certificates ==-
+WORKDIR /
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y ant && \
+    apt-get clean;
+RUN apt-get update && \
+    apt-get install ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f;
 
-WORKDIR /
+# -== Setup JAVA_HOME ==-
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN export JAVA_HOME
+
+# -== Create various folder for this deployment ==-
 RUN mkdir $APP_DIR
 RUN mkdir $SCIDASH_REPO_FOLDER
 WORKDIR $APP_DIR
 RUN mkdir $SOURCES_DIR
 WORKDIR $SCIDASH_REPO_FOLDER
 
-# Install OpenJDK-8
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
+# -== Download SCIDASH repo ==-
 
-# Fix certificate issues
-RUN apt-get update && \
-    apt-get install ca-certificates-java && \
-    apt-get clean && \
-    update-ca-certificates -f;
+RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
 
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
-
-# Get the scidash repo
-
-RUN git clone -b deployment https://github.com/MetaCell/scidash
-
+# -== INSTALL MAVEN ==-
 WORKDIR /tmp
-
 RUN wget http://archive.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
-
-# INSTALL MAVEN
 RUN tar xzf apache-maven-3.5.2-bin.tar.gz -C /opt/
 RUN ln -s /opt/apache-maven-3.5.2 /opt/maven
 RUN ln -s /opt/maven/bin/mvn /usr/local/bin
@@ -51,14 +48,37 @@ RUN rm -f /apache-maven-3.5.2-bin.tar.gz
 ENV MAVEN_HOME /opt/maven
 RUN mvn --version
 
-# INSTALL NEURON
-RUN wget https://neuron.yale.edu/ftp/neuron/versions/v7.6/nrn-7.6.x86_64-linux.deb
-RUN dpkg -i nrn-7.6.x86_64-linux.deb
-ENV NEURON_HOME /usr/local/nrn
+# -== INSTALL NEURON ==-
+RUN mkdir /nrn
+WORKDIR /nrn
+RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
+RUN wget -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
+RUN tar xzvf nrn-7.6.tar.gz
+WORKDIR nrn-7.6
+RUN ./configure \
+    --without-x \
+    --with-nrnpython=python3 \
+    --without-paranrn \
+    --prefix='/opt/conda/neuron' \
+    --without-iv \
+    --without-nrnoc-x11 \
+    --silent &&\
+make --silent -j4 &&\
+make --silent install -j4
+WORKDIR src/nrnpython
+ENV NEURON_HOME /nrn/nrn-7.6/x86_64/bin
+RUN python setup.py install
 
+# -== Linking Neuron environment with application and geppetto ==-
+RUN mkdir -p /Applications/NEURON-7.6/
+WORKDIR /Applications/NEURON-7.6/
+RUN ln -s /nrn/nrn-7.6 nrn
+WORKDIR /usr/local
+RUN ln -s /nrn/nrn-7.6 nrn
+RUN chown developer nrn
+
+# -== INSTALL VIRGO ==-
 RUN mkdir $VIRGO_DIR
-
-# INSTALL VIRGO
 RUN apt-get install curl
 RUN curl -L 'http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/3.7.2.RELEASE/virgo-tomcat-server-3.7.2.RELEASE.zip&r=1' > virgo.zip
 RUN unzip virgo.zip
@@ -73,9 +93,8 @@ RUN chmod 777 -R $VIRGO_DIR
 RUN mkdir rm $VIRGO_DIR/repository/usr
 RUN mvn --version
 
+# -== INSTALL GEPPETTO ==-
 WORKDIR $SOURCES_DIR
-
-# INSTALL GEPPETTO
 RUN git clone $GEPPETTO_REPO -b $ALPHA_TAG
 WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN rm $SOURCES_DIR/org.geppetto/utilities/source_setup/config.json
@@ -120,6 +139,10 @@ RUN python2 update_server.py
 WORKDIR $APP_DIR
 
 RUN chown developer $VIRGO_DIR
+
+# -== Clean up to reduce container size ==-
+RUN rm -rf $SCIDASH_REPO_FOLDER
+RUN rm -rf /tmp/virgo.zip /tmp/apache-maven-3.5.2-bin.tar.gz
 USER developer
 
 EXPOSE 8080
