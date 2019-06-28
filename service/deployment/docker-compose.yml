@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  scidash-redis:
+    image: redis
+    expose:
+        - "6379"
+  scidash-postgres:
+    image: scidash_db
+    expose:
+        - "5432"
+    volumes:
+        - ./database:/var/lib/postgresql/
+  scidash:
+    image: scidash_image_dario
+    ports:
+        - 8001:8000
+    depends_on:
+        - scidash-redis
+        - scidash-postgres
