@@ -1,4 +1,4 @@
-FROM scidash_virgo:latest
+FROM metacell/scidash_virgo:r2.0.0
 
 USER root 
 
@@ -23,10 +23,16 @@ RUN apt-get install -y curl wget lsof
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get -y install nodejs
 
+WORKDIR /nrn
+RUN chown -R developer ./
+
 WORKDIR $APP_DIR/scidash
 RUN pip install virtualenv 
-RUN virtualenv venv-py2 -p python2.7
+RUN virtualenv venv-py -p python3.6
+WORKDIR /usr/local/nrn/src/nrnpython
+RUN python setup.py install
 
+WORKDIR $APP_DIR/scidash
 RUN make install-backend-with-env
 RUN make install-sciunit-neuronunit
 RUN make install-frontend
@@ -35,9 +41,12 @@ WORKDIR $GEPPETTO_DIR
 RUN ls -la
 RUN npm run build-dev-noTest
 
-WORKDIR /nrn
-RUN chown -R developer ./
 WORKDIR $APP_DIR/scidash
+RUN rm -rf .git &&\ 
+    rm -rf static/org.geppetto.frontend/.git &&\ 
+    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
+    rm -rf sciunit/.git &&\
+    rm -rf neuronunit/.git
 RUN chown -R developer ./
 RUN cp ./service/dotenv/scidash_env .env
 
