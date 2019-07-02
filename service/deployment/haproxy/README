@@ -17,3 +17,8 @@ Rebuild the haproxy docker image.
 docker run --net=host -it haproxy:latest
 
 (if the image has been built as haproxy:latest, differently change that part to point to the relevant image just built).
+
+=======================================
+
+3. The certificates pushed in this repo are fake examples used to test the proxy on the UAT instance.
+These need to be replaced with the real certificates.
