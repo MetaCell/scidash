@@ -1,0 +1,19 @@
+INSTRUCTIONS:
+
+1. Edit the haproxy.cfg, in the section pasted below:
+
+backend www-backend
+    # Tell haproxy to redirect all http traffic to https
+    redirect scheme https if !{ ssl_fc }
+    server www-1 172.20.0.4:8000 check
+
+Change the ip address in the last line to match the one used by docker container that runs Scidash.
+Rebuild the haproxy docker image.
+
+=======================================
+
+2. Run the image as per below
+
+docker run --net=host -it haproxy:latest
+
+(if the image has been built as haproxy:latest, differently change that part to point to the relevant image just built).
