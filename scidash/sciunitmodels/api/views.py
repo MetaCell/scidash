@@ -36,6 +36,17 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = ModelInstanceFilter
 
+    def filter_queryset(self, queryset):
+        queryset.filter(model_class__import_path='').update(
+            status=ModelInstance.LOCKED
+        )
+
+        queryset.filter(
+            Q(score__isnull=True) & ~Q(model_class__import_path='')
+        ).update(status=ModelInstance.AVAILABLE)
+
+        return queryset
+
 
 class ModelParametersView(views.APIView):
     def get(self, request):

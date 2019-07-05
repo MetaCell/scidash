@@ -178,7 +178,9 @@ class ScoreInstance(models.Model):
         max_length=200, default='', null=True, blank=True
     )
     score_class = models.ForeignKey(ScoreClass, null=True, blank=True)
-    model_instance = models.ForeignKey(sciunitmodels.models.ModelInstance)
+    model_instance = models.ForeignKey(
+        sciunitmodels.models.ModelInstance, related_name='score'
+    )
     test_instance = models.ForeignKey(TestInstance)
     score = models.FloatField(default=0, null=True, blank=True)
     sort_key = models.FloatField(default=0)
