@@ -4,6 +4,8 @@ from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
 from django.db.models import Q
+from django.conf import settings as s
+from django.contrib.contenttypes.models import ContentType
 
 from scidash.general.models import Tag
 from scidash.sciunittests.filters import (
@@ -30,6 +32,35 @@ class TestInstanceViewSet(viewsets.ModelViewSet):
     serializer_class = TestInstanceSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = TestInstanceFilter
+
+    def filter_queryset(self, queryset):
+        test_instance_content_type = ContentType.objects.get_for_model(
+            TestInstance
+        )
+
+        TestInstance.objects.filter(test_class__import_path='').update(
+            status=TestInstance.LOCKED
+        )
+
+        for instance in TestInstance.objects.filter(
+            test_class__import_path=''
+        ):
+            Tag.objects.get_or_create(
+                name=s.NO_IMPORT_TAG,
+                content_type=test_instance_content_type,
+                object_id=instance.pk
+            )
+
+        TestInstance.objects.filter(
+            Q(score__isnull=True) & ~Q(test_class__import_path='')
+        ).update(status=TestInstance.AVAILABLE)
+
+        for instance in TestInstance.objects.filter(
+            ~Q(test_class__import_path='')
+        ):
+            instance.tags.filter(name=s.NO_IMPORT_TAG).delete()
+
+        return queryset
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):

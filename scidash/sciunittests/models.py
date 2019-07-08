@@ -181,7 +181,7 @@ class ScoreInstance(models.Model):
     model_instance = models.ForeignKey(
         sciunitmodels.models.ModelInstance, related_name='score'
     )
-    test_instance = models.ForeignKey(TestInstance)
+    test_instance = models.ForeignKey(TestInstance, related_name='score')
     score = models.FloatField(default=0, null=True, blank=True)
     sort_key = models.FloatField(default=0)
     prediction_numeric = models.FloatField(default=None, null=True, blank=True)
