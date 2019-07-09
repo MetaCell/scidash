@@ -5,11 +5,14 @@ from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
 from django.db.models import Q
+from django.conf import settings as s
+from django.contrib.contenttypes.models import ContentType
 
 import scidash.sciunitmodels.helpers as hlp
 from scidash.sciunitmodels.filters import ModelClassFilter, ModelInstanceFilter
 from scidash.sciunitmodels.models import Capability, ModelClass, ModelInstance
 from pygeppetto_gateway.interpreters.helpers import URLProcessor
+from scidash.general.models import Tag
 from scidash.sciunitmodels.serializers import (
     CapabilitySerializer, ModelClassSerializer, ModelInstanceSerializer
 )
@@ -35,6 +38,35 @@ class ModelInstanceViewSet(viewsets.ModelViewSet):
     serializer_class = ModelInstanceSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = ModelInstanceFilter
+
+    def filter_queryset(self, queryset):
+        model_instance_content_type = ContentType.objects.get_for_model(
+            ModelInstance
+        )
+
+        ModelInstance.objects.filter(model_class__import_path='').update(
+            status=ModelInstance.LOCKED
+        )
+
+        for instance in ModelInstance.objects.filter(
+            model_class__import_path=''
+        ):
+            Tag.objects.get_or_create(
+                name=s.NO_IMPORT_TAG,
+                content_type=model_instance_content_type,
+                object_id=instance.pk
+            )
+
+        ModelInstance.objects.filter(
+            Q(score__isnull=True) & ~Q(model_class__import_path='')
+        ).update(status=ModelInstance.AVAILABLE)
+
+        for instance in ModelInstance.objects.filter(
+            ~Q(model_class__import_path='')
+        ):
+            instance.tags.filter(name=s.NO_IMPORT_TAG).delete()
+
+        return queryset
 
 
 class ModelParametersView(views.APIView):

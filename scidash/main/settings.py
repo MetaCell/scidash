@@ -240,3 +240,5 @@ DOWNLOADED_MODEL_DIR = os.path.join(
 )
 
 CELERY_RESULT_BACKEND = 'django-db'
+
+NO_IMPORT_TAG = 'unschedulable'
