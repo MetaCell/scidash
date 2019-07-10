@@ -2,13 +2,13 @@
 echo "We are going to build the scidash Database, be carefull since"
 echo " this can overwrite the existing container if another one is already running" 
 while true; do
-    read -p "Do you wish to install to continue?" yn
+    read -p "Do you wish to install to continue? [y/n] > " yn
     case $yn in
-        [Yy]* ) read -p "Please type the tag you want to use for this build (default will use the latest and overwrite this)" tag;
+        [Yy]* ) read -p "Please type the tag you want to use for this build (default will use the latest and overwrite this). [latest/user_input] > " tag;
 		if [[ -z "$tag" ]]; then
-		   docker build -f Dockerfile-postgres -t metacell/scidash_db:latest
+		   docker build --no-cache -f Dockerfile-postgres -t metacell/scidash_db:latest .
 		else
-		   docker build -f Dockerfile-postgres -t metacell/scidash_db:$tag
+		   docker build --no-chace -f Dockerfile-postgres -t metacell/scidash_db:$tag .
 		fi
                 break;;
         [Nn]* ) exit;;
