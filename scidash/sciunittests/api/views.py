@@ -60,7 +60,7 @@ class TestInstanceViewSet(viewsets.ModelViewSet):
         ):
             instance.tags.filter(name=s.NO_IMPORT_TAG).delete()
 
-        return queryset
+        return super().filter_queryset(queryset)
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
