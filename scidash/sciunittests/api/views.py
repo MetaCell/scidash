@@ -99,8 +99,6 @@ class TestInstanceCloneView(views.APIView):
                     }
                 ), 404
             )
-        new_test_instance = self.clone_test(test_instance, request)
-        serializer = TestInstanceSerializer(new_test_instance)
 
         if test_instance.test_class.import_path == '':
             return response.Response(json.dumps(
@@ -110,6 +108,10 @@ class TestInstanceCloneView(views.APIView):
                     }
                 ), 400
             )
+        else:
+            new_test_instance = self.clone_test(test_instance, request)
+            serializer = TestInstanceSerializer(new_test_instance)
+
 
         return response.Response(serializer.data)
 

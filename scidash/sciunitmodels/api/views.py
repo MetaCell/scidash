@@ -117,9 +117,10 @@ class ModelInstanceCloneView(views.APIView):
                     }
                 ), 400
             )
+        else:
+            new_model_instance = self.clone_model(model_instance, request)
+            serializer = ModelInstanceSerializer(new_model_instance)
 
-        new_model_instance = self.clone_model(model_instance, request)
-        serializer = ModelInstanceSerializer(new_model_instance)
         return response.Response(serializer.data)
 
     def clone_model(self, model_instance_model, request):
