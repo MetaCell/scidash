@@ -102,6 +102,15 @@ class TestInstanceCloneView(views.APIView):
         new_test_instance = self.clone_test(test_instance, request)
         serializer = TestInstanceSerializer(new_test_instance)
 
+        if test_instance.test_class.import_path == '':
+            return response.Response(json.dumps(
+                    {
+                        'success': False,
+                        'message': 'Unable to clone, import_path is missing'
+                    }
+                ), 400
+            )
+
         return response.Response(serializer.data)
 
     def clone_test(self, test_instance_model, request):
