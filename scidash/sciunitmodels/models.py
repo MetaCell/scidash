@@ -123,7 +123,7 @@ class ModelInstance(models.Model):
     )
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(default=date.today)
+    timestamp = models.DateTimeField(auto_now=True)
     url = models.URLField(default='', null=True, blank=True)
     tags = GenericRelation(general_models.Tag)
 
