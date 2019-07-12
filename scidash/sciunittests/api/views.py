@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import datetime as date
 from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
@@ -100,6 +100,8 @@ class TestInstanceCloneView(views.APIView):
                 ), 404
             )
         new_test_instance = self.clone_test(test_instance, request)
+        new_test_instance.timestamp = date.today()
+        new_test_instance.save()
         serializer = TestInstanceSerializer(new_test_instance)
 
         return response.Response(serializer.data)
