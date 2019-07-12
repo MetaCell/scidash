@@ -133,7 +133,7 @@ class TestInstance(models.Model):
     status = models.CharField(
         max_length=2, choices=STATUS_CHOICES, default=AVAILABLE
     )
-    timestamp = models.DateField(default=date.today)
+    timestamp = models.DateField(auto_now=True)
     hash_id = models.CharField(max_length=100)
     hostname = models.CharField(
         max_length=200, default='', blank=True, null=True
