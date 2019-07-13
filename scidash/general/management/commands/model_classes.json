@@ -20,11 +20,6 @@
     "import_path": "neuronunit.models.lems.LEMSModel"
   },
   {
-    "class_name": "SwcCellModel",
-    "url": null,
-    "import_path": "neuronunit.models.morphology.SwcCellModel"
-  },
-  {
     "class_name": "SincleCellModel",
     "url": null,
     "import_path": "neuronunit.models.section_extension.SingleCellModel"

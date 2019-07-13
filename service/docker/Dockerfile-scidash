@@ -1,4 +1,4 @@
-FROM metacell/scidash_virgo:r2.0.0
+FROM metacell/scidash_geppetto:latest
 
 USER root 
 
@@ -42,11 +42,11 @@ RUN ls -la
 RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
-RUN rm -rf .git &&\ 
-    rm -rf static/org.geppetto.frontend/.git &&\ 
-    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
-    rm -rf sciunit/.git &&\
-    rm -rf neuronunit/.git
+#RUN rm -rf .git &&\ 
+#    rm -rf static/org.geppetto.frontend/.git &&\ 
+#    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
+#    rm -rf sciunit/.git &&\
+#    rm -rf neuronunit/.git
 RUN chown -R developer ./
 RUN cp ./service/dotenv/scidash_env .env
 

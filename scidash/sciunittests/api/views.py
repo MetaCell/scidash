@@ -60,7 +60,7 @@ class TestInstanceViewSet(viewsets.ModelViewSet):
         ):
             instance.tags.filter(name=s.NO_IMPORT_TAG).delete()
 
-        return queryset
+        return super().filter_queryset(queryset)
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
@@ -99,10 +99,20 @@ class TestInstanceCloneView(views.APIView):
                     }
                 ), 404
             )
-        new_test_instance = self.clone_test(test_instance, request)
-        new_test_instance.timestamp = date.today()
-        new_test_instance.save()
-        serializer = TestInstanceSerializer(new_test_instance)
+
+        if test_instance.test_class.import_path == '':
+            return response.Response(json.dumps(
+                    {
+                        'success': False,
+                        'message': 'Unable to clone, import_path is missing'
+                    }
+                ), 400
+            )
+        else:
+            new_test_instance = self.clone_test(test_instance, request)
+            new_test_instance.timestamp = date.today()
+            new_test_instance.save()
+            serializer = TestInstanceSerializer(new_test_instance)
 
         return response.Response(serializer.data)
 

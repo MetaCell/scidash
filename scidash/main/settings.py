@@ -232,7 +232,14 @@ ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
 
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'user here'
+EMAIL_HOST_PASSWORD = 'password here'
+EMAIL_USE_SSL = True
+
 POPULATE_USERS = True
 
 DOWNLOADED_MODEL_DIR = os.path.join(

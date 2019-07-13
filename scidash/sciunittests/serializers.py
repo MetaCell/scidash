@@ -31,6 +31,7 @@ class TestClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
     units_name = serializers.CharField(required=False)
+    key = 'import_path'
 
     class Meta:
         model = TestClass
