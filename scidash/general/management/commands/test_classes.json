@@ -1,0 +1,470 @@
+[
+  {
+    "class_name": "VmTest",
+    "import_path": "neuronunit.tests.base.VmTest"
+  },
+  {
+    "class_name": "FakeTest",
+    "import_path": "neuronunit.tests.base.FakeTest"
+  },
+  {
+    "class_name": "IVCurveSSTest",
+    "import_path": "neuronunit.tests.channel.IVCurveSSTest"
+  },
+  {
+    "class_name": "IVCurvePeakTest",
+    "import_path": "neuronunit.tests.channel.IVCurvePeakTest"
+  },
+  {
+    "class_name": "IVCurvePeakTest",
+    "import_path": "neuronunit.tests.channel.IVCurvePeakTest"
+  },
+  {
+    "class_name": "Druckmann2013Test",
+    "import_path": "neuronunit.tests.druckmann2013.Druckmann2013Test"
+  },
+  {
+    "class_name": "AP12AmplitudeDropTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP12AmplitudeDropTest"
+  },
+  {
+    "class_name": "AP1SSAmplitudeChangeTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1SSAmplitudeChangeTest"
+  },
+  {
+    "class_name": "AP1AmplitudeTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1AmplitudeTest"
+  },
+  {
+    "class_name": "AP1WidthHalfHeightTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1WidthHalfHeightTest"
+  },
+  {
+    "class_name": "AP1WidthPeakToTroughTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1WidthPeakToTroughTest"
+  },
+  {
+    "class_name": "AP1RateOfChangePeakToTroughTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1RateOfChangePeakToTroughTest"
+  },
+  {
+    "class_name": "AP1AHPDepthTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1AHPDepthTest"
+  },
+  {
+    "class_name": "AP12AmplitudeChangePercentTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP12AmplitudeChangePercentTest"
+  },
+  {
+    "class_name": "AP12HalfWidthChangePercentTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP12HalfWidthChangePercentTest"
+  },
+  {
+    "class_name": "AP12RateOfChangePeakToTroughPercentChangeTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP12RateOfChangePeakToTroughPercentChangeTest"
+  },
+  {
+    "class_name": "AP12AHPDepthPercentChangeTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP12AHPDepthPercentChangeTest"
+  },
+  {
+    "class_name": "InputResistanceTest",
+    "import_path": "neuronunit.tests.druckmann2013.InputResistanceTest"
+  },
+  {
+    "class_name": "AP1DelayMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1DelayMeanTest"
+  },
+  {
+    "class_name": "AP1DelaySDTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1DelaySDTest"
+  },
+  {
+    "class_name": "AP2DelayMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP2DelayMeanTest"
+  },
+  {
+    "class_name": "AP2DelaySDTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP2DelaySDTest"
+  },
+  {
+    "class_name": "Burst1ISIMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.Burst1ISIMeanTest"
+  },
+  {
+    "class_name": "Burst1ISISDTest",
+    "import_path": "neuronunit.tests.druckmann2013.Burst1ISISDTest"
+  },
+  {
+    "class_name": "InitialAccommodationMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.InitialAccommodationMeanTest"
+  },
+  {
+    "class_name": "SSAccommodationMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.SSAccommodationMeanTest"
+  },
+  {
+    "class_name": "AccommodationRateToSSTest",
+    "import_path": "neuronunit.tests.druckmann2013.AccommodationRateToSSTest"
+  },
+  {
+    "class_name": "AccommodationAtSSMeanTest",
+    "import_path": "neuronunit.tests.druckmann2013.AccommodationAtSSMeanTest"
+  },
+  {
+    "class_name": "AccommodationRateMeanAtSSTest",
+    "import_path": "neuronunit.tests.druckmann2013.AccommodationRateMeanAtSSTest"
+  },
+  {
+    "class_name": "AccommodationRateMeanAtSSTest",
+    "import_path": "neuronunit.tests.druckmann2013.AccommodationRateMeanAtSSTest"
+  },
+  {
+    "class_name": "ISICVTest",
+    "import_path": "neuronunit.tests.druckmann2013.ISICVTest"
+  },
+  {
+    "class_name": "ISIMedianTest",
+    "import_path": "neuronunit.tests.druckmann2013.ISIMedianTest"
+  },
+  {
+    "class_name": "ISIBurstMeanChangeTest",
+    "import_path": "neuronunit.tests.druckmann2013.ISIBurstMeanChangeTest"
+  },
+  {
+    "class_name": "SpikeRateStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.SpikeRateStrongStimTest"
+  },
+  {
+    "class_name": "AP1DelayMeanStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1DelayMeanStrongStimTest"
+  },
+  {
+    "class_name": "AP1DelaySDStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP1DelaySDStrongStimTest"
+  },
+  {
+    "class_name": "AP2DelayMeanStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP2DelayMeanStrongStimTest"
+  },
+  {
+    "class_name": "AP2DelaySDStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP2DelaySDStrongStimTest"
+  },
+  {
+    "class_name": "Burst1ISIMeanStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.Burst1ISIMeanStrongStimTest"
+  },
+  {
+    "class_name": "Burst1ISISDStrongStimTest",
+    "import_path": "neuronunit.tests.druckmann2013.AP2DelaySDStrongStimTest"
+  },
+  {
+    "class_name": "TFRTypeTest",
+    "import_path": "neuronunit.tests.dynamics.TFRTypeTest"
+  },
+  {
+    "class_name": "BurstinessTest",
+    "import_path": "neuronunit.tests.dynamics.BurstinessTest"
+  },
+  {
+    "class_name": "ISICVTest",
+    "import_path": "neuronunit.tests.dynamics.ISICVTest"
+  },
+  {
+    "class_name": "ISITest",
+    "import_path": "neuronunit.tests.dynamics.ISITest"
+  },
+  {
+    "class_name": "LocalVariationTest",
+    "import_path": "neuronunit.tests.dynamics.LocalVariationTest"
+  },
+  {
+    "class_name": "LocalVariationTest",
+    "import_path": "neuronunit.tests.dynamics.LocalVariationTest"
+  },
+  {
+    "class_name": "RheobaseTest",
+    "import_path": "neuronunit.tests.fi.RheobaseTest"
+  },
+  {
+    "class_name": "RheobaseTestP",
+    "import_path": "neuronunit.tests.fi.RheobaseTestP"
+  },
+  {
+    "class_name": "MorphologyTest",
+    "import_path": "neuronunit.tests.morphology.MorphologyTest"
+  },
+  {
+    "class_name": "SomaSurfaceAreaTest",
+    "import_path": "neuronunit.tests.morphology.SomaSurfaceAreaTest"
+  },
+  {
+    "class_name": "NumberofStemsTest",
+    "import_path": "neuronunit.tests.morphology.NumberofStemsTest"
+  },
+  {
+    "class_name": "NumberofBifurcationsTest",
+    "import_path": "neuronunit.tests.morphology.NumberofBifurcationsTest"
+  },
+  {
+    "class_name": "BasalDendriteNumberofBifurcationsTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteNumberofBifurcationsTest"
+  },
+  {
+    "class_name": "ApicalDendriteNumberofBifurcationsTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteNumberofBifurcationsTest"
+  },
+  {
+    "class_name": "NumberofBranchesTest",
+    "import_path": "neuronunit.tests.morphology.NumberofBranchesTest"
+  },
+  {
+    "class_name": "BasalDendriteNumberofBranchesTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteNumberofBranchesTest"
+  },
+  {
+    "class_name": "ApicalDendriteNumberofBranchesTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteNumberofBranchesTest"
+  },
+  {
+    "class_name": "OverallWidthTest",
+    "import_path": "neuronunit.tests.morphology.OverallWidthTest"
+  },
+  {
+    "class_name": "BasalDendriteOverallWidthTest",
+    "import_path": "neuronunit.tests.morphology.OverallWidthTest"
+  },
+  {
+    "class_name": "ApicalDendriteOverallWidthTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteOverallWidthTest"
+  },
+  {
+    "class_name": "OverallHeightTest",
+    "import_path": "neuronunit.tests.morphology.OverallHeightTest"
+  },
+  {
+    "class_name": "BasalDendriteOverallHeightTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteOverallHeightTest"
+  },
+  {
+    "class_name": "ApicalDendriteOverallHeightTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteOverallHeightTest"
+  },
+  {
+    "class_name": "OverallDepthTest",
+    "import_path": "neuronunit.tests.morphology.OverallDepthTest"
+  },
+  {
+    "class_name": "BasalDendriteOverallDepthTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteOverallDepthTest"
+  },
+  {
+    "class_name": "AverageDiameterTest",
+    "import_path": "neuronunit.tests.morphology.AverageDiameterTest"
+  },
+  {
+    "class_name": "BasalDendriteAverageDiameterTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteAverageDiameterTest"
+  },
+  {
+    "class_name": "ApicalDendriteAverageDiameterTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteAverageDiameterTest"
+  },
+  {
+    "class_name": "TotalLengthTest",
+    "import_path": "neuronunit.tests.morphology.TotalLengthTest"
+  },
+  {
+    "class_name": "BasalDendriteTotalLengthTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteTotalLengthTest"
+  },
+  {
+    "class_name": "BasalDendriteTotalLengthTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteTotalLengthTest"
+  },
+  {
+    "class_name": "ApicalDendriteTotalLengthTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteTotalLengthTest"
+  },
+  {
+    "class_name": "TotalSurfaceTest",
+    "import_path": "neuronunit.tests.morphology.TotalSurfaceTest"
+  },
+  {
+    "class_name": "BasalDendriteTotalSurfaceTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteTotalSurfaceTest"
+  },
+  {
+    "class_name": "ApicalDendriteTotalSurfaceTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteTotalSurfaceTest"
+  },
+  {
+    "class_name": "TotalVolumeTest",
+    "import_path": "neuronunit.tests.morphology.TotalVolumeTest"
+  },
+  {
+    "class_name": "BasalDendriteTotalVolumeTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteTotalVolumeTest"
+  },
+  {
+    "class_name": "ApicalDendriteTotalVolumeTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteTotalVolumeTest"
+  },
+  {
+    "class_name": "MaxEuclideanDistanceTest",
+    "import_path": "neuronunit.tests.morphology.MaxEuclideanDistanceTest"
+  },
+  {
+    "class_name": "BasalDendriteMaxEuclideanDistanceTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteMaxEuclideanDistanceTest"
+  },
+  {
+    "class_name": "ApicalDendriteMaxEuclideanDistanceTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteMaxEuclideanDistanceTest"
+  },
+  {
+    "class_name": "MaxPathDistanceTest",
+    "import_path": "neuronunit.tests.morphology.MaxPathDistanceTest"
+  },
+  {
+    "class_name": "BasalDendriteMaxPathDistanceTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteMaxPathDistanceTest"
+  },
+  {
+    "class_name": "ApicalDendriteMaxPathDistanceTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteMaxPathDistanceTest"
+  },
+  {
+    "class_name": "MaxBranchOrderTest",
+    "import_path": "neuronunit.tests.morphology.MaxBranchOrderTest"
+  },
+  {
+    "class_name": "BasalDendriteMaxBranchOrderTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteMaxBranchOrderTest"
+  },
+  {
+    "class_name": "ApicalDendriteMaxBranchOrderTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteMaxBranchOrderTest"
+  },
+  {
+    "class_name": "AverageContractionTest",
+    "import_path": "neuronunit.tests.morphology.AverageContractionTest"
+  },
+  {
+    "class_name": "BasalDendriteAverageContractionTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteAverageContractionTest"
+  },
+  {
+    "class_name": "ApicalDendriteAverageContractionTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteAverageContractionTest"
+  },
+  {
+    "class_name": "PartitionAsymmetryTest",
+    "import_path": "neuronunit.tests.morphology.PartitionAsymmetryTest"
+  },
+  {
+    "class_name": "BasalDendritePartitionAsymmetryTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendritePartitionAsymmetryTest"
+  },
+  {
+    "class_name": "ApicalDendritePartitionAsymmetryTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendritePartitionAsymmetryTest"
+  },
+  {
+    "class_name": "AverageRallsRatioTest",
+    "import_path": "neuronunit.tests.morphology.AverageRallsRatioTest"
+  },
+  {
+    "class_name": "BasalDendriteAverageRallsRatioTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteAverageRallsRatioTest"
+  },
+  {
+    "class_name": "ApicalDendriteAverageRallsRatioTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteAverageRallsRatioTest"
+  },
+  {
+    "class_name": "AverageBifurcationAngleLocalTest",
+    "import_path": "neuronunit.tests.morphology.AverageBifurcationAngleLocalTest"
+  },
+  {
+    "class_name": "BasalDendriteAverageBifurcationAngleLocalTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteAverageBifurcationAngleLocalTest"
+  },
+  {
+    "class_name": "ApicalDendriteAverageBifurcationAngleLocalTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteAverageBifurcationAngleLocalTest"
+  },
+  {
+    "class_name": "AverageBifurcationAngleRemoteTest",
+    "import_path": "neuronunit.tests.morphology.AverageBifurcationAngleRemoteTest"
+  },
+  {
+    "class_name": "BasalDendriteAverageBifurcationAngleRemoteTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteAverageBifurcationAngleRemoteTest"
+  },
+  {
+    "class_name": "ApicalDendriteAverageBifurcationAngleRemoteTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteAverageBifurcationAngleRemoteTest"
+  },
+  {
+    "class_name": "FractalDimensionTest",
+    "import_path": "neuronunit.tests.morphology.FractalDimensionTest"
+  },
+  {
+    "class_name": "BasalDendriteFractalDimensionTest",
+    "import_path": "neuronunit.tests.morphology.BasalDendriteFractalDimensionTest"
+  },
+  {
+    "class_name": "ApicalDendriteFractalDimensionTest",
+    "import_path": "neuronunit.tests.morphology.ApicalDendriteFractalDimensionTest"
+  },
+  {
+    "class_name": "TestPulseTest",
+    "import_path": "neuronunit.tests.passive.TestPulseTest"
+  },
+  {
+    "class_name": "InputResistanceTest",
+    "import_path": "neuronunit.tests.passive.InputResistanceTest"
+  },
+  {
+    "class_name": "TimeConstantTest",
+    "import_path": "neuronunit.tests.passive.TimeConstantTest"
+  },
+  {
+    "class_name": "CapacitanceTest",
+    "import_path": "neuronunit.tests.passive.CapacitanceTest"
+  },
+  {
+    "class_name": "RestingPotentialTest",
+    "import_path": "neuronunit.tests.passive.RestingPotentialTest"
+  },
+  {
+    "class_name": "InjectedCurrent",
+    "import_path": "neuronunit.tests.waveform.InjectedCurrent"
+  },
+  {
+    "class_name": "APWidthTest",
+    "import_path": "neuronunit.tests.waveform.APWidthTest"
+  },
+  {
+    "class_name": "InjectedCurrentAPWidthTest",
+    "import_path": "neuronunit.tests.waveform.InjectedCurrentAPWidthTest"
+  },
+  {
+    "class_name": "APAmplitudeTest",
+    "import_path": "neuronunit.tests.waveform.APAmplitudeTest"
+  },
+  {
+    "class_name": "InjectedCurrentAPAmplitudeTest",
+    "import_path": "neuronunit.tests.waveform.InjectedCurrentAPAmplitudeTest"
+  },
+  {
+    "class_name": "APThresholdTest",
+    "import_path": "neuronunit.tests.waveform.APThresholdTest"
+  },
+  {
+    "class_name": "InjectedCurrentAPThresholdTest",
+    "import_path": "neuronunit.tests.waveform.InjectedCurrentAPThresholdTest"
+  }
+]

@@ -1,0 +1,29 @@
+{% extends 'admin/change_form.html' %}
+
+{% block title %}
+  Read log file | Scidash
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/accesslog.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  setInterval(
+    function(){
+      document.location.reload()
+    },
+    6000
+  )
+</script>
+
+<pre>
+  <code class="accesslog">
+    {% for line in lines %}
+      {{line}}
+    {% endfor %}
+  </code>
+</pre>
+
+{% endblock content %}

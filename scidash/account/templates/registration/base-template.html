@@ -1,0 +1,27 @@
+{% load static %}
+
+<html>
+	<head>
+		<link href="{% static 'css/main.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="header">
+	        <div id="scidash-logo" />
+      	</div>
+        {% block content %}
+        {% endblock %}
+        <!-- footer code -->
+         <div id="footer-scidash">
+                <div id="footerLinks">
+                    <a href='/' target='_blank'>Home</a>
+                    <a href='https://github.com/MetaCell/scidash-api/tree/development' target="_blank">SciDash API</a>
+                    <a href='https://github.com/scidash/sciunit' target="_blank">SciUnit</a>
+                    <a href='https://github.com/scidash/neuronunit' target="_blank">NeuronUnit</a>
+                    <a href='https://neuroml-db.org/' target="_blank">NeuroML-DB</a>
+                </div>
+                <div id="footerDate">
+                    &copy; 2017-2019 SciDash / Arizona State University<sup>®</sup>
+                </div>
+            </div>
+    </body>
+<html>

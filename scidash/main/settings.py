@@ -59,19 +59,24 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'django_filters',
     'rest_framework_cache',
-    'material'
+    'material',
+    'django_celery_beat',
+    'django_celery_results',
+    'django_db_logger'
 ]
 
 SCIDASH_APPS = [
     'scidash.sciunitmodels',
     'scidash.sciunittests',
     'scidash.general',
-    'scidash.account'
+    'scidash.account',
+    'scidash.logviewer'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + SCIDASH_APPS
 
 MIDDLEWARE_CLASSES = [
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -169,6 +174,36 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, os.environ.get('STATIC_DIR'))
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'handlers': {
+        'db_log': {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
+    },
+    'loggers': {
+         'django': {
+            'handlers': ['db_log'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'db': {
+            'handlers': ['db_log'],
+            'level': 'DEBUG'
+        }
+    }
+}
+
 AUTH_USER_MODEL = 'general.ScidashUser'
 
 REST_FRAMEWORK_CACHE = {
@@ -176,11 +211,41 @@ REST_FRAMEWORK_CACHE = {
 }
 
 PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
-GEPPETTO_SERVLET_URL = 'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
-GEPPETTO_BASE_URL = 'http://localhost:8080/org.geppetto.frontend/geppetto'
+PYGEPPETTO_BUILDER_PROJECT_BASE_URL = os.path.join(os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR')
+), 'projects')
+
+GEPPETTO_SERVLET_URL = os.environ.get(
+    'GEPPETTO_SERVLET_URL',
+    'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
+)
+GEPPETTO_BASE_URL = os.environ.get(
+    'GEPPETTO_BASE_URL', 'http://localhost:8080/org.geppetto.frontend/geppetto'
+)
+
+BASE_PROJECT_FILES_HOST = os.environ.get(
+    'BASE_PROJECT_FILES_HOST',
+    'http://localhost:8000/static/projects/'
+)
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
 
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'user here'
+EMAIL_HOST_PASSWORD = 'password here'
+EMAIL_USE_SSL = True
+
+POPULATE_USERS = True
+
+DOWNLOADED_MODEL_DIR = os.path.join(
+    BASE_DIR, os.environ.get('STATIC_DIR'), 'models'
+)
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+NO_IMPORT_TAG = 'unschedulable'

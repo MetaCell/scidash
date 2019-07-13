@@ -1,44 +1,55 @@
-FROM python:3.6
+FROM metacell/scidash_geppetto:latest
+
+USER root 
 
 # BUILD VARIABLES
-
 ARG ROOT=/
 ARG APP_DIR=/app
+ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
-ARG VENV_PATH=./venv/
-ARG STATIC_DIR=$APP_DIR/static
+ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
+ARG SCIDASH_BRANCH=development
+ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
 WORKDIR $ROOT
 
-# PYTHON INSTALL
-RUN pip install virtualenv
-#ENV PATH $VENV_PATH/bin:$PATH
-ENV PYTHONUNBUFFERED 1
-
-# CREATING PROJECT FOLDERS
-
-RUN mkdir $APP_DIR
-
 #COPYING PROJECT
-
 WORKDIR $APP_DIR
-ADD . $APP_DIR
+RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
 
 # INSTALLING REQUIREMENTS
+RUN apt-get install -y curl wget lsof
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
+RUN apt-get update && apt-get -y install nodejs
 
-RUN apt-get install curl
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
-RUN apt-get update && apt-get install nodejs
+WORKDIR /nrn
+RUN chown -R developer ./
 
+WORKDIR $APP_DIR/scidash
+RUN pip install virtualenv 
+RUN virtualenv venv-py -p python3.6
+WORKDIR /usr/local/nrn/src/nrnpython
+RUN python setup.py install
+
+WORKDIR $APP_DIR/scidash
 RUN make install-backend-with-env
+RUN make install-sciunit-neuronunit
+RUN make install-frontend
 
 WORKDIR $GEPPETTO_DIR
+RUN ls -la
 RUN npm run build-dev-noTest
 
+WORKDIR $APP_DIR/scidash
+#RUN rm -rf .git &&\ 
+#    rm -rf static/org.geppetto.frontend/.git &&\ 
+#    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
+#    rm -rf sciunit/.git &&\
+#    rm -rf neuronunit/.git
+RUN chown -R developer ./
+RUN cp ./service/dotenv/scidash_env .env
 
-WORKDIR $APP_DIR
-COPY ./service/dotenv/env-docker $APP_DIR/.env
-
+USER developer
 
 CMD ./service/scripts/run.sh

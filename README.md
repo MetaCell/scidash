@@ -13,7 +13,7 @@ SciDash is a geppetto / django-based client-server web application.
 
 ## Installation
 
-We recommend you to use a virtual environment for the installation, so you can keep all the dependencies within that environment.
+We recommend you to use a Python 3 (*3.6 or newer at least*) virtual environment for the installation, so you can keep all the dependencies within that environment.
 
 **Dependencies**
 
@@ -29,37 +29,158 @@ brew install redis
 - [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
 - [application](https://postgresapp.com/) for MacOS
 
-**Install SciDash**
+### **Install SciDash**
+
+#### ***Project root configuration***
+First of all we need to clone the scidash folder from the remote repo, follow the commands below:
 
 ```
 git clone https://github.com/MetaCell/scidash
 cd scidash
-make install
 ```
 
-Also you should create an .env file in the project root, an example can be found in the folder: service/dotenv.
+Once retrieved the data we need to create a .env file in the project root where we are at the moment if you followed the previous commands.
+An example can be found in the folder scidash/dotenv/env-docker but you will need to modify this based on your current configuration (e.g. if you want to configure this in your local machine you will need to change DB_HOST from "scidash-postgres" to "localhost", same principle for the other parameters if you want to use different hosts or ports for your deployment).
 
-**Configure Database**
-Run:
+```
+cp service/dotenv/env-docker .env
+source .env
+```
+
+Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
+
+#### ***Configure Database***
+In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
+
 ```
 # navigate to scidash root folder
 cd service/scripts
 # impersonate postgres user (may not be necessary depending on your access rights)
-su postgres
+sudo su postgres
 # run db creation script located in the scidash folder
 ./db_create_psql.sh
 # to return to your shell user only necessary if you used su
 logout
-make django-migrate
 ```
 
-## Start the server
+#### ***Backend and Fronend Installation***
+Once done with the database configuration you can proceed with the backend (first) and the frontend (second) installation.
+First we start with the backend installation with the command below:
+```
+# navigate to scidash root folder
+make install-backend
+```
+If you'd like to verify that all the packages have been correctly installed you can compare the output of the command "pip list" with the file requirements.txt that contains the list of all the packages required.
+
+Once the backend installation is done we can move to the fronend installation:
+```
+# navigate to scidash root folder
+make install-frontend
+```
+
+#### ***Run Scidash***
+
+##### Start the server
 ```
 make run-dev
 ```
 
 Go to http://localhost:8000/ and enjoy!
 
+## Requirements to neuronunit test and model classes to work with scidash
+
+> Note: to save compatibility with uploaded results you'll be able to save classes which are not meet requirements, but there is no guarantee that they will work with application
+
+#### ***Model classes requirements***
+
+Capabilities of the model should be accessible by class method `get_capabilities`
+
+```python
+model.get_capabilities()
+```
+
+Extra capabilities check should be accessible by class property `extra_capability_checks`
+
+```python
+model.extra_capability_checks
+```
+
+#### ***Test classes requirements***
+
+*Observations*
+
+Should be accessible by class property `observation_schema`
+
+```python
+test.observation_schema
+```
+
+Supported schema
+
+```python
+[(
+    "<schema_name>",
+    {
+        '<observation_field_name>': {<cerberus_validation_schema>},
+        ...<other_fields>
+    }
+), ...<other_schemas>]
+```
+
+In case there are more than one schema. And if there is only one
+
+```python
+(
+    "<schema_name>",
+    {
+        '<observation_field_name>': {<cerberus_validation_schema>},
+        ...<other_fields>
+    }
+)
+```
+
+Iterable observations should have `iterable: True` in validation schema.
+
+*Parameters*
+
+Should be accessible by class property `params_schema`
+
+```python
+test.params_schema
+```
+
+Supported format
+
+```python
+{
+    '<param_name>': {<cerberus_validation_schema>},
+    ...<other_params>
+}
+```
+
+Should have `type` property in validation schema
+
+*Units*
+
+Should be accessible with class property `units`
+
+```python
+test.units
+```
+
+Supported formats
+
+```python
+pq.Unit # importable string
+```
+
+```python
+pq.UnitQuantity('megaohm', pq.ohm*1e6, symbol='Mohm') # custom unit
+```
+
+```python
+{'v': pq.V, 'i': pq.pA} # mapping
+```
 
 ## Deployment
 

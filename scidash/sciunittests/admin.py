@@ -3,10 +3,17 @@ from django.contrib.contenttypes.admin import GenericStackedInline
 
 from scidash.general.models import Tag
 from scidash.sciunittests.models import (
-    ScoreInstance, TestClass, TestInstance, TestSuite
+    ScoreInstance, TestClass, TestInstance, TestSuite, ScoreClass
 )
 
 # Register your models here.
+
+
+class TestClassModelAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'observation_schema', 'test_parameters_schema', 'params_units',
+        'units', 'memo'
+    ]
 
 
 class TestInstanceInline(admin.StackedInline):
@@ -27,6 +34,7 @@ class TestInstanceModelAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
+    list_filter = ["tags__name"]
 
 
 class TestSuiteAdmin(admin.ModelAdmin):
@@ -37,5 +45,6 @@ class TestSuiteAdmin(admin.ModelAdmin):
 
 admin.site.register(TestSuite, TestSuiteAdmin)
 admin.site.register(ScoreInstance)
+admin.site.register(ScoreClass)
 admin.site.register(TestInstance, TestInstanceModelAdmin)
-admin.site.register(TestClass)
+admin.site.register(TestClass, TestClassModelAdmin)

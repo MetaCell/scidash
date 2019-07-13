@@ -1,0 +1,37 @@
+[
+  {
+    "class_name": "ReducedModel",
+    "url": null,
+    "import_path": "neuronunit.models.reduced.ReducedModel"
+  },
+  {
+    "class_name": "VeryReducedModel",
+    "url": null,
+    "import_path": "neuronunit.models.reduced.VeryReducedModel"
+  },
+  {
+    "class_name": "ChannelModel",
+    "url": null,
+    "import_path": "neuronunit.models.channel.ChannelModel"
+  },
+  {
+    "class_name": "LEMSModel",
+    "url": null,
+    "import_path": "neuronunit.models.lems.LEMSModel"
+  },
+  {
+    "class_name": "SincleCellModel",
+    "url": null,
+    "import_path": "neuronunit.models.section_extension.SingleCellModel"
+  },
+  {
+    "class_name": "StaticModel",
+    "url": null,
+    "import_path": "neuronunit.models.static.StaticModel"
+  },
+  {
+    "class_name": "VeryReducedModel",
+    "url": null,
+    "import_path": "neuronunit.models.very_reduced.VeryReducedModel"
+  }
+]

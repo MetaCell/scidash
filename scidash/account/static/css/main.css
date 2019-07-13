@@ -1,0 +1,99 @@
+body {
+	background: linear-gradient(to top, #ada996, #f2f2f2, #dbdbdb, #eaeaea);
+}
+
+#headerLinks {
+	font-size: 0.9em;
+	font-weight: 400;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 32px;
+	height: 30px;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+#headerLinks .activeImageHeader {
+	position: relative;
+}
+
+#headerLinks a {
+	margin: 0px 10px;
+}
+
+#scidash-logo {
+	background-image: url('../images/scidash_mini_logo.png');
+	background-size: 100% 100%;
+	height: 56px;
+	width: 56px;
+	position: fixed;
+	top: 15px;
+	left: 60px;
+}
+
+#footer-scidash {
+	color: #304549;
+	font-weight: 500;
+	clear: both;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	z-index: 10;
+	height: 60px;
+	margin-top: -60px;
+	font-size: 0.75em;
+}
+
+#footerLinks {
+	border-bottom: 1px solid;
+	border-top: 1px solid;
+	padding: 4px;
+	text-align: center;
+}
+
+#footerLinks a {
+	color: #304549;
+	margin: 0px 10px;
+}
+
+#footerLinks a:hover {
+	color: #304549;
+}
+
+#footerDate {
+	margin-top: 8px;
+	text-align: center;
+}
+
+.login-container {
+	position: fixed !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) !important;
+	width: 250px;
+}
+
+.password-reset-container {
+	position: fixed !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) !important;
+	width: 250px;
+}
+
+.password-reset-container {
+	position: fixed !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) !important;
+	width: 250px;
+}
+
+.registration-container {
+	position: fixed !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) !important;
+	width: 250px;
+}

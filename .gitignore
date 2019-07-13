@@ -113,5 +113,10 @@ venv.bak/
 
 static/org.geppetto.frontend
 pygeppetto_server/
-tags
+**/tags
 pygeppetto-django
+static/projects/*
+static/models/*
+virgo-tomcat-server/*
+virgo-tomcat-server/work/*
+celerybeat.pid

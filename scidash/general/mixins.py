@@ -19,7 +19,7 @@ class GetByKeyOrCreateMixin():
 
         key = validated_data.get(self.key)
 
-        if key is not '':
+        if key != '':
             try:
                 model_instance = model.objects.get(**{self.key: key})
                 instance = super(GetByKeyOrCreateMixin,
@@ -28,8 +28,13 @@ class GetByKeyOrCreateMixin():
                 instance = super(GetByKeyOrCreateMixin,
                                  self).create(validated_data)
         else:
-            instance = super(GetByKeyOrCreateMixin,
-                             self).create(validated_data)
+            if not validated_data.get('id', False):
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).create(validated_data)
+            else:
+                model_instance = model.objects.get(pk=validated_data.get('id'))
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).update(model_instance, validated_data)
 
         self.update_or_create_reverse_relations(instance, reverse_relations)
 

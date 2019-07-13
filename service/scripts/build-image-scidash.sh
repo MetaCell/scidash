@@ -11,7 +11,8 @@ else
     version=$scidashtag
 fi
 
-tag="metacell/scidash:$version"
+
+tag="r.cfcr.io/tarelli/metacell/scidash:$version"
 directory="."
 dockerfile="./service/docker/Dockerfile-scidash"
 
