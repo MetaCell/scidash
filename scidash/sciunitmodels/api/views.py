@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import date
+from datetime import datetime as date
 from random import getrandbits as grb
 
 from rest_framework import permissions, response, views, viewsets
@@ -119,6 +119,8 @@ class ModelInstanceCloneView(views.APIView):
             )
         else:
             new_model_instance = self.clone_model(model_instance, request)
+            new_model_instance.timestamp = date.today()
+            new_model_instance.save()
             serializer = ModelInstanceSerializer(new_model_instance)
 
         return response.Response(serializer.data)

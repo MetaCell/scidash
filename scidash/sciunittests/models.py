@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import date
+from datetime import datetime as date
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import HStoreField, JSONField
@@ -21,7 +21,7 @@ db_logger = logging.getLogger('db')
 class TestSuite(models.Model):
     name = models.CharField(max_length=50)
     hash = models.CharField(max_length=57, null=True, blank=True)
-    timestamp = models.DateField(default=date.today)
+    timestamp = models.DateTimeField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
 
     class Meta:
@@ -133,7 +133,7 @@ class TestInstance(models.Model):
     status = models.CharField(
         max_length=2, choices=STATUS_CHOICES, default=AVAILABLE
     )
-    timestamp = models.DateField(default=date.today)
+    timestamp = models.DateTimeField(auto_now=True)
     hash_id = models.CharField(max_length=100)
     hostname = models.CharField(
         max_length=200, default='', blank=True, null=True
@@ -194,7 +194,7 @@ class ScoreInstance(models.Model):
     summary = models.CharField(
         max_length=200, default=None, blank=True, null=True
     )
-    timestamp = models.DateField(default=date.today)
+    timestamp = models.DateTimeField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
     error = models.TextField(null=True, blank=True)
 

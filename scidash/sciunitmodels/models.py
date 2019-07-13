@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import logging
-from datetime import date
+from datetime import datetime as date
 
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.postgres.fields import JSONField
@@ -123,7 +123,7 @@ class ModelInstance(models.Model):
     )
     owner = models.ForeignKey(general_models.ScidashUser, null=True)
     hash_id = models.CharField(max_length=100)
-    timestamp = models.DateField(default=date.today)
+    timestamp = models.DateTimeField(auto_now=True)
     url = models.URLField(default='', null=True, blank=True)
     tags = GenericRelation(general_models.Tag)
 
