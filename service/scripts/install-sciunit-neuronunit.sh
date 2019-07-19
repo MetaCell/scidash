@@ -2,8 +2,8 @@
 
 root_path=$PWD;
 
-sciunit_repo="https://github.com/scidash/sciunit.git -b dev"
-neuronunit_repo="https://github.com/scidash/neuronunit.git -b dev"
+sciunit_repo="https://github.com/ddelpiano/sciunit.git -b 4.0.0"
+neuronunit_repo="https://github.com/ddelpiano/neuronunit.git -b 4.0.0"
 venv="./venv/bin/activate"
 
 sciunit_path="$root_path/sciunit"

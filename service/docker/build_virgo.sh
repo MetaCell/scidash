@@ -6,9 +6,9 @@ while true; do
     case $yn in
         [Yy]* ) read -p "Please type the tag you want to use for this build (default will use the latest and overwrite this). [default/user_input] > " tag;
 		if [[ -z "$tag" ]]; then
-		   docker build --no-cache -f Dockerfile-virgo -t metacell/scidash_geppetto:latest .
+		   docker build --no-cache -f Dockerfile-virgo -t metacell/scidash_virgo:latest .
 		else
-		   docker build --no-cache -f Dockerfile-virgo -t metacell/scidash_geppetto:$tag .
+		   docker build --no-cache -f Dockerfile-virgo -t metacell/scidash_virgo:$tag .
 		fi
                 break;;
         [Nn]* ) exit;;

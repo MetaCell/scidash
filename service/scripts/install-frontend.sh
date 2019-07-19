@@ -5,7 +5,7 @@ node -v
 root_path=$PWD;
 
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git -b scidash_development";
-extension_repo="https://github.com/MetaCell/geppetto-scidash.git -b development";
+extension_repo="https://github.com/MetaCell/geppetto-scidash.git -b 4.0.0";
 
 geppetto_path="./static/org.geppetto.frontend";
 geppetto_app_path="$geppetto_path/src/main/webapp";
