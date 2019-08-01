@@ -76,7 +76,7 @@ run-django:
 	./manage.py runserver
 
 run-django-staging:
-	python3.6 manage.py runserver 0.0.0.0:8000
+	python3.6 manage.py runserver --insecure 0.0.0.0:8000
 
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
