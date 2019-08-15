@@ -82,7 +82,7 @@ run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
 
 run-celery:
-	celery -A scidash.main worker -l info
+	celery -A scidash.main worker -l info --maxtasksperchild=20
 
 run-celery-beat:
 	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
