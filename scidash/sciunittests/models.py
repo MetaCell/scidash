@@ -12,10 +12,25 @@ from scidash.general.helpers import import_class
 from scidash.sciunittests.constants import TEST_PARAMS_UNITS_TYPE
 from scidash.sciunittests.helpers import (
     build_destructured_unit, get_observation_schema, get_test_parameters_schema,
-    get_units
+    get_units, get_default_params
 )
 
+import quantities
+import numbers
+
 db_logger = logging.getLogger('db')
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        quantities.set_default_units(time='s', current='A')
+        if isinstance(obj, quantities.quantity.Quantity):
+            return float(obj.simplified.magnitude)
+        elif isinstance(obj, numbers.Number):
+            # Noticed Rick does not use always quantities, this 
+            # will avoid the entire UI to explode
+            return float(obj)
+        else:
+            db_logger.exception(f"I do not know this unit: {obj}")
 
 
 class TestSuite(models.Model):
@@ -41,6 +56,7 @@ class TestClass(models.Model):
     units = models.TextField(null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
     params_units = JSONField(null=True, blank=True)
+    default_params = JSONField(encoder=JSONEncoder , null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -78,11 +94,13 @@ class TestClass(models.Model):
         params_schema = None
         units = None
         params_units = {}
+        default_params = None
 
         try:
             observation_schema = get_observation_schema(self.import_path)
             params_schema = get_test_parameters_schema(self.import_path)
             units = get_units(self.import_path)
+            default_params = get_default_params(self.import_path)
         except ImportError:
             db_logger.exception(f"Can't import {self.import_path}")
         except AttributeError:
@@ -99,8 +117,12 @@ class TestClass(models.Model):
         if units is None:
             db_logger.exception(f"Units not found {self.import_path}")
 
+        if default_params is None:
+            db_logger.exception(f"Default params not found {self.import_path}")
+
         self.observation_schema = observation_schema
         self.test_parameters_schema = params_schema
+        self.default_params = default_params
 
         if params_schema is not None:
             for key in params_schema:
