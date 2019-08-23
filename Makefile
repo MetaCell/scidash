@@ -76,13 +76,13 @@ run-django:
 	./manage.py runserver
 
 run-django-staging:
-	python3.6 manage.py runserver 0.0.0.0:8000
+	python3.6 manage.py runserver --insecure 0.0.0.0:8000
 
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
 
 run-celery:
-	celery -A scidash.main worker -l info
+	celery -A scidash.main worker -l info --concurrency=5 --maxtasksperchild=20
 
 run-celery-beat:
 	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler

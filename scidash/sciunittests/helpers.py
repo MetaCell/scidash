@@ -37,6 +37,17 @@ def get_test_parameters_schema(import_path):
     return params_schema
 
 
+def get_default_params(import_path):
+    klass = import_class(import_path)
+
+    default_params = klass.default_params
+
+    if default_params is None:
+        default_params = {}
+
+    return default_params
+
+
 def get_units(import_path):
     klass = import_class(import_path)
 

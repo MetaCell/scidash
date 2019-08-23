@@ -34,7 +34,7 @@ dotenv.read_dotenv(
 SECRET_KEY = '4*0@ca#ocm*(1=12m(bfb2p8e$sk-%i4xlj=%$wkj3*&gs!%sr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
         "*"
