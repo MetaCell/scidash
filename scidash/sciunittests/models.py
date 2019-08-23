@@ -26,8 +26,8 @@ class JSONEncoder(json.JSONEncoder):
         if isinstance(obj, quantities.quantity.Quantity):
             return float(obj.simplified.magnitude)
         elif isinstance(obj, numbers.Number):
-            # Noticed Rick does not use always quantities, this 
-            # will avoid the entire UI to explode
+            # Noticed Sciunit does not use always quantities, 
+            # this will avoid the entire UI to explode
             return float(obj)
         else:
             db_logger.exception(f"I do not know this unit: {obj}")
