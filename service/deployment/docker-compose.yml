@@ -13,6 +13,10 @@ services:
         - ./database:/var/lib/postgresql/
   scidash:
     image: metacell/scidash:latest
+    mem_reservation: 5120m
+    mem_limit: 10240m
+    priviliged: true
+    shm_size: 512M
     expose:
         - "8000"
     depends_on:

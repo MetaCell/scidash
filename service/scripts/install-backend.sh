@@ -2,7 +2,7 @@
 
 virtualenv=false;
 pygeppetto_folder="pygeppetto-django"
-pygeppetto_django_repo="https://github.com/MetaCell/pygeppetto-django.git -b development $pygeppetto_folder";
+pygeppetto_django_repo="https://github.com/MetaCell/pygeppetto-django.git -b 4.0.1 $pygeppetto_folder";
 
 while getopts "v" opt
 do
