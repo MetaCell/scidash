@@ -58,7 +58,7 @@ class ModelClassFilter(filters.FilterSet):
         helpers.download_and_save_model(model_path, url)
 
         model_classes = models.ModelClass.objects.filter(
-            ~Q(import_path='')
+            ~Q(import_path='') & Q(import_path__isnull=False)
         )
 
         matching_classes = [

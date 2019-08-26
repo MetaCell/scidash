@@ -27,7 +27,8 @@ class CapabilityViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ModelClassViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ModelClass.objects.filter(~Q(import_path=''))
+    queryset = ModelClass.objects.filter(
+        ~Q(import_path='') & Q(import_path__isnull=False))
     serializer_class = ModelClassSerializer
     permission_classes = (permissions.AllowAny, )
     filter_class = ModelClassFilter

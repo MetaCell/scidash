@@ -49,7 +49,7 @@ class ModelClass(models.Model):
         Capability, through=ExtraCapabilityModelThrough, blank=True
     )
     url = models.URLField(default='', null=True, blank=True, unique=True)
-    import_path = models.TextField(null=True, blank=True)
+    import_path = models.TextField(default='', null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
 
     def populate_capabilities(self):
