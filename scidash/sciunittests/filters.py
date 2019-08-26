@@ -57,6 +57,8 @@ class ScoreFilter(filters.FilterSet):
 
     score_type = filters.CharFilter(name='score_type', lookup_expr='icontains')
 
+    score_class = filters.CharFilter(name='score_class__class_name', lookup_expr='icontains')
+
     build_info = filters.CharFilter(
         name='test_instance__build_info', lookup_expr='icontains'
     )
