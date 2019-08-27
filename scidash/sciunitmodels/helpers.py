@@ -25,6 +25,9 @@ def download_and_save_model(path, url):
 
 
 def check_capabilities(model_file_path, model_class_import_path):
+    if model_class_import_path == '':
+        return False
+
     klass = import_class(model_class_import_path)
 
     try:
