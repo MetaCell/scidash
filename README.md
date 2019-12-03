@@ -13,25 +13,29 @@ SciDash is a geppetto / django-based client-server web application.
 
 ## Installation
 
-We recommend you to use a Python 3 (*3.6 or newer at least*) virtual environment for the installation, so you can keep all the dependencies within that environment.
+Python 3.6 virtual environment is required for the installation (3.7+ will break with current django version.), so you can keep all the dependencies within that environment.
 
 **Dependencies**
 
-*Install Redis server (for the sockets communication)*
+_Install Redis server (for the sockets communication)_
+
 ```
-For Ubuntu 16:
+For Ubuntu 16+:
 sudo apt-get install redis-server
 For OS X:
 brew install redis
 ```
 
-*Install PostgreSQL server*
-- [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
-- [application](https://postgresapp.com/) for MacOS
+_Install PostgreSQL server_
+
+-   [instructions](https://www.postgresql.org/download/linux/ubuntu/) for Ubuntu
+-   [application](https://postgresapp.com/) for MacOS
+-   [docker image](https://hub.docker.com/_/postgres) to run in docker.
 
 ### **Install SciDash**
 
-#### ***Project root configuration***
+#### **_Project root configuration_**
+
 First of all we need to clone the scidash folder from the remote repo, follow the commands below:
 
 ```
@@ -41,46 +45,39 @@ cd scidash
 
 Once retrieved the data we need to create a .env file in the project root where we are at the moment if you followed the previous commands.
 An example can be found in the folder scidash/dotenv/env-docker but you will need to modify this based on your current configuration (e.g. if you want to configure this in your local machine you will need to change DB_HOST from "scidash-postgres" to "localhost", same principle for the other parameters if you want to use different hosts or ports for your deployment).
+If you're using docker containers, remember to configure the host names properly.
 
 ```
 cp service/dotenv/env-docker .env
 source .env
 ```
 
-Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
+Or, if you have direnv installed.
 
-#### ***Configure Database***
-In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
+```
+cp service/dotenv/env-docker .envrc
+direnv allow
+```
+
+Just a reminder before going forward that this project requires a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 installed.
+
+#### **_Backend and Frontend Installation_**
+
+Since there are different options to install the project dependencies and start coding, you can just run for the bellow command, but, there you can check the other install options on the Makefile.
 
 ```
 # navigate to scidash root folder
-cd service/scripts
-# impersonate postgres user (may not be necessary depending on your access rights)
-sudo su postgres
-# run db creation script located in the scidash folder
-./db_create_psql.sh
-# to return to your shell user only necessary if you used su
-logout
+make install
 ```
 
-#### ***Backend and Fronend Installation***
-Once done with the database configuration you can proceed with the backend (first) and the frontend (second) installation.
-First we start with the backend installation with the command below:
-```
-# navigate to scidash root folder
-make install-backend
-```
 If you'd like to verify that all the packages have been correctly installed you can compare the output of the command "pip list" with the file requirements.txt that contains the list of all the packages required.
 
-Once the backend installation is done we can move to the fronend installation:
-```
-# navigate to scidash root folder
-make install-frontend
-```
+Once the backend installation is done we can move to the frontend installation:
 
-#### ***Run Scidash***
+#### **_Run Scidash_**
 
 ##### Start the server
+
 ```
 make run-dev
 ```
@@ -91,7 +88,7 @@ Go to http://localhost:8000/ and enjoy!
 
 > Note: to save compatibility with uploaded results you'll be able to save classes which are not meet requirements, but there is no guarantee that they will work with application
 
-#### ***Model classes requirements***
+#### **_Model classes requirements_**
 
 Capabilities of the model should be accessible by class method `get_capabilities`
 
@@ -105,9 +102,9 @@ Extra capabilities check should be accessible by class property `extra_capabilit
 model.extra_capability_checks
 ```
 
-#### ***Test classes requirements***
+#### **_Test classes requirements_**
 
-*Observations*
+_Observations_
 
 Should be accessible by class property `observation_schema`
 
@@ -141,7 +138,7 @@ In case there are more than one schema. And if there is only one
 
 Iterable observations should have `iterable: True` in validation schema.
 
-*Parameters*
+_Parameters_
 
 Should be accessible by class property `params_schema`
 
@@ -160,7 +157,7 @@ Supported format
 
 Should have `type` property in validation schema
 
-*Units*
+_Units_
 
 Should be accessible with class property `units`
 
@@ -198,10 +195,10 @@ Section with general information:
 kind: Service
 apiVersion: v1
 metadata:
-  name: scidash
-  namespace: scidash-testing
-  labels:
-    app: scidash
+    name: scidash
+    namespace: scidash-testing
+    labels:
+        app: scidash
 ```
 
 Section with port mappings and other important information:
@@ -250,6 +247,7 @@ spec:
       maxUnavailable: 50%
     type: RollingUpdate
 ```
+
 Containers descriptions start here in template:
 
 ```
@@ -283,6 +281,7 @@ Also example for environment description. And as you can see here it uses secret
                 name: scidash-secret
                 key: DB_PASSWORD
 ```
+
 Every secret should be mounted as a volume
 
 ```
@@ -292,6 +291,7 @@ Every secret should be mounted as a volume
 ```
 
 And described in volumes section on the same level as containers:
+
 ```
       volumes:
         - name: scidash-secret

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-psql -d template1 -c 'create extension hstore;'
+psql -h $DB_HOST -p 5432 -U postgres -d template1 -c 'create extension hstore;'
 
-psql <<EOF
+psql -h $DB_HOST -p 5432 -U postgres <<EOF
 \x
 DROP DATABASE IF EXISTS scidash;
 CREATE DATABASE scidash;
