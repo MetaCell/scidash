@@ -1,5 +1,6 @@
 #!/bin/bash
 
+whoami
 su -c "psql -d template1 -c 'create extension hstore;'
 
 psql <<EOF
