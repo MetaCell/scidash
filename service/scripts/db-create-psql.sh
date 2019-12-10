@@ -16,7 +16,7 @@ GRANT ALL PRIVILEGES ON DATABASE scidash TO scidash_admin;
 ALTER USER scidash_admin CREATEDB
 EOF
 
-su postgres
+sleep 5
 cd /tmp
 git clone https://github.com/ddelpiano/scidash-artifacts
 cd scidash-artifacts/database
