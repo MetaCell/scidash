@@ -13,7 +13,10 @@ RUN apt-get update && \
 RUN mkdir $APP_DIR
 
 WORKDIR $APP_DIR
-RUN git clone -b deployment https://github.com/MetaCell/scidash
+RUN echo "nother test5"
+RUN chmod 777 /tmp
+RUN git clone -b feature/393 https://github.com/MetaCell/scidash
 RUN cp scidash/service/database/backup_database.sh /backup_database.sh
 RUN chmod 0644 /backup_database.sh
 RUN cp scidash/service/scripts/db-create-psql.sh /docker-entrypoint-initdb.d/db-create-psql.sh
+RUN whoami

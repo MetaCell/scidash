@@ -1,7 +1,8 @@
 #!/bin/bash
 
-whoami
-su -c "psql -d template1 -c 'create extension hstore;'
+echo "step 1"
+
+psql -d template1 -c 'create extension hstore;'
 
 psql <<EOF
 \x
@@ -17,10 +18,11 @@ GRANT ALL PRIVILEGES ON DATABASE scidash TO scidash_admin;
 ALTER USER scidash_admin CREATEDB
 EOF
 
+echo " step 2"
 sleep 5
 cd /tmp
 git clone https://github.com/ddelpiano/scidash-artifacts
+echo "step 3"
 cd scidash-artifacts/database
-gunzip \`ls | head -n 1\`
-pg_restore --clean -d scidash \`ls *db | head -n 1\`
-" -m postgres
+gunzip `ls | head -n 1`
+pg_restore --clean -d scidash `ls *db | head -n 1`
