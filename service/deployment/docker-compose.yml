@@ -11,14 +11,22 @@ services:
         - "5432"
     volumes:
         - ./database:/var/lib/postgresql/
-  scidash:
-    image: metacell/scidash:latest
+  scidash-virgo:
+    image: metacell/scidash_virgo:v1.0.0
+    expose:
+        - "8080"
     mem_reservation: 5120m
     mem_limit: 10240m
-    priviliged: true
+    privileged: true
     shm_size: 512M
+    depends_on:
+        - scidash-redis
+        - scidash-postgres
+  scidash:
+    image: metacell/scidash:latest
     expose:
         - "8000"
     depends_on:
         - scidash-redis
         - scidash-postgres
+        - scidash-virgo
