@@ -14,6 +14,7 @@ ARG SCIDASH_BRANCH=development
 WORKDIR /
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
+RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y openjdk-8-jdk && \
     apt-get install -y ant && \
@@ -80,14 +81,14 @@ RUN ls -l /usr/local/nrn/
 
 # -== INSTALL VIRGO ==-
 RUN mkdir $VIRGO_DIR
-RUN apt-get install curl
+RUN apt-get -y install curl
 RUN curl -L 'http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/3.7.2.RELEASE/virgo-tomcat-server-3.7.2.RELEASE.zip&r=1' > virgo.zip
 RUN unzip virgo.zip
 RUN cp -r ./virgo-tomcat-server-3.7.2.RELEASE/* $VIRGO_DIR
 RUN rm $VIRGO_DIR/configuration/java-server.profile
 RUN cp /git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
 RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
-RUN cp /git/scidash/service/geppetto/tomcat-server.xml $VIRGO_DIR/configuration/
+RUN cat /git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
 RUN chmod 777 -R $VIRGO_DIR
