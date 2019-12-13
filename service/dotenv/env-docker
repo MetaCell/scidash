@@ -12,6 +12,12 @@ STATIC_DIR=static
 
 REDIS_URL=redis://scidash-redis:6379
 
-GEPPETTO_SERVLET_URL='ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
-GEPPETTO_BASE_URL='http://localhost:8080/org.geppetto.frontend/geppetto'
-BASE_PROJECT_FILES_HOST='http://localhost:8000/static/projects/'
+# for localhost
+# GEPPETTO_HOST=localhost
+# for docker
+GEPPETTO_HOST=scidash-virgo
+GEPPETTO_PORT=8080
+GEPPETTO_SERVLET_URL=ws://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.frontend/GeppettoServlet
+GEPPETTO_BASE_URL=http://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.frontend/geppetto
+
+BASE_PROJECT_FILES_HOST='http://scidash:8000/static/projects/'

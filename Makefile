@@ -58,8 +58,7 @@ run-dev: migrate
 run-staging: migrate
 	make run-django-staging & \
 	make run-celery & \
-	make run-celery-beat & \
-	make run-virgo-staging
+	make run-celery-beat
 
 django-migrate: migrations migrate
 
@@ -85,7 +84,7 @@ run-celery:
 	celery -A scidash.main worker -l info --concurrency=5 --maxtasksperchild=20
 
 run-celery-beat:
-	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --pidfile=
 
 run-virgo-staging:
 	/bin/bash /opt/virgo/bin/startup.sh
