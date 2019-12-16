@@ -37,7 +37,7 @@ install-backend-with-env:
 	@echo "==========================="
 	@echo "=    Install backend      ="
 	@echo "==========================="
-	@./service/scripts/install-backend.sh -v
+	@./service/scripts/install-backend.sh -v $(ARGS)
 
 create-db:
 	@echo "==========================="
@@ -140,3 +140,5 @@ push-scidash-db:
 	@echo "=  Push scidash db image  ="
 	@echo "==========================="
 	@./service/scripts/push-image-scidash-db.sh
+%:
+    @:

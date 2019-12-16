@@ -2,6 +2,9 @@ FROM postgres:9.4
 
 ARG ROOT=/
 ARG APP_DIR=/app
+ARG SCIDASH_BRANCH=development
+ARG originBranch=development
+ARG defaultBranch=development
 
 WORKDIR $ROOT
 
@@ -13,9 +16,9 @@ RUN apt-get update && \
 RUN mkdir $APP_DIR
 
 WORKDIR $APP_DIR
+COPY ./copy.sh $APP_DIR/
 RUN chmod 777 /tmp
-RUN git clone -b feature/393 https://github.com/MetaCell/scidash
+RUN ./copy.sh https://github.com/MetaCell/scidash "${SCIDASH_BRANCH}" "${originBranch}" "${defaultBranch}"
 RUN cp scidash/service/database/backup_database.sh /backup_database.sh
 RUN chmod 0644 /backup_database.sh
 RUN cp scidash/service/scripts/db-create-psql.sh /docker-entrypoint-initdb.d/db-create-psql.sh
-RUN whoami

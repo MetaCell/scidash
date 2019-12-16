@@ -9,7 +9,10 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG SCIDASH_BRANCH=feature/400
+ARG targetBranch=development
+ARG originBranch=development
+ARG defaultBranch=development
+
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
 RUN useradd -ms /bin/bash developer
@@ -22,32 +25,31 @@ RUN apt-get install -y curl wget
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get -y install nodejs
 RUN curl https://www.npmjs.com/install.sh | sh
+RUN pip install virtualenv
+RUN mkdir $APP_DIR
+RUN chown developer $APP_DIR
+RUN chown -R developer /home/developer/.config
 
-#COPYING PROJECT
+USER developer
+
+# COPYING PROJECT
+COPY ./copy.sh $APP_DIR
 WORKDIR $APP_DIR
-RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
+RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
 
 WORKDIR $APP_DIR/scidash
-RUN pip install virtualenv
 RUN virtualenv venv-py -p python3.6
 
 WORKDIR $APP_DIR/scidash
-RUN make install-backend-with-env
-RUN make install-frontend
+RUN make ARGS="-b $targetBranch" install-backend-with-env
+RUN make ARGS="-b $targetBranch" install-frontend
 
 WORKDIR $GEPPETTO_DIR
 RUN ls -la
 RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
-RUN rm -rf .git &&\
-    rm -rf static/org.geppetto.frontend/.git &&\
-    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
-    rm -rf sciunit/.git &&\
-    rm -rf neuronunit/.git
-RUN chown -R developer ./
 RUN cp ./service/dotenv/scidash_env .env
 
-USER developer
 CMD ./service/scripts/run.sh
