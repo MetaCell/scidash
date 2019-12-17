@@ -17,16 +17,10 @@ class DateRangeView(APIView):
             day=current_date.day
         )
 
-        three_month_ago = current_date_iso - three_month_period
-        six_month_ago = three_month_ago - three_month_period
-        nine_month_ago = six_month_ago - three_month_period
-        tvelwe_month_ago = nine_month_ago - three_month_period
-
         acceptable_period = None
 
-        for period in [
-            three_month_ago, six_month_ago, nine_month_ago, tvelwe_month_ago
-        ]:
+        for quarter in range(1, s.SCIDASH_INITIAL_SEARCH_QUARTERS + 1):
+            period = current_date_iso - quarter*three_month_period
             count = ScoreInstance.objects.filter(
                 timestamp__gte=period, timestamp__lt=current_date_iso
             ).count()
@@ -36,7 +30,7 @@ class DateRangeView(APIView):
                 break
 
         if acceptable_period is None:
-            acceptable_period = tvelwe_month_ago
+            acceptable_period = period
 
         return Response(
             {
