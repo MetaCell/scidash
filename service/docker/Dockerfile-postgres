@@ -17,7 +17,7 @@ RUN mkdir $APP_DIR
 
 WORKDIR $APP_DIR
 RUN git clone -b ${SCIDASH_BRANCH} https://github.com/MetaCell/scidash
-COPY ./copy.sh $APP_DIR/
+COPY scidash/service/copy.sh $APP_DIR/
 RUN chmod 777 /tmp
 RUN ./copy.sh https://github.com/MetaCell/scidash "${SCIDASH_BRANCH}" "${originBranch}" "${defaultBranch}"
 RUN cp scidash/service/database/backup_database.sh /backup_database.sh
