@@ -2,7 +2,7 @@ FROM postgres:9.4
 
 ARG ROOT=/
 ARG APP_DIR=/app
-ARG SCIDASH_BRANCH=development
+ARG SCIDASH_BRANCH=$SCIDASH_BRANCH
 ARG originBranch=development
 ARG defaultBranch=development
 
@@ -16,6 +16,7 @@ RUN apt-get update && \
 RUN mkdir $APP_DIR
 
 WORKDIR $APP_DIR
+RUN git clone -b ${SCIDASH_BRANCH} https://github.com/MetaCell/scidash
 COPY ./copy.sh $APP_DIR/
 RUN chmod 777 /tmp
 RUN ./copy.sh https://github.com/MetaCell/scidash "${SCIDASH_BRANCH}" "${originBranch}" "${defaultBranch}"
