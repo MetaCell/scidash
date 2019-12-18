@@ -2,7 +2,7 @@ FROM postgres:9.4
 
 ARG ROOT=/
 ARG APP_DIR=/app
-ARG SCIDASH_BRANCH=$SCIDASH_BRANCH
+ARG SCIDASH_BRANCH=development
 ARG originBranch=development
 ARG defaultBranch=development
 
