@@ -36,7 +36,7 @@ class TestClassSerializer(
     def get_class_name(self, obj):
         # return class_name + ( first part of import_path )
         return obj.class_name + \
-               (' (' + \
+               (' (' +
                 '.'.join(obj.import_path.split('.')[0:-1])
                 + ')').replace(' ()', '')
 
