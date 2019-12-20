@@ -12,4 +12,5 @@ after_success:
       bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN
     else
       bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN 
+    fi
 
