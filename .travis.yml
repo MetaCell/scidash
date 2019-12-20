@@ -7,5 +7,6 @@ install:
 script:
   - echo -e "Trigger python unit testing in here when they will be ready" || true
 after_success:
-  - bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh --branch $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN
+  - echo $TRAVIS_BRANCH
+  - bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b ${TRAVIS_BRANCH} Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN
 
