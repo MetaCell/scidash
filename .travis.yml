@@ -3,7 +3,7 @@ sudo: required
 node_js:
   - "9"
 install:
-  - npm install jest@24.8.0 puppeteer@1.17.0 jest-puppeteer@4.3.0 @babel/preset-env@7.4.5 url-join@4.0.0 @babel/core@7.4.5
+  - npm install jest@24.8.0
 script:
   - echo -e "Trigger python unit testing in here when they will be ready" || true
 after_success:
