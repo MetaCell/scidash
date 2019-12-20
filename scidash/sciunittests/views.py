@@ -9,7 +9,21 @@ from scidash.sciunittests.models import ScoreInstance
 
 class DateRangeView(APIView):
     def get(self, request, *args, **kwargs):
-        three_month_period = datetime.timedelta(3 * 365 / 12)
+        """Returns the initial search period (acceptable_period).
+        for the first N (settings.ACCEPTABLE_SCORE_INSTANCES_AMOUNT) scores.
+
+        Parameters
+        ----------
+        -
+
+        Returns
+        -------
+        JSON object 
+        {
+            "current_date": "<yyyy-mm-ddThh:mi:ss>", 
+            "acceptable_period": "<yyyy-mm-ddThh:mi:ss>"
+        }
+        """
         current_date = datetime.date.today() + datetime.timedelta(days=1)
         current_date_iso = datetime.datetime(
             year=current_date.year,
@@ -17,20 +31,11 @@ class DateRangeView(APIView):
             day=current_date.day
         )
 
-        acceptable_period = None
-
-        for quarter in range(1, s.SCIDASH_INITIAL_SEARCH_QUARTERS + 1):
-            period = current_date_iso - quarter*three_month_period
-            count = ScoreInstance.objects.filter(
-                timestamp__gte=period, timestamp__lt=current_date_iso
-            ).count()
-
-            if count > s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT:
-                acceptable_period = period
-                break
-
-        if acceptable_period is None:
-            acceptable_period = period
+        scores = ScoreInstance.objects.filter(timestamp__lt=current_date_iso)[:s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT]
+        if scores:
+            acceptable_period = scores[len(scores)-1].timestamp
+        else:
+            acceptable_period = current_date_iso - datetime.date.year
 
         return Response(
             {
