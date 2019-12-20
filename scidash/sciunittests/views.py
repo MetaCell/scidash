@@ -31,11 +31,20 @@ class DateRangeView(APIView):
             day=current_date.day
         )
 
-        scores = ScoreInstance.objects.filter(timestamp__lt=current_date_iso)[:s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT]
+        scores = ScoreInstance.objects.filter(
+            timestamp__lt=current_date_iso).order_by('-timestamp') \
+            [:s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT]
         if scores:
-            acceptable_period = scores[len(scores)-1].timestamp
+            # found scores, acceptable period is scores last.timestamp
+            # because sorting is DESC timestamp
+            acceptable_period = scores.reverse()[0].timestamp
         else:
-            acceptable_period = current_date_iso - datetime.date.year
+            # acceptable period defaults to current date - 1 year
+            acceptable_period = datetime.datetime(
+                year=current_date.year-1,
+                month=current_date.month,
+                day=current_date.day
+            )
 
         return Response(
             {
