@@ -8,6 +8,7 @@ script:
   - echo -e "Trigger python unit testing in here when they will be ready" || true
 after_success:
   - echo $TRAVIS_BRANCH
+  - echo $TRAVIS_PULL_REQUEST
   - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
       bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
     else
