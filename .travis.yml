@@ -7,7 +7,6 @@ install:
 script:
   - echo -e "Trigger python unit testing in here when they will be ready" || true
 after_success:
-  - echo $TRAVIS_BRANCH
-  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ; fi;
-  - if [ "$TRAVIS_PULL_REQUEST" != "true" ]; then bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ; fi;
+  - test $TRAVIS_PULL_REQUEST = "false" && bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash $TRAVIS_ACCESS_TOKEN
+  - test $TRAVIS_PULL_REQUEST = "true" && bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash $TRAVIS_ACCESS_TOKEN
 
