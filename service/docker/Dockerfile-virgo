@@ -89,9 +89,9 @@ RUN curl -L 'http://www.eclipse.org/downloads/download.php?file=/virgo/release/V
 RUN unzip virgo.zip
 RUN cp -r ./virgo-tomcat-server-3.7.2.RELEASE/* $VIRGO_DIR
 RUN rm $VIRGO_DIR/configuration/java-server.profile
-RUN cp $APP_DIR/git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
+RUN cp /git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
 RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
-RUN cat $APP_DIR/git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
+RUN cat /git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
 RUN chmod 777 -R $VIRGO_DIR
