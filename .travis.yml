@@ -17,4 +17,4 @@ after_success:
       bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
       echo "I am in the second condition";
     fi
-
+  - cat /tmp/travis-request-output*
