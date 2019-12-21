@@ -9,7 +9,7 @@ ARG SCIDASH_BRANCH=geppetto-scidash
 
 ARG targetBranch=geppetto-scidash
 ARG originBranch=geppetto-scidash
-ARG defaultBranch=development
+ARG defaultBranch=geppetto-scidash
 
 # -== Install OpenJDK and certificates ==-
 WORKDIR /
