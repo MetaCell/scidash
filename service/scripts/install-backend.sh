@@ -2,7 +2,7 @@
 
 virtualenv=false;
 pygeppetto_folder="pygeppetto-django"
-pygeppetto_branch="4.0.1"
+pygeppetto_branch="geppetto-scidash"
 pygeppetto_django_repo="https://github.com/MetaCell/pygeppetto-django.git"
 
 POSITIONAL=()
@@ -40,7 +40,7 @@ git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags
 if [ $? -eq 0 ]; then
   git clone -b $pygeppetto_branch $pygeppetto_django_repo $pygeppetto_folder
 else
-  git clone -b 4.0.1 $pygeppetto_django_repo $pygeppetto_folder
+  git clone -b geppetto-scidash $pygeppetto_django_repo $pygeppetto_folder
 fi
 
 cd $pygeppetto_folder;

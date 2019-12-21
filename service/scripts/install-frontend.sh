@@ -5,9 +5,9 @@ node -v
 root_path=$PWD;
 
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
-geppetto_branch="v0.4.2-beta"
+geppetto_branch="geppett-scidash"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
-extension_branch="4.0.2"
+extension_branch="geppetto-scidash"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -42,7 +42,7 @@ actual_config_path="$geppetto_app_path/GeppettoConfiguration.json";
 #if [ $? -eq 0 ]; then
 #  git clone -b $geppetto_branch $geppetto_repo $geppetto_path;
 #else
-  git clone -b v0.4.2-beta $geppetto_repo $geppetto_path;
+  git clone -b geppetto-scidash $geppetto_repo $geppetto_path;
 #fi
 
 git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$extension_branch > /dev/null
@@ -50,7 +50,7 @@ git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$exte
 if [ $? -eq 0 ]; then
   git clone -b $extension_branch $extension_repo $extension_path;
 else
-  git clone -b 4.0.2 $extension_repo $extension_path;
+  git clone -b geppetto-scidash $extension_repo $extension_path;
 fi
 
 cd $geppetto_app_path;
