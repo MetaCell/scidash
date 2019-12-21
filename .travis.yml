@@ -3,10 +3,14 @@ sudo: required
 node_js:
   - "9"
 install:
-  - npm install jest@24.8.0
+  - npm install jest@24.8.0 puppeteer@1.17.0 jest-puppeteer@4.3.0 @babel/preset-env@7.4.5 url-join@4.0.0 @babel/core@7.4.5
 script:
   - echo -e "Trigger python unit testing in here when they will be ready" || true
 after_success:
-  - test $TRAVIS_PULL_REQUEST = "false" && bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash $TRAVIS_ACCESS_TOKEN
-  - test $TRAVIS_PULL_REQUEST = "true" && bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash $TRAVIS_ACCESS_TOKEN
+  - echo $TRAVIS_BRANCH
+  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+      $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
+    else
+      $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
+    fi
 
