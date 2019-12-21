@@ -2,8 +2,8 @@ FROM postgres:9.4
 
 ARG ROOT=/
 ARG APP_DIR=/app
-ARG SCIDASH_BRANCH=development
-ARG originBranch=development
+ARG targetBranch=geppetto-scidash
+ARG originBranch=geppetto-scidash
 ARG defaultBranch=development
 
 WORKDIR $ROOT
@@ -19,7 +19,7 @@ WORKDIR $APP_DIR
 RUN git clone https://github.com/ddelpiano/travis_utils
 RUN cp travis_utils/copy.sh $APP_DIR
 RUN chmod 777 /tmp
-RUN ./copy.sh https://github.com/MetaCell/scidash "${SCIDASH_BRANCH}" "${originBranch}" "${defaultBranch}"
+RUN ./copy.sh https://github.com/MetaCell/scidash "${targetBranch}" "${originBranch}" "${defaultBranch}"
 RUN cp scidash/service/database/backup_database.sh /backup_database.sh
 RUN chmod 0644 /backup_database.sh
 RUN cp scidash/service/scripts/db-create-psql.sh /docker-entrypoint-initdb.d/db-create-psql.sh

@@ -5,13 +5,11 @@ ARG SOURCES_DIR=$APP_DIR/sources
 ARG VIRGO_DIR=/opt/virgo
 ARG SCIDASH_REPO_FOLDER=/git
 ARG GEPPETTO_REPO=http://github.com/openworm/org.geppetto.git
-ARG ALPHA_TAG=v0.4.2-alpha
-ARG SIMFLAG_TAG=v0.4.2-simflag
 ARG SCIDASH_BRANCH=geppetto-scidash
 
 ARG targetBranch=geppetto-scidash
 ARG originBranch=geppetto-scidash
-ARG defaultBranch=geppetto-scidash
+ARG defaultBranch=development
 
 # -== Install OpenJDK and certificates ==-
 WORKDIR /
@@ -91,9 +89,9 @@ RUN curl -L 'http://www.eclipse.org/downloads/download.php?file=/virgo/release/V
 RUN unzip virgo.zip
 RUN cp -r ./virgo-tomcat-server-3.7.2.RELEASE/* $VIRGO_DIR
 RUN rm $VIRGO_DIR/configuration/java-server.profile
-RUN cp /git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
+RUN cp $APP_DIR/git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
 RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
-RUN cat /git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
+RUN cat $APP_DIR/git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
 RUN chmod 777 -R $VIRGO_DIR
