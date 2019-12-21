@@ -10,5 +10,11 @@ after_success:
   - echo $TRAVIS_BRANCH
   - echo $TRAVIS_PULL_REQUEST
   - echo $TRAVIS_PULL_REQUEST_BRANCH
-  - bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh -b $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN
+  - if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+      bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh --branch $TRAVIS_PULL_REQUEST_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
+      echo "I am in the first condition, so I am evaluating";
+    else
+      bash $TRAVIS_BUILD_DIR/service/scripts/trigger-travis.sh --branch $TRAVIS_BRANCH Metacell geppetto-scidash  $TRAVIS_ACCESS_TOKEN ;
+      echo "I am in the second condition";
+    fi
   - cat /tmp/travis-request-output*
