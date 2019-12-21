@@ -16,7 +16,8 @@ RUN apt-get update && \
 RUN mkdir $APP_DIR
 
 WORKDIR $APP_DIR
-COPY ./copy.sh $APP_DIR/
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 RUN chmod 777 /tmp
 RUN ./copy.sh https://github.com/MetaCell/scidash "${SCIDASH_BRANCH}" "${originBranch}" "${defaultBranch}"
 RUN cp scidash/service/database/backup_database.sh /backup_database.sh

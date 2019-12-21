@@ -37,7 +37,8 @@ RUN mkdir $SCIDASH_REPO_FOLDER
 WORKDIR $APP_DIR
 RUN mkdir $SOURCES_DIR
 WORKDIR $SCIDASH_REPO_FOLDER
-COPY ./copy.sh $APP_DIR
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 
 # -== Download SCIDASH repo ==-
 

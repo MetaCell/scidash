@@ -33,7 +33,8 @@ RUN chown -R developer /home/developer/.config
 USER developer
 
 # COPYING PROJECT
-COPY ./copy.sh $APP_DIR
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 WORKDIR $APP_DIR
 RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
