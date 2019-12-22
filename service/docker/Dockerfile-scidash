@@ -29,12 +29,12 @@ RUN pip install virtualenv
 RUN mkdir $APP_DIR
 RUN chown developer $APP_DIR
 RUN chown -R developer /home/developer/.config
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 
 USER developer
 
 # COPYING PROJECT
-RUN git clone https://github.com/ddelpiano/travis_utils
-RUN cp travis_utils/copy.sh $APP_DIR
 WORKDIR $APP_DIR
 RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
