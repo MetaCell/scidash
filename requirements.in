@@ -13,3 +13,4 @@ celery[redis]
 django-celery-beat
 django-celery-results
 django-db-logger
+git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
