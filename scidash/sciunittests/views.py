@@ -18,9 +18,9 @@ class DateRangeView(APIView):
 
         Returns
         -------
-        JSON object 
+        JSON object
         {
-            "current_date": "<yyyy-mm-ddThh:mi:ss>", 
+            "current_date": "<yyyy-mm-ddThh:mi:ss>",
             "acceptable_period": "<yyyy-mm-ddThh:mi:ss>"
         }
         """
@@ -32,8 +32,8 @@ class DateRangeView(APIView):
         )
 
         scores = ScoreInstance.objects.filter(
-            timestamp__lt=current_date_iso).order_by('-timestamp') \
-            [:s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT]
+            timestamp__lt=current_date_iso).order_by('-timestamp')[
+                 :s.ACCEPTABLE_SCORE_INSTANCES_AMOUNT]
         if scores:
             # found scores, acceptable period is scores last.timestamp
             # because sorting is DESC timestamp
@@ -41,7 +41,7 @@ class DateRangeView(APIView):
         else:
             # acceptable period defaults to current date - 1 year
             acceptable_period = datetime.datetime(
-                year=current_date.year-1,
+                year=current_date.year - 1,
                 month=current_date.month,
                 day=current_date.day
             )
