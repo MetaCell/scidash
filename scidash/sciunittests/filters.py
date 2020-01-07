@@ -72,13 +72,13 @@ class ScoreFilter(filters.FilterSet):
     status = filters.CharFilter(name='status', lookup_expr='iexact')
 
     def model_class_name_filter(self, queryset, name, value):
-        return ScoreInstance.objects.filter(
+        return queryset.filter(
             Q(model_instance__model_class__class_name__icontains=value)
             | Q(model_instance__name__icontains=value)
         )
 
     def with_suites_filter(self, queryset, name, value):
-        tests = TestInstance.objects.prefetch_related('test_suites')
+        tests = queryset.prefetch_related('test_suites')
         tests = tests.annotate(Count('test_suites'))
         tests = tests.filter(test_suites__count__gt=0)
 
