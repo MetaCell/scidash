@@ -243,6 +243,9 @@ class ScoreInstance(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+        indexes = [
+            models.Index(fields=['-timestamp',]),
+        ]
 
     def __str__(self):
         return "Score for {0} in {1} test instance".format(

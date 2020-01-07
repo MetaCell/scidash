@@ -249,3 +249,7 @@ DOWNLOADED_MODEL_DIR = os.path.join(
 CELERY_RESULT_BACKEND = 'django-db'
 
 NO_IMPORT_TAG = 'unschedulable'
+
+# SCIDASH
+# Initial search number of quarters to search back in time.
+SCIDASH_INITIAL_SEARCH_QUARTERS = 12
