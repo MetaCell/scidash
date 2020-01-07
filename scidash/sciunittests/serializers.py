@@ -17,7 +17,6 @@ from scidash.sciunittests.models import (
 
 
 class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
-
     owner = ScidashUserSerializer(
         default=serializers.CurrentUserDefault(), read_only=True
     )
@@ -30,8 +29,16 @@ class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
 class TestClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
+    class_name = serializers.SerializerMethodField()
     units_name = serializers.CharField(required=False)
     key = 'import_path'
+
+    def get_class_name(self, obj):
+        # return class_name + ( first part of import_path )
+        return obj.class_name + \
+               (' (' +
+                '.'.join(obj.import_path.split('.')[0:-1])
+                + ')').replace(' ()', '')
 
     class Meta:
         model = TestClass
@@ -132,7 +139,6 @@ class TestInstanceSerializer(
 class ScoreClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-
     key = 'class_name'
 
     class Meta:
