@@ -64,7 +64,7 @@ class SciunitModelTestCase(TestCase):
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
         capabilities_data = data.get('model_instance') \
-                                .get('model_class').get('capabilities').pop()
+            .get('model_class').get('capabilities').pop()
 
         for key in capabilities_data.keys():
             self.assertTrue(key in parsed_response)
@@ -86,7 +86,7 @@ class SciunitModelTestCase(TestCase):
         parsed_response = parsed_response.pop()
         self.scrub(parsed_response, 'id')
         model_class_data = data.get('model_instance') \
-                               .get('model_class')
+            .get('model_class')
 
         for key in model_class_data.keys():
             self.assertTrue(key in parsed_response)
@@ -118,18 +118,17 @@ class SciunitModelTestCase(TestCase):
 
 class SciunitModelMatchingClassObjects(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super(SciunitModelMatchingClassObjects, cls).setUpClass()
-
-        cls.model_class = {
+    def setUp(self):
+        self.model_class = {
             "class_name": "ScoreModelClass",
             "capabilities": [{
                 "class_name": "TestCapability"
             }],
+            "import_path": "neuronunit.models.static.StaticModel",
             "url": "http://test-score.url"
         }
 
-        cls.user = ScidashUser.objects.create_user(
+        self.user = ScidashUser.objects.create_user(
             'admin', 'a@a.cc', 'montecarlo'
         )
 
@@ -137,12 +136,6 @@ class SciunitModelMatchingClassObjects(TestCase):
         client = Client()
         client.force_login(self.user)
 
-        model_class_serializer = ModelClassSerializer(data=self.model_class)
-
-        if model_class_serializer.is_valid():
-            model_class_serializer.save()
-
-        model_class_serializer = None
         model_class_serializer = ModelClassSerializer(data=self.model_class)
 
         if model_class_serializer.is_valid():

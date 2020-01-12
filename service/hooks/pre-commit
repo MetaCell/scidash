@@ -3,3 +3,5 @@
 set -e
 
 make lint
+
+make run-tests

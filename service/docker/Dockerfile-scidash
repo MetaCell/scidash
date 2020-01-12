@@ -36,6 +36,9 @@ USER developer
 
 # COPYING PROJECT
 WORKDIR $APP_DIR
+# set git email and name for use with git merge
+RUN git config --global user.email "scidash@metacell.us"
+RUN git config --global user.name "SciDash"
 RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
 
