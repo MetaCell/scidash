@@ -100,48 +100,48 @@ RUN mvn --version
 
 # -== INSTALL GEPPETTO ==-
 WORKDIR $SOURCES_DIR
-RUN $APP_DIR/copy.sh http://github.com/openworm/org.geppetto.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
+RUN $APP_DIR/copy.sh http://github.com/openworm/org.geppetto.git geppetto-scidash "${originBranch}" "${defaultBranch}"
 RUN cp /git/scidash/service/geppetto/config.json $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/setup.py $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/geppetto.plan $SOURCES_DIR/org.geppetto/
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.model &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.model\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.core.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.core.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.core && cp /git/scidash/service/geppetto/core/app-config.xml ./src/main/java/META-INF/spring &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.core\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.neuroml.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.neuroml.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.model.neuroml &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.model.neuroml\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulation.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulation.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.simulation &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.simulation\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulator.external.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulator.external.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.simulator.external &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.simulator.external\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/Metacell/org.geppetto.simulator.scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/Metacell/org.geppetto.simulator.scidash.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.simulator.scidash &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.simulator.scidash\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.frontend.git "${targetBranch}" "${originBranch}" "${defaultBranch}" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.frontend.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
     cd org.geppetto.frontend && cp /git/scidash/service/geppetto/frontend/app-config.xml ./src/main/webapp/WEB-INF/spring/ &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.frontend\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
