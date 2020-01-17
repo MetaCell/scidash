@@ -1,0 +1,7 @@
+[run]
+plugins =
+    django_coverage_plugin
+omit =
+    venv/*
+    static/*
+    */migrations/*

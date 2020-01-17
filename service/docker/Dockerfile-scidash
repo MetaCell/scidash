@@ -1,6 +1,6 @@
-FROM metacell/scidash_virgo:v1.0.0
+FROM python:3.6
 
-USER root 
+USER root
 
 # BUILD VARIABLES
 ARG ROOT=/
@@ -9,47 +9,51 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG SCIDASH_BRANCH=4.0.1
+ARG targetBranch=geppetto-scidash
+ARG originBranch=geppetto-scidash
+ARG defaultBranch=geppetto-scidash
+
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
+
+RUN useradd -ms /bin/bash developer
+ENV HOME /home/developer
 
 WORKDIR $ROOT
 
-#COPYING PROJECT
-WORKDIR $APP_DIR
-RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
-
 # INSTALLING REQUIREMENTS
-RUN apt-get install -y curl wget lsof
+RUN apt-get install -y curl wget
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get update && apt-get -y install nodejs
+RUN curl https://www.npmjs.com/install.sh | sh
+RUN pip install virtualenv
+RUN mkdir $APP_DIR
+RUN chown developer $APP_DIR
+RUN chown -R developer /home/developer/.config
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 
-WORKDIR /nrn
-RUN chown -R developer ./
+USER developer
+
+# COPYING PROJECT
+WORKDIR $APP_DIR
+# set git email and name for use with git merge
+RUN git config --global user.email "scidash@metacell.us"
+RUN git config --global user.name "SciDash"
+RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
+
 
 WORKDIR $APP_DIR/scidash
-RUN pip install virtualenv 
 RUN virtualenv venv-py -p python3.6
-WORKDIR /usr/local/nrn/src/nrnpython
-RUN python setup.py install
 
 WORKDIR $APP_DIR/scidash
-RUN make install-backend-with-env
-RUN make install-sciunit-neuronunit
-RUN make install-frontend
+RUN make ARGS="-b $targetBranch" install-backend-with-env
+RUN make ARGS="-b $targetBranch" install-frontend
 
 WORKDIR $GEPPETTO_DIR
 RUN ls -la
 RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
-RUN rm -rf .git &&\ 
-    rm -rf static/org.geppetto.frontend/.git &&\ 
-    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
-    rm -rf sciunit/.git &&\
-    rm -rf neuronunit/.git
-RUN chown -R developer ./
 RUN cp ./service/dotenv/scidash_env .env
-
-USER developer
 
 CMD ./service/scripts/run.sh

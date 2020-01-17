@@ -34,7 +34,8 @@ dotenv.read_dotenv(
 SECRET_KEY = '4*0@ca#ocm*(1=12m(bfb2p8e$sk-%i4xlj=%$wkj3*&gs!%sr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Se via OS env, defaults to False
+DEBUG = TEMPLATE_DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = [
         "*"
@@ -249,3 +250,7 @@ DOWNLOADED_MODEL_DIR = os.path.join(
 CELERY_RESULT_BACKEND = 'django-db'
 
 NO_IMPORT_TAG = 'unschedulable'
+
+# SCIDASH
+# Initial search number of quarters to search back in time.
+SCIDASH_INITIAL_SEARCH_QUARTERS = 12

@@ -4,16 +4,18 @@ ARG APP_DIR=/app
 ARG SOURCES_DIR=$APP_DIR/sources
 ARG VIRGO_DIR=/opt/virgo
 ARG SCIDASH_REPO_FOLDER=/git
-ARG GEPPETTO_REPO=http://github.com/openworm/org.geppetto
-ARG ALPHA_TAG=v0.4.2-alpha
-ARG SIMFLAG_TAG=v0.4.2-simflag
-ARG SCIDASH_BRANCH=development
+ARG GEPPETTO_REPO=http://github.com/openworm/org.geppetto.git
+ARG SCIDASH_BRANCH=geppetto-scidash
 
+ARG targetBranch=geppetto-scidash
+ARG originBranch=geppetto-scidash
+ARG defaultBranch=geppetto-scidash
 
 # -== Install OpenJDK and certificates ==-
 WORKDIR /
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
+RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y openjdk-8-jdk && \
     apt-get install -y ant && \
@@ -33,10 +35,12 @@ RUN mkdir $SCIDASH_REPO_FOLDER
 WORKDIR $APP_DIR
 RUN mkdir $SOURCES_DIR
 WORKDIR $SCIDASH_REPO_FOLDER
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
 
 # -== Download SCIDASH repo ==-
 
-RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
+RUN $APP_DIR/copy.sh http://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
 # -== INSTALL MAVEN ==-
 WORKDIR /tmp
@@ -80,59 +84,68 @@ RUN ls -l /usr/local/nrn/
 
 # -== INSTALL VIRGO ==-
 RUN mkdir $VIRGO_DIR
-RUN apt-get install curl
+RUN apt-get -y install curl
 RUN curl -L 'http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/3.7.2.RELEASE/virgo-tomcat-server-3.7.2.RELEASE.zip&r=1' > virgo.zip
 RUN unzip virgo.zip
 RUN cp -r ./virgo-tomcat-server-3.7.2.RELEASE/* $VIRGO_DIR
 RUN rm $VIRGO_DIR/configuration/java-server.profile
 RUN cp /git/scidash/service/geppetto/java-server.profile $VIRGO_DIR/configuration/
 RUN rm $VIRGO_DIR/configuration/tomcat-server.xml
-RUN cp /git/scidash/service/geppetto/tomcat-server.xml $VIRGO_DIR/configuration/
+RUN cat /git/scidash/service/geppetto/tomcat-server.xml | sed 's/127.0.0.1/0.0.0.0/' > $VIRGO_DIR/configuration/tomcat-server.xml
 RUN chmod u+x $VIRGO_DIR/bin/*.sh
 ENV SERVER_HOME $VIRGO_DIR
 RUN chmod 777 -R $VIRGO_DIR
-RUN mkdir rm $VIRGO_DIR/repository/usr
+RUN mkdir $VIRGO_DIR/repository/usr
 RUN mvn --version
 
 # -== INSTALL GEPPETTO ==-
 WORKDIR $SOURCES_DIR
-RUN git clone $GEPPETTO_REPO -b $ALPHA_TAG
-WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
-RUN rm $SOURCES_DIR/org.geppetto/utilities/source_setup/config.json
+RUN $APP_DIR/copy.sh http://github.com/openworm/org.geppetto.git geppetto-scidash "${originBranch}" "${defaultBranch}"
 RUN cp /git/scidash/service/geppetto/config.json $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/setup.py $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/geppetto.plan $SOURCES_DIR/org.geppetto/
-RUN python2 setup.py
 
-WORKDIR $SOURCES_DIR/org.geppetto.core
-RUN git checkout $SIMFLAG_TAG
-RUN rm ./src/main/java/META-INF/spring/app-config.xml
-RUN cp /git/scidash/service/geppetto/core/app-config.xml ./src/main/java/META-INF/spring
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.model &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.model\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.frontend
-RUN git checkout $SIMFLAG_TAG
-RUN rm ./src/main/webapp/WEB-INF/spring/app-config.xml
-RUN cp /git/scidash/service/geppetto/frontend/app-config.xml ./src/main/webapp/WEB-INF/spring/
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.core.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.core && cp /git/scidash/service/geppetto/core/app-config.xml ./src/main/java/META-INF/spring &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.core\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.model
-RUN git checkout $ALPHA_TAG
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.neuroml.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.model.neuroml &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.model.neuroml\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.model.neuroml
-RUN git checkout $ALPHA_TAG
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulation.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.simulation &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.simulation\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.simulation
-RUN git checkout $SIMFLAG_TAG
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulator.external.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.simulator.external &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.simulator.external\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.simulator.external
-RUN git checkout $ALPHA_TAG
+RUN $APP_DIR/copy.sh https://github.com/Metacell/org.geppetto.simulator.scidash.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.simulator.scidash &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.simulator.scidash\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
-WORKDIR $SOURCES_DIR/org.geppetto.simulator.scidash
-RUN git checkout development
-# RUN rm ./src/main/java/META-INF/spring/app-config.xml
-# RUN cp /git/scidash/service/geppetto/simulator.scidash/app-config.xml ./src/main/java/META-INF/spring
-
-WORKDIR $SOURCES_DIR/org.geppetto
-RUN mvn -Dhttps.protocols=TLSv1.2 -DcontextPath=org.geppetto.frontend -DuseSsl=false -DskipTests install
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.frontend.git geppetto-scidash "${originBranch}" "${defaultBranch}" &&\
+    cd org.geppetto.frontend && cp /git/scidash/service/geppetto/frontend/app-config.xml ./src/main/webapp/WEB-INF/spring/ &&\
+    /bin/echo -e "\e[96mMaven install org.geppetto.frontend\e[0m" &&\
+    mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
+    rm -rf src && cd ../
 
 WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN python2 update_server.py

@@ -12,12 +12,11 @@ from scidash.sciunittests.serializers import (
 )
 
 SAMPLE_OBJECT = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 'test_data/score_object.json'
+    os.path.dirname(__file__), 'test_data/score_object.json'
 )
 
 SAMPLE_OBJECT_LIST = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    'test_data/score_objects_list.json'
+    os.path.dirname(__file__), 'test_data/score_objects_list.json'
 )
 
 
@@ -78,8 +77,10 @@ class SciunitTestTestCase(TestCase):
         self.scrub(parsed_response, 'build_info')
         self.scrub(parsed_response, 'hostname')
         self.scrub(parsed_response, 'owner')
+        self.scrub(parsed_response, 'units_name')
         parsed_keys = parsed_response.keys()
 
+        self.maxDiff=None
         for key in data.keys():
             self.assertTrue(key in parsed_keys)
             self.assertEqual(data.get(key), parsed_response.get(key))
@@ -100,6 +101,7 @@ class SciunitTestTestCase(TestCase):
         self.scrub(parsed_response, 'id')
         self.scrub(parsed_response, 'timestamp')
         self.scrub(parsed_response, 'owner')
+        self.scrub(parsed_response, 'units_name')
         parsed_keys = parsed_response.keys()
         test_instance_data = data.get('test_instance')
 
@@ -234,7 +236,7 @@ class SciunitTestFiltersScoreTestCase(TestCase):
         parsed_response = response.json()
         first_element = parsed_response[2]
         model_class_name = first_element.get('model_instance') \
-                                        .get('model_class').get('class_name')
+            .get('model_class').get('class_name')
 
         filtered_url = '{}?model={}'.format(
             reverse('score-list'), model_class_name

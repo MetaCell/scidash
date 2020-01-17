@@ -1,3 +1,10 @@
+
+VENV:=$(shell if [ -d "venv" ]; then echo "venv/bin/"; else echo ""; fi)
+PYTHON:=$(VENV)python3
+PIP:=$(VENV)/bin/pip
+MANAGE:="manage.py"
+MANAGECMD=$(PYTHON) $(MANAGE)
+
 install: create-db install-sciunit-neuronunit install-frontend install-backend
 	@echo "==========================="
 	@echo "=        Finished         ="
@@ -37,7 +44,7 @@ install-backend-with-env:
 	@echo "==========================="
 	@echo "=    Install backend      ="
 	@echo "==========================="
-	@./service/scripts/install-backend.sh -v
+	@./service/scripts/install-backend.sh -v $(ARGS)
 
 create-db:
 	@echo "==========================="
@@ -58,25 +65,24 @@ run-dev: migrate
 run-staging: migrate
 	make run-django-staging & \
 	make run-celery & \
-	make run-celery-beat & \
-	make run-virgo-staging
+	make run-celery-beat
 
 django-migrate: migrations migrate
 
 migrations:
-	./manage.py makemigrations
+	$(MANAGECMD) makemigrations
 
 migrate:
-	./manage.py migrate
+	$(MANAGECMD) migrate
 
 superuser:
-	./manage.py createsuperuser
+	$(MANAGECMD) createsuperuser
 
 run-django:
-	./manage.py runserver
+	$(MANAGECMD) runserver
 
 run-django-staging:
-	python3.6 manage.py runserver --insecure 0.0.0.0:8000
+	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
 
 run-frontend:
 	cd static/org.geppetto.frontend/src/main/webapp/; npm run build-dev-noTest:watch;
@@ -85,10 +91,22 @@ run-celery:
 	celery -A scidash.main worker -l info --concurrency=5 --maxtasksperchild=20
 
 run-celery-beat:
-	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+	celery -A scidash.main beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --pidfile=
 
 run-virgo-staging:
 	/bin/bash /opt/virgo/bin/startup.sh
+
+manage/%:
+	$(MANAGECMD) $*
+
+run-tests: run-django-tests
+
+run-django-tests:
+	$(MANAGECMD) test
+
+coverage:
+	coverage run $(MANAGE) test
+	coverage report -m
 
 lint: flake8-lint isort-lint yapf-lint
 
@@ -141,3 +159,5 @@ push-scidash-db:
 	@echo "=  Push scidash db image  ="
 	@echo "==========================="
 	@./service/scripts/push-image-scidash-db.sh
+%:
+    @:

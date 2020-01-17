@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -x
 
 psql -d template1 -c 'create extension hstore;'
 
@@ -15,3 +15,10 @@ CREATE USER scidash_admin WITH PASSWORD 'scidash_local_password';
 GRANT ALL PRIVILEGES ON DATABASE scidash TO scidash_admin;
 ALTER USER scidash_admin CREATEDB
 EOF
+
+sleep 5
+cd /tmp
+git clone https://github.com/ddelpiano/scidash-artifacts
+cd scidash-artifacts/database
+gunzip `ls | head -n 1`
+pg_restore --clean --if-exists -d scidash `ls *db | head -n 1` || true

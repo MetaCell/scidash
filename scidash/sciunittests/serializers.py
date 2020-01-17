@@ -2,13 +2,14 @@ import json
 
 import numpy as np
 from drf_writable_nested import WritableNestedModelSerializer
-from rest_framework import serializers
+from rest_framework import serializers, fields
 
 import sciunit
 from scidash.account.serializers import ScidashUserSerializer
 from scidash.general.helpers import import_class
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
-from scidash.general.serializers import TagSerializer
+from scidash.general.serializers import TagSerializer, \
+    SerializerWritableMethodField
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
 from scidash.sciunittests.helpers import build_destructured_unit
 from scidash.sciunittests.models import (
@@ -17,7 +18,6 @@ from scidash.sciunittests.models import (
 
 
 class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
-
     owner = ScidashUserSerializer(
         default=serializers.CurrentUserDefault(), read_only=True
     )
@@ -28,10 +28,18 @@ class TestSuiteSerializer(GetOrCreateMixin, WritableNestedModelSerializer):
 
 
 class TestClassSerializer(
-    GetByKeyOrCreateMixin, WritableNestedModelSerializer
-):
+    GetByKeyOrCreateMixin, WritableNestedModelSerializer):
+    class_name = SerializerWritableMethodField(
+        model_field=TestClass()._meta.get_field('class_name'))
     units_name = serializers.CharField(required=False)
     key = 'import_path'
+
+    def get_class_name(self, obj):
+        # return class_name + ( first part of import_path )
+        return obj.class_name + (
+            ' (' +
+            '.'.join((obj.import_path if obj.import_path else ''
+                      ).split('.')[0:-1]) + ')').replace(' ()', '')
 
     class Meta:
         model = TestClass
@@ -132,7 +140,6 @@ class TestInstanceSerializer(
 class ScoreClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-
     key = 'class_name'
 
     class Meta:
