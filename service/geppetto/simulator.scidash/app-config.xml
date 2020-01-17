@@ -15,7 +15,7 @@
 	<bean id="scidashSimulatorConfig" class="org.geppetto.simulator.scidash.config.ScidashSimulatorConfig">
 		<property name="simulatorName" value="SciDash Simulator" />
 		<property name="simulatorID" value="scidashSimulator" />
-		<property name="serverURL" value="http://localhost:8000/data/experiment-result/handle/" />
+		<property name="serverURL" value="http://scidash:8000/data/experiment-result/handle/" />
 	</bean>
 
 	<bean id="neuronSimulatorConfig" class="org.geppetto.core.beans.SimulatorConfig">
