@@ -26,7 +26,7 @@ install-frontend:
 	@echo "==========================="
 	@echo "=    Install frontend     ="
 	@echo "==========================="
-	@./service/scripts/install-frontend.sh
+	@./service/scripts/install-frontend.sh $(ARGS)
 
 codefresh-install-frontend:
 	@echo "==========================="
