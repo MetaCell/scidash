@@ -9,7 +9,7 @@
 	<!--  <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
 	<!-- Instructs Spring to scan for internal service components to instantiate and configure -->
 	<context:annotation-config/>
-	<context:component-scan base-package="org.geppetto.simulator.scidash.services" />
+	<context:component-scan base-package="org.geppetto.simulator.scidash.services,org.geppetto.simulator.scidash.controllers" />
 
 	<!-- Add flag for Simulation Run Mode -->
 	<bean id="scidashSimulatorConfig" class="org.geppetto.simulator.scidash.config.ScidashSimulatorConfig">
