@@ -218,15 +218,15 @@ PYGEPPETTO_BUILDER_PROJECT_BASE_URL = os.path.join(os.path.join(
 
 GEPPETTO_SERVLET_URL = os.environ.get(
     'GEPPETTO_SERVLET_URL',
-    'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
+    'ws://scidash-virgo:8080/org.geppetto.frontend/GeppettoServlet'
 )
 GEPPETTO_BASE_URL = os.environ.get(
-    'GEPPETTO_BASE_URL', 'http://localhost:8080/org.geppetto.frontend/geppetto'
+    'GEPPETTO_BASE_URL', 'http://scidash-virgo:8080/org.geppetto.frontend/geppetto'
 )
 
 BASE_PROJECT_FILES_HOST = os.environ.get(
     'BASE_PROJECT_FILES_HOST',
-    'http://localhost:8000/static/projects/'
+    'http://scidash:8000/static/projects/'
 )
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
