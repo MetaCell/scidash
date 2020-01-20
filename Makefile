@@ -79,7 +79,7 @@ superuser:
 	$(MANAGECMD) createsuperuser
 
 run-django:
-	$(MANAGECMD) runserver
+	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
 
 run-django-staging:
 	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
