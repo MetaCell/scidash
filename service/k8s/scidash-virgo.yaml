@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scidash-virgo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: scidash-virgo
+    spec:
+      containers:
+      - name: scidash-virgo
+        image:  r.cfcr.io/tarelli/metacell/scidash-virgo:{{CF_SHORT_REVISION}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: nfs-volume
+          mountPath: /opt/virgo/geppettoTmp
+      imagePullSecrets:
+      - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
+      volumes:
+      - name: nfs-volume
+        persistentVolumeClaim:
+          claimName: nfs-scidash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scidash-virgo
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: scidash-virgo
