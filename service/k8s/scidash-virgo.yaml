@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: scidash-virgo
-        image:  r.cfcr.io/tarelli/metacell/scidash-virgo:{{CF_SHORT_REVISION}}
+        image:  r.cfcr.io/tarelli/metacell/scidash_geppetto:{{CF_SHORT_REVISION}}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
