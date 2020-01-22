@@ -104,8 +104,13 @@ run-tests: run-django-tests
 run-django-tests:
 	$(MANAGECMD) test
 
-coverage:
+run-coverage:
 	coverage run $(MANAGE) test
+
+coverage-badge: run-coverage
+	coverage-badge -o coverage.svg
+
+coverage: run-coverage
 	coverage report -m
 
 lint: flake8-lint isort-lint yapf-lint

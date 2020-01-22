@@ -4,3 +4,4 @@ isort
 coverage
 django_coverage_plugin
 pip-tools
+coverage-badge==1.0.1

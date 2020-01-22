@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/MetaCell/scidash/master.svg?style=flat-square&label=master)](https://travis-ci.org/MetaCell/scidash)
 [![Build Status](https://img.shields.io/travis/MetaCell/scidash/development.svg?style=flat-square&label=develop)](https://travis-ci.org/MetaCell/scidash)
+[![Coverage](coverage.svg)](https://travis-ci.org/MetaCell/scidash)
 <p align="center">
   <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
