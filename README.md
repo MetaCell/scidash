@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/MetaCell/scidash/master.svg?style=flat-square&label=master)](https://travis-ci.org/MetaCell/scidash)
 [![Build Status](https://img.shields.io/travis/MetaCell/scidash/development.svg?style=flat-square&label=develop)](https://travis-ci.org/MetaCell/scidash)
+[![Coverage](coverage.svg)](https://travis-ci.org/MetaCell/scidash)
 <p align="center">
   <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
@@ -47,6 +48,20 @@ An example can be found in the folder scidash/dotenv/env-docker but you will nee
 ```
 cp service/dotenv/env-docker .env
 source .env
+```
+
+There is a pre-commit hook (see service/hooks). This hook will run coverage and django tests. After that it will generate a coverage badge.
+To use this hook please install the requirements from requirements-dev.txt and install the hook
+
+```shell script
+pip install -r requirements-dev.txt
+cp service/hooks/pre-commit .git/hooks
+chmod +x .git/hooks/pre-commit
+```
+
+You can also manually generate a new coverage badge by executing
+```
+make coverage-badge
 ```
 
 Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
