@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scidash
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: scidash
+    spec:
+      containers:
+      - name: scidash
+        image:  r.cfcr.io/tarelli/metacell/scidash:{{CF_SHORT_REVISION}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: nfs-volume
+          mountPath: /opt/virgo/geppettoTmp
+      imagePullSecrets:
+      - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
+      volumes:
+      - name: nfs-volume
+        persistentVolumeClaim:
+          claimName: nfs-scidash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scidash
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: scidash

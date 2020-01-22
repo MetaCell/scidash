@@ -26,7 +26,7 @@ install-frontend:
 	@echo "==========================="
 	@echo "=    Install frontend     ="
 	@echo "==========================="
-	@./service/scripts/install-frontend.sh
+	@./service/scripts/install-frontend.sh $(ARGS)
 
 codefresh-install-frontend:
 	@echo "==========================="
@@ -79,7 +79,7 @@ superuser:
 	$(MANAGECMD) createsuperuser
 
 run-django:
-	$(MANAGECMD) runserver
+	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
 
 run-django-staging:
 	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
