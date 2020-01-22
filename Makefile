@@ -108,7 +108,7 @@ run-coverage:
 	coverage run $(MANAGE) test
 
 coverage-badge: run-coverage
-	coverage-badge -o coverage.svg
+	coverage-badge -o coverage.svg -f
 
 coverage: run-coverage
 	coverage report -m
