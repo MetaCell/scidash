@@ -5,3 +5,5 @@ set -e
 make lint
 
 make run-tests
+
+make coverage-badge
