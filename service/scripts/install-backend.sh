@@ -29,10 +29,11 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [ "$virtualenv" = true ] ; then
-    virtualenv -p python3 ./venv;
+    virtualenv -p python3.6 ./venv;
     source ./venv/bin/activate;
 fi
 
+python -m pip install pip==9.0.3
 pip install -r requirements.txt;
 
 git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
