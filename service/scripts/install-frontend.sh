@@ -42,7 +42,7 @@ actual_config_path="$geppetto_app_path/GeppettoConfiguration.json";
 #if [ $? -eq 0 ]; then
 #  git clone -b $geppetto_branch $geppetto_repo $geppetto_path;
 #else
-  git clone -b geppetto-scidash $geppetto_repo $geppetto_path;
+  git clone -b scidash-jest-changes $geppetto_repo $geppetto_path;
 #fi
 
 git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$extension_branch > /dev/null
