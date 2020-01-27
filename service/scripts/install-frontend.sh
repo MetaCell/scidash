@@ -5,7 +5,7 @@ node -v
 root_path=$PWD;
 
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
-geppetto_branch="geppetto-scidash"
+geppetto_branch="scidash-jest-changes"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
 extension_branch="feature/419"
 
