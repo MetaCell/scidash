@@ -5,9 +5,9 @@ node -v
 root_path=$PWD;
 
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
-geppetto_branch="geppett-scidash"
+geppetto_branch="geppetto-scidash"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
-extension_branch="geppetto-scidash"
+extension_branch="feature/419"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
