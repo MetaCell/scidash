@@ -13,6 +13,7 @@ from pygeppetto_server.messages import Servlet as S
 from pygeppetto_server.messages import ServletResponse as SR
 from scidash.general.helpers import import_class
 from scidash.sciunittests.models import ScoreInstance as Score
+from scidash.main.sentry import capture_exception, capture_message
 
 db_logger = logging.getLogger('db')
 
@@ -111,7 +112,8 @@ def send_score_to_geppetto(score):
         while not finished:
             try:
                 response = json.loads(servlet_manager.read())
-            except WebSocketTimeoutException:
+            except WebSocketTimeoutException as e:
+                capture_exception(e)
                 db_logger.info('Successfully started experiment')
                 finished = True
 
@@ -122,6 +124,7 @@ def send_score_to_geppetto(score):
             if response_type == SR.ERROR_RUNNING_EXPERIMENT:
                 error = get_error(response.get('data'))
                 db_logger.error(error)
+                capture_message(error, app=True)
                 score.error = error
                 score.status = score.FAILED
                 score.test_instance.build_info = f' {platform.system()}' \
@@ -138,6 +141,7 @@ def send_score_to_geppetto(score):
 
     except Exception as e:
         db_logger.error(e)
+        capture_exception(e)
         score.error = e
         score.status = Score.FAILED
         score.save()
