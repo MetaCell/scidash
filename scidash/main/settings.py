@@ -16,8 +16,7 @@ import os
 import dotenv
 from django.urls import reverse
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+from .sentry import init as sentry_init
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
@@ -34,15 +33,9 @@ dotenv.read_dotenv(
 # Se via OS env, defaults to False
 DEBUG = TEMPLATE_DEBUG = os.environ.get('DEVELOPMENT', '0') == '1'
 
-if not DEBUG:
-    sentry_sdk.init(
-        dsn=os.environ.get('SENTRY_DSN', ""),
-        integrations=[DjangoIntegration()],
+if DEBUG:
+    sentry_init()
 
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
-    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
