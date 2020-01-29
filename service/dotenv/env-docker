@@ -21,3 +21,6 @@ GEPPETTO_SERVLET_URL=ws://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.fronten
 GEPPETTO_BASE_URL=http://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.frontend/geppetto
 
 BASE_PROJECT_FILES_HOST='http://scidash:8000/static/projects/'
+
+# ToDo: change in development sentry dsn
+SENTRY_DSN="https://ccf48f7877bc4fb5a4cca74bdd193feb@sentry.io/1955654"

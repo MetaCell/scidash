@@ -16,6 +16,9 @@ import os
 import dotenv
 from django.urls import reverse
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,19 +30,29 @@ dotenv.read_dotenv(
     )
 )
 
+# SECURITY WARNING: don't run with debug turned on in production!
+# Se via OS env, defaults to False
+DEBUG = TEMPLATE_DEBUG = os.environ.get('DEVELOPMENT', '0') == '1'
+
+if not DEBUG:
+    sentry_sdk.init(
+        dsn=os.environ.get('SENTRY_DSN', ""),
+        integrations=[DjangoIntegration()],
+
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '4*0@ca#ocm*(1=12m(bfb2p8e$sk-%i4xlj=%$wkj3*&gs!%sr'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Se via OS env, defaults to False
-DEBUG = TEMPLATE_DEBUG = os.environ.get('DEBUG', False)
-
 ALLOWED_HOSTS = [
-        "*"
-        ]
+    "*"
+]
 
 # Application definition
 
@@ -93,10 +106,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'scidash.account.auth.CsrfExemptSessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
-        ],
+    ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
-        ]
+    ]
 }
 
 ROOT_URLCONF = 'scidash.main.urls'
@@ -123,16 +136,15 @@ ASGI_APPLICATION = 'scidash.main.routing.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT'),
-            }
-        }
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -151,7 +163,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -193,7 +204,7 @@ LOGGING = {
         },
     },
     'loggers': {
-         'django': {
+        'django': {
             'handlers': ['db_log'],
             'level': 'ERROR',
             'propagate': False,
@@ -208,7 +219,7 @@ LOGGING = {
 AUTH_USER_MODEL = 'general.ScidashUser'
 
 REST_FRAMEWORK_CACHE = {
-    'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
+    'DEFAULT_CACHE_TIMEOUT': 86400,  # Default is 1 day
 }
 
 PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
@@ -221,7 +232,8 @@ GEPPETTO_SERVLET_URL = os.environ.get(
     'ws://scidash-virgo:8080/org.geppetto.frontend/GeppettoServlet'
 )
 GEPPETTO_BASE_URL = os.environ.get(
-    'GEPPETTO_BASE_URL', 'http://scidash-virgo:8080/org.geppetto.frontend/geppetto'
+    'GEPPETTO_BASE_URL',
+    'http://scidash-virgo:8080/org.geppetto.frontend/geppetto'
 )
 
 BASE_PROJECT_FILES_HOST = os.environ.get(
