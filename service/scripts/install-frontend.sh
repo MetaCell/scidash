@@ -41,7 +41,7 @@ git ls-remote --heads --tags $geppetto_repo | grep -E 'refs/(heads|tags)/'$geppe
 if [ $? -eq 0 ]; then
   git clone -b $geppetto_branch $geppetto_repo $geppetto_path;
 else
-  git clone -b geppetto-scidash $geppetto_repo $geppetto_path;
+  git clone -b development $geppetto_repo $geppetto_path;
 fi
 
 git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$extension_branch > /dev/null
@@ -49,10 +49,11 @@ git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$exte
 if [ $? -eq 0 ]; then
   git clone -b $extension_branch $extension_repo $geppetto_app_path;
 else
-  git clone -b geppetto-scidash $extension_repo $geppetto_app_path;
+  git clone -b development $extension_repo $geppetto_app_path;
 fi
 
 cd $geppetto_path/src/main;
+rm -rf webapp;
 mv geppetto-scidash webapp;
 cd webapp;
 
@@ -61,7 +62,7 @@ git ls-remote --heads --tags $geppetto_client_repo | grep -E 'refs/(heads|tags)/
 if [ $? -eq 0 ]; then
   git clone -b $geppetto_client_branch $geppetto_client_repo;
 else
-  git clone -b geppetto-scidash $geppetto_client_repo;
+  git clone -b development $geppetto_client_repo;
 fi
 
 npm install
