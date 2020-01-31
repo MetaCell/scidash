@@ -9,9 +9,9 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG targetBranch=feature/421
-ARG originBranch=feature/421
-ARG defaultBranch=feature/421
+ARG targetBranch=feature/418
+ARG originBranch=feature/418
+ARG defaultBranch=feature/418
 
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
