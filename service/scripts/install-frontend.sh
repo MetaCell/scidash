@@ -7,7 +7,7 @@ root_path=$PWD;
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
 geppetto_branch="scidash-jest-changes"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
-extension_branch="feature/419"
+extension_branch="feature/421"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
