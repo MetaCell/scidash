@@ -6,9 +6,9 @@ while true; do
     case $yn in
         [Yy]* ) read -p "Please type the tag you want to use for this build (default will use the latest and overwrite this). [latest/user_input] >" tag;
 		if [[ -z "$tag" ]]; then
-		   docker build --no-cache -f Dockerfile-scidash -t metacell/scidash:latest .
+		   docker build -f Dockerfile-scidash -t metacell/scidash:latest .
 		else
-		   docker build --no-cache -f Dockerfile-scidash -t metacell/scidash:$tag .
+		   docker build -f Dockerfile-scidash -t metacell/scidash:$tag .
 		fi
                 break;;
         [Nn]* ) exit;;
