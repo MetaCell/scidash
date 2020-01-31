@@ -48,9 +48,9 @@ actual_config_path="$geppetto_app_path/GeppettoConfiguration.json";
 git ls-remote --heads --tags $extension_repo | grep -E 'refs/(heads|tags)/'$extension_branch > /dev/null
 
 if [ $? -eq 0 ]; then
-  git clone -b $extension_branch $extension_repo $extension_path;
+  git clone -b feature/421 $extension_repo $extension_path;
 else
-  git clone -b geppetto-scidash $extension_repo $extension_path;
+  git clone -b feature/421 $extension_repo $extension_path;
 fi
 
 cd $geppetto_app_path;
