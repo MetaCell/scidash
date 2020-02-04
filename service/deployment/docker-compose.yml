@@ -27,7 +27,7 @@ services:
       - scidash-redis
       - scidash-postgres
   scidash:
-    image: metacell/scidash:libs_test
+    image: metacell/scidash:latest
     container_name: scidash
     cap_add:
       - SYS_ADMIN
