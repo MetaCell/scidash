@@ -27,8 +27,10 @@ services:
       - scidash-redis
       - scidash-postgres
   scidash:
-    image: metacell/scidash:latest
+    image: metacell/scidash:libs_test
     container_name: scidash
+    cap_add:
+      - SYS_ADMIN
     volumes:
       - geppettoTmp-volume:/opt/virgo/geppettoTmp
     ports:

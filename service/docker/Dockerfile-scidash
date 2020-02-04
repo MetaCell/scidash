@@ -62,4 +62,8 @@ RUN npm run build-dev-noTest
 WORKDIR $APP_DIR/scidash
 RUN cp ./service/dotenv/scidash_env .env
 
+USER root
+RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+
+USER developer
 CMD ./service/scripts/run.sh
