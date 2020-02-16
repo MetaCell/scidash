@@ -84,7 +84,8 @@ class ModelClass(models.Model):
             ):  # noqa: E501
                 self.capabilities.add(capability_model)
             else:
-                extra_capability_model, created = ExtraCapabilityModelThrough.objects.get_or_create(  # noqa: E501
+                extra_capability_model, created = ExtraCapabilityModelThrough.objects.get_or_create(
+                    # noqa: E501
                     capability=capability_model,
                     model_class=self,
                     extra_check=extra_capabilities[capability]
@@ -133,3 +134,8 @@ class ModelInstance(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clone_to_user(self, user):
+        self.pk = None
+        self.owner = user
+        return self

@@ -327,3 +327,9 @@ Also codefresh repository requires especial secret for pulling images:
       imagePullSecrets:
       - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
 ```
+
+## Post install steps
+
+For copying/cloning initial model instances and test instances please update the DEMO_USER_ID in the settings file
+to point to the user (id) from where the models and test instances should be cloned.
+
