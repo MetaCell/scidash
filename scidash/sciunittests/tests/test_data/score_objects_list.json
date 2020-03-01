@@ -1,14 +1,37 @@
 [
   {
-    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
+    "score_class": {
+      "class_name": "ZScore",
+      "url": "http://test-url.for/not-spaming-data/in-database"
+    },
     "hash_id": "111",
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel_1",
         "url": "http://test-url.for/not-spaming-data/in-database-one",
+        "import_path": "neuronunit.models.reduced.ReducedModel",
+        "memo": null,
+        "extra_capabilities": [
+          14
+        ],
         "capabilities": [
           {
-            "class_name": "CanBeReduced_1"
+            "class_name": "Runnable"
+          },
+          {
+            "class_name": "ReceivesSquareCurrent"
+          },
+          {
+            "class_name": "ProducesActionPotentials"
+          },
+          {
+            "class_name": "ProducesSpikes"
+          },
+          {
+            "class_name": "ProducesMembranePotential"
+          },
+          {
+            "class_name": "CanBeReduced"
           }
         ]
       },
@@ -16,6 +39,8 @@
       "attributes": {},
       "name": "Izhikevich",
       "run_params": {},
+      "status": "l",
+      "tags": [],
       "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
       "backend": "JNeuroML"
     },
@@ -25,16 +50,18 @@
     "score_type": "ZType_1",
     "test_instance": {
       "description": null,
-      "test_suites": [{
-        "hash": "testhash",
-        "name": "ReducedSuite_1"
-      }],
+      "test_suites": [
+        {
+          "hash": "testhash",
+          "name": "ReducedSuite_1"
+        }
+      ],
       "test_class": {
         "class_name": "MyTest_1",
         "url": "http://test-url.for/not-spaming-data/in-database"
       },
       "observation": {
-        "mean":"8",
+        "mean": "8",
         "std": "3",
         "url": ""
       },
@@ -43,15 +70,33 @@
     }
   },
   {
-    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
+    "score_class": {
+      "class_name": "ZScore",
+      "url": "http://test-url.for/not-spaming-data/in-database"
+    },
     "hash_id": "222",
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel_2",
         "url": "http://test-url.for/not-spaming-data/in-database-two",
+        "import_path": "neuronunit.models.static.StaticModel",
+        "memo": null,
+        "extra_capabilities": [],
         "capabilities": [
           {
-            "class_name": "CanBeReduced_2"
+            "class_name": "ReceivesSquareCurrent"
+          },
+          {
+            "class_name": "ProducesActionPotentials"
+          },
+          {
+            "class_name": "ProducesSpikes"
+          },
+          {
+            "class_name": "ProducesMembranePotential"
+          },
+          {
+            "class_name": "CanBeReduced"
           }
         ]
       },
@@ -59,6 +104,8 @@
       "attributes": {},
       "name": "Izhikevich",
       "run_params": {},
+      "status": "l",
+      "tags": [],
       "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
       "backend": "JNeuroML"
     },
@@ -69,16 +116,18 @@
     "test_instance": {
       "description": null,
       "hash_id": "111",
-      "test_suites": [{
-        "hash": "testhash",
-        "name": "ReducedSuite_2"
-      }],
+      "test_suites": [
+        {
+          "hash": "testhash",
+          "name": "ReducedSuite_2"
+        }
+      ],
       "test_class": {
         "class_name": "MyTest_2",
         "url": "http://test-url.for/not-spaming-data/in-database"
       },
       "observation": {
-        "mean":"8",
+        "mean": "8",
         "std": "3",
         "url": ""
       },
@@ -86,13 +135,31 @@
     }
   },
   {
-    "score_class": {"class_name": "ZScore", "url": "http://test-url.for/not-spaming-data/in-database"},
+    "score_class": {
+      "class_name": "ZScore",
+      "url": "http://test-url.for/not-spaming-data/in-database"
+    },
     "hash_id": "333",
     "model_instance": {
       "model_class": {
         "class_name": "ReducedModel",
         "url": "http://test-url.for/not-spaming-data/in-database-three",
+        "import_path": "neuronunit.models.static.StaticModel",
+        "memo": null,
+        "extra_capabilities": [],
         "capabilities": [
+          {
+            "class_name": "ReceivesSquareCurrent"
+          },
+          {
+            "class_name": "ProducesActionPotentials"
+          },
+          {
+            "class_name": "ProducesSpikes"
+          },
+          {
+            "class_name": "ProducesMembranePotential"
+          },
           {
             "class_name": "CanBeReduced"
           }
@@ -102,6 +169,8 @@
       "hash_id": "311",
       "name": "Izhikevich",
       "run_params": {},
+      "status": "l",
+      "tags": [],
       "url": "https://github.com/scidash/neuronunit/blob/master/neuronunit/models/NeuroML2/LEMS_2007One.xml",
       "backend": "JNeuroML"
     },
@@ -112,16 +181,18 @@
     "test_instance": {
       "description": null,
       "hash_id": "111",
-      "test_suites": [{
-        "hash": "testhash",
-        "name": "ReducedSuite"
-      }],
+      "test_suites": [
+        {
+          "hash": "testhash",
+          "name": "ReducedSuite"
+        }
+      ],
       "test_class": {
         "class_name": "MyTest",
         "url": "http://test-url.for/not-spaming-data/in-database"
       },
       "observation": {
-        "mean":"8",
+        "mean": "8",
         "std": "3",
         "url": ""
       },

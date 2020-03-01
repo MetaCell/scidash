@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/travis/MetaCell/scidash/master.svg?style=flat-square&label=master)](https://travis-ci.org/MetaCell/scidash)
+[![Build Status](https://img.shields.io/travis/MetaCell/scidash/development.svg?style=flat-square&label=develop)](https://travis-ci.org/MetaCell/scidash)
+[![Coverage Status](coverage.svg)](https://travis-ci.org/MetaCell/scidash)
 <p align="center">
   <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
@@ -45,6 +48,25 @@ An example can be found in the folder scidash/dotenv/env-docker but you will nee
 ```
 cp service/dotenv/env-docker .env
 source .env
+```
+
+As a developer you may add the git pre-commit hook to you .git repo. Besides updating the coverage badge, this hook
+runs some more commands before committing your changes. To install the pre-commit hook copy the hook to yur .git folder
+
+```shell script
+cp service/hooks/pre-commit .git
+chmod +x .git/hooks/pre-commit
+```
+
+You should install the requirements-dev.txt to use the coverage and more code testing tools
+
+```shell script
+pip install -r requirements-dev.txt
+```
+
+To update the coverage badge manually run
+```shell script
+make coverage-badge
 ```
 
 Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
