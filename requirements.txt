@@ -27,7 +27,7 @@ django==1.11.7
 djangorestframework-jwt==1.11.0
 djangorestframework==3.7.1
 drf-writable-nested==0.5.1
-git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
+git+git://github.com/ddelpiano/neuronunit@metacell#egg=neuronunit
 hyperlink==18.0.0         # via twisted
 idna==2.8                 # via hyperlink
 incremental==17.5.0       # via twisted
