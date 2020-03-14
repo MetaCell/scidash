@@ -16,3 +16,5 @@ django-db-logger
 git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
 wheel==0.33.6
 sentry-sdk==0.14.1
+django-ckeditor==4.5.3
+django-admin-sortable2==0.7.5
