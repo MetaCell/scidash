@@ -1,3 +1,4 @@
+import datetime
 import json
 import re
 import urllib.request
@@ -39,6 +40,17 @@ def oembedReplace(match):
     return obj['html']
 
 
+class ActiveContentItemManager(models.Manager):
+    def get_queryset(self):
+        now = datetime.datetime.now()
+        return super().get_queryset().filter(
+            models.Q(display_from__isnull=True) |
+            models.Q(display_from__lte=now),
+            models.Q(display_to__isnull=True) |
+            models.Q(display_to__gte=now),
+        ).order_by('content_order')
+
+
 class ContentItem(models.Model):
     content_order = models.PositiveIntegerField(default=0, blank=False,
                                                 null=False)
@@ -46,6 +58,9 @@ class ContentItem(models.Model):
     content = RichTextField()
     display_from = models.DateTimeField(null=True, blank=True)
     display_to = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
+    active_objects = ActiveContentItemManager()
 
     def save(self, *args, **kwargs):
         # replace the oembed tags

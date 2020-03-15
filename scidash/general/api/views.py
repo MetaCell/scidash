@@ -159,7 +159,7 @@ class CreateScoresFromMatrixView(APIView):
 class InstructionsView(APIView):
     def get(self, request):
         html = ""
-        for instructions in ContentItem.objects.all():
+        for instructions in ContentItem.active_objects.all():
             html += instructions.content
         return Response(
             {
