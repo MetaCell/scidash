@@ -1,3 +1,7 @@
+import json
+import re
+import urllib.request
+
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -25,12 +29,29 @@ class Tag(models.Model):
         return self.name
 
 
+def oembedReplace(match):
+    url = "http://ckeditor.iframe.ly/api/oembed?url=" + \
+          re.search(r'<oembed>(.*)</oembed>', match.group()).group(1)
+    req = urllib.request.Request(url,
+                                 headers={"Referer": "https://scidash.org"})
+    f = urllib.request.urlopen(req)
+    obj = json.loads(f.read())
+    return obj['html']
+
+
 class ContentItem(models.Model):
-    content_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    content_order = models.PositiveIntegerField(default=0, blank=False,
+                                                null=False)
     name = models.CharField(max_length=100)
     content = RichTextField()
     display_from = models.DateTimeField(null=True, blank=True)
     display_to = models.DateTimeField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # replace the oembed tags
+        p = re.compile(r'<oembed>.*?</oembed>')
+        self.content = p.sub(oembedReplace, self.content)
+        super().save(*args, **kwargs)
 
     class Meta(object):
         ordering = ['content_order']

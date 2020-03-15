@@ -95,6 +95,11 @@ urlpatterns = [
         CheckIsLoggedView.as_view(),
         name='is-logged'
     ),
+    url(
+        r'^api/instructions/$',
+        general_views.InstructionsView.as_view(),
+        name='instructions-view'
+    ),
     url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
     url(
         r'^api/compatibility/$',
