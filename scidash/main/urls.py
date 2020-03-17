@@ -21,7 +21,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_cache.registry import cache_registry
 from rest_framework_jwt.views import obtain_jwt_token
 
-from scidash.account.api.views import CheckIsLoggedView, UserViewSet
+from scidash.account.api.views import CheckIsLoggedView, \
+    UserViewSet, \
+    SetShowInstructions
 from scidash.account.views import signup
 from scidash.general.api import views as general_views
 from scidash.sciunitmodels.api import views as models_views
@@ -94,6 +96,11 @@ urlpatterns = [
         r'^api/users/is-logged/$',
         CheckIsLoggedView.as_view(),
         name='is-logged'
+    ),
+    url(
+        r'^api/users/toggle-show-instructions/$',
+        SetShowInstructions.as_view(),
+        name='set-show-instructions'
     ),
     url(
         r'^api/instructions/$',

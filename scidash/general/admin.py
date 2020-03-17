@@ -8,12 +8,18 @@ from scidash.general.models import ScidashUser, Tag, ContentItem
 
 # Register your models here.
 
+class ScidashUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('show_instructions',)}),
+    )
+
+
 class ContentItemAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ["name", "display_from", "display_to"]
     date_hierarchy = "display_from"
 
 
-admin.site.register(ScidashUser, UserAdmin)
+admin.site.register(ScidashUser, ScidashUserAdmin)
 admin.site.register(ContentType)
 admin.site.register(Tag)
 admin.site.register(ContentItem, ContentItemAdmin)

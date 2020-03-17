@@ -12,6 +12,8 @@ from ckeditor.fields import RichTextField
 
 
 class ScidashUser(AbstractUser):
+    show_instructions = models.BooleanField(default=True)
+
     class Meta:
         verbose_name = "Scidash user"
         verbose_name_plural = "Scidash users"
