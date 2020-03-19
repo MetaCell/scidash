@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from scidash.general.helpers import import_class
+from scidash.general.models import ContentItem
 from scidash.sciunitmodels.helpers import download_and_save_model
 from scidash.sciunitmodels.models import ModelInstance
 from scidash.sciunittests.models import ScoreInstance, TestInstance
@@ -153,3 +154,16 @@ class CreateScoresFromMatrixView(APIView):
             ScoreInstance.objects.bulk_create(scores)
 
         return Response(result)
+
+
+class InstructionsView(APIView):
+    def get(self, request):
+        html = ""
+        for instructions in ContentItem.active_objects.all():
+            html += instructions.content
+        return Response(
+            {
+                'instructions': html
+            }, 200
+        )
+
