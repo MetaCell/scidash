@@ -32,7 +32,7 @@ django==1.11.23
 djangorestframework-jwt==1.11.0
 djangorestframework==3.7.1
 drf-writable-nested==0.5.1
-git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
+git+git://github.com/scidash/neuronunit@metacell#egg=neuronunit
 hyperlink==18.0.0         # via twisted
 idna==2.8                 # via hyperlink, requests
 igor==0.3
@@ -94,6 +94,7 @@ python-dateutil==2.8.0    # via python-crontab
 pytz==2018.9              # via celery, django, django-timezone-field
 redis==2.10.6             # via celery
 rest-framework-cache==0.1
+sentry-sdk==0.14.1
 six==1.12.0               # via autobahn, automat, django-extensions, pyhamcrest, python-dateutil, txaio
 twisted==18.9.0           # via daphne
 txaio==18.8.1             # via autobahn
