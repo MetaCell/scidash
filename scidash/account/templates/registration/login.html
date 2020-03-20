@@ -2,21 +2,30 @@
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 
-{% load material_form %} 
+{% load material_form %}
 
 {% block content %}
    <div class="login-container">
   <h5>SCIDASH LOGIN</h5>
-  <a href="{% url 'sign-up' %}">Have no account? Then sign-up!</a>
-  <a href="{% url 'password-reset' %}">Forgot your password? Let's reset it</a>
   <br>
   <br>
   <form method="POST">
     {% csrf_token %}
     {% form form=form %}{% endform %}
     <input type="hidden" name="next" value="{% url 'index' %}">
-    <button type="submit" name="_submit" class="btn">Submit</button>
+    <button type="submit" name="_submit" class="btn right">Login</button>
   </form>
+  <br>
+  <br>
+  <br>
+  <a href="{% url 'sign-up' %}">
+    <button name="_signup" class="btn">Sign-up</button>
+  </a>
+  <a href="{% url 'password-reset' %}">
+    <button name="_reset" class="btn">Reset Password</button>
+  </a>
+  <br>
+  <br>
   <a href="{% url 'index' %}">Go home</a>
 </div>
 {% endblock %}
