@@ -52,3 +52,4 @@ class SerializerWritableMethodField(fields.ModelField):
     def to_representation(self, value):
         method = getattr(self.parent, self.method_name)
         return method(value)
+
