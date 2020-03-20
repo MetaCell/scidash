@@ -257,5 +257,5 @@ CELERY_RESULT_BACKEND = 'django-db'
 NO_IMPORT_TAG = 'unschedulable'
 
 # SCIDASH
-# Initial search number of quarters to search back in time.
-SCIDASH_INITIAL_SEARCH_QUARTERS = 12
+# DEMO user id used to clone initial models and tests from
+SCIDASH_DEMO_USER_ID = None
