@@ -85,6 +85,14 @@ urlpatterns = [
         ),
         name='password-reset'
     ),
+    url(
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='registration/password-reset-confirm.html',
+            success_url="/",
+            post_reset_login=True
+        ),
+        name='password_reset_confirm'),
     url(r'^auth/sign-up/$', signup, name='sign-up'),
     url(
         r'^api/users/me/$',
