@@ -20,8 +20,10 @@ deap==1.3.0
 decorator==4.4.1          # via ipyparallel, ipython, networkx, traitlets, validators
 defusedxml==0.6.0         # via nbconvert
 distributed==2.9.0        # via dask
+django-admin-sortable2==0.7.5
 django-celery-beat==1.4.0
 django-celery-results==1.0.4
+django-ckeditor==5.9.0
 django-db-logger==0.1.7
 django-dotenv==1.4.2
 django-extensions==2.1.6

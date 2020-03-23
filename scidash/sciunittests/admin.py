@@ -10,6 +10,7 @@ from scidash.sciunittests.models import (
 
 
 class TestClassModelAdmin(admin.ModelAdmin):
+    search_fields = ['class_name']
     readonly_fields = [
         'observation_schema', 'test_parameters_schema', 'params_units',
         'units', 'memo'

@@ -22,7 +22,16 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class CheckIsLoggedView(views.APIView):
     def get(self, request, format=None):
-
         return response.Response(
             {'is_logged': self.request.user.is_authenticated()}
         )
+
+
+class SetShowInstructions(views.APIView):
+    def post(self, request, format=None):
+        show = request.data.get('show', None)
+        if show is not None:
+            user = ScidashUser.objects.get(id=request.user.id)
+            user.show_instructions = show
+            user.save()
+        return response.Response()
