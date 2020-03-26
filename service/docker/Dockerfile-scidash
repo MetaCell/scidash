@@ -9,7 +9,7 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG targetBranch=geppetto-scidash
+ARG targetBranch=feature/472
 ARG originBranch=geppetto-scidash
 ARG defaultBranch=geppetto-scidash
 
