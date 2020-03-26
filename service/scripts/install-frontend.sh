@@ -5,7 +5,7 @@ node -v
 root_path=$PWD;
 
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
-geppetto_branch="development"
+geppetto_branch="geppetto-scidash"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
 extension_branch="feature/487"
 geppetto_client_repo="https://github.com/openworm/geppetto-client.git"
@@ -32,7 +32,7 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 geppetto_path="./static/org.geppetto.frontend";
-geppetto_app_path="$geppetto_path/src/main/geppetto-scidash";
+geppetto_app_path="$geppetto_path/src/main/webapp";
 
 # The lines below can be commented out when we will be in line with the latest geppetto, differently
 # if we try to test development this won't work since we are diverging from geppetto frontend at the moment
