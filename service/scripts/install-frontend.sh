@@ -7,7 +7,7 @@ root_path=$PWD;
 geppetto_repo="https://github.com/openworm/org.geppetto.frontend.git"
 geppetto_branch="geppetto-scidash"
 extension_repo="https://github.com/MetaCell/geppetto-scidash.git"
-extension_branch="feature/487"
+extension_branch="geppetto-scidash"
 geppetto_client_repo="https://github.com/openworm/geppetto-client.git"
 geppetto_client_branch="geppetto-scidash"
 
