@@ -108,31 +108,31 @@ RUN cp /git/scidash/service/geppetto/config.json $SOURCES_DIR/org.geppetto/utili
 RUN cp /git/scidash/service/geppetto/setup.py $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/geppetto.plan $SOURCES_DIR/org.geppetto/
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.git "development" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.git "development" "development" "development" &&\
     cd org.geppetto.model &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.model\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.core.git "development" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.core.git "development" "development" "development" &&\
     cd org.geppetto.core && cp /git/scidash/service/geppetto/core/app-config.xml ./src/main/java/META-INF/spring &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.core\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.neuroml.git "development" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.model.neuroml.git "development" "development" "development" &&\
     cd org.geppetto.model.neuroml &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.model.neuroml\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulation.git "development" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulation.git "development" "development" "development" &&\
     cd org.geppetto.simulation &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.simulation\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
-RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulator.external.git "development" &&\
+RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.simulator.external.git "development" "development" "development" &&\
     cd org.geppetto.simulator.external &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.simulator.external\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
@@ -147,7 +147,7 @@ RUN $APP_DIR/copy.sh https://github.com/Metacell/org.geppetto.simulator.scidash.
 RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.frontend.git geppetto-scidash "${originBranch}" "${defaultBranch}"
     
 RUN cd org.geppetto.frontend/src/main &&\
-  $APP_DIR/copy.sh https://github.com/openworm/geppetto-application.git "development" &&\
+  $APP_DIR/copy.sh https://github.com/openworm/geppetto-application.git "development" "development" "development" &&\
   mv geppetto-application webapp
 
 RUN cd org.geppetto.frontend/src/main/webapp &&\
