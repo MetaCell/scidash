@@ -45,7 +45,7 @@ WORKDIR $APP_DIR
 # set git email and name for use with git merge
 RUN git config --global user.email "scidash@metacell.us"
 RUN git config --global user.name "SciDash"
-RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git feature/487
+RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "feature/472"
 
 
 WORKDIR $APP_DIR/scidash
