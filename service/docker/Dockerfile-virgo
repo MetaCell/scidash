@@ -151,7 +151,7 @@ RUN cd org.geppetto.frontend/src/main &&\
   mv geppetto-application webapp
 
 RUN cd org.geppetto.frontend/src/main/webapp &&\
-  $APP_DIR/rename.sh https://github.com/metacell/geppetto-scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
+  $APP_DIR/rename.sh https://github.com/metacell/geppetto-client.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
 RUN cd org.geppetto.frontend/ && cp /git/scidash/service/geppetto/frontend/app-config.xml src/main/webapp/WEB-INF/spring/ &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.frontend\e[0m" &&\
