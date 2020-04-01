@@ -55,6 +55,9 @@ WORKDIR $APP_DIR/scidash
 RUN make ARGS="-b $targetBranch" install-backend-with-env
 RUN make ARGS="-b $targetBranch" install-frontend
 
+RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
+RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
+
 WORKDIR $GEPPETTO_DIR
 RUN ls -la
 RUN npm run build-dev-noTest
