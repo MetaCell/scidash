@@ -40,7 +40,7 @@ RUN cp travis_utils/copy.sh $APP_DIR
 
 # -== Download SCIDASH repo ==-
 
-RUN $APP_DIR/copy.sh http://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
+RUN $APP_DIR/copy.sh http://github.com/Metacell/scidash.git "development" "development" "development"
 
 # -== INSTALL MAVEN ==-
 WORKDIR /tmp
