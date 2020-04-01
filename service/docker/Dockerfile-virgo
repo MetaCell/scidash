@@ -100,7 +100,7 @@ RUN mvn --version
 
 # -== INSTALL GEPPETTO ==-
 WORKDIR $SOURCES_DIR
-RUN $APP_DIR/copy.sh http://github.com/openworm/org.geppetto.git geppetto-scidash "${originBranch}" "${defaultBranch}"
+RUN $APP_DIR/copy.sh http://github.com/openworm/org.geppetto.git "scidash-backend" "scidash-backend" "scidash-backend"
 RUN cp /git/scidash/service/geppetto/config.json $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/setup.py $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN cp /git/scidash/service/geppetto/geppetto.plan $SOURCES_DIR/org.geppetto/
