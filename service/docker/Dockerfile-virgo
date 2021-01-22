@@ -27,7 +27,7 @@ RUN apt-get update && \
     update-ca-certificates -f;
 
 # -== Setup JAVA_HOME ==-
-ENV JAVA_HOME /usr/lib/jvm/java-9-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
 # -== Create various folder for this deployment ==-
