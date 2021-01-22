@@ -16,17 +16,18 @@ WORKDIR /
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
 RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
+RUN apt-get update
+RUN apt-get remove libgcc-8-dev -y
+RUN apt-get install -y openjdk-8-jdk 
+RUN apt-get install -y ant 
+RUN apt-get clean
 RUN apt-get update && \
     apt-get install ca-certificates-java && \
     apt-get clean && \
     update-ca-certificates -f;
 
 # -== Setup JAVA_HOME ==-
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-9-openjdk-amd64/
 RUN export JAVA_HOME
 
 # -== Create various folder for this deployment ==-
