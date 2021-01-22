@@ -18,6 +18,7 @@ ENV HOME /home/developer
 RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get remove libgcc-8-dev -y
+RUN apt-get install build-essential -y
 RUN apt-get install -y openjdk-8-jdk 
 RUN apt-get install -y ant 
 RUN apt-get clean
