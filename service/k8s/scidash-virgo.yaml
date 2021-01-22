@@ -11,15 +11,13 @@ spec:
     spec:
       containers:
       - name: scidash-virgo
-        image:  r.cfcr.io/tarelli/metacell/scidash_geppetto:{{CF_SHORT_REVISION}}
+        image:  {{REGISTRY_URL}}/scidash_geppetto:{{CF_SHORT_REVISION}}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         volumeMounts:
         - name: nfs-volume
           mountPath: /opt/virgo/geppettoTmp
-      imagePullSecrets:
-      - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
       volumes:
       - name: nfs-volume
         persistentVolumeClaim:
