@@ -15,19 +15,21 @@ ARG defaultBranch=scidash-backend
 WORKDIR /
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
+
+RUN wget -q https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u282-b08/OpenJDK8U-jdk_x64_linux_hotspot_8u282b08.tar.gz && \
+    tar xzf OpenJDK8U-jdk_x64_linux_hotspot_8u282b08.tar.gz
+# -== Setup JAVA_HOME ==-
+RUN export JAVA_HOME=/home/developer/jdk8u282-b08
+RUN export PATH=$JAVA_HOME/bin:$PATH
+
+
 RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
     apt-get install -y ant && \
     apt-get clean;
 RUN apt-get update && \
-    apt-get install ca-certificates-java && \
     apt-get clean && \
     update-ca-certificates -f;
-
-# -== Setup JAVA_HOME ==-
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
 
 # -== Create various folder for this deployment ==-
 RUN mkdir $APP_DIR
