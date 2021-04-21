@@ -46,7 +46,7 @@ RUN $APP_DIR/copy.sh http://github.com/Metacell/scidash.git "development" "devel
 
 # -== INSTALL MAVEN ==-
 WORKDIR /tmp
-RUN wget http://archive.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
+RUN wget -q http://archive.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
 RUN tar xzf apache-maven-3.5.2-bin.tar.gz -C /opt/
 RUN ln -s /opt/apache-maven-3.5.2 /opt/maven
 RUN ln -s /opt/maven/bin/mvn /usr/local/bin
@@ -58,7 +58,7 @@ RUN mvn --version
 RUN mkdir /nrn
 WORKDIR /nrn
 RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
-RUN wget -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
+RUN wget -q -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
 RUN tar xzvf nrn-7.6.tar.gz
 WORKDIR nrn-7.6
 RUN ./configure \
