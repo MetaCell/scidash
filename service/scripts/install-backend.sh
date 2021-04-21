@@ -35,6 +35,8 @@ fi
 
 python -m pip install pip==9.0.3
 pip install -r requirements.txt;
+pip uninstall -y sciunit
+pip install git+git://github.com/ddelpiano/sciunit@4.0.0#egg=sciunit
 
 git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
 
