@@ -59,7 +59,12 @@ class TestInstanceSerializer(
     key = 'hash_id'
 
     def validate(self, data):
-        sciunit.settings['PREVALIDATE'] = True
+        try:
+            # old style
+            sciunit.settings['PREVALIDATE'] = True
+        except:
+            # new style
+            sciunit.config_set('PREVALIDATE', True)
 
         class_data = data.get('test_class')
 
