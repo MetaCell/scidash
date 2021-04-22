@@ -36,6 +36,7 @@ RUN curl https://www.npmjs.com/install.sh | sh
 RUN pip install virtualenv
 RUN mkdir $APP_DIR
 RUN chown developer $APP_DIR
+RUN mkdir -p /home/developer/.config
 RUN chown -R developer /home/developer/.config
 RUN git clone https://github.com/ddelpiano/travis_utils
 RUN cp travis_utils/copy.sh $APP_DIR
@@ -49,7 +50,6 @@ RUN git config --global user.email "scidash@metacell.us"
 RUN git config --global user.name "SciDash"
 RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 
-
 WORKDIR $APP_DIR/scidash
 RUN virtualenv venv-py -p python3.6
 
@@ -60,8 +60,14 @@ RUN make ARGS="-b $targetBranch" install-frontend
 RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
 RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
 
+# install scidash api dependency for testing the scidash api notebook score upload, it needs the RandomTest class
+# so scidash also needs to be able to import the RandomTest class
+WORKDIR $APP_DIR
+RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash-api.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
+WORKDIR $APP_DIR/scidash-api
+RUN /bin/bash -c "source ../scidash/venv/bin/activate && pip install -e ."
+
 WORKDIR $GEPPETTO_DIR
-RUN ls -la
 RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash

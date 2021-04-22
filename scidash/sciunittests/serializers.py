@@ -59,7 +59,12 @@ class TestInstanceSerializer(
     key = 'hash_id'
 
     def validate(self, data):
-        sciunit.settings['PREVALIDATE'] = True
+        try:
+            # old style
+            sciunit.settings['PREVALIDATE'] = True
+        except:
+            # new style
+            sciunit.config_set('PREVALIDATE', True)
 
         class_data = data.get('test_class')
 
@@ -68,15 +73,18 @@ class TestInstanceSerializer(
 
         test_class = import_class(class_data.get('import_path'))
 
-        try:
-            destructured = json.loads(class_data.get('units'))
-        except json.JSONDecodeError:
-            quantity = import_class(class_data.get('units'))
-        else:
-            if destructured.get('name', False):
-                quantity = build_destructured_unit(destructured)
+        if class_data.get("units"):
+            try:
+                destructured = json.loads(class_data.get('units'))
+            except json.JSONDecodeError:
+                quantity = import_class(class_data.get('units'))
             else:
-                quantity = destructured
+                if destructured.get('name', False):
+                    quantity = build_destructured_unit(destructured)
+                else:
+                    quantity = destructured
+        else:
+            quantity = 1
 
         observations = data.get('observation')
         without_units = []
@@ -95,7 +103,7 @@ class TestInstanceSerializer(
                     without_units += filter_units(schema[1])
                 else:
                     without_units += filter_units(schema)
-        else:
+        elif test_class.observation_schema:
             without_units = filter_units(test_class.observation_schema)
 
         def process_obs(obs):
@@ -140,7 +148,38 @@ class TestInstanceSerializer(
 class ScoreClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-    key = 'class_name'
+    def create(self, validated_data):
+        model = self.Meta.model
+        relations, reverse_relations = self._extract_relations(validated_data)
+
+        self.update_or_create_direct_relations(
+            validated_data,
+            relations,
+        )
+
+        key_url = validated_data.get("url")
+        key_class_name = validated_data.get("class_name")
+
+        if key_url != "" and key_class_name != "":
+            try:
+                model_instance = model.objects.get(**{"url": key_url, "class_name": key_class_name})
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).update(model_instance, validated_data)
+            except model.DoesNotExist:
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).create(validated_data)
+        else:
+            if not validated_data.get('id', False):
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).create(validated_data)
+            else:
+                model_instance = model.objects.get(pk=validated_data.get('id'))
+                instance = super(GetByKeyOrCreateMixin,
+                                 self).update(model_instance, validated_data)
+
+        self.update_or_create_reverse_relations(instance, reverse_relations)
+
+        return instance
 
     class Meta:
         model = ScoreClass
