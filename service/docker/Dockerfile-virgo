@@ -22,6 +22,8 @@ RUN wget -q https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/
 # -== Setup JAVA_HOME ==-
 RUN export JAVA_HOME=/home/developer/jdk8u282-b08
 RUN export PATH=$JAVA_HOME/bin:$PATH
+ENV JAVA_HOME=/home/developer/jdk8u282-b08
+
 WORKDIR /
 
 RUN printf "\ndeb http://deb.debian.org/debian/ sid main\n" >> /etc/apt/sources.list
@@ -154,8 +156,6 @@ WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
 RUN python2 update_server.py
 
 WORKDIR $APP_DIR
-
-ENV JAVA_HOME=/home/developer/jdk8u282-b08
 
 RUN chown developer $VIRGO_DIR
 
