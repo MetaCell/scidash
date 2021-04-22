@@ -27,15 +27,13 @@ spec:
     spec:
       containers:
       - name: scidash-postgres
-        image: us.gcr.io/metacellllc/scidash_postgres:{{CF_SHORT_REVISION}}
+        image: gcr.io/metacellllc/metacell/scidash_db:production
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
         volumeMounts:
         - name: scidash-postgres-volume
-          mountPath: /opt/datga
-      imagePullSecrets:
-      - name: ""
+          mountPath: /opt/data
       volumes:
       - name: scidash-postgres-volume
         persistentVolumeClaim:

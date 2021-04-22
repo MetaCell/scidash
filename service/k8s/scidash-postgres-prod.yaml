@@ -34,8 +34,6 @@ spec:
         volumeMounts:
         - name: scidash-postgres-volume
           mountPath: /opt/data
-      imagePullSecrets:
-      - name: ""
       volumes:
       - name: scidash-postgres-volume
         persistentVolumeClaim:

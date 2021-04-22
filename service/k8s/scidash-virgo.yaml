@@ -21,8 +21,6 @@ spec:
         volumeMounts:
         - name: nfs-volume
           mountPath: /opt/virgo/geppettoTmp
-      imagePullSecrets:
-      - name: ""
       volumes:
       - name: nfs-volume
         persistentVolumeClaim:
