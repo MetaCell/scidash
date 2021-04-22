@@ -34,8 +34,10 @@ django==1.11.23
 djangorestframework-jwt==1.11.0
 djangorestframework==3.7.1
 drf-writable-nested==0.5.1
-# git+https://github.com/scidash/sciunit@dev#egg=sciunit-9999
-git+git://github.com/scidash/neuronunit@metacell#egg=neuronunit
+## git+https://github.com/scidash/sciunit@dev#egg=sciunit-9999
+# git+git://github.com/scidash/neuronunit@metacell#egg=neuronunit
+## git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
+git+git://github.com/zsinnema/neuronunit@metacell#egg=neuronunit
 hyperlink==18.0.0         # via twisted
 idna==2.8                 # via hyperlink, requests
 igor==0.3
@@ -69,7 +71,6 @@ nbformat==4.4.0           # via nbconvert
 neo==0.5.2                # via elephant, pynn
 networkx==2.4             # via scikit-image
 neuromllite==0.1.9
-#git+git://github.com/ddelpiano/neuronunit@4.0.0#egg=neuronunit
 numba==0.46.0
 numpy==1.18.0             # via allensdk, bokeh, dask, deap, efel, elephant, h5py, imageio, lazyarray, lmfit, matplotlib, neo, numba, pandas, patsy, pynn, pynrrd, pywavelets, scipy, statsmodels
 packaging==19.2           # via bokeh
