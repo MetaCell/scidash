@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: scidash-postgres
-        image: us.gcr.io/metacellllc/scidash_postgres:{{CF_SHORT_REVISION}}
+        image: us.gcr.io/metacellllc/scidash_db
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
