@@ -34,7 +34,7 @@ django==1.11.23
 djangorestframework-jwt==1.11.0
 djangorestframework==3.7.1
 drf-writable-nested==0.5.1
-git+https://github.com/scidash/sciunit@dev#egg=sciunit-9999
+# git+https://github.com/scidash/sciunit@dev#egg=sciunit-9999
 git+git://github.com/scidash/neuronunit@metacell#egg=neuronunit
 hyperlink==18.0.0         # via twisted
 idna==2.8                 # via hyperlink, requests
