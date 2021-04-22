@@ -21,7 +21,7 @@ class CapabilitySerializer(
 class ModelClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-    key = 'import_path'
+    key = 'url'
     capabilities = CapabilitySerializer(many=True)
     url = serializers.URLField(
         allow_null=True, allow_blank=True, validators=[]
