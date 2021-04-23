@@ -37,7 +37,7 @@ spec:
       volumes:
       - name: scidash-geppettotmp
         persistentVolumeClaim:
-          claimName: nfs-scidash
+          claimName: scidash-geppettotmp
 ---
 apiVersion: v1
 kind: Service
