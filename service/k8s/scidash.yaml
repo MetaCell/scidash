@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scidash-geppettotmp
+  labels:
+    app: scidash-geppettotmp
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10G
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,10 +32,10 @@ spec:
         ports:
         - containerPort: 8000
         volumeMounts:
-        - name: nfs-volume
+        - name: scidash-geppettotmp
           mountPath: /opt/virgo/geppettoTmp
       volumes:
-      - name: nfs-volume
+      - name: scidash-geppettotmp
         persistentVolumeClaim:
           claimName: nfs-scidash
 ---

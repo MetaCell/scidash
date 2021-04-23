@@ -19,12 +19,12 @@ spec:
         ports:
         - containerPort: 8080
         volumeMounts:
-        - name: nfs-volume
+        - name: scidash-geppettotmp
           mountPath: /opt/virgo/geppettoTmp
       volumes:
-      - name: nfs-volume
+      - name: scidash-geppettotmp
         persistentVolumeClaim:
-          claimName: nfs-scidash
+          claimName: scidash-geppettotmp
 ---
 apiVersion: v1
 kind: Service

@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: scidash-postgres-volume
+  name: scidash-db
   labels:
-    app: scidash-postgres-volume
+    app: scidash-db
 spec:
   accessModes:
   - ReadWriteOnce
@@ -32,12 +32,12 @@ spec:
         ports:
         - containerPort: 8000
         volumeMounts:
-        - name: scidash-postgres-volume
+        - name: scidash-db
           mountPath: /var/lib/postgresql/data
       volumes:
-      - name: scidash-postgres-volume
+      - name: scidash-db
         persistentVolumeClaim:
-          claimName: scidash-postgres-volume
+          claimName: scidash-db
 ---
 apiVersion: v1
 kind: Service
