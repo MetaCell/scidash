@@ -29,11 +29,14 @@ spec:
       - name: scidash-postgres
         image: gcr.io/metacellllc/metacell/scidash_db:production
         imagePullPolicy: IfNotPresent
+        env:
+        - name: PGDATA
+          value: /opt/scidash-db/data
         ports:
         - containerPort: 8000
         volumeMounts:
         - name: scidash-db
-          mountPath: /var/lib/postgresql/data
+          mountPath: /opt/scidash-db
       volumes:
       - name: scidash-db
         persistentVolumeClaim:
