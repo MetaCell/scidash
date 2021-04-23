@@ -25,6 +25,14 @@ spec:
       labels:
         app: scidash-virgo
     spec:
+      initContainers:
+      - name: scidash-virgo-init
+        image: us.gcr.io/metacellllc/scidash_geppetto:{{CF_SHORT_REVISION}}
+        imagePullPolicy: IfNotPresent
+        command: ["sh","-c","mkdir -p /opt/virgo/geppettoTmp && chown -R 1000:1000 /opt/virgo/geppettoTmp && chmod go+rw /opt/virgo/geppettoTmp"]
+        volumeMounts:
+        - name: scidash-geppettotmp
+          mountPath: /opt/virgo/geppettoTmp
       containers:
       - name: scidash-virgo
         image: us.gcr.io/metacellllc/scidash_geppetto:{{CF_SHORT_REVISION}}
