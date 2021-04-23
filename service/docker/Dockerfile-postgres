@@ -2,8 +2,8 @@ FROM postgres:9.4.24
 
 ARG ROOT=/
 ARG APP_DIR=/app
-ARG targetBranch=geppetto-scidash
-ARG originBranch=geppetto-scidash
+ARG targetBranch=development
+ARG originBranch=development
 ARG defaultBranch=development
 
 WORKDIR $ROOT
