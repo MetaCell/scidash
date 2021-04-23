@@ -33,7 +33,7 @@ spec:
         - containerPort: 8000
         volumeMounts:
         - name: scidash-postgres-volume
-          mountPath: /opt/data
+          mountPath: /var/lib/postgresql/data
       volumes:
       - name: scidash-postgres-volume
         persistentVolumeClaim:
