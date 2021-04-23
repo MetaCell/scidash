@@ -33,7 +33,7 @@ spec:
         - name: PGDATA
           value: /opt/scidash-db/data
         ports:
-        - containerPort: 8000
+        - containerPort: 5432
         volumeMounts:
         - name: scidash-db
           mountPath: /opt/scidash-db
@@ -47,9 +47,9 @@ kind: Service
 metadata:
   name: scidash-postgres
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 8000
-    targetPort: 8000
+  - port: 5432
+    targetPort: 5432
   selector:
     app: scidash-postgres
