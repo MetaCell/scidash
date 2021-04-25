@@ -14,7 +14,7 @@ django-celery-beat
 django-celery-results
 django-db-logger
 git+git://github.com/scidash/neuronunit@metacell#egg=neuronunit
-git+git://github.com:MetaCell/scidash-api.git@master#egg=scidash_api
+git+git://github.com/MetaCell/scidash-api.git@master#egg=scidash_api
 wheel==0.33.6
 sentry-sdk==0.14.1
 django-ckeditor==5.9.0
