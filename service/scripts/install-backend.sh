@@ -38,8 +38,6 @@ pip install -r requirements.txt;
 # pip uninstall -y sciunit
 # pip install git+git://github.com/ddelpiano/sciunit@4.0.0#egg=sciunit
 
-pip install git+git@github.com:MetaCell/scidash-api.git@master#egg=scidash_api
-
 git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
 
 if [ $? -eq 0 ]; then
