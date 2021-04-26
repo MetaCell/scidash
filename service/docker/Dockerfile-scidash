@@ -44,6 +44,7 @@ RUN cp travis_utils/copy.sh $APP_DIR
 # COPYING PROJECT
 #RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 RUN mkdir -p $APP_DIR/scidash
+RUN chown developer:developer $APP_DIR/scidash
 COPY --chown=developer . $APP_DIR/scidash
 
 USER developer
