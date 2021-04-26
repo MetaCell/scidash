@@ -29,6 +29,9 @@ spec:
       - name: scidash
         image: us.gcr.io/metacellllc/scidash:{{CF_SHORT_REVISION}}
         imagePullPolicy: IfNotPresent
+        env:
+        - name: CF_SHORT_REVISION
+          value: "{{CF_SHORT_REVISION}}"
         ports:
         - containerPort: 8000
         volumeMounts:

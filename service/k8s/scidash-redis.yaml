@@ -16,6 +16,9 @@ spec:
       - name: scidash-redis
         image: registry.hub.docker.com/library/redis:latest
         imagePullPolicy: IfNotPresent
+        env:
+        - name: CF_SHORT_REVISION
+          value: "{{CF_SHORT_REVISION}}"
         ports:
         - containerPort: 6379
 ---

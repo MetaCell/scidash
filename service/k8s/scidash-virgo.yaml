@@ -32,6 +32,9 @@ spec:
       - name: scidash-virgo
         image: us.gcr.io/metacellllc/scidash_geppetto:{{CF_SHORT_REVISION}}
         imagePullPolicy: IfNotPresent
+        env:
+        - name: CF_SHORT_REVISION
+          value: "{{CF_SHORT_REVISION}}"
         ports:
         - containerPort: 8080
         volumeMounts:

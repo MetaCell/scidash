@@ -32,6 +32,8 @@ spec:
         env:
         - name: PGDATA
           value: /opt/scidash-db/data
+        - name: CF_SHORT_REVISION
+          value: "{{CF_SHORT_REVISION}}"
         ports:
         - containerPort: 5432
         volumeMounts:
