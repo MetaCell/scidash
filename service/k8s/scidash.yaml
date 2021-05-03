@@ -39,6 +39,16 @@ spec:
         volumeMounts:
         - name: scidash-geppettotmp
           mountPath: /opt/virgo/geppettoTmp
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: usesvolume
+                    operator: In
+                    values:
+                      - scidash-geppettotmp
+              topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: scidash-geppettotmp
         persistentVolumeClaim:

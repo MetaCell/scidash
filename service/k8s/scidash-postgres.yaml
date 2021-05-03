@@ -39,6 +39,16 @@ spec:
         volumeMounts:
         - name: scidash-db
           mountPath: /opt/scidash-db
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: usesvolume
+                    operator: In
+                    values:
+                      - scidash-db
+              topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: scidash-db
         persistentVolumeClaim:
