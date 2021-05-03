@@ -4,6 +4,7 @@ metadata:
   name: scidash-geppettotmp
   labels:
     app: scidash-geppettotmp
+    usesvolume: scidash-geppettotmp
 spec:
   accessModes:
   - ReadWriteOnce
@@ -24,6 +25,7 @@ spec:
     metadata:
       labels:
         app: scidash-virgo
+        usesvolume: scidash-geppettotmp
     spec:
       securityContext:
         runAsUser: 1000

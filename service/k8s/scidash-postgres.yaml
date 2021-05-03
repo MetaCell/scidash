@@ -15,6 +15,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: scidash-postgres
+  labels:
+    app: scidash-postgres
+    usesvolume: scidash-db
 spec:
   replicas: 1
   selector:
@@ -24,6 +27,7 @@ spec:
     metadata:
       labels:
         app: scidash-postgres
+        usesvolume: scidash-db
     spec:
       containers:
       - name: scidash-postgres
