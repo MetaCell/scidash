@@ -30,11 +30,10 @@ dotenv.read_dotenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Se via OS env, defaults to False
+# Set via OS env, defaults to False
 DEBUG = TEMPLATE_DEBUG = os.environ.get('DEVELOPMENT', '0') == '1'
 
-if DEBUG:
-    sentry_init()
+sentry_init()
 
 
 # Quick-start development settings - unsuitable for production

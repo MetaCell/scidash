@@ -32,6 +32,8 @@ spec:
         env:
         - name: CF_SHORT_REVISION
           value: "{{CF_SHORT_REVISION}}"
+        - name: ENVIRONMENT
+          value: "{{ENVIRONMENT}}"
         ports:
         - containerPort: 8000
         volumeMounts:

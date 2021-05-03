@@ -7,6 +7,8 @@ from sentry_sdk.integrations.redis import RedisIntegration
 global sio_app
 global sio_sys
 
+sentry_environment = os.environ.get("ENVIRONMENT", "Production")
+
 
 def _capture(msg, app=False, extra_context=None, f=sentry_sdk.capture_message):
     if extra_context is None:
@@ -48,6 +50,7 @@ def init():
         sio_sys = sentry_sdk.client.Client(sentry_dsn_sys)
         sentry_sdk.init(
             transport=send_event,
+            environment=sentry_environment,
             integrations=[CeleryIntegration(),
                           DjangoIntegration(),
                           RedisIntegration()],
