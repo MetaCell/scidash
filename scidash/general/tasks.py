@@ -4,6 +4,7 @@ import os
 import platform
 
 from celery import shared_task
+from scidash.main.celery import app
 from django.conf import settings as s
 from websocket import WebSocketTimeoutException
 
@@ -147,7 +148,7 @@ def send_score_to_geppetto(score):
         score.save()
 
 
-@shared_task
+@app.task
 def run_experiment():
     scores = list(Score.objects.filter(status=Score.SCHEDULED))
 
