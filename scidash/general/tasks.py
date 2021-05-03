@@ -7,6 +7,7 @@ from celery import shared_task
 from scidash.main.celery import app
 from django.conf import settings as s
 from websocket import WebSocketTimeoutException
+from sentry_sdk import capture_exception, capture_message
 
 import pygeppetto_gateway as pg
 from pygeppetto_gateway.interpreters.helpers import interpreter_detector
@@ -14,7 +15,6 @@ from pygeppetto_server.messages import Servlet as S
 from pygeppetto_server.messages import ServletResponse as SR
 from scidash.general.helpers import import_class
 from scidash.sciunittests.models import ScoreInstance as Score
-from scidash.main.sentry import capture_exception, capture_message
 
 db_logger = logging.getLogger('db')
 
