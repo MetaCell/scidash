@@ -21,10 +21,9 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   name: scidash-web-nginx-ingress
-  namespace: scidash
 spec:
   rules:
-  - host: dash.scidash.org
+  - host: {{DOMAIN}}
     http:
       paths:
       - backend:
@@ -34,5 +33,5 @@ spec:
         pathType: ImplementationSpecific
   tls:
   - hosts:
-    - dash.scidash.org
+    - {{DOMAIN}}
     secretName: scidash-tls
