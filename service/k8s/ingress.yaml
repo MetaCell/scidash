@@ -17,7 +17,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-scidash
+    cert-manager.io/issuer: letsencrypt-scidash
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   name: scidash-web-nginx-ingress
