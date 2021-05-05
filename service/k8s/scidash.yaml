@@ -30,11 +30,11 @@ spec:
     spec:
       containers:
       - name: scidash
-        image: us.gcr.io/metacellllc/scidash:{{CF_SHORT_REVISION}}
+        image: us.gcr.io/metacellllc/scidash:{{CF_BUILD_ID}}
         imagePullPolicy: IfNotPresent
         env:
-        - name: CF_SHORT_REVISION
-          value: "{{CF_SHORT_REVISION}}"
+        - name: CF_BUILD_ID
+          value: "{{CF_BUILD_ID}}"
         - name: ENVIRONMENT
           value: "{{ENVIRONMENT}}"
         ports:
