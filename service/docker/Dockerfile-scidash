@@ -11,8 +11,8 @@ ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG targetBranch=development
-ARG originBranch=development
+ARG targetBranch=geppetto-scidash
+ARG originBranch=geppetto-scidash
 ARG defaultBranch=development
 
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
@@ -42,7 +42,6 @@ RUN git clone https://github.com/ddelpiano/travis_utils
 RUN cp travis_utils/copy.sh $APP_DIR
 
 # COPYING PROJECT
-#RUN $APP_DIR/copy.sh https://github.com/Metacell/scidash.git "${targetBranch}" "${originBranch}" "${defaultBranch}"
 RUN mkdir -p $APP_DIR/scidash
 RUN chown developer:developer $APP_DIR/scidash
 COPY --chown=developer . $APP_DIR/scidash
