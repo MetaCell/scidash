@@ -36,7 +36,7 @@ fi
 python -m pip install pip==9.0.3
 pip install -r requirements.txt;
 python3 -m pip install --upgrade pip
-pip3 install social-auth-app-django==4.0.0
+pip3 install social-auth-app-django==4.0.0 dotenv
 # pip uninstall -y sciunit
 # pip install git+git://github.com/ddelpiano/sciunit@4.0.0#egg=sciunit
 
