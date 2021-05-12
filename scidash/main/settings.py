@@ -71,6 +71,8 @@ THIRD_PARTY_APPS = [
     'django_db_logger',
     'ckeditor',
     'adminsortable2',
+    # Add the following django-allauth apps
+    'social_django',
 ]
 
 SCIDASH_APPS = [
@@ -94,12 +96,43 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# see https://python-social-auth.readthedocs.io/en/latest/backends/index.html
+# for configation of social backends
+
+# GOOGLE
+# https://python-social-auth.readthedocs.io/en/latest/backends/google.html
+# see https://developers.google.com/identity/protocols/oauth2?csw=1#Registering
+# to get google client id (key) and secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '732706977649-oou1hmc5q4mbrsida2bvu0mplmsebok0.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'WbtBzkxLVODaSi9PcPHS2DuL'
+
+# TWITTER
+# https://python-social-auth.readthedocs.io/en/latest/backends/twitter.html
+SOCIAL_AUTH_TWITTER_KEY = ''
+SOCIAL_AUTH_TWITTER_SECRET = ''
+
+# GITHUB
+# https://python-social-auth.readthedocs.io/en/latest/backends/github.html
+SOCIAL_AUTH_GITHUB_KEY = '6e17b37f51445888e940'
+SOCIAL_AUTH_GITHUB_SECRET = 'b920fd48bb6a057225989692bb5eacb84032bab5'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'scidash.account.auth.CsrfExemptSessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -118,6 +151,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
