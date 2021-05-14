@@ -68,6 +68,7 @@ RUN cp ./service/dotenv/scidash_env .env
 
 USER root
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+RUN mkdir -p /etc/secrets
 
 USER developer
 CMD ./service/scripts/run.sh
