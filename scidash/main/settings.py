@@ -111,8 +111,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'WbtBzkxLVODaSi9PcPHS2DuL'
 
 # TWITTER
 # https://python-social-auth.readthedocs.io/en/latest/backends/twitter.html
-SOCIAL_AUTH_TWITTER_KEY = ''
-SOCIAL_AUTH_TWITTER_SECRET = ''
+SOCIAL_AUTH_TWITTER_KEY = 'YLbWDorRWSsO1FQo5kanraUzt'
+SOCIAL_AUTH_TWITTER_SECRET = '2D8ICyjXOMssEdfaw0v8Qtyb2vEGpFUYTjLdIZ1YiMJE0TR0rx'
+# twitter bearer token: AAAAAAAAAAAAAAAAAAAAAPJuPgEAAAAAhP2wPOYLMrjP0RNRzfFGj%2BUgJrE%3DlEjIikC9mLUfDpQsVMyPuAK4f5k4TNHQHLXVGqmkeDVEzbPkv2
 
 # GITHUB
 # https://python-social-auth.readthedocs.io/en/latest/backends/github.html

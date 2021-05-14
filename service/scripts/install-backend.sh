@@ -29,17 +29,14 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [ "$virtualenv" = true ] ; then
-    virtualenv -p python3.6 ./venv;
-    source ./venv/bin/activate;
+    python -m venv venv
+    source ./venv/bin/activate
 fi
 
-python -m pip install pip==9.0.3
-pip install -r requirements.txt;
+# python -m pip install pip==9.0.3
 python3 -m pip install --upgrade pip
-
-# pip3 install social-auth-app-django==4.0.0
-# pip uninstall -y sciunit
-# pip install git+git://github.com/ddelpiano/sciunit@4.0.0#egg=sciunit
+pip install Jinja2==2.11.3 --no-cache-dir
+pip install -r requirements.txt --no-cache-dir
 
 git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
 
