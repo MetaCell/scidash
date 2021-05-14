@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: scidash
-        image: us.gcr.io/metacellllc/metacell/scidash:{{CF_BUILD_ID}}
+        image: us.gcr.io/metacellllc/scidash:{{CF_BUILD_ID}}
         imagePullPolicy: IfNotPresent
         env:
         - name: CF_BUILD_ID
