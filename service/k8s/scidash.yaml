@@ -43,13 +43,13 @@ spec:
     spec:
       containers:
       - name: scidash
-        image: metacell/scidash:latest
+        image: metacell/scidash:"{{CF_BUILD_ID}}"
         imagePullPolicy: IfNotPresent
         env:
         - name: CF_BUILD_ID
-          value: latest
+          value: "{{CF_BUILD_ID}}"
         - name: ENVIRONMENT
-          value: Development
+          value: "{{ENVIRONMENT}}"
         ports:
         - containerPort: 8000
         volumeMounts:
