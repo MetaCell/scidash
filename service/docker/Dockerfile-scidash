@@ -17,8 +17,10 @@ ARG defaultBranch=development
 
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
+RUN cat /etc/passwd
 RUN useradd -ms /bin/bash developer
 ENV HOME /home/developer
+RUN cat /etc/passwd
 
 WORKDIR $ROOT
 
