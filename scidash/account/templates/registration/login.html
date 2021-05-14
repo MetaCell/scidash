@@ -8,25 +8,22 @@
    <div class="login-container">
   <h5>SCIDASH LOGIN</h5>
   <br>
-  <br>
-  <form method="POST">
-    {% csrf_token %}
-    {% form form=form %}{% endform %}
-    <input type="hidden" name="next" value="{% url 'index' %}">
-    <button type="submit" name="_submit" class="btn right">Login</button>
-  </form>
-  <br>
-  <br>
-  <br>
-  <a href="{% url 'sign-up' %}">
-    <button name="_signup" class="btn" style="float: left; letter-spacing: 0px;">Sign-up</button>
+  <a href="{% url 'social:begin' 'github' %}">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+      Login with GitHub
+    </button>
   </a>
-  <a href="{% url 'password-reset' %}">
-    <button name="_reset" class="btn" style="float: right; letter-spacing: 0px;">Reset Password</button>
+  <a href="{% url 'social:begin' 'google-oauth2' %}">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+      Login with Google
+    </button>
   </a>
-  <br>
-  <br>
-  <a href="{% url 'index' %}">Go home</a>
+  <a href="{% url 'social:begin' 'twitter' %}">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+      Login with Twitter
+    </button>
+  </a>
+  <a href="{% url 'index' %}" style="float: left; margin: 40px; width: 100%">Go home</a>
 </div>
 {% endblock %}
 
