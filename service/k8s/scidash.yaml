@@ -1,15 +1,15 @@
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: scidash
-# type: Opaque
-# stringData:
-#   SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: key
-#   SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: secret
-#   SOCIAL_AUTH_TWITTER_KEY: key
-#   SOCIAL_AUTH_TWITTER_SECRET: secret
-#   SOCIAL_AUTH_GITHUB_KEY: key
-#   SOCIAL_AUTH_GITHUB_SECRET: secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: scidash
+type: Opaque
+stringData:
+  SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: {{OAUTH_GOOGLE_KEY}}
+  SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: {{OAUTH_GOOGLE_SECRET}}
+  SOCIAL_AUTH_TWITTER_KEY: {{OAUTH_TWITTER_KEY}}
+  SOCIAL_AUTH_TWITTER_SECRET: {{OAUTH_TWITTER_SECRET}}
+  SOCIAL_AUTH_GITHUB_KEY: {{OAUTH_GITHUB_KEY}}
+  SOCIAL_AUTH_GITHUB_SECRET: {{OAUTH_GITHUB_SECRET}}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
