@@ -22,6 +22,9 @@ ENV HOME /home/developer
 
 WORKDIR $ROOT
 
+RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+RUN mkdir -p /etc/secrets
+
 # INSTALLING REQUIREMENTS
 RUN apt-get update
 RUN apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
@@ -66,9 +69,4 @@ RUN npm run build-dev-noTest
 WORKDIR $APP_DIR/scidash
 RUN cp ./service/dotenv/scidash_env .env
 
-USER root
-RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
-RUN mkdir -p /etc/secrets
-
-USER developer
 CMD ./service/scripts/run.sh
