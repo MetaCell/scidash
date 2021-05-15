@@ -98,6 +98,7 @@ MIDDLEWARE_CLASSES = [
 
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
 # see https://python-social-auth.readthedocs.io/en/latest/backends/index.html
 # for configation of social backends
