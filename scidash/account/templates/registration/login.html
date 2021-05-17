@@ -29,8 +29,11 @@
     {% csrf_token %}
     {% form form=form %}{% endform %}
     <input type="hidden" name="next" value="{% url 'index' %}">
-      <button type="submit" name="_submit" class="btn left">Login</button>
-    </form>
+    <button type="submit" name="_submit" class="btn left">Login</button>
+    <a href="{% url 'password-reset' %}">
+      <button name="_reset" class="btn" style="float: right; letter-spacing: 0px;">Reset Password</button>
+    </a>
+  </form>
   <br>
   <h6 style="margin-top: 80px">Or sign up for a SciDash account</h6>
   <a href="{% url 'sign-up' %}">
