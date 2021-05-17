@@ -9,22 +9,33 @@
   <h5>SCIDASH LOGIN</h5>
   <br>
   <a href="{% url 'social:begin' 'github' %}">
-    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin-right: 30px; width: 180px">
       Login with GitHub
     </button>
   </a>
   <a href="{% url 'social:begin' 'google-oauth2' %}">
-    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin-right: 30px; width: 180px">
       Login with Google
     </button>
   </a>
   <a href="{% url 'social:begin' 'twitter' %}">
-    <button class="btn" style="float: left; letter-spacing: 0px; margin: 10px; width: 180px">
+    <button class="btn" style="float: left; letter-spacing: 0px; margin-right: 30px; width: 180px">
       Login with Twitter
     </button>
+  </a>
+  <br>
+  <h6 style="margin-top: 80px">Or use your SciDash account</h6>
+  <form method="POST">
+    {% csrf_token %}
+    {% form form=form %}{% endform %}
+    <input type="hidden" name="next" value="{% url 'index' %}">
+      <button type="submit" name="_submit" class="btn left">Login</button>
+    </form>
+  <br>
+  <h6 style="margin-top: 80px">Or sign up for a SciDash account</h6>
+  <a href="{% url 'sign-up' %}">
+    <button name="_signup" class="btn" style="float: left; letter-spacing: 0px;">Sign-up</button>
   </a>
   <a href="{% url 'index' %}" style="float: left; margin: 40px; width: 100%">Go home</a>
 </div>
 {% endblock %}
-
-
