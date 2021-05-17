@@ -32,11 +32,8 @@ spec:
         fsGroup: 1000
       containers:
       - name: scidash-virgo
-        image: us.gcr.io/metacellllc/scidash_geppetto:{{CF_SHORT_REVISION}}
+        image: us.gcr.io/metacellllc/scidash_geppetto:{{TAG}}
         imagePullPolicy: IfNotPresent
-        env:
-        - name: CF_SHORT_REVISION
-          value: "{{CF_SHORT_REVISION}}"
         ports:
         - containerPort: 8080
         volumeMounts:

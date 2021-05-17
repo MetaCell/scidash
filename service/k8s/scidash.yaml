@@ -43,11 +43,9 @@ spec:
     spec:
       containers:
       - name: scidash
-        image: us.gcr.io/metacellllc/scidash:{{CF_BUILD_ID}}
+        image: us.gcr.io/metacellllc/scidash:{{TAG}}
         imagePullPolicy: IfNotPresent
         env:
-        - name: CF_BUILD_ID
-          value: "{{CF_BUILD_ID}}"
         - name: ENVIRONMENT
           value: "{{ENVIRONMENT}}"
         ports:
