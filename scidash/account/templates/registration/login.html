@@ -36,8 +36,8 @@
       Login with Twitter
     </button>
   </a>
-  <br>
-  <h6 style="margin-top: 80px">Or use your SciDash account</h6>
+  <br style="clear: both;">
+  <h6 style="margin-top: 40px">Or use your SciDash account</h6>
   <form method="POST">
     {% csrf_token %}
     {% form form=form %}{% endform %}
@@ -48,7 +48,7 @@
     </a>
   </form>
   <br>
-  <h6 style="margin-top: 80px">Or sign up for a SciDash account</h6>
+  <h6 style="margin-top: 40px">Or sign up for a SciDash account</h6>
   <a href="{% url 'sign-up' %}">
     <button name="_signup" class="btn" style="float: left; letter-spacing: 0px;">Sign-up</button>
   </a>
