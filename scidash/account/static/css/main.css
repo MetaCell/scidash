@@ -96,3 +96,14 @@ body {
 	transform: translate(-50%, -50%) !important;
 	width: 250px;
 }
+
+.btn.icon-btn {
+	float: left;
+	letter-spacing: 0px;
+	margin-top: 16px;
+	margin-right: 16px;
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
