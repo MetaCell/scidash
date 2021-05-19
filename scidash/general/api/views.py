@@ -167,3 +167,13 @@ class InstructionsView(APIView):
             }, 200
         )
 
+class SettingsView(APIView):
+    def get(self, request):
+        return Response(
+            {
+                'sentry': {
+                    'dsn': s.SENTRY_DSN,
+                    'env': s.SENTRY_ENV
+                }
+            }, 200
+        )
