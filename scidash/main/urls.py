@@ -116,6 +116,11 @@ urlpatterns = [
         general_views.InstructionsView.as_view(),
         name='instructions-view'
     ),
+    url(
+        r'^api/settings/$',
+        general_views.SettingsView.as_view(),
+        name='instructions-view'
+    ),
     url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
     url(
         r'^api/compatibility/$',

@@ -16,6 +16,8 @@ import os
 import dotenv
 from django.urls import reverse
 
+SENTRY_ENV = os.environ.get("ENVIRONMENT", "Production")
+SENTRY_DSN = os.environ.get('SENTRY_DSN', "")
 from .sentry import init as sentry_init
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
