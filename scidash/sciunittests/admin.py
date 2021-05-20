@@ -8,6 +8,8 @@ from scidash.sciunittests.models import (
 
 # Register your models here.
 
+class ScoreInstanceAdmin(admin.ModelAdmin):
+    list_display = ('model_instance', 'test_instance', 'status')
 
 class TestClassModelAdmin(admin.ModelAdmin):
     search_fields = ['class_name']
@@ -45,7 +47,7 @@ class TestSuiteAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TestSuite, TestSuiteAdmin)
-admin.site.register(ScoreInstance)
+admin.site.register(ScoreInstance, ScoreInstanceAdmin)
 admin.site.register(ScoreClass)
 admin.site.register(TestInstance, TestInstanceModelAdmin)
 admin.site.register(TestClass, TestClassModelAdmin)

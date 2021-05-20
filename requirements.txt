@@ -17,7 +17,7 @@ django-db-logger
 neo==0.5.2
 pynn==0.9.5
 Jinja2==2.11.3 
-git+git://github.com/scidash/neuronunit@metacell
+git+git://github.com/scidash/neuronunit@master
 git+git://github.com/MetaCell/scidash-api.git@master
 wheel
 sentry-sdk

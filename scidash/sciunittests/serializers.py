@@ -64,7 +64,10 @@ class TestInstanceSerializer(
             sciunit.settings['PREVALIDATE'] = True
         except:
             # new style
-            sciunit.config_set('PREVALIDATE', True)
+            try:
+                sciunit.config_set('PREVALIDATE', True)
+            except:
+                sciunit.config.set('PREVALIDATE', True)
 
         class_data = data.get('test_class')
 
@@ -97,14 +100,17 @@ class TestInstanceSerializer(
 
             return result
 
-        if isinstance(test_class.observation_schema, list):
-            for schema in test_class.observation_schema:
-                if isinstance(schema, tuple):
+        observation_schema = test_class.observation_schema
+        if not observation_schema:
+            observation_schema = class_data.get("observation_schema")
+        if isinstance(observation_schema, list):
+            for schema in observation_schema:
+                if isinstance(schema, tuple) or len(schema)>1:
                     without_units += filter_units(schema[1])
                 else:
                     without_units += filter_units(schema)
-        elif test_class.observation_schema:
-            without_units = filter_units(test_class.observation_schema)
+        elif observation_schema:
+            without_units = filter_units(observation_schema)
 
         def process_obs(obs):
             try:
