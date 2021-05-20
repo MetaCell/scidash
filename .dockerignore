@@ -2,4 +2,4 @@ venv
 tmp
 **/*/node_modules
 pygeppetto-django
-static
+static/org.geppetto.frontend
