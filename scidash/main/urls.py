@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from rest_framework_cache.registry import cache_registry
-# from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token
 
 from scidash.account.api.views import CheckIsLoggedView, \
     UserViewSet, \
@@ -65,7 +65,7 @@ router.register(
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^api/login/$', obtain_jwt_token),
+    url(r'^api/login/$', obtain_jwt_token),
     url('', include('social_django.urls', namespace='social')),
     url(r'^data/', include('scidash.general.urls')),
     url(r'^api/date-range/$', DateRangeView.as_view(), name='date-range-view'),
