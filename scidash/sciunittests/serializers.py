@@ -103,6 +103,8 @@ class TestInstanceSerializer(
         observation_schema = test_class.observation_schema
         if not observation_schema:
             observation_schema = class_data.get("observation_schema")
+            if not observation_schema:
+                observation_schema = TestClass.objects.get(import_path=class_data.get('import_path')).observation_schema
         if isinstance(observation_schema, list):
             for schema in observation_schema:
                 if isinstance(schema, tuple) or len(schema)>1:

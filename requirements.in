@@ -5,7 +5,7 @@ djangorestframework==3.7.1
 drf-writable-nested
 django-filter==1.1.0
 django-timezone-field==3.1
-djangorestframework-jwt
+git+git://github.com/zsinnema/django-rest-framework-jwt@master
 django-extensions==2.1.6
 django-dotenv
 rest-framework-cache
