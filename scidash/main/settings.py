@@ -285,9 +285,9 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'email_username'
-EMAIL_HOST_PASSWORD = 'email_password'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'scidashasu@gmail.com'
+EMAIL_HOST_PASSWORD = 'Zh0UzMZDI7ic'
 EMAIL_USE_SSL = True
 
 POPULATE_USERS = True
