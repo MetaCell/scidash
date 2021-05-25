@@ -106,9 +106,13 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 # for configation of social backends
 
 def get_secret(secret):
-    sec_path = os.getenv('SECRETS_PATH','/etc/secrets')
-    with open(os.path.join(sec_path, secret)) as fh:
-        return fh.read()
+    try:
+        sec_path = os.getenv('SECRETS_PATH','/etc/secrets')
+        with open(os.path.join(sec_path, secret)) as fh:
+            return fh.read()
+    except:
+        # if no secrets folder exists
+        return ''
 
 # GOOGLE
 # https://python-social-auth.readthedocs.io/en/latest/backends/google.html
