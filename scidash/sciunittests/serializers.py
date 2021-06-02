@@ -1,17 +1,12 @@
-import json
-
-import numpy as np
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers, fields
 
-import sciunit
 from scidash.account.serializers import ScidashUserSerializer
-from scidash.general.helpers import import_class
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer, \
     SerializerWritableMethodField
 from scidash.sciunitmodels.serializers import ModelInstanceSerializer
-from scidash.sciunittests.helpers import build_destructured_unit
+from scidash.sciunittests.validators import TestInstanceValidator
 from scidash.sciunittests.models import (
     ScoreClass, ScoreInstance, TestClass, TestInstance, TestSuite
 )
@@ -59,88 +54,12 @@ class TestInstanceSerializer(
     key = 'hash_id'
 
     def validate(self, data):
-        try:
-            # old style
-            sciunit.settings['PREVALIDATE'] = True
-        except:
-            # new style
-            try:
-                sciunit.config_set('PREVALIDATE', True)
-            except:
-                sciunit.config.set('PREVALIDATE', True)
-
-        class_data = data.get('test_class')
-
-        if not class_data.get('import_path', False):
-            return data
-
-        test_class = import_class(class_data.get('import_path'))
-
-        if class_data.get("units"):
-            try:
-                destructured = json.loads(class_data.get('units'))
-            except json.JSONDecodeError:
-                quantity = import_class(class_data.get('units'))
-            else:
-                if destructured.get('name', False):
-                    quantity = build_destructured_unit(destructured)
-                else:
-                    quantity = destructured
-        else:
-            quantity = 1
-
-        observations = data.get('observation')
-        without_units = []
-
-        def filter_units(schema):
-            result = []
-            for key, rules in schema.items():
-                if not rules.get('units', False):
-                    result.append(key)
-
-            return result
-
-        observation_schema = test_class.observation_schema
-        if not observation_schema:
-            observation_schema = class_data.get("observation_schema")
-            if not observation_schema:
-                observation_schema = TestClass.objects.get(import_path=class_data.get('import_path')).observation_schema
-        if isinstance(observation_schema, list):
-            for schema in observation_schema:
-                if isinstance(schema, tuple) or len(schema)>1:
-                    without_units += filter_units(schema[1])
-                else:
-                    without_units += filter_units(schema)
-        elif observation_schema:
-            without_units = filter_units(observation_schema)
-
-        def process_obs(obs):
-            try:
-                obs = int(obs)
-            except ValueError:
-                obs = np.array(json.loads(obs))
-
-            return obs
-
-        if not isinstance(quantity, dict):
-            obs_with_units = {
-                x: (
-                    process_obs(y) * quantity
-                    if x not in without_units else process_obs(y)
-                )
-                for x, y in observations.items()
-            }
-        else:
-            obs_with_units = {
-                x: (
-                    process_obs(y) * import_class(quantity[x])
-                    if x not in without_units else process_obs(y)
-                )
-                for x, y in observations.items()
-            }
+        fallback_observation_scheme = TestClass.objects.get(
+            import_path=data.get('test_class').get('import_path')
+        ).observation_schema
 
         try:
-            test_class(obs_with_units)
+            TestInstanceValidator.validate(data, fallback_observation_scheme)
         except Exception as e:
             raise serializers.ValidationError(
                 f"Can't instantiate class, reason candidates: {e}"
