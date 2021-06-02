@@ -1,3 +1,5 @@
+# Please upgrade pip to min v21, the default version v18 of py36 has package resolving issues
+# e.g. when installing numba the py37 version of numpy will be installed and fails
 django==1.11.29
 psycopg2-binary==2.8.6
 channels==2.3.1
@@ -14,13 +16,17 @@ celery[redis]==4.2.2
 django-celery-beat==1.4.0
 django-celery-results==1.0.4
 django-db-logger
-neo==0.5.2
+neo==0.9.0
+numpy<1.20.0
 pynn==0.9.5
 Jinja2==2.11.3 
 git+git://github.com/scidash/neuronunit@master
+#git+git://github.com/scidash/sciunit@master
+git+git://github.com/zsinnema/sciunit.git
 git+git://github.com/MetaCell/scidash-api.git@master
 wheel
 sentry-sdk
 django-ckeditor==5.9.0
 django-admin-sortable2==0.7.5
 social-auth-app-django==4.0.0  # will be installed through install script install-backend
+#git+git://github.com/scidash/python-quantities@master  # waiting for this PR https://github.com/python-quantities/python-quantities/pull/186 to be merged
