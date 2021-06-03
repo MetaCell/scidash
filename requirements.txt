@@ -178,6 +178,7 @@ importlib-metadata==3.10.1
     #   click
     #   jsonpickle
     #   jsonschema
+    #   sciunit
 incremental==21.3.0
     # via twisted
 ipykernel==5.5.5
@@ -404,8 +405,10 @@ scipy==1.5.4
     #   elephant
     #   lmfit
     #   neuronunit
-sciunit==0.2.4
-    # via neuronunit
+git+git://github.com/scidash/sciunit@master
+    # via
+    #   -r requirements.in
+    #   neuronunit
 sentry-sdk==1.1.0
     # via -r requirements.in
 service-identity==21.1.0
@@ -439,8 +442,6 @@ sortedcontainers==2.4.0
     # via distributed
 soupsieve==2.2.1
     # via beautifulsoup4
-sty==1.0.0rc1
-    # via sciunit
 tblib==1.7.0
     # via distributed
 testpath==0.5.0
