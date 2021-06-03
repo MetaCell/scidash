@@ -21,8 +21,7 @@ numpy<1.20.0
 pynn==0.9.5
 Jinja2==2.11.3 
 git+git://github.com/scidash/neuronunit@master
-#git+git://github.com/scidash/sciunit@master
-git+git://github.com/zsinnema/sciunit.git
+# git+git://github.com/scidash/sciunit@master
 git+git://github.com/MetaCell/scidash-api.git@master
 wheel
 sentry-sdk
