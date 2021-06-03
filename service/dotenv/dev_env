@@ -1,5 +1,6 @@
 DEVELOPMENT=1
 PRODUCTION=0
+HTTP=0
 
 DB_HOST='scidash-postgres'
 DB_PORT=5432

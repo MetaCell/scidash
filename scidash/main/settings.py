@@ -101,7 +101,7 @@ MIDDLEWARE_CLASSES = [
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.environ.get('PRODUCTION', '0') == '1'  # production is behind a reverse proxy with https
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.environ.get('HTTPS', '0') == '1'  # production is behind a reverse proxy with https
 
 # see https://python-social-auth.readthedocs.io/en/latest/backends/index.html
 # for configation of social backends
