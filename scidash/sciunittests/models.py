@@ -226,6 +226,7 @@ class ScoreInstance(models.Model):
     timestamp = models.DateTimeField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
     error = models.TextField(null=True, blank=True)
+    related_data = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

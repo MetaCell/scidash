@@ -79,6 +79,7 @@ superuser:
 	$(MANAGECMD) createsuperuser
 
 run-django:
+	cp ./service/dotenv/dev_env .env
 	$(MANAGECMD) runserver --insecure 0.0.0.0:8000
 
 run-django-staging:

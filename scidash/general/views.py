@@ -1,6 +1,7 @@
 import collections
 import copy
 import json
+import jsonpickle
 import logging
 import os
 import re
@@ -47,6 +48,11 @@ class FileUploadView(APIView):
             )
 
     def populate_data(self, data, request):
+        related_data = data.get('related_data')
+        if related_data and isinstance(related_data, dict):
+            # related data is a dict, make it a string
+            data.update({'related_data': jsonpickle.encode(related_data, unpicklable=True, make_refs=False)})
+        
         score_serializer = ScoreInstanceSerializer(
             data=data, context={'request': request}
         )
