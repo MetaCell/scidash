@@ -152,6 +152,5 @@ class ScoreInstanceSerializer(
         model = ScoreInstance
         exclude = (
             'prediction_dict',
-            'prediction_numeric',
-            'related_data'
+            'prediction_numeric'
         )
