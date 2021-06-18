@@ -21,14 +21,25 @@ from scidash.sciunittests.serializers import (
 
 
 class ScoreViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ScoreInstance.objects.all()
+    queryset = ScoreInstance.objects.all(). \
+        select_related('score_class','model_instance__model_class','model_instance__owner','test_instance__test_class','test_instance__owner','owner'). \
+        prefetch_related('model_instance__model_class__capabilities','model_instance__model_class__extra_capabilities',
+                        'test_instance__test_suites',
+                        'owner__user_permissions','owner__user_permissions__content_types','owner__groups',
+                        'model_instance__owner__user_permissions','model_instance__owner__user_permissions__content_types','model_instance__owner__groups',
+                        'model_instance__tags','model_instance__tags__content_type','model_instance__tags__content_object',
+                        'test_instance__owner__user_permissions','test_instance__owner__user_permissions__content_types','test_instance__owner__groups',
+                        'test_instance__test_suites__owner__user_permissions','test_instance__test_suites__owner__user_permissions__content_types','test_instance__test_suites__owner__groups',
+                        'test_instance__tags','test_instance__tags__content_type','test_instance__tags__content_object')
     serializer_class = ScoreInstanceSerializer
     permission_classes = (permissions.AllowAny, )
     filter_class = ScoreFilter
 
 
 class TestInstanceViewSet(viewsets.ModelViewSet):
-    queryset = TestInstance.objects.all()
+    queryset = TestInstance.objects.all(). \
+        select_related('test_class','owner'). \
+        prefetch_related('test_suites','tags','tags__content_type','tags__content_object')
     serializer_class = TestInstanceSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_class = TestInstanceFilter
@@ -64,7 +75,7 @@ class TestInstanceViewSet(viewsets.ModelViewSet):
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TestSuite.objects.all()
+    queryset = TestSuite.objects.all().select_related('test_instance')
     serializer_class = TestSuiteSerializer
     permission_classes = (permissions.AllowAny, )
     filter_class = TestSuiteFilter

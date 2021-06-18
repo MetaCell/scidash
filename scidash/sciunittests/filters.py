@@ -78,7 +78,11 @@ class ScoreFilter(filters.FilterSet):
         )
 
     def with_suites_filter(self, queryset, name, value):
-        tests = TestInstance.objects.prefetch_related('test_suites')
+        tests = TestInstance.objects. \
+            prefetch_related('test_suites',
+                    'owner__user_permissions','owner__user_permissions__content_type','owner__groups',
+                    'tags','tags__content_type','tags__content_object'). \
+            select_related('owner','test_class')
         tests = tests.annotate(Count('test_suites'))
         tests = tests.filter(test_suites__count__gt=0)
 

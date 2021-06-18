@@ -9,7 +9,8 @@ from scidash.sciunittests.models import (
 # Register your models here.
 
 class ScoreInstanceAdmin(admin.ModelAdmin):
-    list_display = ('model_instance', 'test_instance', 'status')
+    list_display = ('model_instance', 'test_instance', 'status', 'test_instance')
+    exclude = ('related_data',)
 
 class TestClassModelAdmin(admin.ModelAdmin):
     search_fields = ['class_name']
