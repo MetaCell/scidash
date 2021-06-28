@@ -405,7 +405,8 @@ scipy==1.5.4
     #   elephant
     #   lmfit
     #   neuronunit
-git+git://github.com/scidash/sciunit@0391ac1cf0b25122c67f2b551ba3db6c90eb4f8d  #master
+#git+git://github.com/scidash/sciunit@0391ac1cf0b25122c67f2b551ba3db6c90eb4f8d
+git+git://github.com/scidash/sciunit@master
     # via
     #   -r requirements.in
     #   neuronunit
