@@ -4,6 +4,7 @@ from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers, fields
 
 from scidash.account.serializers import ScidashUserSerializer
+from scidash.general.helpers import import_class
 from scidash.general.mixins import GetByKeyOrCreateMixin, GetOrCreateMixin
 from scidash.general.serializers import TagSerializer, \
     SerializerWritableMethodField
@@ -30,6 +31,15 @@ class TestClassSerializer(
         model_field=TestClass()._meta.get_field('class_name'))
     units_name = serializers.CharField(required=False)
     key = 'import_path'
+
+    tooltip = serializers.SerializerMethodField()
+
+    def get_tooltip(self, test_class):
+        try:
+            c = import_class(test_class.import_path)
+            return c.description if c.description else ''
+        except Exception as e:
+            return ''
 
     def get_class_name(self, obj):
         # return class_name + ( first part of import_path )
@@ -129,6 +139,14 @@ class ScoreInstanceSerializer(
 
     key = 'hash_id'
 
+    def __init__(self, *args, **kwargs):
+        # Instantiate the superclass normally
+        super(ScoreInstanceSerializer, self).__init__(*args, **kwargs)
+
+        related_data = self.context['request'].query_params.get('related_data',None)
+        if related_data is None:
+            self.fields.pop("related_data")
+
     def get_prediction(self, obj):
         if obj.prediction_numeric is not None:
             return obj.prediction_numeric
@@ -152,6 +170,5 @@ class ScoreInstanceSerializer(
         model = ScoreInstance
         exclude = (
             'prediction_dict',
-            'prediction_numeric',
-            'related_data'
+            'prediction_numeric'
         )
