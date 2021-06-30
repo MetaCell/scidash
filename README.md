@@ -16,7 +16,7 @@ SciDash is a geppetto / django-based client-server web application.
 
 ## Installation with Docker
 
-This installation procedure will relies on the use of docker and docker-compose, if you don't have these already installed in your machine you can follow these [link 1](https://docs.docker.com/install/) and [link 2](https://docs.docker.com/compose/install/).
+This installation procedure relies on the use of docker and docker-compose, if you don't have these already installed in your machine you can follow these [link 1](https://docs.docker.com/install/) and [link 2](https://docs.docker.com/compose/install/).
 
 In order to install scidash in your machine you will need to clone the scidash repository
 
@@ -64,7 +64,7 @@ Wait 1-2 mins that docker compose will bring up all the service and enjoy Scidas
 
 ## Installation in my machine
 
-We recommend you to use a Python 3.6 (*3.6 or newer at least*) virtual environment for the installation, so you can keep all the dependencies within that environment.
+We recommend you to use a Python 3.6 virtual environment for the installation, so you can keep all the dependencies within that environment.
 
 **Dependencies**
 
@@ -116,7 +116,7 @@ To update the coverage badge manually run
 make coverage-badge
 ```
 
-Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
+Just a reminder before going forward that this project requires a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 installed.
 
 #### ***Configure Database***
 In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
