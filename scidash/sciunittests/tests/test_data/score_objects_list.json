@@ -11,6 +11,7 @@
         "url": "http://test-url.for/not-spaming-data/in-database-one",
         "import_path": "neuronunit.models.reduced.ReducedModel",
         "memo": null,
+        "tooltip": "",
         "extra_capabilities": [
           14
         ],
@@ -57,13 +58,26 @@
         }
       ],
       "test_class": {
-        "class_name": "MyTest_1",
-        "url": "http://test-url.for/not-spaming-data/in-database"
+        "class_name": "InputResistanceTest ZS3",
+        "url": "http://github.com/scidash/neuronunit.git",
+        "import_path": "neuronunit.tests.passive.InputResistanceTest",
+        "observation_schema": [
+          ["Mean, Standard Deviation, N", {"n": {"min": 1, "type": "integer"}, "std": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}], 
+          ["Mean, Standard Error, N", {"n": {"min": 1, "type": "integer", "required": true}, "sem": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}]
+        ]
       },
       "observation": {
-        "mean": "8",
-        "std": "3",
-        "url": ""
+          "mean": {
+            "py/object": "quantities.quantity.Quantity",
+            "py/state": {
+              "base": "125.0",
+              "units": "megaohm"}},
+          "n": 10,
+          "std": {
+              "py/object": "quantities.quantity.Quantity",
+              "py/state": {
+                "base": "40.0",
+                "units": "megaohm"}}
       },
       "hash_id": "111",
       "verbose": 1
@@ -81,6 +95,7 @@
         "url": "http://test-url.for/not-spaming-data/in-database-two",
         "import_path": "neuronunit.models.static.StaticModel",
         "memo": null,
+        "tooltip": "",
         "extra_capabilities": [],
         "capabilities": [
           {
@@ -123,13 +138,26 @@
         }
       ],
       "test_class": {
-        "class_name": "MyTest_2",
-        "url": "http://test-url.for/not-spaming-data/in-database"
+        "class_name": "InputResistanceTest ZS1",
+        "url": "http://github.com/scidash/neuronunit.git",
+        "import_path": "neuronunit.tests.passive.InputResistanceTest",
+        "observation_schema": [
+          ["Mean, Standard Deviation, N", {"n": {"min": 1, "type": "integer"}, "std": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}], 
+          ["Mean, Standard Error, N", {"n": {"min": 1, "type": "integer", "required": true}, "sem": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}]
+        ]
       },
       "observation": {
-        "mean": "8",
-        "std": "3",
-        "url": ""
+          "mean": {
+            "py/object": "quantities.quantity.Quantity",
+            "py/state": {
+              "base": "125.0",
+              "units": "megaohm"}},
+          "n": 10,
+          "std": {
+              "py/object": "quantities.quantity.Quantity",
+              "py/state": {
+                "base": "40.0",
+                "units": "megaohm"}}
       },
       "verbose": 1
     }
@@ -146,6 +174,7 @@
         "url": "http://test-url.for/not-spaming-data/in-database-three",
         "import_path": "neuronunit.models.static.StaticModel",
         "memo": null,
+        "tooltip": "",
         "extra_capabilities": [],
         "capabilities": [
           {
@@ -188,13 +217,26 @@
         }
       ],
       "test_class": {
-        "class_name": "MyTest",
-        "url": "http://test-url.for/not-spaming-data/in-database"
+        "class_name": "InputResistanceTest ZS2",
+        "url": "http://github.com/scidash/neuronunit.git",
+        "import_path": "neuronunit.tests.passive.InputResistanceTest",
+        "observation_schema": [
+          ["Mean, Standard Deviation, N", {"n": {"min": 1, "type": "integer"}, "std": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}], 
+          ["Mean, Standard Error, N", {"n": {"min": 1, "type": "integer", "required": true}, "sem": {"min": 0, "units": true, "required": true}, "mean": {"units": true, "required": true}}]
+        ]
       },
       "observation": {
-        "mean": "8",
-        "std": "3",
-        "url": ""
+          "mean": {
+            "py/object": "quantities.quantity.Quantity",
+            "py/state": {
+              "base": "125.0",
+              "units": "megaohm"}},
+          "n": 10,
+          "std": {
+              "py/object": "quantities.quantity.Quantity",
+              "py/state": {
+                "base": "40.0",
+                "units": "megaohm"}}
       },
       "verbose": 1
     }

@@ -1,5 +1,6 @@
 import json
 import os
+from scidash.sciunittests.models import TestClass
 
 from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
@@ -20,6 +21,13 @@ class SciunitModelTestCase(TestCase):
 
         factory = RequestFactory()
         request = factory.get('/data/upload/sample_json.json')
+
+        cls.test_class = TestClass.objects.create(
+            class_name="InputResistanceTest",
+            import_path="neuronunit.tests.passive.InputResistanceTest",
+            url="http://github.com/scidash/neuronunit.git",
+        )
+
         cls.user = ScidashUser.objects.create_user(
             'admin', 'a@a.cc', 'montecarlo'
         )

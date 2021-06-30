@@ -1,5 +1,6 @@
 import json
 import importlib
+from scidash.sciunittests.models import TestClass
 import numpy as np
 import quantities as pq
 import sciunit
@@ -93,14 +94,14 @@ class TestInstanceValidator:
             obs_with_units = observation
         else:
             # none of the observation items have units, let try to get them from the (class)template
-            obs_with_units = cls.add_units_to_observation(class_data, test_class, observation)
+            obs_with_units = cls.add_units_to_observation(class_data, test_class, observation, fallback_observation_schema)
 
         test_class(obs_with_units)
 
         return data
 
     @classmethod
-    def add_units_to_observation(cls, class_data, test_class, observation):
+    def add_units_to_observation(cls, class_data, test_class, observation, fallback_observation_schema=None):
         without_units = []
         if class_data.get("units"):
             try:

@@ -75,7 +75,7 @@ class TestInstanceViewSet(viewsets.ModelViewSet):
 
 
 class TestSuiteViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TestSuite.objects.all().select_related('test_instance')
+    queryset = TestSuite.objects.all().select_related('owner')
     serializer_class = TestSuiteSerializer
     permission_classes = (permissions.AllowAny, )
     filter_class = TestSuiteFilter

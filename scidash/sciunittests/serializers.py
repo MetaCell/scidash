@@ -66,12 +66,12 @@ class TestInstanceSerializer(
     key = 'hash_id'
 
     def validate(self, data):
-        fallback_observation_scheme = TestClass.objects.get(
+        fallback_observation_schema = TestClass.objects.get(
             import_path=data.get('test_class').get('import_path')
         ).observation_schema
 
         try:
-            TestInstanceValidator.validate(data, fallback_observation_scheme)
+            TestInstanceValidator.validate(data, fallback_observation_schema)
         except Exception as e:
             raise serializers.ValidationError(
                 f"Can't instantiate class, reason candidates: {e}"
@@ -143,7 +143,7 @@ class ScoreInstanceSerializer(
         # Instantiate the superclass normally
         super(ScoreInstanceSerializer, self).__init__(*args, **kwargs)
 
-        related_data = self.context['request'].query_params.get('related_data',None)
+        related_data = getattr(self.context['request'], 'query_params', {}).get('related_data',None)
         if related_data is None:
             self.fields.pop("related_data")
 
