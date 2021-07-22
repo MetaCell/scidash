@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: scidash-postgres
-        image: gcr.io/metacellllc/metacell/scidash_db:{{TAG}}
+        image: us.gcr.io/metacellllc/scidash_db:{{TAG}}
         imagePullPolicy: IfNotPresent
         env:
         - name: PGDATA
