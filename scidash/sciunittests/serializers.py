@@ -143,7 +143,7 @@ class ScoreInstanceSerializer(
         # Instantiate the superclass normally
         super(ScoreInstanceSerializer, self).__init__(*args, **kwargs)
 
-        related_data = getattr(self.context['request'], 'query_params', {}).get('related_data',None)
+        related_data = getattr(self.context.get('request',{}), 'query_params', {}).get('related_data',None)
         if related_data is None:
             self.fields.pop("related_data")
 
