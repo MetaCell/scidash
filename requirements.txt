@@ -136,13 +136,13 @@ django-timezone-field==3.1
     #   django-celery-beat
 djangorestframework==3.7.1
     # via -r requirements.in
-git+git://github.com/zsinnema/django-rest-framework-jwt@master
+git+https://github.com/zsinnema/django-rest-framework-jwt@master
     # via -r requirements.in
 dpath==2.0.1
     # via scidash-api
 drf-writable-nested==0.6.3
     # via -r requirements.in
-elephant==0.5.0
+elephant==0.10.0
     # via neuronunit
 entrypoints==0.3
     # via nbconvert
@@ -264,9 +264,9 @@ nest-asyncio==1.5.1
     # via nbclient
 neuromllite==0.3.2
     # via pyneuroml
-git+git://github.com/scidash/neuronunit@master
+git+https://github.com/scidash/neuronunit@master
     # via -r requirements.in
-numba==0.53.1
+numba==0.50.1
     # via neuronunit
 numpy==1.19.5
     # via
@@ -399,14 +399,14 @@ requests-oauthlib==1.3.0
     # via social-auth-core
 rest-framework-cache==0.1
     # via -r requirements.in
-git+git://github.com/MetaCell/scidash-api.git@master
+git+https://github.com/MetaCell/scidash-api.git@master
     # via -r requirements.in
 scipy==1.5.4
     # via
     #   elephant
     #   lmfit
     #   neuronunit
-git+git://github.com/scidash/sciunit@master
+git+https://github.com/scidash/sciunit@metacell
     # via
     #   -r requirements.in
     #   neuronunit
