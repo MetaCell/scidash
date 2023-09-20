@@ -60,7 +60,10 @@ RUN mvn --version
 # -== INSTALL NEURON ==-
 RUN mkdir /nrn
 WORKDIR /nrn
-RUN apt-get install -y libreadline5 libreadline-gplv2-dev lsof
+RUN apt -y update
+RUN apt-get install -y readline-common # libreadline5
+RUN apt-get install -y libreadline-dev # libreadline-gplv2-dev
+RUN apt-get install -y lsof
 RUN wget -q -O nrn-7.6.tar.gz https://github.com/ddelpiano/neuron/raw/master/nrn-7.6.tar.gz
 RUN tar xzvf nrn-7.6.tar.gz
 WORKDIR nrn-7.6
@@ -148,11 +151,13 @@ RUN $APP_DIR/copy.sh https://github.com/Metacell/org.geppetto.simulator.scidash.
 
 RUN $APP_DIR/copy.sh https://github.com/openworm/org.geppetto.frontend.git scidash-backend scidash-backend scidash-backend &&\
     cd org.geppetto.frontend && cp /git/scidash/service/geppetto/frontend/app-config.xml ./src/main/webapp/WEB-INF/spring/ &&\
+    cat ./src/main/webapp/package-lock.json | grep -i superagent &&\
     /bin/echo -e "\e[96mMaven install org.geppetto.frontend\e[0m" &&\
     mvn -Dhttps.protocols=TLSv1.2 -DskipTests --quiet install &&\
     rm -rf src && cd ../
 
 WORKDIR $SOURCES_DIR/org.geppetto/utilities/source_setup
+RUN apt install -y python2
 RUN python2 update_server.py
 
 WORKDIR $APP_DIR
