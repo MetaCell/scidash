@@ -65,5 +65,5 @@ else
   git clone -b development $geppetto_client_repo;
 fi
 
-npm install
+npm ci
 
