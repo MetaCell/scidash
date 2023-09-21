@@ -47,7 +47,7 @@ services:
     shm_size: 512M
     depends_on:
       - scidash-redis
-      - scidash-postgres
+      - scidash-db
   scidash:
     image: metacell/scidash:latest
     build:
