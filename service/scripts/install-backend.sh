@@ -35,7 +35,7 @@ fi
 
 python3 -m pip install --upgrade pip
 export CRYPTOGRAPHY_DONT_BUILD_RUST=1
-pip install -r requirements.txt --no-cache-dir
+pip install -r requirements.txt --no-cache-dir --no-deps
 
 git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
 

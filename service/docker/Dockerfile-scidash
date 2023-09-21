@@ -60,13 +60,13 @@ WORKDIR $APP_DIR/scidash
 
 WORKDIR $APP_DIR/scidash
 RUN make ARGS="-b $targetBranch" install-backend-with-env
-#RUN make ARGS="-b $targetBranch" install-frontend
+RUN make ARGS="-b $targetBranch" install-frontend
 
-# RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
-# RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
+RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
+RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
 
-# WORKDIR $GEPPETTO_DIR
-# RUN npm run build-dev-noTest
+WORKDIR $GEPPETTO_DIR
+RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
 RUN cp ./service/dotenv/scidash_env .env
