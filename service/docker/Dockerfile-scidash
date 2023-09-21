@@ -32,10 +32,12 @@ RUN apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libc
     libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 \
     libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 \
     libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 \
-    lsb-release xdg-utils wget curl llvm python3-tk
+    lsb-release xdg-utils wget curl llvm python3-tk llvm
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN apt-get update && apt-get -y install nodejs
-RUN curl https://www.npmjs.com/install.sh | sh
+RUN apt-get update && apt-get -y install nodejs npm
+# RUN npm --version
+# RUN curl https://www.npmjs.com/install.sh | npm_install=6.4.0 sh
+RUN npm install npm@7.20.3 -g
 RUN pip install virtualenv
 RUN mkdir $APP_DIR
 RUN chown developer $APP_DIR
@@ -58,15 +60,17 @@ WORKDIR $APP_DIR/scidash
 
 WORKDIR $APP_DIR/scidash
 RUN make ARGS="-b $targetBranch" install-backend-with-env
-RUN make ARGS="-b $targetBranch" install-frontend
+#RUN make ARGS="-b $targetBranch" install-frontend
 
-RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
-RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
+# RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
+# RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
 
-WORKDIR $GEPPETTO_DIR
-RUN npm run build-dev-noTest
+# WORKDIR $GEPPETTO_DIR
+# RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
 RUN cp ./service/dotenv/scidash_env .env
+
+RUN bash -c "source venv/bin/activate && pip list "
 
 CMD ./service/scripts/run.sh

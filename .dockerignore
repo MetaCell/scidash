@@ -3,3 +3,4 @@ tmp
 **/*/node_modules
 pygeppetto-django
 static/org.geppetto.frontend
+service/docker
