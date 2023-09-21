@@ -1,32 +1,80 @@
-version: '2'
+version: '3'
 
 services:
   scidash-redis:
     image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+    ports:
+      - 6379:6379
     expose:
-        - 6379
+      - 6379
   scidash-postgres:
     image: metacell/scidash_db:latest
+    container_name: scidash_db
+    build:
+      dockerfile: service/docker/Dockerfile-postgres
+      context: ../..
+    environment:
+      - SCIDASH_BRANCH=development
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 15s
+        timeout: 10s
+        retries: 5
     expose:
-        - 5432
+      - 5432
     volumes:
-        - ./database:/var/lib/postgresql/
+      - ./database:/var/lib/postgresql/
   scidash-virgo:
-    image: metacell/scidash_virgo:v1.0.0
+    image: metacell/scidash_geppetto:latest
+    build:
+      dockerfile: service/docker/Dockerfile-virgo
+      context: ../..
+    container_name: scidash_geppetto
+    volumes:
+      - geppettoTmp-volume:/opt/virgo/geppettoTmp
+    ports:
+      - 8080:8080
     expose:
-        - 8080
+      - 8080
     mem_reservation: 5120m
     mem_limit: 10240m
     privileged: true
     shm_size: 512M
     depends_on:
-        - scidash-redis
-        - scidash-postgres
+      - scidash-redis
+      - scidash-postgres
   scidash:
     image: metacell/scidash:latest
+    build:
+      dockerfile: service/docker/Dockerfile-scidash
+      context: ../..
+    environment:
+      - EMAIL_USERNAME=scidashasu@gmail.com
+      - EMAIL_PASSWORD=Zh0UzMZDI7ic
+      - ENVIRONMENT=production
+      - DOMAIN=dash.scidash.org
+    container_name: scidash
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - geppettoTmp-volume:/opt/virgo/geppettoTmp
+      - ./secrets:/etc/secrets
     ports:
-        - 8000:8000
+      - 8000:8000
     depends_on:
-        - scidash-redis
-        - scidash-postgres
-        - scidash-virgo
+      scidash-redis:
+        condition: service_healthy
+      scidash-postgres:
+        condition: service_healthy
+
+volumes:
+  geppettoTmp-volume:
+    driver_opts:
+      o: uid=1000,gid=1000
+      device: tmpfs
+      type: tmpfs

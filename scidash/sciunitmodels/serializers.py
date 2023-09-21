@@ -1,3 +1,4 @@
+from scidash.general.helpers import import_class
 from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers
 
@@ -21,11 +22,19 @@ class CapabilitySerializer(
 class ModelClassSerializer(
     GetByKeyOrCreateMixin, WritableNestedModelSerializer
 ):
-    key = 'import_path'
+    key = 'url'
     capabilities = CapabilitySerializer(many=True)
     url = serializers.URLField(
         allow_null=True, allow_blank=True, validators=[]
     )
+    tooltip = serializers.SerializerMethodField()
+
+    def get_tooltip(self, model_class):
+        try:
+            c = import_class(model_class.import_path)
+            return c.description if c.description else ''
+        except Exception as e:
+            return ''
 
     class Meta:
         model = ModelClass

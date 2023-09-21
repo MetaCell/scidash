@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: scidash
+type: Opaque
+stringData:
+  SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: {{OAUTH_GOOGLE_KEY}}
+  SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: {{OAUTH_GOOGLE_SECRET}}
+  SOCIAL_AUTH_TWITTER_KEY: {{OAUTH_TWITTER_KEY}}
+  SOCIAL_AUTH_TWITTER_SECRET: {{OAUTH_TWITTER_SECRET}}
+  SOCIAL_AUTH_GITHUB_KEY: {{OAUTH_GITHUB_KEY}}
+  SOCIAL_AUTH_GITHUB_SECRET: {{OAUTH_GITHUB_SECRET}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scidash-geppettotmp
+  labels:
+    app: scidash-geppettotmp
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2G
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scidash
+  labels:
+    usesvolume: scidash-geppettotmp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scidash
+  template:
+    metadata:
+      labels:
+        app: scidash
+        usesvolume: scidash-geppettotmp
+    spec:
+      containers:
+      - name: scidash
+        image: us.gcr.io/metacellllc/scidash:{{TAG}}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ENVIRONMENT
+          value: "{{ENVIRONMENT}}"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: scidash-geppettotmp
+          mountPath: /opt/virgo/geppettoTmp
+        - name: secrets
+          mountPath: "/etc/secrets"
+          readOnly: true
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: usesvolume
+                    operator: In
+                    values:
+                      - scidash-geppettotmp
+              topologyKey: "kubernetes.io/hostname"
+      volumes:
+      - name: scidash-geppettotmp
+        persistentVolumeClaim:
+          claimName: scidash-geppettotmp
+      - name: secrets
+        secret:
+          secretName: scidash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scidash
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: scidash

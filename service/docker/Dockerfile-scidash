@@ -3,13 +3,18 @@ FROM python:3.6
 USER root
 
 # BUILD VARIABLES
+ARG EMAIL_USERNAME
+ARG EMAIL_PASSWORD
 ARG ROOT=/
 ARG APP_DIR=/app
 ARG NRN_SYMLINK=/Applications/NEURON-7.6/nrn/
 ARG DOTENV_FILE=env-docker
 ARG STATIC_DIR=$APP_DIR/scidash/static
 ARG GEPPETTO_DIR=$STATIC_DIR/org.geppetto.frontend/src/main/webapp
-ARG SCIDASH_BRANCH=feature/400
+ARG targetBranch=geppetto-scidash
+ARG originBranch=geppetto-scidash
+ARG defaultBranch=development
+
 ENV SERVER_HOME $APP_DIR/virgo-tomcat-server
 
 RUN useradd -ms /bin/bash developer
@@ -17,37 +22,55 @@ ENV HOME /home/developer
 
 WORKDIR $ROOT
 
+RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+RUN mkdir -p /etc/secrets
+
 # INSTALLING REQUIREMENTS
-RUN apt-get install -y curl wget
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
-RUN apt-get update && apt-get -y install nodejs
-RUN curl https://www.npmjs.com/install.sh | sh
-
-#COPYING PROJECT
-WORKDIR $APP_DIR
-RUN git clone -b $SCIDASH_BRANCH https://github.com/MetaCell/scidash
-
-
-WORKDIR $APP_DIR/scidash
+RUN apt-get update
+RUN apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
+    libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 \
+    libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 \
+    libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 \
+    libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 \
+    lsb-release xdg-utils wget curl llvm python3-tk llvm
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get update && apt-get -y install nodejs npm
+# RUN npm --version
+# RUN curl https://www.npmjs.com/install.sh | npm_install=6.4.0 sh
+RUN npm install npm@7.20.3 -g
 RUN pip install virtualenv
-RUN virtualenv venv-py -p python3.6
+RUN mkdir $APP_DIR
+RUN chown developer $APP_DIR
+RUN mkdir -p /home/developer/.config
+RUN chown -R developer /home/developer/.config
+RUN git clone https://github.com/ddelpiano/travis_utils
+RUN cp travis_utils/copy.sh $APP_DIR
+
+# COPYING PROJECT
+RUN mkdir -p $APP_DIR/scidash
+RUN chown developer:developer $APP_DIR/scidash
+COPY --chown=developer . $APP_DIR/scidash
+
+USER developer
+# set git email and name for use with git merge
+RUN git config --global user.email "scidash@metacell.us"
+RUN git config --global user.name "SciDash"
 
 WORKDIR $APP_DIR/scidash
-RUN make install-backend-with-env
-RUN make install-frontend
+
+WORKDIR $APP_DIR/scidash
+RUN make ARGS="-b $targetBranch" install-backend-with-env
+RUN make ARGS="-b $targetBranch" install-frontend
+
+RUN sed -i "s/email_username/$EMAIL_USERNAME/g" ./scidash/main/settings.py
+RUN sed -i "s/email_password/$EMAIL_PASSWORD/g" ./scidash/main/settings.py
 
 WORKDIR $GEPPETTO_DIR
-RUN ls -la
 RUN npm run build-dev-noTest
 
 WORKDIR $APP_DIR/scidash
-RUN rm -rf .git &&\
-    rm -rf static/org.geppetto.frontend/.git &&\
-    rm -rf static/org.geppetto.frontend/extension/geppetto-scidash/.git &&\
-    rm -rf sciunit/.git &&\
-    rm -rf neuronunit/.git
-RUN chown -R developer ./
 RUN cp ./service/dotenv/scidash_env .env
 
-USER developer
+RUN bash -c "source venv/bin/activate && pip list "
+
 CMD ./service/scripts/run.sh

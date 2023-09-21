@@ -39,9 +39,8 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit tests / coverage reports
 htmlcov/
-.tox/
 .coverage
 .coverage.*
 .cache
@@ -120,3 +119,6 @@ static/models/*
 virgo-tomcat-server/*
 virgo-tomcat-server/work/*
 celerybeat.pid
+
+.devcontainer
+tmp

@@ -11,7 +11,8 @@ from scidash.general import models as general_models
 from scidash.general.helpers import import_class
 from scidash.sciunittests.constants import TEST_PARAMS_UNITS_TYPE
 from scidash.sciunittests.helpers import (
-    build_destructured_unit, get_observation_schema, get_test_parameters_schema,
+    build_destructured_unit, get_observation_schema,
+    get_test_parameters_schema,
     get_units, get_default_params
 )
 
@@ -20,13 +21,14 @@ import numbers
 
 db_logger = logging.getLogger('db')
 
+
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         quantities.set_default_units(time='s', current='A')
         if isinstance(obj, quantities.quantity.Quantity):
             return float(obj.simplified.magnitude)
         elif isinstance(obj, numbers.Number):
-            # Noticed Sciunit does not use always quantities, 
+            # Noticed Sciunit does not use always quantities,
             # this will avoid the entire UI to explode
             return float(obj)
         else:
@@ -56,7 +58,7 @@ class TestClass(models.Model):
     units = models.TextField(null=True, blank=True)
     memo = models.TextField(null=True, blank=True)
     params_units = JSONField(null=True, blank=True)
-    default_params = JSONField(encoder=JSONEncoder , null=True, blank=True)
+    default_params = JSONField(encoder=JSONEncoder, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Test class'
@@ -127,7 +129,7 @@ class TestClass(models.Model):
         if params_schema is not None:
             for key in params_schema:
                 params_units[key] = TEST_PARAMS_UNITS_TYPE[params_schema[key]
-                                                           ['type']]
+                ['type']]
 
         self.units = units
         self.params_units = params_units
@@ -171,6 +173,11 @@ class TestInstance(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.test_class.class_name} instance"
+
+    def clone_to_user(self, user):
+        self.pk = None
+        self.owner = user
+        return self
 
 
 class ScoreClass(models.Model):
@@ -219,6 +226,7 @@ class ScoreInstance(models.Model):
     timestamp = models.DateTimeField(default=date.today)
     owner = models.ForeignKey(general_models.ScidashUser, default=None)
     error = models.TextField(null=True, blank=True)
+    related_data = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -243,6 +251,9 @@ class ScoreInstance(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+        indexes = [
+            models.Index(fields=['-timestamp', ]),
+        ]
 
     def __str__(self):
         return "Score for {0} in {1} test instance".format(

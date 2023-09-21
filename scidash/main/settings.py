@@ -16,6 +16,10 @@ import os
 import dotenv
 from django.urls import reverse
 
+SENTRY_ENV = os.environ.get("ENVIRONMENT", "Production")
+SENTRY_DSN = os.environ.get('SENTRY_DSN', "")
+from .sentry import init as sentry_init
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,19 +31,22 @@ dotenv.read_dotenv(
     )
 )
 
+# SECURITY WARNING: don't run with debug turned on in production!
+# Set via OS env, defaults to False
+DEBUG = TEMPLATE_DEBUG = os.environ.get('DEVELOPMENT', '0') == '1'
+
+sentry_init()
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '4*0@ca#ocm*(1=12m(bfb2p8e$sk-%i4xlj=%$wkj3*&gs!%sr'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Se via OS env, defaults to False
-DEBUG = TEMPLATE_DEBUG = os.environ.get('DEBUG', False)
-
 ALLOWED_HOSTS = [
-        "*"
-        ]
+    "*"
+]
 
 # Application definition
 
@@ -63,7 +70,11 @@ THIRD_PARTY_APPS = [
     'material',
     'django_celery_beat',
     'django_celery_results',
-    'django_db_logger'
+    'django_db_logger',
+    'ckeditor',
+    'adminsortable2',
+    # Add the following django-allauth apps
+    'social_django',
 ]
 
 SCIDASH_APPS = [
@@ -87,16 +98,70 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = os.environ.get('HTTPS', '0') == '1'  # production is behind a reverse proxy with https
+
+# see https://python-social-auth.readthedocs.io/en/latest/backends/index.html
+# for configation of social backends
+
+def get_secret(secret):
+    try:
+        sec_path = os.getenv('SECRETS_PATH','/etc/secrets')
+        with open(os.path.join(sec_path, secret)) as fh:
+            return fh.read()
+    except:
+        # if no secrets folder exists
+        return ''
+
+# GOOGLE
+# https://python-social-auth.readthedocs.io/en/latest/backends/google.html
+# see https://developers.google.com/identity/protocols/oauth2?csw=1#Registering
+# to get google client id (key) and secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_secret('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_secret('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+# TWITTER
+# https://python-social-auth.readthedocs.io/en/latest/backends/twitter.html
+SOCIAL_AUTH_TWITTER_KEY = get_secret('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = get_secret('SOCIAL_AUTH_TWITTER_SECRET')
+
+# GITHUB
+# https://python-social-auth.readthedocs.io/en/latest/backends/github.html
+SOCIAL_AUTH_GITHUB_KEY = get_secret('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = get_secret('SOCIAL_AUTH_GITHUB_SECRET')
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+JWT_AUTH = {
+    # how long the original token is valid for
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),
+
+    # allow refreshing of tokens
+    'JWT_ALLOW_REFRESH': True,
+
+    # this is the maximum time AFTER the token was issued that
+    # it can be refreshed.  exprired tokens can't be refreshed.
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'scidash.account.auth.CsrfExemptSessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
-        ],
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
-        ]
+    ]
 }
 
 ROOT_URLCONF = 'scidash.main.urls'
@@ -111,6 +176,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -123,16 +190,15 @@ ASGI_APPLICATION = 'scidash.main.routing.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT'),
-            }
-        }
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -151,7 +217,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -193,7 +258,7 @@ LOGGING = {
         },
     },
     'loggers': {
-         'django': {
+        'django': {
             'handlers': ['db_log'],
             'level': 'ERROR',
             'propagate': False,
@@ -208,7 +273,7 @@ LOGGING = {
 AUTH_USER_MODEL = 'general.ScidashUser'
 
 REST_FRAMEWORK_CACHE = {
-    'DEFAULT_CACHE_TIMEOUT': 86400, # Default is 1 day
+    'DEFAULT_CACHE_TIMEOUT': 86400,  # Default is 1 day
 }
 
 PYGEPPETTO_SOCKET_URL = 'org.geppetto.frontend/GeppettoServlet'
@@ -218,15 +283,16 @@ PYGEPPETTO_BUILDER_PROJECT_BASE_URL = os.path.join(os.path.join(
 
 GEPPETTO_SERVLET_URL = os.environ.get(
     'GEPPETTO_SERVLET_URL',
-    'ws://localhost:8080/org.geppetto.frontend/GeppettoServlet'
+    'ws://scidash-virgo:8080/org.geppetto.frontend/GeppettoServlet'
 )
 GEPPETTO_BASE_URL = os.environ.get(
-    'GEPPETTO_BASE_URL', 'http://localhost:8080/org.geppetto.frontend/geppetto'
+    'GEPPETTO_BASE_URL',
+    'http://scidash-virgo:8080/org.geppetto.frontend/geppetto'
 )
 
 BASE_PROJECT_FILES_HOST = os.environ.get(
     'BASE_PROJECT_FILES_HOST',
-    'http://localhost:8000/static/projects/'
+    'http://scidash:8000/static/projects/'
 )
 
 ACCEPTABLE_SCORE_INSTANCES_AMOUNT = 50
@@ -236,10 +302,10 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'user here'
-EMAIL_HOST_PASSWORD = 'password here'
-EMAIL_USE_SSL = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'email_username'
+EMAIL_HOST_PASSWORD = 'email_password'
+EMAIL_USE_TLS = True
 
 POPULATE_USERS = True
 
@@ -250,3 +316,74 @@ DOWNLOADED_MODEL_DIR = os.path.join(
 CELERY_RESULT_BACKEND = 'django-db'
 
 NO_IMPORT_TAG = 'unschedulable'
+
+# SCIDASH
+# DEMO user id used to clone initial models and tests from
+SCIDASH_DEMO_USER_ID = None
+
+# Initial search number of quarters to search back in time.
+SCIDASH_INITIAL_SEARCH_QUARTERS = 12
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        # 'height': 291,
+        # 'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}

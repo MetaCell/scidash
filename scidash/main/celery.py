@@ -14,7 +14,7 @@ dotenv.read_dotenv(
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scidash.main.settings')
 
-app = Celery('proj', broker=os.environ.get('REDIS_URL', 'redis://'))
+app = Celery('proj', broker=os.environ.get('REDIS_URL', 'redis://'), include=['scidash.general.tasks',])
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

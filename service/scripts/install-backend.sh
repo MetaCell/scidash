@@ -2,23 +2,48 @@
 
 virtualenv=false;
 pygeppetto_folder="pygeppetto-django"
-pygeppetto_django_repo="https://github.com/MetaCell/pygeppetto-django.git -b 4.0.1 $pygeppetto_folder";
+pygeppetto_branch="geppetto-scidash"
+pygeppetto_django_repo="https://github.com/MetaCell/pygeppetto-django.git"
 
-while getopts "v" opt
+POSITIONAL=()
+while [[ $# -gt 0 ]]
 do
-    case $opt in
-        v) virtualenv=true;;
-    esac
+key="$1"
+
+case $key in
+    -v|--virtualenv)
+    virtualenv=true
+    shift # past argument
+    ;;
+    -b|--branch)
+    pygeppetto_branch="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
 done
+set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [ "$virtualenv" = true ] ; then
-    virtualenv -p python3 ./venv;
-    source ./venv/bin/activate;
+    python -m venv venv
+    source ./venv/bin/activate
 fi
 
-pip install -r requirements.txt;
+python3 -m pip install --upgrade pip
+export CRYPTOGRAPHY_DONT_BUILD_RUST=1
+pip install -r requirements.txt --no-cache-dir --no-deps
 
-git clone $pygeppetto_django_repo;
+git ls-remote --heads --tags $pygeppetto_django_repo | grep -E 'refs/(heads|tags)/'$pygeppetto_branch > /dev/null
+
+if [ $? -eq 0 ]; then
+  git clone -b $pygeppetto_branch $pygeppetto_django_repo $pygeppetto_folder
+else
+  git clone -b geppetto-scidash $pygeppetto_django_repo $pygeppetto_folder
+fi
 
 cd $pygeppetto_folder;
 

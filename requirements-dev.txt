@@ -1,3 +1,7 @@
 flake8
 yapf
 isort
+coverage
+coverage-badge
+django_coverage_plugin
+pip-tools

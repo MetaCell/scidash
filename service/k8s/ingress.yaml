@@ -1,0 +1,38 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: "letsencrypt-scidash"
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: filippo@metacell.us
+    privateKeySecretRef:
+      name: letsencrypt-scidash
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-scidash
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
+  name: scidash-web-nginx-ingress
+spec:
+  rules:
+  - host: {{DOMAIN}}
+    http:
+      paths:
+      - backend:
+          serviceName: scidash
+          servicePort: 8000
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - {{DOMAIN}}
+    secretName: scidash-tls

@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/travis/MetaCell/scidash/master.svg?style=flat-square&label=master)](https://travis-ci.org/MetaCell/scidash)
+[![Build Status](https://img.shields.io/travis/MetaCell/scidash/development.svg?style=flat-square&label=develop)](https://travis-ci.org/MetaCell/scidash)
+[![Coverage Status](coverage.svg)](https://travis-ci.org/MetaCell/scidash)
 <p align="center">
   <img src="http://scidash.github.io/assets/scidash-text.png" alt="SciDash logo"/>
 </p>
@@ -11,9 +14,57 @@ SciDash is a project that enables the reproducible execution and visualization o
 
 SciDash is a geppetto / django-based client-server web application.
 
-## Installation
+## Installation with Docker
 
-We recommend you to use a Python 3 (*3.6 or newer at least*) virtual environment for the installation, so you can keep all the dependencies within that environment.
+This installation procedure relies on the use of docker and docker-compose, if you don't have these already installed in your machine you can follow these [link 1](https://docs.docker.com/install/) and [link 2](https://docs.docker.com/compose/install/).
+
+In order to install scidash in your machine you will need to clone the scidash repository
+
+```
+git clone https://github.com/metacell/scidash.git
+```
+
+Then, we need to access the repository at the folder scidash/service/docker, for instance if you are using linux you can type in your terminal the below:
+
+```
+cd ./scidash/service/docker
+```
+
+Inside this folder you will find the 3 docker files needed to build and run scidash locally.
+Running the 3 commands below we will build 3 docker images that we will re-use through our docker-compose.yml file in order to run scidash. You can now proceed with the 3 commands below to build the 3 images required (note, it might take roughly 1 hour to build all the 3 images and the time can vary depending on your internet connection speed since these steps will have to download other software from the web):
+
+```
+docker build -f Dockerfile-postgres -t metacell/scidash_db:my_local_tag .
+docker build -f Dockerfile-virgo -t metacell/scidash_virgo:my_local_tag .
+docker build -f Dockerfile-scidash -t metacell/scidash:my_local_tag .
+```
+
+Once the 3 images have been created we can now move to the deployment folder, on the same level of the current docker folder, for instance in linux we can run:
+
+```
+cd ../deployment
+```
+
+At this point we need to edit the docker-compose.yml with our favourite editor (vim obviously, unless you are one of those who use emacs, I am sorry for you) and replace the tag with the one used during the manual build.
+If you did a copy paste of the commands, you will need to replace the tag latest with the my_local_tag string, for instance:
+
+    image: metacell/scidash_db:latest
+
+will become:
+
+    image: metacell/scidash_db:my_local_tag
+
+Once we finish to edit the file with the correct tag we are ready to run scidash, so sit down, relax and run:
+
+```
+docker-compose up -d
+```
+
+Wait 1-2 mins that docker compose will bring up all the service and enjoy Scidash!
+
+## Installation in my machine
+
+We recommend you to use a Python 3.6 virtual environment for the installation, so you can keep all the dependencies within that environment.
 
 **Dependencies**
 
@@ -47,7 +98,25 @@ cp service/dotenv/env-docker .env
 source .env
 ```
 
-Just a reminder before going forward that this project requires at least a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 (or bigger) installed.
+As a developer you may add the git pre-commit hook to you .git repo. Besides updating the coverage badge, this hook runs some more commands before committing your changes. To install the pre-commit hook copy the hook to your .git folder
+
+```shell script
+cp service/hooks/pre-commit .git
+chmod +x .git/hooks/pre-commit
+```
+
+You should install the requirements-dev.txt to use the coverage and more code testing tools
+
+```shell script
+pip install -r requirements-dev.txt
+```
+
+To update the coverage badge manually run
+```shell script
+make coverage-badge
+```
+
+Just a reminder before going forward that this project requires a Python 3.6 version, if this requirement is not satisfied before proceeding further ensure you have Python 3.6 installed.
 
 #### ***Configure Database***
 In order to configure the database you need the PostgreSQL server installed as per dependencies listed above, then you can proceed with the steps below that will need to be run as postgres user:
@@ -63,7 +132,7 @@ sudo su postgres
 logout
 ```
 
-#### ***Backend and Fronend Installation***
+#### ***Backend and Frontend Installation***
 Once done with the database configuration you can proceed with the backend (first) and the frontend (second) installation.
 First we start with the backend installation with the command below:
 ```
@@ -86,6 +155,7 @@ make run-dev
 ```
 
 Go to http://localhost:8000/ and enjoy!
+
 
 ## Requirements to neuronunit test and model classes to work with scidash
 
@@ -182,126 +252,8 @@ pq.UnitQuantity('megaohm', pq.ohm*1e6, symbol='Mohm') # custom unit
 {'v': pq.V, 'i': pq.pA} # mapping
 ```
 
-## Deployment
+## Post install steps
 
-For scidash test deployment there are configurations in deploy folder `$PROJECT_ROOT/service/kubernetes/scidash`
+For copying/cloning initial model instances and test instances please update the DEMO_USER_ID in the settings file
+to point to the user (id) from where the models and test instances should be cloned.
 
-What is what:
-
-`scidash-service.yaml`
-
-This configuration describes kubernetes service ([what is service](https://kubernetes.io/docs/concepts/services-networking/service/)) for scidash deployment.
-
-Section with general information:
-
-```yaml
-kind: Service
-apiVersion: v1
-metadata:
-  name: scidash
-  namespace: scidash-testing
-  labels:
-    app: scidash
-```
-
-Section with port mappings and other important information:
-
-```
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 8000
-  selector:
-    app: scidash
-```
-
-This service in general is k8 resource with load balancer which provides access to the open ports from your pods ([what is pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/))
-
-`scidash-deployment.yaml`
-
-This file provides management for deploying (and updating) pod with containers (application container and redis container).
-
-To better understanding you can compare k8 pods with composition created by docker-compose.
-
-Section with general information:
-
-```
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    app: scidash
-  name: scidash
-  namespace: scidash-testing
-```
-
-Start of actual specification for deployment:
-
-```
-spec:
-  replicas: 1 # Count of the similar pods that should by launched
-  selector:
-    matchLabels:
-      app: scidash
-  strategy:
-    rollingUpdate:
-      maxSurge: 50%
-      maxUnavailable: 50%
-    type: RollingUpdate
-```
-Containers descriptions start here in template:
-
-```
-  template:
-    metadata:
-      labels:
-        app: scidash
-    spec:
-      containers:
-
-      - image: r.cfcr.io/tarelli/metacell/scidash:deployment
-        imagePullPolicy: Always
-        name: scidash
-        ports:
-        - containerPort: 8000 # Ports that should be exposed
-          protocol: TCP
-```
-
-Also example for environment description. And as you can see here it uses secrets ([what is secret](https://kubernetes.io/docs/concepts/configuration/secret/)) as a source for sensible data.
-
-```
-        env:
-          - name: DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: scidash-secret
-                key: DB_USER
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: scidash-secret
-                key: DB_PASSWORD
-```
-Every secret should be mounted as a volume
-
-```
-        volumeMounts:
-          - name: scidash-secret
-            mountPath: /scidash-secret
-```
-
-And described in volumes section on the same level as containers:
-```
-      volumes:
-        - name: scidash-secret
-          secret:
-            secretName: scidash-secret
-```
-
-Also codefresh repository requires especial secret for pulling images:
-
-```
-      imagePullSecrets:
-      - name: codefresh-generated-r.cfcr.io-cfcr-scidash-testing
-```

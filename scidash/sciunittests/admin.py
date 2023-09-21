@@ -8,8 +8,12 @@ from scidash.sciunittests.models import (
 
 # Register your models here.
 
+class ScoreInstanceAdmin(admin.ModelAdmin):
+    list_display = ('model_instance', 'test_instance', 'status', 'test_instance')
+    exclude = ('related_data',)
 
 class TestClassModelAdmin(admin.ModelAdmin):
+    search_fields = ['class_name']
     readonly_fields = [
         'observation_schema', 'test_parameters_schema', 'params_units',
         'units', 'memo'
@@ -44,7 +48,7 @@ class TestSuiteAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TestSuite, TestSuiteAdmin)
-admin.site.register(ScoreInstance)
+admin.site.register(ScoreInstance, ScoreInstanceAdmin)
 admin.site.register(ScoreClass)
 admin.site.register(TestInstance, TestInstanceModelAdmin)
 admin.site.register(TestClass, TestClassModelAdmin)

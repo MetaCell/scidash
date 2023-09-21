@@ -1,0 +1,29 @@
+DEVELOPMENT=1
+PRODUCTION=0
+HTTP=0
+
+DB_HOST='scidash-postgres'
+DB_PORT=5432
+DB_NAME='scidash'
+DB_USER=scidash_admin
+DB_PASSWORD=scidash_local_password
+
+REDIS_URL=redis://scidash-redis:6379
+
+STATIC_URL='/static/'
+STATIC_DIR='static'
+
+# for localhost
+# GEPPETTO_HOST=localhost
+# for docker
+GEPPETTO_HOST=scidash-virgo
+GEPPETTO_PORT=8080
+GEPPETTO_SERVLET_URL=ws://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.frontend/GeppettoServlet
+GEPPETTO_BASE_URL=http://${GEPPETTO_HOST}:${GEPPETTO_PORT}/org.geppetto.frontend/geppetto
+
+BASE_PROJECT_FILES_HOST='http://scidash:8000/static/projects/'
+
+# ToDo: change in development sentry dsn
+SENTRY_DSN="https://f25ea2fac2da427684e6875c7de5c296@sentry.metacell.us/2" # base of all errors
+SENTRY_SYS_DSN="https://f25ea2fac2da427684e6875c7de5c296@sentry.metacell.us/2" # system/infra errors
+SENTRY_APP_DSN="https://f25ea2fac2da427684e6875c7de5c296@sentry.metacell.us/2" # application errors

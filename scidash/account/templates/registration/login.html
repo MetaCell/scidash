@@ -1,25 +1,57 @@
+{% include 'registration/base-template.html' %}
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 
-{% include 'registration/base-template.html' %}
-
-{% load material_form %} 
+{% load material_form %}
 
 {% block content %}
    <div class="login-container">
   <h5>SCIDASH LOGIN</h5>
-  <a href="{% url 'sign-up' %}">Have no account? Then sign-up!</a>
-  <a href="{% url 'password-reset' %}">Forgot your password? Let's reset it</a>
   <br>
-  <br>
+  <a href="{% url 'social:begin' 'github' %}">
+    <button class="btn icon-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="padding-right: 6px;">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" style="fill: rgb(255, 255, 255)"/>
+      </svg>
+      Login with GitHub
+    </button>
+  </a>
+  <a href="{% url 'social:begin' 'google-oauth2' %}">
+    <button class="btn icon-btn">
+      <svg viewBox="14 14 17.64 18" width="24" height="24" xmlns="http://www.w3.org/2000/svg" style="padding-right: 6px;">
+        <path d="M17.64,9.20454545 C17.64,8.56636364 17.5827273,7.95272727 17.4763636,7.36363636 L9,7.36363636 L9,10.845 L13.8436364,10.845 C13.635,11.97 13.0009091,12.9231818 12.0477273,13.5613636 L12.0477273,15.8195455 L14.9563636,15.8195455 C16.6581818,14.2527273 17.64,11.9454545 17.64,9.20454545 L17.64,9.20454545 Z" id="Shape" fill="#4285F4" transform="matrix(1, 0, 0, 1, 14, 14)"/>
+        <path d="M9,18 C11.43,18 13.4672727,17.1940909 14.9563636,15.8195455 L12.0477273,13.5613636 C11.2418182,14.1013636 10.2109091,14.4204545 9,14.4204545 C6.65590909,14.4204545 4.67181818,12.8372727 3.96409091,10.71 L0.957272727,10.71 L0.957272727,13.0418182 C2.43818182,15.9831818 5.48181818,18 9,18 L9,18 Z" id="Shape" fill="#34A853" transform="matrix(1, 0, 0, 1, 14, 14)"/>
+        <path d="M3.96409091,10.71 C3.78409091,10.17 3.68181818,9.59318182 3.68181818,9 C3.68181818,8.40681818 3.78409091,7.83 3.96409091,7.29 L3.96409091,4.95818182 L0.957272727,4.95818182 C0.347727273,6.17318182 0,7.54772727 0,9 C0,10.4522727 0.347727273,11.8268182 0.957272727,13.0418182 L3.96409091,10.71 L3.96409091,10.71 Z" id="Shape" fill="#FBBC05" transform="matrix(1, 0, 0, 1, 14, 14)"/>
+        <path d="M9,3.57954545 C10.3213636,3.57954545 11.5077273,4.03363636 12.4404545,4.92545455 L15.0218182,2.34409091 C13.4631818,0.891818182 11.4259091,0 9,0 C5.48181818,0 2.43818182,2.01681818 0.957272727,4.95818182 L3.96409091,7.29 C4.67181818,5.16272727 6.65590909,3.57954545 9,3.57954545 L9,3.57954545 Z" id="Shape" fill="#EA4335" transform="matrix(1, 0, 0, 1, 14, 14)"/>
+      </svg>
+      Login with Google
+    </button>
+  </a>
+  <a href="{% url 'social:begin' 'twitter' %}">
+    <button class="btn icon-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="padding-right: 6px;"> 
+        <path opacity="0" d="M0 0h24v24H0z"></path> 
+        <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z" style="fill: #1d9bf0"></path> 
+      </svg>
+      Login with Twitter
+    </button>
+  </a>
+  <br style="clear: both;">
+  <h6 style="margin-top: 40px">Or use your SciDash account</h6>
   <form method="POST">
     {% csrf_token %}
     {% form form=form %}{% endform %}
     <input type="hidden" name="next" value="{% url 'index' %}">
-    <button type="submit" name="_submit" class="btn">Submit</button>
+    <button type="submit" name="_submit" class="btn left">Login</button>
+    <a href="{% url 'password-reset' %}" style="float: right; letter-spacing: 0px;">
+      <button name="_reset" class="btn" type="button">Reset Password</button>
+    </a>
   </form>
-  <a href="{% url 'index' %}">Go home</a>
+  <br>
+  <h6 style="margin-top: 40px">Or sign up for a SciDash account</h6>
+  <a href="{% url 'sign-up' %}">
+    <button name="_signup" class="btn" style="float: left; letter-spacing: 0px;">Sign-up</button>
+  </a>
+  <a href="{% url 'index' %}" style="float: left; margin: 40px; width: 100%">Go home</a>
 </div>
 {% endblock %}
-
-

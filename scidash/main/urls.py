@@ -21,7 +21,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_cache.registry import cache_registry
 from rest_framework_jwt.views import obtain_jwt_token
 
-from scidash.account.api.views import CheckIsLoggedView, UserViewSet
+from scidash.account.api.views import CheckIsLoggedView, \
+    UserViewSet, \
+    SetShowInstructions
 from scidash.account.views import signup
 from scidash.general.api import views as general_views
 from scidash.sciunitmodels.api import views as models_views
@@ -64,6 +66,7 @@ router.register(
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login/$', obtain_jwt_token),
+    url('', include('social_django.urls', namespace='social')),
     url(r'^data/', include('scidash.general.urls')),
     url(r'^api/date-range/$', DateRangeView.as_view(), name='date-range-view'),
     url(r'^api/', include(router.urls)),
@@ -83,6 +86,14 @@ urlpatterns = [
         ),
         name='password-reset'
     ),
+    url(
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='registration/password-reset-confirm.html',
+            success_url="/",
+            post_reset_login=True
+        ),
+        name='password_reset_confirm'),
     url(r'^auth/sign-up/$', signup, name='sign-up'),
     url(
         r'^api/users/me/$',
@@ -94,6 +105,21 @@ urlpatterns = [
         r'^api/users/is-logged/$',
         CheckIsLoggedView.as_view(),
         name='is-logged'
+    ),
+    url(
+        r'^api/users/toggle-show-instructions/$',
+        SetShowInstructions.as_view(),
+        name='set-show-instructions'
+    ),
+    url(
+        r'^api/instructions/$',
+        general_views.InstructionsView.as_view(),
+        name='instructions-view'
+    ),
+    url(
+        r'^api/settings/$',
+        general_views.SettingsView.as_view(),
+        name='instructions-view'
     ),
     url(r'^api/parameters/$', models_views.ModelParametersView.as_view()),
     url(
