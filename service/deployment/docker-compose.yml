@@ -9,7 +9,7 @@ services:
       - 6379:6379
     expose:
       - 6379
-  scidash-db:
+  scidash-postgres:
     image: metacell/scidash_db:latest
     container_name: scidash_db
     build:
@@ -29,7 +29,7 @@ services:
       - 5432
     volumes:
       - ./database:/var/lib/postgresql/
-  scidash-geppetto:
+  scidash-virgo:
     image: metacell/scidash_geppetto:latest
     build:
       dockerfile: service/docker/Dockerfile-virgo
@@ -47,7 +47,7 @@ services:
     shm_size: 512M
     depends_on:
       - scidash-redis
-      - scidash-db
+      - scidash-postgres
   scidash:
     image: metacell/scidash:latest
     build:
@@ -69,7 +69,7 @@ services:
     depends_on:
       scidash-redis:
         condition: service_healthy
-      scidash-db:
+      scidash-postgres:
         condition: service_healthy
 
 volumes:
