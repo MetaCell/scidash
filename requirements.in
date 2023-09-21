@@ -7,7 +7,7 @@ djangorestframework==3.7.1
 drf-writable-nested
 django-filter==1.1.0
 django-timezone-field==3.1
-git+git://github.com/zsinnema/django-rest-framework-jwt@master
+git+https://github.com/zsinnema/django-rest-framework-jwt@master
 django-extensions==2.1.6
 django-dotenv
 rest-framework-cache
@@ -17,15 +17,20 @@ django-celery-beat==1.4.0
 django-celery-results==1.0.4
 django-db-logger
 neo==0.9.0
-numpy<1.20.0
+elephant==0.10.0
 pynn==0.9.5
-Jinja2==2.11.3 
-git+git://github.com/scidash/neuronunit@master
-git+git://github.com/scidash/sciunit@master
-git+git://github.com/MetaCell/scidash-api.git@master
+Jinja2==2.11.3
+lmfit==1.0.2
+numpy==1.19.5
+numba==0.50.1
+git+https://github.com/scidash/neuronunit@metacell
+git+https://github.com/scidash/sciunit@metacell
+git+https://github.com/MetaCell/scidash-api.git@master
 wheel
 sentry-sdk
 django-ckeditor==5.9.0
 django-admin-sortable2==0.7.5
 social-auth-app-django==4.0.0  # will be installed through install script install-backend
 #git+git://github.com/scidash/python-quantities@master  # waiting for this PR https://github.com/python-quantities/python-quantities/pull/186 to be merged
+quantities==0.12.1
+llvmlite>=0.33.0.dev0,<0.34
